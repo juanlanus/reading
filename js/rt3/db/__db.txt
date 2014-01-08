@@ -1,0 +1,5 @@
+db directory
+
+JavaScript code to impact the database.  
+The in.js file is about updating the database with the reader's data, through the data port (3333).  
+The out.js file is for queries.  

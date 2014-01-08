@@ -1,0 +1,551 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Language" content="en">
+  <title>Windows node.js server setup</title>
+  <link rel="stylesheet" href="res/rtDoc.css" type="text/css">
+  <script type="text/javascript" src="res/jquery-1.8.3.js">
+ </script>
+  <script type="text/javascript" src="res/tocBuilder.js">
+ </script>
+  <link href="res/tocBuilder.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#tocContainer').tocBuilder({
+        type: 'headings',
+        backLinkText: 'TOC',
+        startLevel: 2,
+        endLevel: 6
+      });
+    });
+  </script>
+  <script type="text/javascript" src="res/rt.js">
+ </script>
+</head>
+
+<body>
+
+<div class="imgR miniMenu">
+
+    <div>
+        <ul>
+          <li><a
+            href="https://dl.dropbox.com/u/2965258/reading/doc/nodeServerSetup.html">this</a></li>
+          <li><a href="index.html">index</a> </li>
+          <li><a href="tasks.html">tasks &amp; bugs</a> </li>
+          <li><a href="comparison.html">comparison</a></li>
+          <li><a href="rtech.html">technical defs</a></li>
+          <li><a href="nodeServerSetup.html">technical defs</a></li>
+          <li><a href="notes.html">notes &amp; links</a></li>
+          <li><a href="aboutScrolling.html">about scrolling</a></li>
+        </ul>
+    </div>
+</div>
+
+<div id="rtHeader">
+
+    <div class="fixedHeader">
+        <h1 style="display:block; padding-top:0; ">Windows node.js server setup</h1>
+    </div>
+</div>
+
+<div id="rtBody" style="clear:none;">
+
+<div id="tocContainer_ZZZ" class="tocContainer_ZZZ">
+<!-- Header levels
+h1 global title
+h2 source book from CA library: IDLB22PR.boo
+h3 book chapter
+h3 book section
+h4, h5 subsections
+-->
+
+<p> </p>
+
+<div class="toc">
+<ul>
+  <li><a href="#CA-Ideal procedure language">Installation steps</a>
+    <ul>
+      <li><a href="#L113">Directory</a></li>
+      <li><a href="#L180">The startup script</a></li>
+      <li><a href="#L133">Node.js</a></li>
+      <li><a href="#L178">python</a></li>
+      <li><a href="#L197">git</a></li>
+      <li><a href="#L239">ruby</a></li>
+      <li><a href="#L368">curl</a></li>
+      <li><a href="#L338">MongoDB</a></li>
+      <li><a href="#L255">backup</a></li>
+      <li><a href="#L471">Starting the server</a></li>
+      <li><a href="#L4991">Getting the server to work</a></li>
+      <li><a href="#L430">links</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+</div>
+
+<h2 id="CA-Ideal procedure language">Installation steps</h2>
+
+<p>This is the report of an attempt to set a self-contained node.js development
+or learning environment in Windows, without using administrator privileges, and
+without much knowledge of Node.js, in a Windows XP box. </p>
+
+<p>The following tools are installed: </p>
+<ol style="margin-left:6em">
+  <li>node.js</li>
+  <li>git</li>
+  <li>python</li>
+  <li>ruby</li>
+  <li>curl</li>
+  <li>MongoDB</li>
+</ol>
+
+<p>After all the installations I can run all these tools from the command line,
+as if I was in UNIX, and also a bash shell featuring a bunch of the most used
+commands (<a href="http://www.mingw.org/wiki/MSYS">MSys</a>). </p>
+
+<p>The computer where I'm doing this does not contain any of these tools. If
+one was available in your computer then you might want to use it. To do so you
+need to add the appropriate executable directory to the <code>PATH</code> as
+shown in the startup script described below. </p>
+
+<h3 id="L113">Directory</h3>
+
+<p>The working directory will be named <code>server</code>. A
+<code>bin</code> directory will hang under <code>server</code> to hold the
+executables. In my PC, <code>server</code> is in the X: drive. </p>
+<pre class="framed">X:\server
++---bin</pre>
+
+<p>As I will install <em>portable</em> versions of the products, a command or
+script will be needed to start the working environment (the command line) and
+set the appropriate path variables, instead of setting them the Windows way, to
+be able to start any of this programs by the bare name, instead of having to
+type the full path. </p>
+
+<h3 id="L180">The startup script</h3>
+
+<p>The <code>server</code> directory will contain a script named
+<code>startServer.cmd</code>  to set the working environment, in particular it
+will set the path so that sitting in the <code>server</code> directory all the
+tools could be started by typing only their name.</p>
+
+<p>This makes the whole thing more self-contained and portable, as the script
+is part of the tarball and hopefully all its paths are relative, that is,
+self-relocating. </p>
+
+<h3 id="L133">Node.js</h3>
+
+<p>There is a <a
+href="http://imsky.co/notes/nodejs-portable-windows-version-15">portable
+node.js for Windows</a> by Ivan Malopinsky. The download sports a zip with the
+32-bit and the 64-bit versions. We'll use the 32-bit version that comes in the
+<code>node-v0.8.6-x86</code> subdirectory of the archive, so I create a
+<code>server\bin\node</code> directory and extract there the content of
+<code>node-v0.8.6-x86</code>. </p>
+
+<p>The x86 subdirectory (<code>server\bin\node\x86</code>) contains the
+executable <code>node.exe</code>, a <code>node_modules</code> subdirectory
+containing <code>npm</code> only, and a few .bat and .cmd files to start node
+and npm in the right environment, thus in <code>node.cmd</code>: </p>
+<pre class="framed">@echo off
+set PATH=%PATH%;%cd%
+set NODE_PATH=%cd%\node_modules\npm\node_modules;%cd%\node_modules\npm
+node
+cmd</pre>
+
+<p>Equivalent paths have to be set by the startup script, including the path
+declarations for the node executable. </p>
+
+<p>The startup script needs to have the paths adjusted. First it defines a
+<code>SERVER_DIR</code> variable pointing to the <code>server</code> directory.
+All the paths in subdirectories of <code>server</code> will be relative to this
+one. </p>
+
+<p>The first version of the script <code>startServer.cmd</code> stored in the
+<code>server</code> directory is: </p>
+<pre class="framed">: @echo off
+
+: store a reference to the server directory (the path of %0) and CD there
+set SERVER_DIR=%~p0
+cd /D SERVER_DIR
+
+: add node to the path and set NODE_PATH (where node searchs for modules)
+set NODEDIR=%SERVER_DIR%bin\node
+set PATH=%NODEDIR%;%PATH%
+set NODE_PATH=%NODEDIR%\node_modules\npm\node_modules;%NODEDIR%\node_modules\npm
+set NODE_PATH=%NODE_PATH;%NODEDIR%\node_modules</pre>
+
+<p>The environment setting must include setting a variable to tell
+<code>node</code> where to search for installed modules. Thus: </p>
+<pre class="framed">set NODE_PATH=%NODEDIR%\node_modules\npm\node_modules;%NODEDIR%\node_modules\npm
+set NODE_PATH=%NODE_PATH%;%NODEDIR%\node_modules</pre>
+
+<p>There can be modules in various locations, but those installed from the
+<code>%NODE_PATH%</code> directory will end up in a
+<code>node_modules</code> directory directly hanging from
+<code>%NODE_PATH</code> and <code>node</code> needs this hint to find them. </p>
+
+<h3 id="L178">python</h3>
+
+<p>Python will be needed, so let's install it. It is used by gyp to build
+applications that require a build process to install. Node uses the waf build
+system written in Python. Usually C++ modules are pre-built for the Windows
+versions, but there might be exceptions, like <code>DTrace</code>. </p>
+
+<p>There is a <a href="http://www.portablepython.com/">portable Python site</a>
+offering different versions, I chose 3.2.1.1 (which later appeared to be a
+wrong choice).</p>
+
+<p>Later on, while installing <code>restify</code>, i got the following error:
+</p>
+<pre class="framed">npm http GET https://registry.npmjs.org/dtrace-provider/0.2.4
+gyp ERR! configure error
+gyp ERR! stack Error: Python executable "python" is v3.2.1, which is not supported by gyp.
+gyp ERR! stack You can pass the --python switch to point to Python &gt;= v2.5.0 &amp; &lt; 3.0.0.</pre>
+
+<p>So I replaced the installed python by an older version <code><a
+href="http://elvis.rowan.edu/mirrors/portablepython/v1.1/PortablePython_1.1_py2.6.1.exe">PortablePython_1.1_py2.6.1.exe</a></code>
+and solved the problem. </p>
+
+<p>As of this writing the issue is explained in the <code><a
+href="https://github.com/TooTallNate/node-gyp#installation">node-gyp</a></code> site,
+both the Python thing and a requirement for MS Visual Studio C++ that rears
+later. </p>
+
+<p>The portable looks like an installer but it's an executable archive that
+expands the files allowing you to choose the target directory. I installed
+under <code>server/bin</code> and renamed the folder to simply
+<code>python</code> to avoid the spaces in the path and the need to change the
+startup script when the version changes. </p>
+
+<p>These lines should make Python available in the command line and to the
+other applications: </p>
+<pre class="framed">: add the python directory to the path 
+set PATH=%PATH%;SERVER_DIR\bin\python\App\</pre>
+
+<h3 id="L197">git</h3>
+
+<p>npm uses git, so let's install a portable version. </p>
+
+<p>There is an <a
+href="http://markashleybell.com/articles/portable-git-windows-setting-home-environment-variable">article
+on portable git</a> by Mark Ashley Bell dated November 2010 that points to a
+downloads page. I chose <code>PortableGit-1.8.0-preview20121022.7z</code> from
+<a href="http://code.google.com/p/msysgit/downloads/list">the downloads
+page</a>. It's labeled "beta" but anyway. </p>
+
+<p>The archive contains a file named <code>README.portable</code> with
+information on the following steps after expanding the content (218 MB!). I
+expanded it in a folder <code>server/bin/git</code>. </p>
+
+<p>To make git available to other applications I follow the instructions of the
+README: </p>
+
+<p style="margin-left:2em"><cite>Since this portable package does not modify
+any Windows %path% variables, it is not possible to run the git.exe and
+gitk.exe files directly. Start the Git Bash or Git Cmd instead, or add the cmd/
+folder to your %path%. </cite></p>
+
+<p>So I added the following lines to the startup script to be able to run those
+commands from within the server command line: </p>
+<pre class="framed">: add the git directory and the minimal UNIX to the path
+set PATH=%SERVER_DIR%bin\git\cmd;%PATH%
+set PATH=%SERVER_DIR%bin\git\bin;%PATH%</pre>
+
+<p>As a bonus, with git comes a minimal UNIX environment, located in the folder
+<code>server\bin\git\bin</code>. I added it to the path in order to be able to
+leverage the bash shell, like so: </p>
+<pre class="framed">X:\server&gt;<strong>bash</strong>
+bash-3.1$ grep
+Usage: grep [OPTION]... PATTERN [FILE]...
+Try `grep --help' for more information.
+bash-3.1$^D </pre>
+
+<h3 id="L239">ruby</h3>
+
+<p>Ruby is required by npm (or was it git?). </p>
+
+<p>There are "installers" with 7z extension in <a
+href="http://rubyinstaller.org/downloads/">rubyinstaller.org</a> so let's get
+one, expand it in <code>server/bin/ruby</code> and add the <code>bin
+</code>directory to the path:<code></code></p>
+<pre class="framed">: add the ruby directory to the path
+set PATH=%SERVER_DIR%bin\ruby\bin\;%PATH%</pre>
+
+<h3 id="L368">curl</h3>
+
+<p>A command-line curl is needed for testing. This program can be downloaded
+from <a href="http://curl.haxx.se/download.html">curl.haxx.se</a>. The Windows
+binaries are near the end of the long downloads page in archive format, so I
+can use one for my purpose.</p>
+
+<p>I downloaded <a
+href="http://curl.haxx.se/gknw.net/7.28.1/dist-w32/curl-7.28.1-rtmp-ssh2-ssl-sspi-zlib-idn-static-bin-w32.zip">an
+archive file</a> after having used the <em><a
+href="http://curl.haxx.se/dlwiz/">download wizard</a></em> (I had to run it
+with MSIE, as in Chrome it didn't work). </p>
+
+<p>The path addition must appear before the git entry in the path roster,
+because git includes a smaller version of curl in its binaries directory that
+gets called instead. </p>
+<pre class="framed">: add curl to the path
+set PATH=%SERVER_DIR%bin\curl\;%PATH%</pre>
+
+<h3 id="L338">MongoDB</h3>
+
+<div class="imgR" style="margin-left:2em; margin-bottom:1em;">
+<img alt="powered by mongodb" src="res/PoweredMongoDBbeige50.png" width="129"
+height="61"> </div>
+
+<p>I downloaded MongoDB for Windows 32bit version 2.0.8. There are newer
+versions, but as of 2.2 Windows XP is not supported any more. Running MongoDB
+in a 32 bit platform imposes restrictions like a 2GB limit in database size,
+which is not a problem for my development installation. If your Windows is
+newer then go for the newer MongoDB. </p>
+
+<p>There are <a href="Install MongoDB on Windows">detailed instructions for
+installing in Windows</a> in the MongoDB site.</p>
+
+<p>In this case I don't install MongoDB under the
+<code>server\bin</code> directory but somewhere else because I plan to use it
+for other purposes. The directory added to the <code>PATH</code> will reflect
+it. </p>
+
+<p>Also, in addition to adding MongoDB to the path I added a line to start it
+spawning a new, minimized, command window. </p>
+
+<p>Update the start script: </p>
+<pre class="framed">: add the mongodb binaries to the path
+set PATH=X:\mongodb-win32-i386-2.0.8;%PATH%
+start /min mongod.exe --dbpath X:\server\data</pre>
+
+<p>The <code>mongod</code> command starts the server. </p>
+
+<p>It requires a parameter <code>--dbpath</code> with the location of the data
+directory. I added it in the startup script, after having created a
+<code>data</code> directory directly hanging from the
+<code>server</code> directory (<code>server/data</code>). </p>
+
+<p>The database motor confirms it has started with the "waiting for
+connections" message. </p>
+<pre class="framed">warning: 32-bit servers don't have journaling enabled by default. Please use --journal if you want durability.
+[initandlisten] MongoDB starting : pid=7628 port=27017 dbpath=X:\server\data 32-bit host=T61
+[initandlisten]
+[initandlisten] ** NOTE: when using MongoDB 32 bit, you are limited to about 2 gigabytes of data
+[initandlisten] **       see http://blog.mongodb.org/post/137788967/32-bit-limitations
+[initandlisten] **       with --journal, the limit is lower
+[initandlisten]
+[initandlisten] db version v2.0.8, pdfile version 4.5
+[initandlisten] git version: a340a57af7cdda865da420704e1d1b2fac0cedc2
+[initandlisten] build info: windows sys.getwindowsversion(major=6, minor=0, build=6002, 
+                platform=2, service_pack='Service Pack 2') BOOST_LIB_VERSION=1_42
+[initandlisten] options: { dbpath: "X:\server\data" }
+[initandlisten] <strong>waiting for connections on port 27017</strong>
+[websvr] admin web console waiting for connections on port 28017</pre>
+
+<p>The MongoDB interactive shell can be invoked with the
+<code>mongo</code> command: </p>
+<pre class="framed">X:\server&gt;mongo
+MongoDB shell version: 2.0.8
+connecting to: test
+&gt; </pre>
+
+<p>The complement to MongoDB is MongoJS. MongoJS is a Node.js package that lets
+you access MongoDB using an API that is very similar to MongoDB's JavaScript
+shell. It's MongoDB js driver. </p>
+<pre>npm install mongojs</pre>
+
+<p>It installs cleanly. Its purpose is to allow the use of MongoDB from within
+node with low impedance, like so: </p>
+<pre class="framed"> db.users.save(
+    {
+        email: "srirangan@gmail.com", 
+        password: "iLoveMongo", 
+        sex: "male"
+    }, 
+    function(err, saved) {
+        if( err || !saved ) {
+            console.log("User not saved");
+        } else { 
+            console.log("User saved");
+        }
+    }</pre>
+
+<p> </p>
+<pre class="framed">db.users.find(
+    {sex: "female"}, 
+    function(err, users) {
+        if( err || !users &amp;&amp; 0 &lt; users.length) {
+            console.log("No female users found");
+        } else {
+            users.forEach( 
+                function(femaleUser) {
+                    console.log(femaleUser);
+                }
+            ); 
+        }
+    }
+);</pre>
+
+<h3 id="L255">backup</h3>
+
+<p>At this point I archive the content of the <code>server</code> directory in
+a zip file. Thus, I'll be able to recover this sort of initial status. </p>
+
+<p>Next I will walkthrough over one or more tutorials for setting a node server
+that can return RESTful requests from my application's database. </p>
+
+<p>So far the environment is started by running the startup script
+startServer.cmd in a command window, and is capable of responding to several
+commands:  </p>
+<ul>
+  <li>node</li>
+  <li>npm</li>
+  <li>git</li>
+  <li>python</li>
+  <li>ruby</li>
+  <li>bash</li>
+  <li>curl</li>
+</ul>
+
+<p>I also installed documentation commands: </p>
+<ul>
+  <li>docRuby</li>
+  <li>docPython</li>
+  <li>docGit</li>
+  <li>docCurl</li>
+</ul>
+
+<p>to have them at hand if I ever need one. Some of the files came with the
+corresponding program, others were downloaded for the occasion, all of them are
+within the related application's directories. </p>
+
+<p>The directory tree (pruned) looks like this: </p>
+<pre class="framed">X:\server
++---bin
+    +---curl
+    +---git
+    +---node
+    +---python
+    +---ruby
++---data</pre>
+
+<p>Except for the MongoDB motor, which I installed elsewhere, I can expand the
+backup archive in any Windows computer and use it as if it was portable, which
+in fact it is. </p>
+
+<h3 id="L471">Starting the server</h3>
+
+<p>The final startServer script: </p>
+<pre class="framed">: D:\jml\server\startServer
+@echo off
+
+: store a reference to the server directory (drive and path of this file) and CD there
+set SERVER_DIR=%~dp0
+cd /D %SERVER_DIR%
+
+: add node to the path and set NODE_PATH (where node searchs for modules)
+set NODEDIR=%SERVER_DIR%bin\node
+set PATH=%NODEDIR%;%PATH%
+set NODE_PATH=%NODEDIR%\node_modules\npm\node_modules;%NODEDIR%\node_modules\npm
+set NODE_PATH=%NODE_PATH;%NODEDIR%\node_modules
+
+: add the python directory to the path
+set PATH=%SERVER_DIR%bin\python\App\;%PATH%
+
+: add the git directory and the minimal UNIX to the path
+set PATH=%SERVER_DIR%bin\git\cmd;%PATH%
+set PATH=%SERVER_DIR%bin\git\bin;%PATH%
+
+: add the mongodb binaries to the path and start it
+set PATH=X:\mongodb-win32-i386-2.0.8;%PATH%
+start /min mongod.exe --dbpath X:\server\data</pre>
+
+<p></p>
+
+<div class="imgR" style="margin-left:2em; margin-bottom:1em;">
+<img alt="node icon" src="res/nodeIcon.png" width="48" height="48"></div>
+I set a shortcut to this script, which also opens the command window and starts
+the MongoDB server. The shortcut is set thus: 
+<ul>
+  <li>target: <code>%SystemRoot%\system32\cmd.exe /k
+    "X:\server\startServer.cmd"</code></li>
+  <li>start in: <code>X:\server</code> </li>
+  <li>icon: <code>X:\server\bin\node\node.exe</code> </li>
+</ul>
+
+<p>where "<code>X:\server</code>" is the location of the server directory. </p>
+
+<p>The "<code>/k</code>" switch means "run the specified script, don't close
+the command window when it ends". </p>
+
+<p>Double-clicking the icon (that has the node looks) opens the command window
+and runs the script, leaving it ready for doing node stuff:</p>
+
+<p><img alt="node window" src="res/nodeWindow2.png"> </p>
+
+<p></p>
+
+<p></p>
+
+<h3 id="L4991">Getting the server to work</h3>
+
+<p>Next are the steps for moving from a carefully installed node server, to a
+server capable of responding to RESTful request from my application. </p>
+
+<h3 id="L430">links</h3>
+<ul>
+  <li><a
+    href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/percent.mspx?mfr=true">Windows:
+    Using batch parameters</a> </li>
+  <li><a
+    href="http://technet.microsoft.com/en-us/library/bb490890.aspx">Windows:
+    Command-line reference A-Z</a> </li>
+  <li><a
+    href="http://imsky.co/notes/nodejs-portable-windows-version-15">Portable
+    node.js for Windows</a> </li>
+  <li><a href="http://www.portablepython.com/">Portable Python for Windows
+    site</a> </li>
+  <li><a href="http://rubyinstaller.org/downloads/">Ruby installers</a> </li>
+  <li><a
+    href="https://www.google.com.ar/#hl=en&amp;newwindow=1&amp;safe=off&amp;tbo=d&amp;sclient=psy-ab&amp;q=node+js+restful+service+tutorial&amp;oq=node+js+restful+service+tutorial&amp;gs_l=hp.3..33i29.2061.10845.2.11580.9.9.0.0.0.0.403.2538.2-7j1j1.9.0.les%3B..0.0...1c.1.fBdcE6BX-10&amp;pbx=1&amp;bav=on.2,or.r_gc.r_pw.r_cp.r_qf.&amp;bvm=bv.1357700187,d.eWU&amp;fp=289c44b9a42ca71c&amp;biw=1044&amp;bih=819">search
+    for REST with node</a> </li>
+  <li><a
+    href="http://stackoverflow.com/questions/2099389/node-js-rest-framework">Node.js
+    REST framework? [closed]</a> </li>
+  <li><a href="http://mcavage.github.com/node-restify">restify tutorial</a>
+  </li>
+  <li><a
+    href="http://howtonode.org/node-js-and-mongodb-getting-started-with-mongojs">Node.js
+    and MongoDB - Getting started with MongoJS</a> </li>
+  <li><a href="http://docs.mongodb.org/manual/">The MongoDB Manual</a> </li>
+  <li><a href="http://docs.mongodb.org/manual/reference/sql-comparison/">SQL to
+    MongoDB Mapping Chart</a> </li>
+  <li><a href="http://docs.mongodb.org/manual/reference/commands/">Database
+    Commands Quick Reference</a> </li>
+  <li><a href="http://docs.mongodb.org/manual/reference/glossary/">mongodb
+    glossary</a> </li>
+  <li><a href="http://www.10gen.com/reference">MongoDB Quick Reference
+    Cards</a> </li>
+  <li><a href="http://docs.mongodb.org/manual/">The MongoDB Manual</a> </li>
+  <li><a
+    href="http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/">Install
+    MongoDB on Windows</a> </li>
+</ul>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p> </p>
+</div>
+</body>
+</html>

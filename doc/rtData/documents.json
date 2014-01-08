@@ -1,0 +1,14 @@
+db.documents.insert({
+    "_id": 123,
+    "slug": "CAIdeal",
+    "publisher": "Juan Lanus",
+    "current_version": {
+        "number": "1",
+        "URI": "http://localhost/box/public/reading/doc/CAIdeal.html",
+        "date_published": "2012-11-12",
+    },
+    "versions": [
+        { }
+    ],
+    "description": "Abbreviated manual of CA's Ideal ancient programming language"
+});

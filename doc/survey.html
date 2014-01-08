@@ -1,0 +1,340 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Language" content="es, en">
+  <title>Your feedback - Books Smart Reader</title>
+  <link rel="stylesheet" href="res/agenda.css" type="text/css">
+  <script type="text/javascript" src="res/jquery-1.8.3.js">
+ </script>
+  <script type="text/javascript">
+  $(function() {
+
+    // store the query string
+    var qs = window.location.search.replace('?','').split('&'), request = {};
+    $.each(qs, function(i,v) {
+      var pair = v.split('=');
+      return request[pair[0]] = pair[1];
+    });
+    console.log(request);
+    localStorage.setItem('survey' + localStorage.length, JSON.stringify( request ) );
+
+    $('#consentStudy').on(
+      'click', 
+      function(e) {
+        $('#continue').prop('disabled', ! this.checked);
+      }
+    )
+
+  });
+  </script>
+</head>
+
+<body>
+
+<div id="agendaBody">
+<h1 id="usability">Usability Test Feedback</h1>
+
+<p><strong>The Books Smart Reader</strong></p>
+
+<p></p>
+
+<p>This is the most relevant part of the usability test: when you give us your
+feedback. </p>
+
+<p>There are questions with a closed set of answers, that you answer by
+clicking a choice, and open answers (optional) where you can write whatever you
+feel it fits. </p>
+
+<p>Written answers can be in English or Spanish, it' your choice. </p>
+
+<p>Multiple choice answers are such that "1" (the leftmost choice) means
+"worst" and "5" (the rightmost choice) means "best", and "2", "3" and "4" mean
+intermediate satisfaction levels as usual. In addition to the choices, some of
+these questions provide a space where you can optionally explain yourself in
+written. </p>
+<p>&nbsp;</p>
+<form action="thankyou.html" type="get">
+
+  <table border="0" style="">
+    <col>
+    <col>
+    <col>
+    <tbody>
+
+      <tr>
+        <th></th>
+        <th><h4>General perception</h4></th>
+        <th style="white-space:pre; text-align:center;">       1    2    3    4    5       <br>worst          best</th>
+      </tr>
+
+      <tr>
+        <td>1</td>
+        <td>Were you able to complete the test in full, without getting blocked by any issues?  
+          <p><textarea id="t1" name="t1" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q1" value="q1-1">
+            <input type="radio" name="q1" value="q1-2">
+            <input type="radio" name="q1" value="q1-3">
+            <input type="radio" name="q1" value="q1-4">
+            <input type="radio" name="q1" value="q1-5">
+        </td>
+      </tr>
+
+      <tr>
+        <td>2</td>
+        <td>In general terms, how did you like the system? 
+          <p><textarea id="t2" name="t2" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q2" value="q2-1">
+            <input type="radio" name="q2" value="q2-2">
+            <input type="radio" name="q2" value="q2-3">
+            <input type="radio" name="q2" value="q2-4">
+            <input type="radio" name="q2" value="q2-5">
+        </td>
+      </tr>
+      </tr>
+
+      <tr>
+        <td>3</td>
+        <td>Would you like to see the features of this application generally available, in many sites that publish lengthy articles or books? 
+          <p><textarea id="t3" name="t3" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q3" value="q3-1">
+            <input type="radio" name="q3" value="q3-2">
+            <input type="radio" name="q3" value="q3-3">
+            <input type="radio" name="q3" value="q3-4">
+            <input type="radio" name="q3" value="q3-5">
+        </td>
+      </tr>
+      </tr>
+
+      <tr>
+        <td>13</td>
+        <td>In your opinion, how intrusive is the left hand vertical bar that contains the controls? (1=a lot, 5=none)
+          <p><textarea id="t13" name="t13" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q13" value="q13-1">
+            <input type="radio" name="q13" value="q13-2">
+            <input type="radio" name="q13" value="q13-3">
+            <input type="radio" name="q13" value="q13-4">
+            <input type="radio" name="q13" value="q13-5">
+        </td>
+      </tr>
+      </tr>
+
+      <tr>
+        <th></th>
+        <th><h4>Smart scroll</h4></th>
+        <th style="white-space:pre; text-align:center;">       1    2    3    4    5       <br>worst          best</th>
+      </tr>
+
+      <tr>
+        <td>4</td>
+        <td>Were you able to adapt to scrolling with the spacebar with ease?
+          <p><textarea id="t4" name="t4" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q4" value="q4-1">
+            <input type="radio" name="q4" value="q4-2">
+            <input type="radio" name="q4" value="q4-3">
+            <input type="radio" name="q4" value="q4-4">
+            <input type="radio" name="q4" value="q4-5">
+        </td>
+      </tr>
+      </tr>
+
+      <tr>
+        <td>5</td>
+        <td>How would you compare this way to scroll to the existing ways?
+          <p><textarea id="t5" name="t5" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q5" value="q5-1">
+            <input type="radio" name="q5" value="q5-2">
+            <input type="radio" name="q5" value="q5-3">
+            <input type="radio" name="q5" value="q5-4">
+            <input type="radio" name="q5" value="q5-5">
+        </td>
+      </tr>
+      </tr>
+
+      <tr>
+        <td>6</td>
+        <td>How interested would you be in seeing this feature available in web sites that publish lengthy texts?
+          <p><textarea id="t6" name="t6" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q6" value="q6-1">
+            <input type="radio" name="q6" value="q6-2">
+            <input type="radio" name="q6" value="q6-3">
+            <input type="radio" name="q6" value="q6-4">
+            <input type="radio" name="q6" value="q6-5">
+        </td>
+      </tr>
+      </tr>
+
+      <tr>
+        <td>7</td>
+        <td>Do you think that the amount of text scrolled in each action should be increaded? 
+          <p><textarea id="t7" name="t7" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q7" value="q7-1">
+            <input type="radio" name="q7" value="q7-2">
+            <input type="radio" name="q7" value="q7-3">
+            <input type="radio" name="q7" value="q7-4">
+            <input type="radio" name="q7" value="q7-5">
+        </td>
+      </tr>
+      </tr>
+
+      <tr>
+        <th></th>
+        <th><h4>Progress indicator</h4></th>
+        <th style="white-space:pre; text-align:center;">       1    2    3    4    5       <br>worst          best</th>
+      </tr>
+
+      <tr>
+        <td>8</td>
+        <td>Was the <em>progress indicator</em> useful to you, or do you thing it might have any use while reading lengthy texts (like books)?
+          <p><textarea id="t8" name="t8" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q8" value="q8-1">
+            <input type="radio" name="q8" value="q8-2">
+            <input type="radio" name="q8" value="q8-3">
+            <input type="radio" name="q8" value="q8-4">
+            <input type="radio" name="q8" value="q8-5">
+        </td>
+      </tr>
+      </tr>
+
+      <tr>
+        <th></th>
+        <th><h4>Progress Table of content</h4></th>
+        <th style="white-space:pre; text-align:center;">       1    2    3    4    5       <br>worst          best</th>
+      </tr>
+
+      <tr>
+        <td>9</td>
+        <td>Were you able to display the TOC and scroll to the "Microsoft" section using it?
+          <p><textarea id="t9" name="t9" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q9" value="q9-1">
+            <input type="radio" name="q9" value="q9-2">
+            <input type="radio" name="q9" value="q9-3">
+            <input type="radio" name="q9" value="q9-4">
+            <input type="radio" name="q9" value="q9-5">
+        </td>
+      </tr>
+      </tr>
+
+      <tr>
+        <th></th>
+        <th><h4>Highlighting</h4></th>
+        <th style="white-space:pre; text-align:center;">       1    2    3    4    5       <br>worst          best</th>
+      </tr>
+
+      <tr>
+        <td>10</td>
+        <td>Were you able to highliht text easily?
+          <p><textarea id="t10" name="t10" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q10" value="q10-1">
+            <input type="radio" name="q10" value="q10-2">
+            <input type="radio" name="q10" value="q10-3">
+            <input type="radio" name="q10" value="q10-4">
+            <input type="radio" name="q10" value="q10-5">
+        </td>
+      </tr>
+      </tr>
+
+      <tr>
+        <td>11</td>
+        <td>How this highlighting mechanism compares with others you have used (if any) like in MS Word or any other application?
+          <p><textarea id="t11" name="t11" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q11" value="q11-1">
+            <input type="radio" name="q11" value="q11-2">
+            <input type="radio" name="q11" value="q11-3">
+            <input type="radio" name="q11" value="q11-4">
+            <input type="radio" name="q11" value="q11-5">
+        </td>
+      </tr>
+      </tr>
+      <tr>
+        <th></th>
+        <th><h4>Wrapout</h4></th>
+        <th style="white-space:pre; text-align:center;">       1    2    3    4    5       <br>worst          best</th>
+      </tr>
+
+      <tr>
+        <td>12</td>
+        <td>Would you be interested in participating in future tests of this applicaiton? (if yes please jot down your email address in case you haven't done before)
+          <p><textarea id="t12" name="t12" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q12" value="q12-1">
+            <input type="radio" name="q12" value="q12-2">
+            <input type="radio" name="q12" value="q12-3">
+            <input type="radio" name="q12" value="q12-4">
+            <input type="radio" name="q12" value="q12-5">
+        </td>
+      </tr>
+      </tr>
+
+      <tr>
+        <td>14</td>
+        <td>How much do you read on screen (as opposed to "on paper")? (1=seldom 5=a lot)
+          <p><textarea id="t14" name="t14" style="width:99%; height:2em; border:1px solid silver;"></textarea></p>
+        </td>
+        <td>
+            <input type="radio" name="q14" value="q14-1">
+            <input type="radio" name="q14" value="q14-2">
+            <input type="radio" name="q14" value="q14-3">
+            <input type="radio" name="q14" value="q14-4">
+            <input type="radio" name="q14" value="q14-5">
+        </td>
+      </tr>
+      </tr>
+
+
+    </tbody>
+  </table>
+
+  <p></p> 
+  <p></p> 
+  <p></p> 
+  <p></p>
+
+<div class="framed" style="padding:18px;">
+  <div style="text-align:right; ">
+  <button id="finish" name="finish" value="finish" style="font-size:133%; padding:6px; margin-right:2em;" >finish</button>
+  </div>
+</form>
+</div>
+
+<p></p> 
+<p></p> 
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+</div>
+</body>
+</html>

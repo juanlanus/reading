@@ -1,0 +1,128 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Language" content="es, en">
+  <title>Consent - Books Smart Reader</title>
+  <link rel="stylesheet" href="res/agenda.css" type="text/css">
+  <script type="text/javascript" src="res/jquery-1.8.3.js">
+ </script>
+  <script type="text/javascript">
+  $(function() {
+
+    $('#consentStudy').on(
+      'click', 
+      function(e) {
+        $('#continue').prop('disabled', ! this.checked);
+      }
+    )
+
+  });
+  </script>
+</head>
+
+<body>
+
+<div id="agendaBody">
+<h1 id="usability">Usability Test Consent</h1>
+
+<p><strong>The Books Smart Reader</strong></p>
+
+<p></p>
+
+<p>Protocol Director: Juan Lanus</p>
+
+<p></p>
+
+<p>DESCRIPTION: You are invited to participate in a research study on the
+&ldquo;Books Smart Reader&rdquo; application, a software to aid those who read
+lengthy texts on screen to read more with less strain and more comfort.</p>
+
+<p>You&rsquo;ll be asked to read a text and give us qualitative feedback, not
+on the text content but the way it is presented to you and the features to
+manipulate it.</p>
+
+<p>Your actions you take to operate the Book Smart Reader user interface will
+be recorded, and also</p>
+
+<p></p>
+
+<p></p>
+
+<p>TIME INVOLVEMENT: Your participation will take approximately 20 to 50
+minutes.</p>
+
+<p></p>
+
+<p>RISKS AND BENEFITS: There are no risks associated with this study. There are
+also no benefits, besides helping make the world a better place.</p>
+
+<p></p>
+
+<p>PAYMENTS: You will no payment for your participation.</p>
+
+<p></p>
+
+<p>YOUR RIGHTS: If you have read this form and have decided to participate in
+this project, please understand your participation is voluntary and you have
+the right to withdraw your consent or discontinue participation at any time
+without penalty or loss of benefits to which you are otherwise entitled. The
+alternative is not to participate. You have the right to refuse to answer
+particular questions.</p>
+
+<p>About your individual privacy, we will publish data resulting from the study
+and you will be mentioned by your first name. Your personal information and
+contact data will be held private.</p>
+
+<p></p>
+
+<p>CONTACT INFORMATION:</p>
+
+<p>Questions: If you have any questions, concerns or complaints about this
+research, its procedures, risks and benefits, contact the Protocol Director:
+Juan Lanus juan.lanus at gmail or phone +5411 6795 7549</p>
+
+<p></p>
+
+<div class="framed" style="padding:18px;">
+<style>
+ #consentForm li { padding:4px; }</style>
+
+<form action="instructions.html" type="get">
+  <ul id="consentForm" style="list-style-type:none; ">
+    <li><label>My name is   <input type="text"
+      id="consentName" name="consentName"
+      style="width:18em; border:1px solid silver; "></label>
+    </li>
+    <li><label>I give consent to be audio or video taped during this study 
+      <input type="checkbox" id="consentTape" name="consentTape"></label>
+    </li>
+    <li><label>I'd like to be informed of this project's evolution and for that
+      sole purpose I'm providing my email here   <input type="text"
+      id="consentEmail" name="consentEmail"
+      style="width:18em; border:1px solid silver; "></label> 
+    </li>
+    <li><label>I agree to participate in this usability study  <input
+      type="checkbox" id="consentStudy" name="consentStudy"></label> 
+    </li>
+    <li>
+      <div style="text-align:right; padding:20px; ">
+      <button id="continue" name="continue"
+      style="font-size:133%; padding:12px; margin-right:0em;"
+      disabled="disabled">continue to the instructions</button> 
+      </div>
+    </li>
+  </ul>
+</form>
+</div>
+</div>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+</body>
+</html>

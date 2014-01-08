@@ -1,0 +1,99 @@
+<!DOCTYPE html >
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta http-equiv="Content-Language" content="en">
+    <title>rt: cors test</title>
+    <link rel="stylesheet" href="res/rtDoc.css" type="text/css">
+    <script type="text/javascript" src="res/jquery.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        // initialize here
+      });
+
+/*    $(document).ajaxError(function(event, jqXHR, ajaxSettings, thrownError) {
+        alert( "Triggered ajaxError handler." );
+      });    */
+      
+      function doCORS() {
+        // alert('doing CORS');
+        // do things against port 3333 of localhost
+        var theType = document.getElementById('AjaxMethod').value;
+        var theURL = 'http://localhost:3333/' + document.getElementById('AjaxURL').value;
+        var theData = document.getElementById('data').value;
+        var jqXHR = $.ajax({
+          type: theType,
+          url: theURL,
+          contentType: 'text/plain',
+          data: theData,
+          success: function() {
+            alert('CORS worked!');
+            console.log('uploaded: ' + 'the data');
+          },
+          error: function() {
+            console.log('failed: ' + theType + ' ' + theData);
+          }
+        });
+      };
+    </script>
+  </head>
+
+  <body> 
+    <div id="rtBody">
+      <h2>CORS test page</h2>
+      <p>
+      <label>
+        AJAX method
+        <select id="AjaxMethod">
+          <option value="GET" selected="selected">GET</option>
+          <option value="POST">POST</option>
+          <option value="PUT">PUT</option>
+          <option value="OPTIONS">OPTIONS</option>
+        </select>
+        </label>
+      </p>
+      <p>
+        <label>
+          AJAX URL http://localhost:3333/
+          <input id="AjaxURL"
+          type="text" style="width:22em; border:1px solid silver; padding:4px;"
+          value='storeActions'
+          />
+        </label>
+      </p>
+      <p>
+        <label for="data">
+          data
+          <input id="data"
+          type="text" style="width:29em; border:1px solid silver; padding:4px;"
+          value='2i3uy4i-098er09er-324oi-2342-twert' 
+          />
+        </label>
+      </p>
+      <p class="framed" style="font-size:133%; font-weight:bold; display:inline-block;
+      background:rgb(240,240,240); border:3px solid rgb(192,192,192);" 
+      onclick="doCORS();">
+        fire CORS test
+      </p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+    </div>
+  </body>
+</html>
+

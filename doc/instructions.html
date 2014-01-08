@@ -1,0 +1,135 @@
+
+
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Language" content="es, en">
+  <title>Instructions - Books Smart Reader</title>
+  <link rel="stylesheet" href="res/agenda.css" type="text/css">
+  <script type="text/javascript" src="res/jquery-1.8.3.js">
+ </script>
+  <script type="text/javascript">
+  $(function() {
+
+    // store the query string
+    var qs = window.location.search.replace('?','').split('&'), request = {};
+    $.each(qs, function(i,v) {
+      var pair = v.split('=');
+      return request[pair[0]] = pair[1];
+    });
+    console.log(request);
+    localStorage.setItem('instructions' + localStorage.length, JSON.stringify( request ) );
+
+  });
+  </script>
+</head>
+
+<body>
+
+<div id="agendaBody">
+<h1 id="usability">Usability Test Instructions</h1>
+
+<p><strong>The Books Smart Reader</strong></p>
+
+<p></p>
+
+<p></p>
+<style>
+  .testInstructions li { padding:8px; }</style>
+
+<p>Please perform the following steps:</p>
+<ul class="testInstructions">
+  <li>If you are using Internet Explorer then don't waste your time: this won't
+    work, it will fail miserabily (as of IE8). Thanks anyway. </li>
+  <li>Take note that the test is not on you, but on the system. If you
+    experience problems it's not your fault, it's because we aren't done honing
+    the system's UI. Hence this test. Your critic feedback is very valuable for
+    us, much more than a patronizong "very nice". </li>
+  <li>We are thankful with those who help us taking this test. If you left your
+    email, and this project takes off, we'll let you know. </li>
+  <li style="display:none;">
+    <div style="float:right; padding-left:2em; ">
+    <img alt="the help icon" src="res/chromeLogo.png" width="63" height="63"></div>
+    <p>Using the Chrome browser, open the following page: <a href="http://ec2-54-227-184-202.compute-1.amazonaws.com:8080/tlotfc/tlotfc2.html">http://ec2-54-227-184-202.compute-1.amazonaws.com:8080/tlotfc/tlotfc2.html</a>
+    </p>
+  </li>
+  <li>Wait for a while, until the page fully loads. It is hosted in a free
+    facility, which is not the fastest, kindly provided by Amazon Web
+  Services.</li>
+  <li>
+    <div style="float:right; padding-left:2em; ">
+    <img alt="the help icon" src="res/iconhelp2.png" width="55" height="55"></div>
+    Display the help text by clicking the question mark (?) icon and read the
+    <em>Operation of the UI</em> section (where "UI" stands for "User
+    Interface").</li>
+  <li>Optionally, if you want increased insight, read the other part of the
+    help text, intitled "Purpose and description of the application". You are
+    welcome.</li>
+  <li>When you are done dimiss the help panel by clicking the help button
+    again. </li>
+  <li>
+    <div style="float:right; padding-left:2em; ">
+    <img alt="the menu icon" src="res/iconmenu.png" width="55" height="55"></div>
+    <p>You don't need to remember the instructions in full, during the test
+    they will be available by clicling the menu icon. Click once to show the
+    instructions, click again to hide them. </p>
+  </li>
+  <li><strong><em>Smart scroll </em> test:</strong> 
+    <p>After having clicked the <em>Continue</em>&nbsp;button, read all or part of
+    the article that shows for about 10 minutes, more if you want. It's
+    intitled "The Loneliness Of The Female Coder" and is about sexism in
+    software development workspaces. </p>
+    <p>To progress in the reading use the <em>smart scroll</em>&nbsp;feature, that
+    is, advance the text ("scroll") by pressing the space bar and use shift +
+    space bar to back up. </p>
+    <p><img alt="shift + spacebar" src="res/ShiftAndSpacebar.png"></p>
+    <p>The idea is to use the <em>smart scroll</em>&nbsp;feature enough time as to
+    get used to it. </p>
+  </li>
+  <li><strong>Progress indicator</strong> 
+    <p>Notice the <em>progress indicator</em>&nbsp;in the top left corner of the
+    screen and check how it changes as you read. </p>
+  </li>
+  <li><strong>TOC</strong> 
+    <p>Using the TOC (table of content) locate a title that mentions
+    "Microsoft" and select it. </p>
+  </li>
+  <li><strong>Highlighting</strong> 
+    <p>Select a piece of text (by dragging the mouse over them) and highlight
+    then with the yellow highlight button. </p>
+    <p>Select several pieces of text (holding down the "Ctrl" key) and
+    highlight them with a single click of the highlight button. </p>
+  </li>
+  <li><strong>Finish</strong> 
+    <p>Once you are done, or if you don't want to continue, click the "End"
+    button to proceed to the survey about the test results. </p>
+    <p></p>
+  </li>
+</ul>
+
+<div class="framed" style="padding:18px;">
+
+<form action="tlotfc2.html" type="get">
+
+  <div style="text-align:right; ">
+  <button id="continue" name="continue" value="toTest" style="font-size:133%; padding:6px; margin-right:2em;">proceed to the test</button> 
+  </div>
+</form>
+</div>
+
+<p></p> 
+<p></p> 
+<p></p> 
+<p></p> 
+<p></p> 
+<p></p> 
+<p></p> 
+<p></p> 
+<p></p> 
+<p></p> 
+<p></p> 
+<p></p> 
+<p></p>
+</div>
+
+
+</body></html>

@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>The Loneliness Of The Female Coder - Co.Labs - code + community</title>
+  <link rel="stylesheet" href="./tlotfc_files/main.css"> 
+  <meta name="description" content="Whats it really like to be the lone woman in a software team? Two women chart their secret emotional lives in tech.">
+  <script src="./res/jquery.js"></script> 
+  <script src="./res/rt.js"></script>
+  <script src="./res/toc.js"></script>
+  <script src="./res/rangy/uncompressed/rangy-core.js"></script>
+  <script src="./res/rangy/uncompressed/rangy-cssclassapplier.js"></script>
+  <script src="./res/animatescroll.js"></script>
+  <link rel="stylesheet" href="./res/rt.css">
+  <script> 
+    $(document).ready(function() {
+
+      // activate reading control (pass a selector to the function) - was: rt('#containerOuter', 1);
+      rt('#containerOuter', 1);
+    });
+  </script> 
+</head> 
+
+<body> 
+<div class="contain-to-grid clearfix"> 
+
+  <nav id="navigation" style="padding-left:68px;" class="top-bar">
+    <ul class="title">
+    <!-- Title Area -->
+    <li class="name">
+      <h1 itemscope="" itemtype="http://schema.org/Organization"><a href="http://www.fastcompany.com/"><img
+      itemprop="logo" alt="Fast Company logo" title="takes you to the Fast Company site, out of this proto"
+      src="./tlotfc_files/FastCompany-logo-white.svg" width="100" height="18"></a></h1> 
+      <div class="hide" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="http://wwww.fastcompany.com/" itemprop="url"><span itemprop="title">Fast Company</span></a>
+      </div>
+      </li>
+    <li class="toggle-topbar" title="deactivated menu from the original article"></li>
+    </ul> 
+
+    <section class="hide-on-print">
+      <!-- Left Nav Section -->
+      <ul class="left brands hide-for-medium-down">
+      <li class="codesign">
+      <a href="http://www.fastcodesign.com/">
+      <img src="./tlotfc_files/fastcodesign-dark.svg" width="10" height="10">Design
+      </a>
+      </li>
+      <li class="divider show-for-small"></li>
+      <li class="coexist">
+      <a href="http://www.fastcoexist.com/">
+      <img src="./tlotfc_files/fastcoexist-dark.svg" width="10" height="10">Exist
+      </a>
+      </li>
+      <li class="divider show-for-small"></li>
+      <li class="cocreate">
+      <a href="http://www.fastcocreate.com/">
+      <img src="./tlotfc_files/fastcocreate-dark.svg" width="10" height="10">Create
+      </a>
+      </li>
+      <li class="divider show-for-small"></li>
+      <li class="colabs">
+      <a href="http://www.fastcolabs.com/">
+      <img src="./tlotfc_files/fastcolabs-dark.svg" width="10" height="10">Labs
+      </a>
+      </li>
+      <li class="divider show-for-small"></li>
+      </ul>
+
+      <!-- Middle Brands Section -->
+      <ul class="left hide-for-medium-down circle-plus">
+      <li class="has-megadrop hide-for-small brands">
+      <a href="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders#megadrop-brands" class="toggle-megadrop">
+      <span class="icon-plus-sign" title="Expand"></span>
+      </a>
+      </li>
+      </ul>
+
+      <!-- Right Nav Section -->
+      <ul class="right">
+        <li class="divider show-for-small"></li>
+        <li class="has-megadrop features">
+        <a href="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders#megadrop-features" class="toggle-megadrop">Features</a>
+        </li>
+        <li class="divider show-for-small"></li>
+        <li class="subscribe">
+        <a href="http://www.fastcompany.com/newsletters" class="toggle-megadrop">Emails</a>
+        </li>
+        <li class="divider show-for-small"></li>
+        <li class="has-megadrop issues">
+        <a href="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders#megadrop-issues" class="toggle-megadrop">Issues</a>
+        </li>
+        <li class="divider show-for-small"></li>
+        <li class="print-subscribe">
+        <a href="https://magazine.fastcompany.com/loc/FST/2013HolidayTopNavCoLabs" class="toggle-megadrop" target="_blank">Subscribe</a>
+        </li>
+        <li class="divider show-for-small"></li>
+        <li class="has-button search" data-name="search">
+        <a href="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders#search" class="toggle-notify">
+        <span class="icon-search" title="Search"></span>
+        </a>
+        </li>
+
+        <li class="divider show-for-small"></li>
+        <li class="has-button rss">
+        <a href="http://www.fastcolabs.com/rss.xml" rel="feed" class="toggle-notify">
+        <span class="icon-rss" title="RSS"></span>
+        </a>
+        </li>
+
+        <li class="divider show-for-small"></li>
+        <li class="has-dropdown editions">
+        <a href="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders#" rel="share" data-event-category="topbar" data-event-action="toggle" data-event-label="Topbar: Editions">
+        <span class="icon-globe" title="Editions"></span>
+        </a>
+        <ul class="dropdown"><li class="title back js-generated"><h5><a href="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders#">
+        <span class="icon-globe" title="Editions"></span>
+        </a></h5></li>
+        <li><label>Editions</label></li>
+        <li class="divider"></li>
+        <li><a href="http://www.fastcompany.cn/">China</a></li>
+        </ul>
+        </li>
+
+        <li class="divider show-for-small"></li>
+        <li class="has-dropdown share">
+        <a href="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders#" rel="share">
+        <span class="icon-share-this" title="Share"></span>
+        </a>
+        <ul class="dropdown"><li class="title back js-generated" style=""><h5><a href="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders#">
+        <span class="icon-share-this" title="Share"></span>
+        </a></h5></li>
+        <li><label>Find Us</label></li>
+        <li class="divider"></li>
+        <li><a href="http://www.facebook.com/fastcolabs">Facebook</a></li>
+        <li><a href="https://twitter.com/FastCoLabs">Twitter</a></li>
+        <li><a href="https://plus.google.com/u/0/b/118243011872731622612/118243011872731622612/posts">Google +</a></li>
+        <li><a href="https://alpha.app.net/fastcolabs">App.net</a></li>
+        </ul>
+        </li>
+      </ul>
+
+    </section>
+  </nav>
+
+</div>
+
+<section id="page-jumbotron" style="padding-left:62px;" class="hide-on-print" style="position:relative;"><div class="container">
+
+  <figure class="jumbotron" itemscope="" itemprop="image" itemtype="http://schema.org/ImageObject">
+    <img src="./tlotfc_files/3008216-poster-p-the-loneliness-of-the-female-coder.jpg"
+    width="1280" height="720" id="poster" itemprop="contentUrl representativeOfPage">
+  </figure>
+
+  <span itemscope="" itemtype="http://schema.org/Organization">
+    <a style="position:absolute; top=0; left=0; z-index:111;"
+    itemprop="url" href="http://www.fastcolabs.com/" id="logo" class="navigate hide-for-small hide-on-print"> 
+    <img itemprop="logo" src="./tlotfc_files/fastcolabs-dark-txt.svg" width="100" height="123" class="hide-on-print"> 
+    </a>
+  </span>
+
+  <span class="hide" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="http://www.fastcolabs.com/" itemprop="url"><span itemprop="title">Co.Labs</span></a>
+  </span>
+
+  </div>
+</section>
+
+<div class="pull-left-meta hide-for-large">
+  <div class="hide-for-medium-down">
+    <p>2013-09-11</p> 
+    <p>This article<br> borrowed from<br>
+    <a href="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders">the original publisher</a></p> 
+    <h4 class="tag" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+      <p><a href="http://www.fastcolabs.com/section/tracking" itemprop="url"><span itemprop="title">Tracking</span></a></p>
+    </h4> 
+  </div>
+</div>
+
+<header> 
+  <div class="summary row collapse" style="padding-left:68px;"> 
+    <h1 class="title twelve columns" itemprop="title headline">The Loneliness Of The Female Coder</h1> 
+    <span class="deck nine columns pull-three" itemprop="deck description"><p>What's it really like to be the
+    lone woman in a software team? Two women chart their secret emotional lives in tech.</p></span> 
+  </div>
+
+  <div class="tools row collapse" style="padding-left:68px;">
+    <div class="five columns" itemscope="" itemtype="http://schema.org/Person"> 
+      <div class="byline"> By 
+      <a rel="author" href="http://www.fastcolabs.com/user/ciara-byrne" itemprop="byline" class="navigate" data-resource-type="user">Ciara Byrne</a> 
+      </div> 
+    </div>
+
+    <div style="display:none;" class="six columns hide-on-print">
+    <div style="" class="share-box">
+      <div class="share-buttons"
+        data-url="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders"
+        data-title="The Loneliness Of The Female Coder"
+        data-text="What's it really like to be the lone woman in a software team? 
+        Two women chart their secret emotional lives in tech.">
+
+        <ul>
+
+          <li>
+          <span>
+          <a href="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders#comments">25</a> Notes
+          </span>
+          </li>
+          <li class="divider">/</li>
+
+          <li class="share-button dropdown" data-service="twitter">
+          <span title="1.6k">Tweet</span>
+          <div class="append-button">
+          </div>
+          </li>
+          <li class="divider">/</li>
+
+          <li class="share-button dropdown" data-service="facebook">
+          <span title="2.7k">Like</span>
+          <div class="append-button">
+          </div>
+          </li>
+
+          <li class="share-button dropdown hide pull-left" data-service="googleplus">
+          <span title="187">Plus</span>
+          <div class="append-button">
+          </div>
+          </li>
+          <li class="divider hide">/</li>
+
+          <li class="share-button dropdown hide" data-service="linkedin">
+          <span title="233">Share</span>
+          <div class="append-button">
+          </div>
+          </li>
+        </ul>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
+<hr class="break">
+
+<!-- added style to this container -->
+<div id="containerOuter" class="row collapse" style="height:100%; overflow:auto; position:relative; ">
+  <div id="containerInner" style="margin-left:70px; padding-top:99px; max-width:48em;"
+  class="body prose twelve columns" itemprop="body articleBody">
+
+    <h2  >That loneliness ...</h2>
+    <p >It's the loneliness that I remember most. More than the joy of cracking a problem, the satisfaction of getting a tricky piece of code to run, of releasing version 1.0 of a product, of closing a million Euro deal by shipping on time, it's that feeling of isolation that I associate with my time of working in development teams, and of managing them. Dead Reckon's recent post <a href="http://www.dead-reckon.com/post/60762312852/games-girls-onions" target="_blank" >Games! Girls! Onions!</a> on her life in games felt uncomfortably familiar.</p> 
+    <blockquote ><p >You feel lonely, you feel like a novelty, you feel like a fraud. You feel like you don't deserve a seat at the table.</p></blockquote> 
+    <p >I was the typical developer type--introverted, fascinated by systems, a bit scared of all that messy, unpredictable people stuff --but coming in a girl-shaped package makes you atypical in most development teams. To make things worse, I gravitated towards areas like Machine Learning, large-scale backend systems and security, areas of software where women were even scarcer.</p> 
+    <p >I was once offered a job on a development team of 50 where I would be the only woman. Mostly I was still the only woman, but I chose smaller, less intimidating teams. Always the only woman in the meeting, often the first(-the first female R&amp;D engineer, first female project lead, first female software team lead-)in the companies I worked for. What the management blogs wittering on about leadership don't tell you is that being the first is a burden. You carry the responsibility of representing not only yourself but the entire experience of working with that semi-mythical creature, the female techie.</p> 
+    <blockquote ><p >Sometimes you don't feel lonely or like a novelty, like when you're sitting around the lunch table, cracking jokes with your coworkers. You feel happy and included. But when one of your coworkers makes a joke that is crude, even though it doesn't offend you at all and you haven't even had time to laugh, he turns to you and apologizes, because you are the only woman at the table and your delicate sensibilities must have been affronted. You feel lonely again. You feel like you're not supposed to be at the table.</p></blockquote> 
+    <p >I once worked on a project with a former soldier who had served in Iraq and a female member of my team. The ex-soldier told us that he had never heard such shocking language in the army as came out of her mouth (Hi Hilary!). A joke which would jar more sensitive types, the potty-mouthed Hilary would find hilarious. On the other hand, I have often been in situations where an off-color joke or careless comment made me feel extremely uncomfortable. We understand that sometimes it's hard to know what's appropriate.</p> 
+    <blockquote ><p >One day a coworker leaves an unsolicited, romantically charged gift on your desk where everyone can see it. You didn't ask for this, and you feel deeply embarrassed as you hide it away out of sight.</p></blockquote> 
+    <p >One of my developers was leaving. At the end of our final status meeting, he launched into a description of a dream he had about me in which I was wearing Uma Thurman's <em >Kill Bill</em> catsuit and laying waste to some baddies with a sword. I honestly think that he didn't mean any harm, but I was acutely embarrassed. How do you a manage a team which is  simultaneously picturing you in a yellow catsuit? Which brings me to cluelessness.</p> 
+    <blockquote ><p >Most people have good hearts and really DON'T want to offend. But when men feel terrified of offending the women they work with, it only contributes to our sense of isolation and inequality. <br ><br >If women can keep in mind that few people consciously WANT to exclude them, and if men can keep in mind that women feel excluded for most of their careers, it brings the emotional temperature down.</p></blockquote> 
+    <p >Many of the problems I encountered in my tech career were due to the cluelessness of my teammates rather than any malice on their part. There was malice too-the boss who told colleagues that I was "too smart for my own good" and never gave me credit for my work, the subordinate who did everything possible to undermine my authority because he hated working for a woman, the team who would go to the pub together and never invite me, and that was hard to deal with. But mostly I worked with decent guys who were just happily being themselves. Although I was like them in many respects, I looked at things from a different angle, one which my colleagues often didn't recognize or adapt to. Why should they? I felt like the lone voice in the wilderness.</p> 
+    <p >Looking back, I didn't always make it easy for my colleagues to feel comfortable around me. I masked my vulnerability with a forbidding facade without even being aware of it. I was never too friendly, afraid of sending the wrong signals. When I was upset or angry or sad, I never showed it. The one time in a 15-year career that I cried at work, the CEO of the startup I was working for was so unnerved that I think he would have doubled my salary on the spot just to make it stop.</p> 
+    <p >So there is often misunderstanding on both sides, but to build a diverse and productive team where everyone feels welcome, everyone needs to change and adapt, and that includes the majority.</p> 
+    <blockquote ><p >You're hanging out at GDC, conversing with a group of people, and you mention your love for <em >Warcraft III</em>. A male presenter looks at you incredulously and asks, in earnest: "You play games?"</p></blockquote> 
+    <p >Reading Shanley Kane's <a href="https://medium.com/about-work/aa49dffc975d" target="_blank" >Misogyny and the Marketing Chick</a> post recently was a revelation. I realized that I spent my entire career trying to prove that I was not this, largely imaginary, clueless marketing chick. That's partly down to my pathological need to seem clever, but the tech world doesn't make things easy. I know that wearing a dress and high heels doesn't make me any less competent, but I didn't for most of my career because it made the ¿You're a developer? question even more likely. A guy in a bar once explained to me in very small words what a bug was; I was doing Machine Learning research at the time. Last week at a developer meetup someone asked what I was doing there, and I had to sheepishly explain that I had done the introductory presentation.</p> 
+    <blockquote ><p >Over the years, other people's words and actions pile onto your shoulders. You feel enormous pressure to pretend that nothing bothers you, because you don't want to give others more power to hurt you, or upset people you care about or make them feel uncomfortable. So you don't say anything, you try to ignore it, and the result is an ever-present sense of isolation that chills your enthusiasm and makes you defensive.</p></blockquote> 
+    <p >It's tiring always being first, always being different, always being the one who has to adapt, denying important parts of yourself just to get the chance to do your job. It's like being a stranger in a strange land, where you speak the language but nobody learns yours. That's why even women who do well in development end up leaving mid-career.</p> 
+    <p >I wish I had an easy solution--I don't--but I do know that improving the life of the lone female coder requires shifting the gender ratio in your dev team, and in your company, in a significant way. Don't just hire one female developer. Hire two or three. Make them feel that their way of doing things is valuable too, because it is. Promote them. Add women to your founding or executive team. And stop saying "You're a developer?"</p> 
+    <hr > 
+    <h2  ><a name="Previous_Updates" >Previous Updates</a></h2> 
+    <hr > 
+    <h3  ><a name="Want_More_Women_In_Your_Software_Company_It_Starts_With_One" >Want More Women In Your Software Company? It Starts With One</a></h3> 
+    <p ><span class="subhead" >September 04, 2013</span></p> 
+    <p >In an industry which constantly wrings its hands about how impossibly difficult it is to find female engineers, a startup called <a href="http://www.levoleague.com/" target="_blank" >Levo League</a> has built a  majority-female development team without even trying. The product itself is a career site for twentysomething women, providing mentoring, advice, and meetups, but the company didn't set out to hire women especially--it just sort of happened.</p> 
+    <p >"We never set out to have a female dev team," says CTO Sara Chipps. "We interviewed a ton of engineers and we ended up with our pretty diverse team organically." How is that possible?</p> 
+    <p >"We know from the research that people do feel more comfortable with mentors who look like them, and unfortunately that also applies to gender," says cofounder <a href="http://www.levoleague.com/profiles/caroline-ghosn" target="_blank" >Caroline Ghosn</a>. "By virtue of Sara being a developer and being who she is, that attracts engineers who are both women and men."</p> 
+    <figure class="inline-large inline" >
+    <img src="./tlotfc_files/3008216-inline-i-1-levo-league-devs.jpg" alt="" >
+    </figure>
+
+    <p >Levo League has some notable backers. Facebook COO Sheryl Sandberg is an investor. <a href="http://www.forbes.com/sites/jessedraper/2013/05/07/say-no-to-the-funhouse-mirror-warren-buffett-joins-levo-league-to-advocate-for-gen-y-women-in-the-workplace/" target="_blank" >Warren Buffet is a Levo League mentor</a>. FastCoLabs quizzed Ghosn and Chipps--who told us just before we published this story that she will step down as CTO to devote more time to her <a href="http://www.girldevelopit.com/" target="_blank" >Girl Develop It project</a>, but will remain an advisor --on how Levo League built a female-friendly development team.</p> 
+    <h3  ><a name="Tap_into_New_Networks" >Tap into New Networks</a></h3> 
+    <p >If you don't know any female developers, you are probably not going to find them via your existing network. Identify people who are connected into different ones. "I've never had a problem finding female engineers," says Chipps. "I am involved in the community a lot so I do run into them. Most of our hires are actually people that I knew personally beforehand. I know a ton of them."</p> 
+    <h3  ><a name="Be_Prepared_to_Change_Your_Culture" >Be Prepared to Change Your Culture</a></h3> 
+    <p >"If your culture is one of homogeny and you want to introduce diversity, then your culture does need to change," says Chipps. "The most important thing to focus on is understanding how to communicate with people in the way that they communicate. A lot of teams have their culture which they expect any new members to adapt to. They are resistant to incorporating that person's style into their culture. Teams have an established dynamic and can be averse to changing the way they interact or communicate. A lot of teams are afraid of that, but that's the whole point. Diversity makes better teams, and learning how to communicate with lots of different people makes your products better."</p> 
+    <h3  ><a name="Less_Competition_More_Mentoring" >Less Competition, More Mentoring</a></h3> 
+    <p >"Our culture is not competitive, "says Chipps. "I have found many engineering teams to be super-competitive. Who knows the most about XYZ? The skill set in our team is really broad and everyone is super-open to teaching anyone anything. Some team members are better at JavaScript, some are better at Rails. Everyone does pair programming. Pairing has worked as a great way to broaden everyone's skill set. Mentoring is what the Levo League product is focused on and it's also how we build it. Everyone on our team at some point is a mentor. Every developer has something to contribute. It's all about teaching each other and not about proving ourselves."</p> 
+    <h3  ><a name="Educate_The_Whole_Company_on_Development" >Educate The Whole Company on Development</a></h3> 
+    <p >"Sara has compressed and delivered some of her Girl Develop It classes to the entire Levo team," says Ghosn. "Many members of our team don't have a technical background but it's important for them to have a certain level of empathy with how things are getting built so they can be better teammates to the engineers. Lila was on the business development team and she had a lot of knowledge about what the companies need on the job board. She spent the day pairing with an engineer and she was able to contribute business insights but also understand how the product she uses every day is being built. It started as pair programming within the engineering team and now it's been a way to improve the communication outside of that team."</p> 
+    <p >Chipps explained further how this breaks down barriers within the company. "There was a really interesting article that came out about a month and a half ago called something like That Effing Marketing Chick," she says (meaning this piece entitled '<a href="https://medium.com/about-work/aa49dffc975d" target="_blank" >Misogyny and the Marketing Chick</a>'). "It focuses on how startups think we just need a bunch of developers and some marketing girl who doesn't understand technology. Things like that really do create that rift--that the marketing people don't know and developers do know. If you can make sure that everyone on your team does have the technical knowledge, you are ensuring that those misunderstandings don't happen."</p> 
+    <h3  ><a name="Build_Your_Own_Female_Engineers" >Build Your Own Female Engineers</a></h3> 
+    <p >"Sometimes it's about being open to giving people opportunities to transition, to coach someone through a transition into development," says Ghosn. Chipps explains further. "Brenda was a Girl Develop It student and I really wanted her to work at Levo. I knew she would make a great contribution. She was interviewing for design jobs and when she heard that the role would be really heavy on development she was like 'Oh that's probably not something I can do.' I had seen her take all our classes and work as a TA in our classes so I knew what she was capable of. So I was like 'Brenda, you are being ridiculous. Come here and if you find it's too hard we will work something out." Brenda has exceeded every expectation I have ever set for her. She is now our lead front-end developer. She mentors two junior developers."</p> 
+    <p >Ghosn explains that there are multiple examples of this type of transition on Levo League's team. "We have Zahra who was an architecture Masters student and learned to program. We hired her straight out of her programming bootcamp. When you create an environment where people feel open to taking on new challenges and they feel supported and mentored, they can really blossom."</p> 
+    <hr > 
+    <h2  ><a name="Previous_Updates" >Previous Updates</a></h2> 
+    <hr > 
+    <h3  ><a name="Woman_In_Tech_Gets_Tired_Of_Explaining_Herself_Creates_This_Hilarious_Slideshow" >Woman In Tech Gets Tired Of Explaining Herself, Creates This Hilarious Slideshow</a></h3> 
+    <p ><span class="subhead" >August 15, 2013</span></p> 
+    <p ><a href="http://terri.zone12.com/" target="_blank" >Terri Oda</a> is a mathematician who has been teaching Computer Science for seven years. She gets very frustrated when people argue that biological differences in the mathematical ability of the genders account for the low numbers of women in software. So she made a <a href="http://www.slideshare.net/terriko/how-does-biology-explain-the-low-numbers-of-women-in-cs-hint-it-doesnt?imm_mid=0adcff&amp;cmp=em-strata-na-na-newsltr_20130807_elist" target="_blank" >mischievous slide set</a> explaining why they are wrong.</p> 
+    <figure class="inline-large inline" >
+    <img src="./tlotfc_files/3008216-inline-screen-shot-2013-08-15-at-125627-pm.png" alt="" >
+    </figure>
+
+    <p ></p><p class="interview-question" >Why did you create the slideshow?</p><p ></p> 
+    <p ></p><p class="interview-answer" >Women in computing tend to have to waste an awful lot of time answering questions related to being a woman in computing.  Case in point: My male colleagues are doing science while I'm taking time to answer this email. So I wanted to make something short, funny, and easy to pass around so women could turn those stupid arguments on their heads. Judging from the emails I've gotten, it's been pretty effective! </p><p ></p> 
+    <figure class="inline-large inline" >
+    <img src="./tlotfc_files/3008216-inline-screen-shot-2013-08-15-at-125654-pm.png" alt="" >
+    </figure>
+
+    <p ></p><p class="interview-question" >If it's not biology, then why aren't there more women in software?</p><p ></p> 
+    <p ></p><p class="interview-answer" >My personal guess is that it's a combination of factors. Subtle and not-so subtle discouragement, outright harassment, cultural disparities that result in both young girls and adult women having less free time, young men stereotyped as bad communicators so they gravitate to careers not known for communication, more young men diagnosed with autism spectrum disorders so they gravitate towards places like Silicon Valley where it's common, etc. etc. It's a hard subject to study and because so much of it is cultural, the answer is probably changing constantly.</p><p ></p> 
+    <figure class="inline-large inline" >
+    <img src="./tlotfc_files/3008216-inline-screen-shot-2013-08-15-at-125720-pm.png" alt="" >
+    </figure>
+
+    <p ></p><p class="interview-question" >As a CS teacher, what do you think could help increase the numbers?</p><p ></p> 
+    <p ></p><p class="interview-answer" >Because I don't think there's a single answer to what causes the problem, I don't think there's a single solution. Here are a few ideas:</p><p ></p> 
+    <ul >
+    <li ><span >We should make sure students understand that CS is about practice, not inherent genius, so that when young women try to program and run into simple bugs they don't assume people were right about women in computing and give up, but instead realize that they just need more practice. Better teaching helps everyone, but it helps those inclined to give up more.</span></li>
+    <li ><span >We should do a better job of retaining women. It's cute to teach 8-year-olds how to program, but harder to deal with adult women who've had experiences with harassment. When my students ask me what it's like to be a woman in computing, I have to tell them bad stories as well as good, and that's not always very encouraging.</span></li>
+    <li ><span >We need to find a way to better socialize the men in computing. 2/3 of women in computer science experience sexual harassment, and I got into online feminism after I received a death threat from a fairly well-known troll. It's outright ridiculous how these things thrive in a community of people who pride themselves on their intelligence.</span></li>
+    <li ><span >We should do a better job of making people understand that CS skills are useful even if you don't plan to follow a typical programmer career path. My sister, for example, is a biologist who uses her programming skills to help her keep track of information so she can help the Canadian government make better decisions about public safety. Many young women gravitate towards positions where computer science skills could make them key players, but they don't realize it's worth the effort.</span></li>
+    </ul> 
+    <figure class="inline-large inline" >
+    <img src="./tlotfc_files/3008216-inline-screen-shot-2013-08-15-at-125751-pm.png" alt="" >
+    </figure>
+
+    <p ><a href="http://www.slideshare.net/terriko/how-does-biology-explain-the-low-numbers-of-women-in-cs-hint-it-doesnt?imm_mid=0adcff&amp;cmp=em-strata-na-na-newsltr_20130807_elist" target="_blank" >View the full slideshow.</a></p> 
+    <hr > 
+    <h3  ><a name="Why_Are_Female_Developers_Offered_Such_Low_Salaries" >Why Are Female Developers Offered Such Low Salaries?</a></h3> 
+    <p ><span class="subhead" >August 5, 2013</span></p> 
+    <p ><a href="https://developerauction.com/" target="_blank" >Developer Auction</a> lets employers bid on top tech talent in competitive two-week auctions. For each auction, the company filters thousands of developers down to a few hundred of the best profiles. Employers can make these candidates job offers which include salary, equity, and signing bonus details.</p> 
+    <p >Founder Matt Mickiewicz has noticed a curious phenomenon on the site. "Women represent just 7% of the candidates in our marketplace but 12% of our Top 100 most all-time popular developers," says Mickiewicz. "Our top ever engineer in our marketplace was a woman who got 24 offers and had a Computer Science degree from Stanford." According to the site, most developers receive between 5 and 15 offers.</p> 
+    <p >Here's where things get strange. The median offer to a female engineer on Developer Auction is $100,000 versus $120,000 for her male counterpart. The average offer is $103,500 for women as opposed to $118,400 for men. The highest ever offer to a female engineer, the aforementioned all-time most popular coder on Developer Auction, was $160,000 while the top salary offer to a man was $240,000.</p> 
+    <p >To put this in context, developers with H1B visas also get lower salary offers and 32% fewer job offers than average on Developer Auction. But they still get higher offers than women. H1B holders receive a median offer of $117.5,000 and $114,500 average offer.</p> 
+    <p >I asked Mickiewicz why he thought female developers get more job offers but at lower salaries and whether there are significant differences between the years of experience or in-demand skills in the profiles of Developer Auction's female versus male candidates. "I think it's just the gender-wage gap that's seen in other industries," he said. Since employers don't see the minimum salary requirements of developers on the site, the salary gap can't be down to female engineers setting lower minimum salaries. There's also no salary negotiation at the auction stage (offers are non-binding and may be renegotiated at the interview stage), so the difference cannot be accounted for by the much-cited theory that <a href="http://www.theatlantic.com/sexes/archive/2013/01/dont-ask-dont-get-how-to-fix-the-gender-gap-in-salary-negotiations/267024/" target="_blank" >women need help with salary negotiation</a>.</p> 
+    <p >The software business has a pretty good reputation when it comes to the gender wage gap. A <a href="http://media.dice.com/report/spotlight-on-women-in-tech-3/" target="_blank" >2012-2013 salary survey from tech recuitment site Dice</a> showed a minimal difference between the earnings of male and female software engineers. Men earned $95,929 per year as opposed to $87,527 for women in the survey but Dice concluded that the gap was due to different job titles. "Average salaries are equal for male and female tech pros, provided we're comparing equal levels of experience and education and parallel job titles," says the press release.</p> 
+    <p >A <a href="http://www.payscale.com/about/press-releases/ps-pr?id=9010" target="_blank" >report from PayScale</a> this year cited similar statistics. In PayScale's data, median pay for male software engineers in Seattle, for example, was $89,400 while women earn $79,000. Economist Katie Bardaro <a href="http://www.itbusinessedge.com/blogs/charting-your-it-career/payscale-challenges-tech-gender-wage-gap.html" target="_blank" >was quoted in the report</a> as saying that when you control for years of experience and job responsibilities, the wage gap for women decreases to 97 cents on the dollar for men.</p> 
+    <hr > 
+    <h3  ><a name="Microsoft_Promotes_A_Woman_To_Oversee_Xbox_And_Sexist_Gamer_Backlash_Ensues" >Microsoft Promotes A Woman To Oversee Xbox And Sexist Gamer Backlash Ensues</a></h3> 
+    <p ><span class="subhead" >August 1, 2013</span></p> 
+    <p >The four women who were promoted--Amy Hood, Julie Larson-Green, Lisa Brummel, and Tami Reller--are now in four of Microsoft's 13 Executive Vice President positions. The move has already garnered some <a href="https://www.microsoft.com/en-us/news/exec/slt.aspx" target="_blank" >positive press</a> for the tech giant, which is not altogether undeserved.</p> 
+    <p >But if you cast an ever-so-slightly critical eye at the facts, there's still plenty of room for improvement. First of all, three of these new executives are in positions that don't directly touch on any Microsoft development teams: Brummel is EVP, Human Resources; Hood is EVP and Chief Financial Officer; Reller is EVP, Marketing. Only <a href="https://www.microsoft.com/en-us/news/exec/larsongreen/default.aspx" target="_blank" >Larson-Green</a>, in her position as EVP of Devices and Studios, which oversees the Xbox and Surface, is directly responsible for development teams and has a software development background.</p> 
+    <p >While we certainly applaud any lifting of the glass ceiling for women within Microsoft, it's also fairly self-evident that to get more women programmers, big-cap companies may need more women <em >managing</em> programmers. In fairness, only four of Microsoft's <a href="https://www.microsoft.com/en-us/news/exec/slt.aspx" target="_blank" >14 executive positions</a> (counting CEO Steve Ballmer) are explicitly development-related. The 1:3 women to men ratio fits company-wide and even industry-wide trends, which I've previously covered in this tracking story. (To see stats, scroll down to the entry below entitled "Hard Numbers.")</p> 
+    <p >Still, it's not all fun and games for Larson-Green. In fact, it's games that have already presented one major headache. After it was revealed that she would be stepping in for Don Mattrick in charge of Xbox, online news comment threads were filled with <a href="http://www.digitaltrends.com/gaming/lay-off-uberfans-julie-larson-green-is-qualified-to-hold-the-reigns-on-xbox/" target="_blank" >all manner of vitriol</a> aimed at Larson-Green for nothing more than her gender. It's <a href="http://www.slate.com/articles/double_x/doublex/2012/08/sexual_harassment_in_the_gaming_world_a_real_life_problem_for_female_gamers_.html" target="_blank" >well-documented</a> that gaming is a particularly <a href="http://www.slate.com/articles/technology/technology/2013/06/why_more_female_protagonists_are_needed_in_video_games.html" target="_blank" >male-dominated subset</a> of the technology world, with plenty of <a href="http://www.slate.com/blogs/future_tense/2013/06/24/video_game_industry_sexism_the_time_for_talk_is_over.html" target="_blank" >room for improvement</a>, but frankly we didn't expect this severe a reaction.</p> 
+    <p >Company-wide, Microsoft's employee gender breakdown is <a href="https://www.microsoft.com/en-us/news/inside_ms.aspx#RevenueHeadcount" target="_blank" >under 25% female</a>, and while the company doesn't offer gender breakdowns by job title, I'd wager that the ratio of females in programmer roles to non-programmer roles is much lower than the same ratio for male Microsoft employees. (The disparity is likely offset in the overall numbers by Microsoft's enormous publishing, marketing, and publicity arms, which in most large companies are traditionally more populated by women.) Microsoft isn't a lone pariah of gender inequality in the tech world--it's just archetypal of the sort of frat-like companies we hope will change.</p> 
+    <hr > 
+    <h3  ><a name="Why_Cant_Female_Tech_Founders_Get_Funding" >Why Can't Female Tech Founders Get Funding?</a></h3> 
+    <p ><span class="subhead" >July 16, 2013</span></p> 
+    <p >Ross Baird founded the <a href="http://www.vilcap.com/" target="_blank" >Village Capital</a> startup accelerator program four years ago to assist mission-driven companies tackling major social problems, who might not otherwise get access to capital. At the end of each program, the 15 or so companies in a cohort select two of their peers to receive a $50,000 investment.</p> 
+    <p >Now he has a problem. Roughly half of the 250 Village Capital alumni companies have a female cofounder, but those companies are 50% less likely to get follow-on funding than those with all-male founding teams. This is in spite of the fact that female-led Village Capital companies are 15% more likely to be profitable and 78% more likely to be selected by their peers for investment.<br >
+    <br >
+    "The process favors entrepreneurs who are more substantive and less flashy," says Baird. "We find that women tend to under-promise, over-deliver, hit milestones but are maybe not as free to brag about themselves up on stage. Men, and I say this fully aware of being one, will oversell anything. Women undersell and this is a problem particularly in fundraising across our alumni. The shift in power dynamic in peer selection corrects for some of that. One of our female entrepreneurs has said that she often felt like she didn't get a fair shake in the traditional investment process in that she wasn't really given the time to demonstrate her value, to demonstrate what she was creating."</p> 
+    <p >Baird thinks that the power imbalance between investors and founders is a bad thing for everyone. "Many startups are trying to figure out what investors will invest in. There is an overemphasis on 'What do investors like?' and less emphasis on 'What value can we provide to the world?' Raising money should not be your primary goal as a startup. We say that if you build a company which solves a major problem and people are willing to pay you to get the problem solved then investment will come. Investment is the result of achieving your goals. It shouldn't be the goal itself."</p> 
+    <p >As a result, Village Capital's program concentrates on customer validation, acquisition, and revenue rather than pitching to investors. On top of the peer-to-peer review process, this emphasis on customers may favor women. "'We will get as many users as possible and we will figure out how to monetize them later' is not in the long term a successful business strategy. A lot of what we do in the program is distinguishing between customers and users. In the peer-to-peer process, customer acquisition rather than user acquisition is rewarded," says Baird.</p> 
+    <p >That peer-to-peer review process involves three open peer ranking sessions where each company ranks the others based on team, product, customer, financials, scale, and return of capital. The final session results in the selection of the teams which get an investment. Baird insists that that process is more productive for everyone than the traditional investment model. <br >
+    <br >
+    "In the prize mentality or the 'get the investment' mentality in a startup competition, two people get funding, 15 people get skewered and ripped apart by people trying to make themselves look good, and the non-winners just don't get anything," explains Baird. "In the peer-reviewed process everyone gets something out of it. Entrepreneurs when they give feedback to each other are very thoughtful because they care a lot about each other and if they are unfair to each other it comes back to them. The process is productive even for the non-winners." Could this emphasis on collaboration, rather than competitive pitching, be the key to the success of female entrepreneurs in the Village Capital program?</p> 
+    <p >When I ask Baird to choose his favorite Village Capital graduate he doesn't hesitate. "<a href="http://www.kickboardforteachers.com/" target="_blank" >Kickboard</a>. Peer selected from the first program. The founder is a woman who is a teacher and coder and she has a data management process which allows teachers to manage student performance data so they can improve teaching. She didn't set out to be an entrepreneur. She built this as a teacher to solve problems for other teachers."</p> 
+    <p >Kickboard founder Jen Medbery tried to get the company off the ground for a year before finding Village Capital. Four years later Kickboard has <a href="http://www.crunchbase.com/company/kickboard" target="_blank" > raised $2 million in mainstream capital</a>. "To see her not raising funds in the traditional angel investment world but being the overwhelming favorite of her peers, getting her first investment peer selected and becoming incredibly successful in solving major problems in U.S. education is a story I am really excited about," says Baird.</p> 
+    <hr > 
+    <h3  ><a name="This_Simple_Toy_Shows_Why_Girls_Hate_Engineering" >This Simple Toy Shows Why Girls Hate Engineering</a></h3> 
+    <p ><span class="subhead" >July 10, 2013</span></p> 
+    <p >Growing up in Ireland my three siblings and I had a favorite game; We called it James Bond. One of us would play the coveted role of secret agent, and the remaining siblings tried to stop them from snatching some top secret papers.</p> 
+    <p >The twist? We're all sisters--not a James in the bunch.</p> 
+    <p >As children, nobody ever told us that it was strange for four girls to impersonate James Bond plots. Yet we girls do get the message early and often that engineering is not something for us. The CEO of website builder <a href="http://www.moonfruit.com/" target="_blank" >Moonfruit</a>, Wendy Tan White, recently described in <em ><a href="http://www.guardian.co.uk/women-in-leadership/2013/jun/19/geeky-technologys-image-problem" target="_blank" >the Guardian</a></em> how she speaks at schools about careers in technology:</p> 
+    <blockquote ><p >"Raise your hand if you want to work in technology," I ask students. Predictably, but sadly, no hands go up. But when I ask girls to raise their hands if they like Facebook, every arm in the room reaches for the sky. The "geeky" label is still attached to technology in schools, so it's little wonder that students can be indifferent to the subject: it's not presented in a way that's appealing.There needs to be a greater focus on showing what technology allows you to do: cross geographical boundaries; make stuff; unleash your creative side; talk to friends; and share your latest musical creation. </p></blockquote> 
+    <p >That brings us back to <a href="http://www.goldieblox.com/" target="_blank" >Goldie Blox</a>, a construction kit for girls from the age of six up. CEO Debbie Sterling is herself a Stanford engineering graduate, and after talking to young girls about the toys they love most, she came to a realization: Girls love to read because they love stories. My sisters and I were all voracious readers. "Most construction and engineering kits, which are touted as 'technical and numerical toys,' don't include the storytelling that appeals to many girls," <a href="http://www.forbes.com/fdc/welcome_mjx.shtml" target="_blank" >reports Forbes</a>.</p> 
+    <p >So Sterling designed a kit to be used in conjunction with a story book starring a girl inventor called Goldie who builds machines in order to solve problems, in the first book a spinning machine to help her dog chase his tail.</p> 
+    <blockquote ><p >With the Spinning Machine, Sterling introduces girls to the idea of a belt drive and the concept of tension by using a plastic pegboard, spools and ribbon to teach them how to turn one and then multiple wheels as part of a story involving Goldie's dog Nacho and several other characters.</p></blockquote> 
+    <p >GoldieBlox reached its $150,000 funding target in the first four days of a Kickstarter campaign last year (It eventually raised $285,811) and Toys "R Us will stock the $29.99 "GoldieBlox and the Spinning Machine"  in more than 600 stores.</p> 
+    <p >This is a generalization of course--but girls are often more interested in machines and technical systems when they are placed in a larger context, where there's a problem to be solved or an obvious benefit to society. It's no coincidence that women study medicine in much higher numbers than engineering, even though both tracks are technical; It's obvious that doctors help people.</p> 
+    <p >Girls don't just want to have fun--they want to know why.</p> 
+    <hr > 
+    <h3  ><a name="Why_Arent_All_Executives_Female" >Why Aren't All Executives Female?</a></h3> 
+    <p ><span class="subhead" >June 25, 2013</span></p> 
+    <p >Last month we took a statistical look at how job titles break down by gender. This month we're looking at why women are not represented at the highest levels of their work sectors. (Read back through our previous updates below if you need to get caught up.)</p> 
+    <p >A <a href="http://psp.sagepub.com/content/early/2013/05/03/0146167213486358.abstract" target="_blank" >study</a> published in the May issue of the <em >Personality and Social Psychology Bulletin</em> may help. It seems to suggest that women don't take as much credit for their work as their male counterparts, undervaluing their contributions to a project when working with men. From the article's abstract:</p> 
+    <blockquote ><p >Women gave more credit to their male teammates and took less credit themselves unless their role in bringing about the performance outcome was irrefutably clear (Studies 1 and 2), or they were given explicit information about their likely task competence (Study 4). However, women did not credit themselves less when their teammate was female (Study 3).</p></blockquote> 
+    <p >The full study is unfortunately behind the ivory tower academic paywall, but Wired U.K. <a href="http://www.wired.co.uk/news/archive/2013-05/8/women-teamwork-bias?utm_content=bufferb05fc&amp;utm_source=buffer&amp;utm_medium=twitter&amp;utm_campaign=Buffer" target="_blank" > has more details on the study </a> and noted that "teamwork is an essential component to most professional roles, so if women repeatedly undervalue themselves in group situations, in front of coworkers and employers, it could be extremely detrimental to overall job progression."</p> 
+    <p >This study offers a strong, plausible reason for why women are not as likely to be recognized as leaders in their workplaces: You often have to speak up for your accomplishments in order to advance in your career.</p> 
+    <p >Another bit of research put out last week in the <a href="http://onlinelibrary.wiley.com/doi/10.1111/jeb.12198/abstract" target="_blank" > <em >Journal of Evolutionary Biology</em></a> reveals that female scientists (evolutionary biologists, in the case of this study) don't present their work at conferences as much as their male colleagues. Apparently, women are underrepresented even in relationship to the gender gap that already exists in science fields. In other words, the percentage of female conference presenters is even lower than the percentage of female scientists.</p> 
+    <p >Apparently, one of the main causes of this underrepresentation was that women turned down conference speaking invitations at nearly twice the rate (50 percent) as men (26 percent). One of the study's main authors, Dr. Hannah Dugdale, <a href="http://www.sheffield.ac.uk/news/nr/women-underrepresented-science-evolutionary-biology-1.281055" target="_blank" > elaborated on the implications of the study's findings</a>:</p> 
+    <blockquote ><p >"It's important that we understand why this is happening and what we can do to address it--high-quality science by women has low exposure at the international level, and this is constraining evolutionary biology from reaching its full potential. We're currently investigating the reasons behind this lower acceptance rate--it could relate to child-care requirements, lower perception of scientific ability, being uncomfortable with self-promotion--there are many potential contributing factors."</p></blockquote> 
+    <p >It could also be related to the social psychology study above: If women don't feel as confident in their accomplishments, then they may feel underqualified to speak at international conferences.</p> 
+    <p >Obviously neither of these studies look directly at gender dynamics in the software development space. But looking at both of these studies, it seems like some aspects might apply to software while others might not as much. For instance, it's definitely true that women coders are underrepresented in conference keynotes. And the observation of Dugdale's coauthor, Dr. Julia Schroeder, that "[f]ewer women in top positions mean fewer female role models for students who aspire to be scientists" certainly rings true in the software world as well.</p> 
+    <p >On the other hand, depending on what type of developer someone is, they might work on their own a large part of the time, possibly even freelancing from home. In that case, the social psychology of attributing success to male colleagues isn't as relevant. Of course, many developers work in corporate office jobs where that dynamic could very much still be at play.</p> 
+    <p >In other news, the fact that half of NASA's <a href="http://www.nasa.gov/astronauts/2013astroclass.html" target="_blank" > eight newest astronaut trainees are women</a>, selected from a pool of over 6,100 candidates, is a good sign. It shows that some progress is being made in STEM fields more generally, especially considering the fact that until now only <a href="http://www.itworld.com/software/361364/meet-nasas-8-new-astronauts-including-4-women" target="_blank" > 10.7% of the people who have been in space are women</a>. With NASA astronauts being the elite of their fields, not to mention role models for every third grader in the country, having more women in space certainly bodes well for the prospect of more role models for women interested in STEM careers.</p> 
+    <hr > 
+    <p ><br >
+    </p><h3  ><a name="Minding_The_Gap_How_Your_Company_Can_Woo_Female_Coders" >Minding The Gap: How Your Company Can Woo Female Coders</a></h3><p ></p> 
+    <p >The software industry has a gender problem. Men far outnumber women, and while most of those men like (dare we say delight in?) having women around the office, the cool-bro rock star nerd culture makes it harder to attract, hire, retain and--most important--listen to women engineers. We'll be tracking successes, conflicts, and visionaries in this vein, and narrate as the status quo changes. We won't stop tracking this story until there are as many women working in software as men.</p> 
+    <hr > 
+    <p ><br >
+    </p><h3  ><a name="Why_Dont_Women_In_Tech_Speak_Up" >Why Don't Women In Tech Speak Up?</a></h3><p ></p> 
+    <p >We're not the only journalists <a href="./tlotfc_files/tlotfc.html" target="_self" >tracking women's roles in technology</a>. Laura Sydell, a longtime technology reporter for NPR, covers the intersection of technology and culture, and we caught her story a few weeks ago about <a href="http://www.npr.org/series/177622347/the-changing-lives-of-women" target="_blank" >the changing lives of female programmers</a>. We asked her to give us the behind-the-scenes scoop on her recent piece profiling prominent developer Sarah Allen, who led the team that created Flash video and now runs a mobile app design firm. Sydell has seen the reality of ingrained sexism and thinks that building momentum is the only way to undo industry habits.</p> 
+    <p >"My take is that it's about visibility," Sydell says. "I mean who do you hear about in the news? Who do you see in the news? Twenty percent of programmers are women'that's a significant number," Sydell says. But where is the coverage?</p> 
+    <p >One obstacle is that women in tech are sometimes reluctant to talk about sexism ("like it's a disease they might catch" says Sydell.) She speculates that pointing out a gender disparity at their jobs may not feel like it will ultimately benefit their personal situation. "This doesn't mean they don't experience sexism," Sydell says. "They just want to fit in and they're working hard to get ahead."</p> 
+    <p >If her sources are mum about office sexism, Sydell says, they're even less open about the flaws they see in hiring practices. "I have had some off the record conversations where people are like, "well I'm afraid to hire a woman if she's around childbearing age because we can't afford for somebody in a startup to take maternity leave." But nobody says, "I don't want to hire a man of childbearing age."</p> 
+    <h3  ><a name="Some_Invisible_Factors_At_Play" >Some Invisible Factors At Play</a></h3> 
+    <p >It makes sense that one obstacle to women's proliferation has stemmed from a lack of computer science exposure in childhood, which can lead women to feel like they are at an insurmountable disadvantage once they start college. Expanding curriculum options and entry-level college courses, efforts being tested at schools like <a href="http://www.npr.org/blogs/alltechconsidered/2013/05/01/178810710/How-One-College-Is-Closing-The-Tech-Gender-Gap" target="_blank" >Harvey Mudd</a> in California, may be one solution for leveling the playing field.</p> 
+    <p >"You know unfortunately my take is that a lot of people who get into computers and programming start before college," Sydell says, "which often does turn out to be young guys and so the women end up feeling intimidated."</p> 
+    <p >And it seems like computer science and engineering may currently be taught in a way that caters to how men think and conceptualize problems. "I remember people saying that for some reason guys are much more willing to work in the abstract for longer," Sydell says. "I don't know why this is, but women like to see pretty quickly that something they're building is having an effect."</p> 
+    <p >This perspective could ultimately be a strength that draws women to coding, though, if other barriers are addressed. "It's not that they can't do the abstract," Sydell says, "but once they see that programming can have this immediate effect they get more interested in it."</p> 
+    <h3 id="RT-0-0-3-10-0-0-0" ><a name="Getting_Private_Views_Out_There" >Getting Private Views Out There</a></h3> 
+    <p >While reporting for her recent piece, Sydell attended a 25-person mentorship event with Sarah Allen for young entrepreneurs. After the event, the only three women in attendance came over to Allen and started chatting. "None of them talked about discrimination really," Sydell says, but "they did talk about how they sometimes felt isolated. They all mentioned that in school they sought out a female colleague for support." Yet even this small and understandable measure, they feared, could have unintended consequences. "They also debated whether it was possible to do too much networking with other women," explains Sydell. "The problem is that the men have the larger networks and so you don't want to limit your connections."</p> 
+    <p >Sydell has seen progress as an increasing number of hard working and qualified women enter tech, but she has also concluded that only a sustained, concerted effort will continue to draw women into the field. "I think one of the most important things that Sarah Allen said is find an industry where there isn't sexism. If you get up to the higher echelons of anything the world is sexist. And the more money that's involved, the more it seems to be guys. And what's up with that?"</p> 
+    <h3 id="RT-0-0-3-11-0-0-0" ><a name="What_It_Feels_Like_To_Be_A_Woman_Programmer" >What It Feels Like To Be A Woman Programmer</a></h3> 
+    <p >We don't hear from the women who are actually working in software often enough. Ellen Ullman, a former software engineer, recently penned an opinion piece in the <em >New York Times</em> called <a href="http://www.nytimes.com/2013/05/19/opinion/sunday/how-to-be-a-woman-programmer.html?_r=0" target="_blank" >"How to be a "Woman Programmer"."</a> It's an important firsthand account of what it actually feels like to be a woman working in technology--invaluable for men like me who will never subjectively know that actual experience.</p> 
+    <blockquote ><p >I looked around and wondered, "Where are all the other women?" We women found ourselves nearly alone, outsiders in a culture that was sometimes boyishly puerile, sometimes rigorously hierarchical, occasionally friendly and welcoming. This strange illness meanwhile left the female survivors with an odd glow that made them too visible, scrutinized too closely, held to higher standards. It placed upon them the terrible burden of being not only good but the best.</p></blockquote> 
+    <p >Other parts of her article resonate with what we recently found in the gender gap by job title breakdown from Bright Labs: namely, that the more technical a job within the tech sector is, the wider the gender gap tends to be.</p> 
+    <blockquote ><p >We get stalled at marketing and customer support, writing scripts for Web pages. Yet coding, looking into the algorithmic depths, getting close to the machine, is the driver of technology; and technology, in turn, is driving fundamental changes in personal, social and political life.</p></blockquote> 
+    <p >But perhaps the biggest takeaway for me and other male allies to women working in software, is this: It's important to talk about the challenges facing women in software, but it's just as important to recognize the achievements of women engineers as programmers, not merely as trailblazers. Ullman writes:</p> 
+    <blockquote ><p >But none of it [experience as a programmer] qualified me as extraordinary in the great programmer scheme of things. What seems to have distinguished me is the fact that I was a "woman programmer." The questions I am often asked about my career tend to concentrate not on how one learns to code but how a woman does.</p></blockquote> 
+    <hr > 
+    <h3 id="RT-0-0-3-12-0-0-0" ><a name="Hard_Numbers_The_Actual_Percentages_Of_Women_In_Tech_Roles_" >Hard Numbers: The Actual Percentages Of Women In Tech Roles </a></h3> 
+    <p >Bright Labs has released new research to Co.Labs about which roles are most male-dominated, and some patterns begin to emerge.</p> 
+    <p ><strong >This is one of the most complete snapshots of the gender gap in technology employment we've seen so far.</strong> Co.Labs readers have been eating up the slices of data on the gender gap we've been dishing out. It's clear that "women in software" is a topic that begs for more coverage. So we got in touch with our friends at <a href="http://www.bright.com/labs" target="_blank" >Bright Labs</a> to provide us with some previously unreleased numbers on what the actual gender breakdown is by job title.</p> 
+    <p >The first thing to keep in mind with these numbers is that job titles can be pretty arbitrary and may not actually reflect the kind of work being done by any given individual. With that said, there are a couple of interesting trends worth highlighting here. But first, the stats:</p> 
+    <figure class="inline-large inline" >
+    <img src="./tlotfc_files/3008216-inline-men-graph.png" alt="" >
+    </figure> 
+    <p >Let's break down these numbers. First of all, it looks like tech support positions tend to bubble up and be the most of a dudefest: IT support, computer technician, network technician, and desktop support technician are all more than 90% male. Does this mean corporate suits feel more comfortable talking to a male IT geek about their problems with Outlook than a female IT worker? Or perhaps the IT help desk is a particularly unfriendly place for women to integrate? Either way, it's important to note that these numbers are domestic; it would be interesting to see the gender breakdown in outsourced IT, or internationally.</p> 
+    <p >On the other hand, "analyst" positions like data analyst, help desk analyst, and senior programmer analyst tend to be the least--though are still significantly--male-dominated, floating between 53.8% and 75% male. With these numbers, we're starting to see a clearer picture now: The less a job deals with the back end of a development environment or network infrastructure, the more open (for whatever reason) it is to women working in that role.</p> 
+    <p >One final interesting data point to note is that senior software developers are 89.5% male, while plain old software developers are only ("only") 78.1% male.</p> 
+    <p >What's the gender breakdown for these positions like in your company? What do you make of these numbers? Do you have your own research you'd like to share? Tweet <a href="https://twitter.com/jcassano" target="_blank" >@jcassano</a> and <a href="https://twitter.com/FastCoLabs" target="_blank" >@FastCoLabs</a> with your facts, insights, and opinions.</p> 
+    <hr > 
+    <h3 id="RT-0-0-3-13-0-0-0" ><a name="Why_The_Developing_World_Needs_Women_To_Be_Online_" >Why The Developing World Needs Women To Be Online </a></h3> 
+    <p >Want to improve economic conditions in developing countries? As usual, the best approach is to focus on women.</p> 
+    <p >If women can't get online, then there's no chance they'll get a job in software. Here at Co.Labs we've been on a number-crunching bit when it comes to women in software. So far we've taken a look at two important slices of data: perspectives on obstacles to getting more women in tech and how new tech jobs are mostly going to men. Now we take a look at the third piece of the puzzle: the gender gap in accessing the Internet.</p> 
+    <p >Earlier this year, Intel released a <a href="http://www.intel.com/content/dam/www/public/us/en/documents/pdf/women-and-the-web.pdf" target="_blank" >massive study</a> crammed full of useful research. It's a lot to digest, so we've pulled out some of the most provocative trends.</p> 
+    <p >The report focuses on women's access to the World Wide Web, particularly in developing countries. One consistent but unsurprising pattern is that the less economically well-off a country or region is, the wider the digital divide between women and men tends to be.</p> 
+    <blockquote ><p >On average across the developing world, nearly 25 percent fewer women than men have access to the Internet, and the gender gap soars to nearly 45 percent in regions like sub-Saharan Africa. Even in rapidly growing economies, the gap is enormous. Nearly 35 percent fewer women than men in South Asia, the Middle East and North Africa have Internet access, and nearly 30 percent in parts of Europe and across Central Asia. In most higher-income countries, women's Internet access only minimally lags that of men's, and in countries such as France and the United States, women's access, in fact, exceeds men's.</p></blockquote> 
+    <figure class="inline-large inline" >
+    <img src="./tlotfc_files/3008216-inline-1wvpne2vsmwlp-wm6ls1bvu4ezcv7aope24gkxq.jpeg" alt="" >
+    </figure> 
+    <p >Intel stresses that this is bad for business for two main reasons: first, the loss of revenue from online transactions and second, the reduction in economic opportunity for women who might use the Internet to find work. According to the report, there will organically be 450 million new women online by 2016--the report's main recommendation is to boost this number by another 150 million in that time period. This will reportedly open up market opportunities of at least $50 billion.</p> 
+    <p >Intel's researchers also home in on the fact that 30% of women with reliable Internet access have used it to search for jobs or otherwise improve their economic standing. A lot of efforts to overcome the digital divide work narrowly on just getting more people online. That's great, to be sure. But in a section called "not all access is equally empowering," the authors write:</p> 
+    <blockquote ><p >The Internet can convey numerous benefits to women, but unlocking these benefits depends on how deeply women engage online. "Fully engaging" on the Internet requires feeling conversant--knowing what to look for, how to search, and how to leverage networks, knowledge and services--as well having fast, unrestricted, reliable access.  
+    </p><p >Our study showed that the longer a woman had been using the Internet, the more likely she was to report concrete benefits such as earning additional income, applying for jobs, and helping with her studies. Users with multiple platforms to access the Internet were also more likely to report these concrete benefits than users of either computers or mobiles only.</p></blockquote><p ></p> 
+    <figure class="inline-large inline" >
+    <img src="./tlotfc_files/3008216-inline-1ic8dv8zym0wqr-pe15yb4ke3luge8hq5ex-rha.jpeg" alt="" >
+    </figure> 
+    <p >The report also features an interesting breakdown of the different demographic groups and how they are likely to access the Internet: computer-only, mobile-only, or multi-platform. In general, mobile-only users are younger women who use the Internet daily, but are unlikely to use it to apply for a job. Computer-only users (laptop or desktop) tended to be middle-income female homemakers and often use the Internet for education and study. Multi-platform users, naturally, tended to be wealthier women who use the Internet daily and are likely to use it for education and shopping.</p> 
+    <p >How one accesses the Internet also affects one's attitudes about it. Women who access the Internet through both mobile and computers, for instance, hold the strongest belief that Internet access is a fundamental human right. This suggests that there's a positive feedback loop at work: The more regularly women access the web, the more they begin to see it as an integral piece of social fabric--something that everyone needs to be a part of.</p> 
+    <p >This is good to know because if we're serious about overcoming the gender gap in software, the first job needs to be getting more women around the world online. Computer programming is a skill that any individual, with enough access, can learn on their own to improve their economic standing. This is true even--and perhaps especially--in the developing world. If the next wave of new computer programmers is going to come from outside developed countries, then it's imperative to get more women online now so that they can enter the job market on equal footing.</p> 
+    <hr > 
+    <h3 id="RT-0-0-3-14-0-0-0" ><a name="Is_The_Tech_Gender_Gap_Widening_" >Is The Tech Gender Gap Widening? </a></h3> 
+    <p >Despite all of the increased attention the gender gap is receiving, new data suggests that it might be widening rather than shrinking. Spoiler alert: We need more women engineers.</p> 
+    <p ><strong >The data doesn't lie. For all the talk about tech becoming a less male-dominated space, women are still a vast minority in the industry.</strong> In fact, recent data from <a href="http://bright.com/" target="_blank" >Bright.com</a> suggests that the gender gap is widening--at least momentarily.</p> 
+    <p >We recently covered a survey by the freelancing site Elance, an online marketplace for self-employment. That survey mostly focused on the attitudes of men and women freelancers towards how tech can become more open to women. <a href="http://www.bright.com/labs/brightside" target="_blank" >A new survey from job search platform Bright</a> tackles the nitty-gritty details of who's actually snagging new tech jobs.</p> 
+    <blockquote ><p >The number of jobs in the technology sector has grown a substantial 3.8% nationwide in just the first four months of 2013 (compared to the last four months of 2013). In April 2013, some of the known tech geographies where among the fastest growing regions in tech, including San Jose, Austin, San Francisco, Boston and Seattle, however other areas less well-known for their tech jobs also displayed strong growth, including Oklahoma City, Kansas City, Tucson, and Indianapolis.</p></blockquote> 
+    <p >Nothing new there. We know that tech is one of the country's fastest-growing sectors, and that it tends to grow the most in traditional geographic hotbeds like the Bay Area. It is interesting to see that New York's much-touted "Silicon Alley" didn't make the growth cut while Kansas City continues to explode under the influence of Google Fiber.</p> 
+    <p >The real question we're interested in is, who are companies hiring to fill all these new jobs? The report tackled this question head on:</p> 
+    <blockquote ><p >These jobs are trending to favor male job seekers. While the tech sector is predominantly male overall, an estimated 71% male, the titles displaying the largest increase in available jobs have also trended towards male-dominated roles, including Systems Administrators (89.7% male) and Senior Software Engineers (77.1% male).</p></blockquote> 
+    <p >Let's take a moment to unpack these numbers. We know that men account for about three out of every four people working in tech right now. On top of that, the job areas that grew the most in the first four months of 2013 tended to favor men by an even larger percentage than the industry as a whole. If this trend keeps up, the gender gap may end up widening rather than shrinking, despite heightened awareness of the issue.</p> 
+    <p >To be clear, we know the problem is probably even worse than it seems because a lot of the women who are counted as working in the tech sector often work in PR, HR, or marketing. The answer shouldn't be to just keep hiring women in those roles. According to Bright Labs, the most in-demand job titles in April 2013 were all technical positions. Companies need to hire women engineers if they want the gender gap to shrink.</p> 
+    <hr > 
+    <p >The war for engineering talent is so hot that companies are <a href="http://www.fastcolabs.com/3007862/tracking/how-think-engineer" target="_self" >trying everything</a> to lure top candidates. Sometimes, these incredible bonus packages are a great way of finding talent who will fit in with the team. Other times, the tactics become so gimmicky and specific that they're almost guaranteed to screen out a diverse set of candidates.</p> 
+    <p >Take, for example, Saatchi and Saatchi Tel Aviv's recent decision to screen candidates for a software engineering position by conducting interviews inside Diablo III.</p> 
+    <!-- <figure class="inline-video inline" >
+      <div class="fluid-width-video-wrapper" style="padding-top: 60.71428571428571%;" ><iframe src="./tlotfc_files/xvNmSHrDXkg.html" frameborder="0" id="fitvid528879" ></iframe>
+      </div>
+    </figure> --> 
+    <p >The idea to test skills like teamwork and thinking under pressure using a video game is worth exploring. The U.S. Army, for example, <a href="http://www.huffingtonpost.co.uk/2012/08/02/us-army-video-game-training_n_1731816.html" target="_blank" >uses video games</a> to help train soldiers how to recognize friendly people from insurgents disguised as civilians in Iraq and Afghanistan.</p> 
+    <p >Choosing a specific game with no relation to the job other than the CEO's preference, however, was probably not the way to go if the company wanted to have any shot at hiring a woman. Technology is already a male-dominated field, <a href="http://www.haaretz.com/business/the-marker-passover-magazine-2012/israel-s-untapped-engineers-female-and-arab-1.422190" target="_blank" >especially in Israel</a>. Moreover, Diablo III's playerbase is <a href="http://diablo.incgamers.com/blog/comments/31-of-diablo-players-are-female" target="_blank" >69% male</a>, meaning that by choosing the game you've already narrowed down the pool to an incredibly homogenous group.</p> 
+    <p >Even if you did find a qualified woman gamer-developer, there's another problem with conducting in-game interviews that most men would never even think about. Due to a combination of their relative scarcity and the anonymous nature of online gaming, women who play Internet games and identify themselves as such face a constant barrage of sexist trash-talking from their male counterparts. The problem is so severe that some women have <a href="http://fatuglyorslutty.com/" target="_blank" >created entire sites</a> to document the misogyny they face playing online on a regular basis. Given the stigma attached to female gamers, it wouldn't be shocking if women didn't want to participate in an interview where their potential boss was giving them orders over the same system so many jerks use to berate them.</p> 
+    <p >Although it's tempting to search for new and inventive ways to find candidates, companies have to be careful not to automatically weed out too many qualified candidates just by the interview criteria. There's a fine line between offering perks that help you find someone who will fit well on the team and searching for such specific traits that you're almost guaranteed to find someone exactly like yourself. Unfortunately, Saatchi crossed that line.</p> 
+    <p ><em >This update was contributed by <a href="http://fastcolabs.com/user/gabe-stein/" target="_self" >Gabe Stein</a></em>.</p> 
+    <hr > 
+    <p ><strong >According to <a href="https://www.elance.com/q/women-in-technology" target="_blank" >a survey conducted by Elance</a>, the greatest deterrent to getting more women in technology fields is a lack of female role models.</strong> Elance is a popular platform for freelancers, so survey respondents come primarily from that share of the tech marketplace. And some questions are specific to working from home. Still, it's probably a safe assumption that a lot of the same trends apply for women working in technology fields whether remotely or in-office.</p> 
+    <p >It's definitely worth reading through the results of this (fairly short) survey. Here are three stats we've pulled out for you:</p> 
+    <ul >
+    <li ><span >66 percent say that for women to be successful in tech will require equal pay for women and men with same skillsets</span></li>
+    <li ><span >Only 22 percent of respondents believe technology needs to be made more "glamorous" or "cool" in order to appeal to women</span></li>
+    <li ><span >80 percent are "optimistic" or "extremely optimistic" about the future of women in technology</span></li>
+    </ul> 
+    <p >Female readers: Do these figures resonate with you? The most interesting stat here is the one about unequal pay, because it demonstrates that the women responding to this survey expect to get paid less off the bat, even in more progressive companies. Also--it's telling that nearly a quarter of respondents don't find technology "cool enough" to compete with careers in more feminine organizations. Help us unpack what these stats mean by sharing your take <a href="https://twitter.com/fastcolabs" target="_blank" >on Twitter</a>.</p> 
+    <hr > 
+    <p ><strong >A recent NPR segment, <a href="http://www.npr.org/blogs/alltechconsidered/2013/04/29/178810467/blazing-the-trail-for-female-programmers" target="_blank" >"Blazing The Trail For Female Programmers,"</a> profiled the lead developer of Flash video, Sarah Allen</strong>. It's part of an ongoing NPR series called <a href="http://www.npr.org/series/177622347/the-changing-lives-of-women" target="_blank" >"The Changing Lives of Women."</a> NPR talked with Allen about what it means to work in a field where only 20 percent of her peers are women.</p> 
+    <p >Today Allen is CEO of mobile design &amp; development outfit <a href="http://blazingcloud.net/" target="_blank" >Blazing Cloud</a>. In addition to Blazing Cloud's volume of work speaking for itself, Allen is also getting business from startups who value their genuine emphasis on diversity, as opposed to just hiring women as "window dressing."</p> 
+    <p >Allen reflects on the decades she spent being the only woman on a development team and how things still haven't changed too much. She tells a story about being being one of six women at a 200 person Ruby on Rails conference a few years back. Coming out of that experience Allen started <a href="http://workshops.railsbridge.org/" target="_blank" >RailsBridge</a>, an organization aiming to increase diversity in tech through free workshops for "women and their friends."</p> 
+    <p >She also emphatically makes the point that the issue is a lack of supporting for women who already want to get into tech:</p> 
+    <blockquote ><p >We've really proven that demand is not a problem. Every single workshop we've ever held has had a waiting list.</p></blockquote> 
+    <p >There are lots of other interesting moments in this quick 8-minute segment: According to NPR, the proportion of women studying computer science has actually decreased since the mid-20th century (that's ponderous stat #4, for those counting). While you're listening, also check out the April 29th broadcast of NPR's All Things Considered for <a href="http://www.npr.org/blogs/alltechconsidered/2013/05/01/178810710/How-One-College-Is-Closing-The-Tech-Gender-Gap" target="_blank" >a complementary segment</a> about Harvey Mudd's efforts to get more women in computer science degree programs.</p> 
+    <hr > 
+    <p ><strong >Should all-male software companies be on some kind of wall of shame?</strong> Here at Co.Labs we've <a href="http://www.fastcolabs.com/3005681/how-hack-broken-gender-dynamics-workplace" target="_self" >celebrated the success</a> of specific companies that have actively sought to increase diversity within the programming community. But what about those companies with particularly egregious records? Is it really so bad to have an organization that's all one sex?</p> 
+    <p >The creators of a blog called <a href="http://100percentmen.tumblr.com/" target="_blank" >100% Men</a> think so, which is why they've <a href="http://100percentmen.tumblr.com/post/49004410888/the-staff-of-posterous-in-2011-they-now-have-one" target="_blank" >put the spotlight on IFTTT, Posterous, Autonomy (an HP subsidiary), and the dating site Couple.me</a>--all of which boast about as much gender diversity as a Freemasons meeting. (In fairness, Posterous was only 100 percent men as of 2011, and the company is being shuttered anyway, but to their credit they now they have <a href="https://posterous.com/about" target="_blank" >two women on staff</a>: one engineer and the office manager.)</p> 
+    <p >It seems like a total no-brainer for a dating product to have a gender mix on the design team, doesn't it? Perhaps that's why no one's heard of Couple.me. Read previous updates to this story below.</p> 
+    <hr > 
+    <p ><strong ><a href="http://railsgirlsberlin.github.io/summer-of-code/index.html" target="_blank" >Rails Girls Summer of Code (RGSoC)</a> was started by Berlin Rails Girls organizers to help Rails Girls get into open source</strong>, a focus that distinguishes it from Google's original Summer of Code. Ruby on Rails is a full-stack development language that you can <a href="http://rubyonrails.org/" target="_blank" >learn more about here</a>.</p> 
+    <blockquote ><p >Just as in Google Summer of Code and Ruby Summer of Code, students will be paid so they're free to work on Open Source projects for a few months. Unlike those programs, the Rails Girls Summer of Code is about helping students to further expand their knowledge and skills by contributing to a great Open Source project (rather than producing highly sophisticated code).</p></blockquote> 
+    <p >Targeting women in tech is great, and helping them become active, productive members of the vibrant Rails and open source communities makes this program particularly exciting. To get involved as a student or mentor, write to <a href="http://summer-of-code@railsgirls.com/" target="_blank" >summer-of-code@railsgirls.com</a> or catch <a href="https://twitter.com/railsgirlssoc" target="_blank" >RGSoC</a> on Twitter.</p> 
+    <hr > 
+    <p >Stacey Mulcahy wrote a letter to her 8 year old niece and posted it online. Why does that matter? Well Mulcahy(aka <a href="https://twitter.com/bitchwhocodes" target="_blank" >@bitchwhocodes</a>)is a developer who has personally come up against the shortcomings of the tech community when it comes to gender equality. Inspired by her 8-year-old niece's decision to become a game developer when she grows up, Mulcahy wrote<a href="http://futurewomanintech.com/" target="_blank" > this letter</a> "to a future woman in tech." It's full of hopes for her niece and for the developer world in general:</p> 
+    <blockquote ><p >I hope that when you attend a meeting that is mostly male, that you never get asked why you are not taking meeting notes. I hope you say "fuck this" more than "it's okay".  
+    </p><p >...I hope that skill will always be held in higher esteem than your gender--if you had no skill, you would not be part of the discussion, and your gender is simply a modifier.</p> 
+    <p >...I hope that no one ever tells you to "deal with it," "relax," or "ease up" because you refuse to laugh at something that simply is not funny.</p> 
+    <p >...I hope that you attend conferences and find yourself complaining about long lines for the bathroom. </p></blockquote><p ></p> 
+    <p >A lot of the lines in this letter will be familiar with anyone who follows even the slightest the grievances of women in tech. But it's a powerfully original way of framing the issue, by focusing on the positive vision of the kind of developer community Mulcahy would like to be a part of, rather than just railing against the shortcomings of the one that currently exists it's empowering. (Hat tip to <a href="https://twitter.com/bitchwhocodes" target="_blank" >@NGA_Anita</a>.)</p> 
+    <hr > 
+    <p >We can talk about the gender divide in tech all day, but it's also important to celebrate the achievements of women in software. In fact, if it weren't for the work of one woman, <a href="https://en.wikipedia.org/wiki/Ada_lovelace" target="_blank" >Ada Lovelace</a>, computers as we think of them today might not exist. Lovelace worked closely with Charles Babbage on his early mechanical computer designs. Although today Babbage is considered the "father of computing," it was actually Lovelace who is believed to have written the first computer program. She also imagined computers as more than just calculating machines, influencing the thought of several pioneers in modern computing.</p> 
+    <p >Stevens Institute of Technology is holding <a href="http://www.stevens.edu/calconference/" target="_blank" >a conference celebrating the achievements and legacies of Ada Lovelace</a> on October 18, 2013. Proposals for papers are due May 14. From the institute:</p> 
+    <blockquote ><p >An interdisciplinary conference celebrating the achievements and legacies of the poet Lord Byron's only known legitimate child, Ada Byron King, Countess of Lovelace (1815-1852), will take place at Stevens Institute of Technology (Hoboken, New Jersey) on 18 October 2013. This conference will coincide with the week celebrating Ada Lovelace Day, a global event for women in Science, Technology, Engineering, and Mathematics (STEM). All aspects of the achievements and legacies of Ada Lovelace will be considered, including but not limited to: 
+    </p><ul >
+    <li ><span >Lovelace as Translator and/or Collaborator</span></li>
+    <li ><span >Technology in the Long Nineteenth Century</span></li>
+    <li ><span >Women in Computing: Past/Present/Future</span></li>
+    <li ><span >Women in STEM</span></li>
+    <li ><span >Ada Lovelace and her Circle<p ></p></span></li></ul></blockquote> 
+    <p >So if you care about women in software, then, now, or in the future go ahead and submit a paper. It's a good way to honor the legacy of the world's first coder -- a woman.</p> 
+    <hr > 
+    <h2  ><a name="Previous_Updates_To_This_Story" >Previous Updates To This Story</a></h2> 
+    <p ><strong >For those who missed it, "donglegate," as <a href="http://www.wired.com/opinion/2013/03/richards-affair-and-misogyny-in-tech/" target="_blank" ><em >Wired</em> dubbed it</a>, is the latest blowup after a display of sexism in the coding community.</strong> Although some people, including women in tech, took issue with the way Adria Richards handled the situation, <em >Wired</em>'s Alice Marwick puts it in context very bleakly:</p> 
+    <blockquote ><p >Regardless of the nuances of the incident, the fact remains that Richards faced a gargantuan backlash that included death threats, rape threats, a flood of racist and sexually violent speech, a DDOS attack on her employer--and a photoshopped picture of a naked, bound, decapitated woman. The use of mob justice to punish women who advocate feminist ideals is nothing new, but why does this happen so regularly when women criticize the tech industry? Just stating that the tech industry has a sexism problem--something that's supported by reams of scholarly evidence--riles up the trolls.</p></blockquote> 
+    <p ><a href="http://jezebel.com/5991792/woman-in-tech-tweets-about-sexist-dudes-in-tech-dude-get-fired-internet-meltdown-ensues" target="_blank" >Jezebel also chimed in</a>, pointing out the how these kinds of jokes are possible and seem normal because of how much of a dudefest tech is. It seems particularly egregious that these guys made these jokes right when the speaker was talking about bridging the gender gap in tech.</p> 
+    <blockquote ><p >Richards was distracted, mid-seminar, by a couple of tech bros sitting behind her making some shitty sexual puns about "dongles" and "forking." (She blogged about the <a href="http://butyoureagirl.com/14015/forking-and-dongle-jokes-dont-belong-at-tech-conferences/" target="_blank" >full chronology of events here</a>.) Richards did not enjoy the jokes. She especially did not enjoy the disrespect shown to the speaker, who happened to be specifically, at that moment, addressing programs designed to make the tech community more welcoming to women. Meanwhile, in the audience--Richards's photos reveal a sea of men--a couple of dudes felt 100% comfortable cracking the kind of crude jokes that people generally reserve for their home turf. And that's because, to a lot of dudes, tech is a space owned by men.</p></blockquote> 
+    <hr > 
+    <p ><strong ><a href="http://brucebyfield.com/about/" target="_blank" >Bruce Byfield</a>, who has written extensively on all things free &amp; open source, gives <a href="http://www.datamation.com/open-source/state-of-sexism-in-foss-1.html" target="_blank" >an overview of sexism in the FOSS community</a>.</strong> As a subset of the broader development community, FOSS has a lot of great things going for it because of its transparency and emphasis on collaboration. Unfortunately it still shares many of the same problems when it comes to gender. Byfield takes an informative look at initiatives that are trying to fix the gender imbalance, like the Geek Feminism Wiki, Ada Initiative, and Ubuntu Code of Conduct.</p> 
+    <blockquote ><p >Carla Schroder credits Ubuntu for its all-purpose <a href="https://launchpad.net/codeofconduct/1.0.1" target="_blank" >code of conduct</a>, which she calls "a radical departure from the dominant 'freedom to be a jerk' ethos that prevailed before." As a result, Schroder adds, "Ubuntu has also attracted large numbers of contributors and users from more diverse walks of life than other distros.  
+    </p><p >However, in the last two years, FOSS feminism has paid special attention to anti-harassment policies for conferences. Most of this work has been developed by the <a href="http://adainitiative.org/" target="_blank" >Ada Initiative</a>, an offshoot of the Geek Feminism Wiki, which has developed <a href="http://geekfeminism.wikia.com/wiki/conference_anti-harassment/policy" target="_blank" >templates</a> for policies that can be used either unmodified or as starting points for discussion.</p> 
+    <p >The <a href="http://adainitiative.org/2012/10/how-stopping-conference-harassment-changes-opentech-communities-at-all-levels/" target="_blank" >rationale</a> offered for this emphasis is that anti-harassment policies can be a starting point for changing other aspects of the community.</p></blockquote><p ></p> 
+    <p >All in all a thorough and well-reasoned piece worth a read (even if the pagination on datamation is ridiculously annoying).</p> 
+    <hr > 
+    <p ><strong ><a href="https://twitter.com/ashedryden" target="_blank" >Ashe Dryden</a>, a Drupal and Rails developer, did the software community a huge favor by starting to answer the question "How can I help tech be less sexist?"</strong> She gives <a href="http://ashedryden.com/blog/increasing-diversity-at-your-conference" target="_blank" >concrete, applicable steps</a> that people can take to make conferences more diverse, like:</p> 
+    <blockquote ><p >Anonymize and remove gendered pronouns from abstracts/bios before handing the data over to your proposal review committee. Someone who is outside of your proposal reviewing committee should be assigned this task.</p></blockquote> 
+    <p >Pretty simple, but makes a huge difference. Dryden's post is full of tidbits like that. It also includes a pretty thorough list of different marginalized populations, going far beyond gender diversity to include, for example, physical disability and economic status. But women in tech is still the focus of what Dryden is writing about.</p> 
+    <hr > 
+    <p ><strong ><br >
+    The headline of <a href="http://www.forbes.com/sites/women2/2012/01/17/with-programs-like-codecademy-women-are-no-longer-accidentally-excluded-from-learning-technology/" target="_blank" >this article</a> in Forbes elides individual (and organizational) responsibility by saying that women are "accidentally" excluded from tech.</strong> That said, it still makes a great point that tools like Codecademy are democratizing technology and thereby removing a lot of the traditional barriers to women, like it being hard to find mentorship in a boy's club.</p> 
+    <hr > 
+    <p ><strong >Dani Landers, a transgender woman game developer, gives an account of <a href="http://www.kickstarter.com/projects/1376061185/bloom-memories-one-of-a-kind-action-adventure-rpg/posts/424211" target="_blank" >how her identity informs her game design decisions</a> in <em >Bloom</em>, a game currently vying for funding on Kickstarter.<br >
+    </strong><br >
+    </p><blockquote ><p >It's no secret that the games industry, by and large, lacks diversity. In this case, that is gender diversity. This is actually a huge shame as it limits the stories and points of views different types of people bring to the collective table of gaming.</p></blockquote><p ></p> 
+    <p >Landers contrasts the way she handles representation of female characters and motherhood with the way major video game studios do, which is pretty obvious in her artwork.</p> 
+    <blockquote ><p >The differences in the way I create concept art and models is pretty self-explanatory. Basically, notice how the female characters aren't half naked with giant breasts? Yea, this is a pretty easy one to be aware of...I'm kind of surprised this is even "different" to treat them with that level of respect.</p></blockquote> 
+    <figure class="inline-large inline" >
+    <img src="./tlotfc_files/3008216-inline-09c5c47fd2aad0f8f6f5e682c6333b86large.png" alt="" >
+    </figure> 
+    <p >The influential gaming site Penny Arcade <a href="http://www.penny-arcade.com/report/article/video-games-showed-me-who-i-could-be-transgender-gamers-share-their-stories" target="_blank" >picked up the story</a>, with a really interesting take on how gaming can be a safe haven for certain marginalized populations.</p> 
+    <blockquote ><p >Games themselves may offer a safe place for transgender, genderqueer, questioning, or other LGBT community individuals, but the gaming community has been less receptive. When Landers was promoting her game in one gaming community forum, users hijacked the thread and began posting "tranny porn," telling Landers she should find new work in the adult film industry.  
+    </p><p >Articles and features on gaming sites that bring up gender representation of any kind, be it transgender or otherwise, is typically met with the 'Why is this important?' 'How is this relevant to video games?' style responses. It should be apparent by now that games can be far more than just entertainment to some individuals. To some, it's a necessary escape, or a safe haven where the question of "Who am i?" can be safely explored.</p></blockquote><p ></p> 
+    <hr > 
+    <p ><strong >So, a pretty prime example of women being reduced to sexual objects in the technology world is this article on Complex, "<a href="http://www.complex.com/tech/2013/03/the-40-hottest-women-in-tech/" target="_blank" >The 40 Hottest Women in Tech</a>".</strong> At first glance the article is a weird mix of acknowledging sexism in tech followed by outright sexism from a publication covering tech. It begins:</p> 
+    <blockquote ><p >Technology has been a boy's club for most of its existence. Just another unfortunate repercussion of the patriarchy. But that's been slowly changing, and over the last decade we've seen a number of wonderful, intelligent, and cunning women make inspiring strides in the field of technology. Through web development, social media, space exploration, and video game design, we see the world of tech becoming a more equal playing field. Here are 40 women we admire doing work in the field of innovation.</p></blockquote> 
+    <p >Followed by a slideshow of scantily clad women or typical "hot" women, including noting that one of them was a <em >Playboy</em> playmate. Commenters on the piece were justifiably outraged, writing:</p> 
+    <blockquote ><p >How can you open with "sure, tech hasn't been friendly to women for ages, but it's better now!" and then proceed to objectify the women who have fought through this bullshit? Do you not see that you're only perpetuating the toxic culture?</p></blockquote> 
+    <p >And:</p> 
+    <blockquote ><p >Funny you would mention patriarchy in your opening paragraph, then proceed to perpetuate it by subjecting all of the hardworking and talented women in this field to, effectively, a 'hot-or-not' list. Shameful.</p></blockquote> 
+    <p >It turns out, though, that the author of this piece <a href="http://www.twitlonger.com/show/n_1rjce0c" target="_blank" >didn't want it turn out that way</a>:</p> 
+    <blockquote ><p >I was assigned to write the 50 Hottest Women in Tech by Complex and it really bummed me out, because the idea of perpetrating the same old gender divisions in an area like tech - which has predominantly been a boy's club throughout history - seemed like kind of a messed up thing to do. It represents the most banal form of internet content that exists. But it's hard to say no to a paycheck.  
+    </p><p >So what I tried to do was see if it was possible to make something called "The 50 Hottest Women in Tech" earnest and empowering and an actual good thing. I pretty much only included normal looking women, who were involved in something really crucial or exciting in the tech space. I made no allusions to their looks in the blurbs, and ended up with simply a long list of very exciting women.</p> 
+    <p >Of course when the piece actually ran, I discovered that over half of the women I had included were replaced with people like Morgan Webb, complete with the usual lascivious dialogue. Sigh. It's hard to win when you're writing for Complex, but please know that I tried.</p></blockquote><p ></p> 
+    <p >That explains why tech-entertainment celebs are mixed in with actual female technology innovators like Gina Trapani and Marissa Mayer. It's the mark of a bad publication that it would not only assign a piece like this in the first place but that it would so drastically alter it after the fact. Fortunately, people in technology fields weren't buying what Complex was selling, as evidenced by <a href="https://twitter.com/grossbart/status/320793127285846016" target="_blank" > this tweet</a> and <a href="https://twitter.com/lizquilty/status/319553425685762048" target="_blank" > this tweet</a>:</p> 
+    <figure class="inline-large inline" >
+    <img src="./tlotfc_files/3008216-inline-screen-shot-2013-04-18-112533-am.png" alt="" >
+    </figure> 
+    <figure class="inline-large inline" >
+    <img src="./tlotfc_files/3008216-inline-screen-shot-2013-04-18-112520-am.png" alt="" >
+    </figure> 
+    <hr > 
+    <h3  ><a name="Stay_tuned_as_coverage_continues" >Stay tuned as coverage continues!</a></h3> 
+    <p >[<em >Image: Flickr user <a href="http://www.flickr.com/photos/geekounet/4873241022/in/photostream/" target="_blank" >Pierre Guinoiseau</a></em>]</p>
+  </div> 
+</div>
+
+<div style="padding-left:68px;" class="after-body clearfix"> 
+<hr class="hr-long">
+<div class="tags clearfix hide-on-print">
+<p><span>Article Tags: </span><a href="http://www.fastcolabs.com/tag/bro">bro</a><a href="http://www.fastcolabs.com/tag/coding-skills-job">coding skills = job</a><a href="http://www.fastcolabs.com/tag/covering-tech">covering tech</a><a href="http://www.fastcolabs.com/tag/gap-more-like-gender-chasm">gap? more like gender chasm</a><a href="http://www.fastcolabs.com/tag/how-to-scare-away-women">how to scare away women</a><a href="http://www.fastcolabs.com/tag/your-job-ad-sucks">your job ad sucks</a></p>
+</div>
+<hr class="hr-long" style="display:none;"> 
+<div style="display:none;" class="share-box clearfix hide-on-print"><div class="share-buttons" data-url="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders" data-title="The Loneliness Of The Female Coder" data-text="What's it really like to be the lone woman in a software team? Two women chart their secret emotional lives in tech."> 
+<ul> 
+<li>
+<span>
+<a href="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders#comments">25</a> Notes
+</span>
+</li>
+<li class="divider">/</li> 
+
+<li class="share-button dropdown" data-service="twitter">
+<span title="1.6k">Tweet</span>
+<div class="append-button">
+</div>
+</li>
+<li class="divider">/</li>
+
+<li class="share-button dropdown" data-service="facebook">
+<span title="2.7k">Like</span>
+<div class="append-button">
+</div>
+</li>
+
+<li class="share-button dropdown hide pull-left" data-service="googleplus">
+<span title="187">Plus</span>
+<div class="append-button">
+</div>
+</li>
+<li class="divider hide">/</li>
+
+<li class="share-button dropdown hide" data-service="linkedin">
+<span title="233">Share</span>
+<div class="append-button">
+</div>
+</li>
+</ul>
+
+</div>
+
+<a class="social-pager" href="http://www.fastcolabs.com/3008216/tracking/minding-gap-how-your-company-can-woo-female-coders#"><span class="icon-angle-down"></span></a>
+</div>
+
+<br class="clear">
+<hr class="hr-long"> 
+
+<aside id="author" class="clearfix  ">
+<div class="author-wrap clearfix">
+
+<div class="row"> 
+
+<div class="three columns mobile-one">
+<figure class="poster">
+<a class="author-readmore" href="http://www.fastcolabs.com/user/ciara-byrne">
+<img class="author-headshot" src="./tlotfc_files/3006504-photo-twitter.jpeg">
+</a>
+</figure>
+</div>
+<div class="teaser nine columns mobile-three">
+
+<h4 class="author-name" itemprop="author">Ciara Byrne</h4>
+
+<div class="author-teaser">
+<p>Lapsed developer, current tech journalist and wannabe data scientist.</p>
+</div>
+
+<div class="author-readmore">
+<a href="http://www.fastcolabs.com/user/ciara-byrne">Continue</a>
+</div> 
+
+</div>
+
+</div>
+
+</div>
+</aside>
+
+<aside class="pager clearfix">
+<div class="pager-wrap clearfix">
+
+<div class="row">
+
+<div class="twelve columns">
+
+<div class="three columns mobile-two pager-page previous">
+
+</div>
+
+<div class="six columns hide-for-small time">
+<time itemprop="datePublished" datetime="2013-09-11">September 11, 2013 | 10:00 AM</time>
+</div>
+
+<div class="three columns mobile-two pager-page next end">
+
+</div>
+</div>
+</div>
+</div>
+</aside>
+
+<hr class="hr-long"> 
+
+<section id="comments">
+<div class="comments-wrap hide-on-print">
+<div id="disqus_thread">
+</div>
+</div> 
+</section>
+</div>
+
+<div id="helpContentText" style="display:none;">
+
+  <h3>Operation of the UI</h3>
+
+  <p><strong>Smart scroll: </strong>
+  This is a feature aimed at preventing <a href="http://en.wikipedia.org/wiki/Asthenopia"
+  target="_blank">eye strain</a>. <br>
+  Once you have read about half of the page, press the space bar: the text will scroll
+  gently and reposition at the top of a paragraph or whatever. <br>
+  If there is a header, the header will be set atop the top of the window, no split test
+  lines. <br>
+  Pressing shift + spacebar repositions the content back, in smaller chunks (single paragraph). 
+  </p>
+
+  <p>There are a few features showcased, from dozens that will come. </p>
+  <p style="color:rgb(80,80,80);">Warning: please close each feature before opening another, the
+  appropriate logic is not yet implemented. </p>
+
+  <p><strong>Progress indicator: </strong>
+  The top-left element is intended to show the reader the current position withing the lengthy text. </p>
+  <p>The numbers are the number of pages already read (23) and not-yet-read(77) . The gray bar represents the 
+  current reading position, that will move down as the reading progresses: it is like those bookmarks
+  inserted between a paper book's pages. </p>
+  <p>Of course, reopening the page, may be in another device, will take the reader to the exact previous
+  position. </p>
+
+  <p><strong>Menu: </strong>
+  This icon slides a "control panel" over the reading area, that in the future will have useful data
+  for the reader, and configuration options. Clicking again the icon or the panel hides it. </p>
+
+  <p><strong>Table of content</strong>
+  Clicking this icon makes the TOC visible, clicking again hides it. </p>
+  <p>The TOC contains the article's headings. Clicking one takes the reader to the corresponding
+  reading position and hides the TOC. </p>
+  <p>The TOC is organized as a hierarchy of headers and sub-headers. Clicking in the [-] and [+] icons
+  conceals or reveals a branch of said hierarchy. </p>
+
+  <p><strong>Highlighting: </strong>
+  The reader can highlight text by selecting it and clicking the yellow button. <p>
+  <p>Currently the highlights are not persisted, as will be in the real application. </p>
+
+  <p><strong>Help: </strong>
+  This icon displays this that you are reading now (thanks!). Clicking again hides this text. </p>
+
+  <h3>Purpose and description of the application</h3>
+
+  <h4>You are a reader (or, as an evaluator, you are impersonating one)</h4>
+
+  <p>You, as a user, are a person who reads on screen. Not just a glimpse at the
+  news, or a facebook posting: you really read, you are a <em>reader</em>. </p>
+
+  <p>Historically the web has been providing more and more content, but not much
+  has been done in order to help <em>readers</em>&nbsp;to overcome many of the
+  problems that stem from reading on screen content. Albeit sites are much better
+  than years ago, and also screens, published pages haven't changed much. </p>
+
+  <h4>What do the editors do?</h4>
+
+  <p>Those who publish, the <em>editors</em>, are focused on providing you the
+  best content thay can. At the same time, they remain oblivious of what can they
+  do in order to relief their beloved readers from that eye strain or neck ache.
+  </p>
+
+  <p>The purpose of this application is to enhance the online published pages in
+  order to make the on-screen reading experience better. </p>
+
+  <p>The method is twofold. It is about helping to control strain, and also
+  providing additional useful features not available on paper. </p>
+
+  <p>The editors will be interested in implementing this because it comes with a
+  lot of back-end features like detailed tracking of the usage of the texts,
+  useful for the authors to realize what parts are read, where the readers quit,
+  and more. </p>
+
+  <h4>What does this application do?</h4>
+
+  <p>In order to manage the eye strain produced by on-screen reading, it has a
+  new soft scroll functionality that slides the text in a natural way, slowly,
+  unlike the normal instant page jums that come with the browsers. This allows
+  the reader to be more confident that the text will remain there allowing them
+  to <em>blink</em> more frequently (eye strain comes, in part, from not blinking
+  enough which produces dry eyes). </p>
+
+  <h4>Some paper features available</h4>
+
+  <p><strong>Highlighting:</strong> On paper the readers can highlight the most
+  interesting parts of the text, to be able to review it quickly. This UI has an
+  easy to use highlighting feature: the reader highlights the text with the mouse
+  (and later by touching it) and clicks the yellow highlight button. </p>
+
+  <p>In the finished app the highlights are persisted in the backend, in this
+  prototype one can highlight text fragments but they are not persisted, not even
+  locally. </p>
+
+  <p><strong>Notes:</strong>&nbsp;It will be possible to take notes that will be
+  persisted in the backend. </p>
+</div>
+
+<pre id="docPathLog" style="padding-left:80px; line-height:90%; font-size:75%; ">
+</pre>
+
+<div id="agendaBody" style="display:none; overflow:scroll;">
+<h1 id="usability">Usability Test Instructions</h1>
+
+<p><strong>The Books Smart Reader</strong></p>
+
+<p></p>
+
+<p></p>
+<style>
+  .testInstructions li { padding:8px; }</style>
+
+<p>Please perform the following steps:</p>
+<ol class="testInstructions">
+  <li>Take note that the test is not on you, but on the system. If you
+    experience problems it's not your fault, it's because we aren't done honing
+    the system's UI. Hence this test. Your critic feedback is very valuable for
+    us, much more than a patronizing "very nice". </li>
+  <li>We are thankful with those who help us taking this test. If you left your
+    email, and this project takes off, we'll let you know. </li>
+  <li style="display:none;">
+    <div style="float:right; padding-left:2em; ">
+    <img alt="the help icon" src="res/chromeLogo.png" width="63" height="63"></div>
+    <p>Using the Chrome browser, open the following page: 
+      <a href="http://ec2-54-227-184-202.compute-1.amazonaws.com:8080/tlotfc/tlotfc2.html"
+      >The Loneliness Of The Female Coder</a>
+    </p>
+  </li>
+  <li>Wait for a while, until the page fully loads. It is hosted in a free
+    facility, which is not the fastest, kindly provided by Amazon Web
+  Services.</li>
+  <li>
+    <div style="float:right; padding-left:2em; ">
+    <img alt="the help icon" src="res/iconhelp2.png" width="55" height="55"></div>
+    Display the help text by clicking the question mark (?) icon and read the
+    <em>Operation of the UI</em> section (where "UI" stands for "User
+    Interface").</li>
+  <li>Optionally, if you want increased insight, read the other part of the
+    help text, intitled "Purpose and description of the application". You are
+    welcome.</li>
+  <li>When you are done dimiss the help panel by clicking the help button
+    again. </li>
+  <li>
+    <div style="float:right; padding-left:2em; ">
+    <img alt="the menu icon" src="res/iconmenu.png" width="55" height="55"></div>
+    <p>You don't need to remember the instructions in full, during the test
+    they will be available by clicling the menu icon. Click once to show the
+    instructions, click again to hide them. </p>
+  </li>
+  <li><strong><em>Smart scroll </em> test:</strong> 
+    <p>After having clicked the <em>Continue</em>&nbsp;button, read all or part of
+    the article that shows for about 10 minutes, more if you want. It's
+    intitled "The Loneliness Of The Female Coder" and is about sexism in
+    software development workspaces. </p>
+    <p>To progress in the reading use the <em>smart scroll</em>&nbsp;feature, that
+    is, advance the text ("scroll") by pressing the space bar and use shift +
+    space bar to back up. </p>
+    <p><img alt="shift + spacebar" src="res/ShiftAndSpacebar.png"></p>
+    <p>The idea is to use the <em>smart scroll</em>&nbsp;feature for enough time 
+    to get used to it. </p>
+  </li>
+  <li><strong>Progress indicator</strong> 
+    <p>Notice the <em>progress indicator</em>&nbsp;in the top left corner of the
+    screen and check how it changes as you read. </p>
+  </li>
+  <li><strong>TOC</strong> 
+    <p>Using the TOC (table of content) locate a title and select it. </p>
+  </li>
+  <li><strong>Highlighting</strong> 
+    <p>Select text (by dragging the mouse over it) and highlight
+    it with the yellow highlight button. </p>
+    <p style="display:none;">Select several pieces of text (holding down the "Ctrl" key) and
+    highlight them with a single click of the highlight button. </p>
+  </li>
+  <li><strong>Finish</strong> 
+    <p>Once you are done, or if you don't want to continue, click the "End"
+    button to proceed to the survey about the test results. </p>
+    <p></p>
+  </li>
+</ul>
+
+<div class="framed" style="padding:18px;">
+
+<form action="">
+  <label></label> 
+
+  <div style="text-align:right; ">
+  <button id="continue" name="continue" style="font-size:133%; padding:6px; margin-right:2em;" disabled="disabled">proceed to the test</button> </div>
+</form>
+</div>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+</div>
+
+
+<!-- contains HTML for the control panel, that is applied with js -->
+<div style="display:none;">
+    <!-- progress indicator -->
+    <div id="rtProgressTemplate" class="rtProgress">
+        <div class="rtProgressDone"
+        title="already read"> </div> 
+        <div class="rtProgressCurrent"
+        title="current page"> </div> 
+        <div class="rtProgressRemaining"
+        title="not yet read"> </div> 
+    </div>
+</div>
+
+
+</body>
+</html>

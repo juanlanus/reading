@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>SRAid = Smarter Reading Aid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap-combined.no-icons.min.css">
+    <link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css">
+    <link type="text/css" rel="stylesheet" href="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fsocial-buttons.css">
+    <script src="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fjquery.js"></script>
+    <script src="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap.js"></script>
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic">
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800,300italic,400italic,600italic,700italic">
+
+<style type="text/css">
+
+/* large desktop */
+@media (min-width:980px) {
+  body          { padding-top:60px; }
+  .copy         { padding-left:6em; max-width:54em; }
+  .linediv-l    { border-right:1px solid white; }
+  .linediv-r    { border-left:1px solid white; }
+  .heading,
+  .subheading   { font-family:Ubuntu,Helvetica,Arial,sans-serif; text-align:center; }
+}
+
+/* landscape phones and down */
+@media (max-width:480px) {
+  .copy         { padding:2.5% 0%; }
+  .linediv-l    { border-bottom:1px solid white; }
+  .linediv-r    { border-top:1px solid white; }
+  .heading,
+  .subheading   { font-family:Ubuntu,Helvetica,Arial,sans-serif; text-align:left; }
+}
+
+/* all form factors */
+
+  /* main body and headings */
+  body          { font-family:'Open Sans',Helvetica,Arial,sans-serif; }
+  .container    { margin:0; }
+  p.lead        { padding-top:1.5%; font-size:1.5em; line-height:1.7em; }
+  p             { font-size:1.2em; line-height:1.3em; }
+  li            { font-size:1.2em; line-height:1.1em; margin-left:1.5em; }
+
+  /* video pitch and action */
+  .pitch        { padding:2.5% 0%; }
+  .order        { padding:2% 0%; }
+  .actions      { background-color:#343434; padding:0 0 1% 0; }
+  .video,
+  .thermometer,
+  .order,
+  .social,
+  .statistics   { text-align:center; }
+  .statistics h3,
+  .statistics p { color:white; }
+  .img-polaroid { padding:0; border:0; }
+
+  /* marketing copy and footer */
+  .copy         { padding-top:2.5%; padding-bottom:2.5%; text-align:justify; }
+  .asset        { padding:2.5% 0%; }
+  .footer       { color:#cccccc; text-align:center; }
+  .footer p     { font-size:11px; }
+  .footer a     { color:#ccccff; }
+</style>
+</head>
+
+<body>
+  <!-- mobile friendly navbar adapted from example:
+  http://twitter.github.io/bootstrap/examples/starter-template.html -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <button type="button" class="btn btn-navbar"
+          data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="brand" href="#">Bitstarter</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!-- /.nav-collapse -->
+      </div>
+    </div>
+  </div>
+
+  <!-- we use row-fluid inside containers to achieve a resizable layout -->
+  <!-- blogs.endjin.com/2013/04/tips-for-implementing-responsive-designs-using-bootstrap/ -->
+  <!-- http://stackoverflow.com/a/12270322 -->
+  <div class="container">
+    <!-- font and paired font of .heading/.subheading and body from Google Fonts -->
+    <!-- www.google.com/fonts/specimen/Ubuntu -->
+    <!-- www.google.com/fonts/specimen/Ubuntu#pairings -->
+    <div class="row-fluid heading">
+      <div class="span12">
+        <h1>SRAid = S<span style="color:#a0a0a0;">marter</span> R<span style="color:#a0a0a0;">eading</span> Aid 
+          <span style="font-size:50%; color:#c0c0c0;" class="subheading">(ess&nbsp;-&nbsp;ar&nbsp;-&nbsp;aid)</span></h1>
+      </div>
+    </div>
+    <div class="row-fluid subheading">
+      <div class="span12">
+        <!-- Special typography from Bootstrap for lead paragraph. -->
+        <!-- http://twitter.github.io/bootstrap/base-css.html#typography -->
+        <p class="lead">Leverage the advantages of reading on screen</p>
+      </div>
+    </div>
+    <div class="row-fluid pitch">
+      <div class="span5 offset1 video">
+        <img class="img-polaroid" src="./imag/3-28-13_Reading.jpg" alt="books">
+      </div>
+
+      <!-- we define a new 'actions' div to contain statistics, order and share buttons -->
+      <div class="span5 actions">
+        <div class="span8 offset2">
+          <div class="statistics">
+            <div class="span4">
+              <!-- linediv-l and linediv-r give dividing lines that look different in
+              horizontal and vertical layouts, illustrating media queries -->
+              <div class="linediv-l">
+                <h3>1000</h3> <p>backers</p>
+              </div>
+            </div>
+            <div class="span4">
+              <div class="linediv-c">
+                <h3>$6000</h3> <p>of $10,000</p>
+              </div>
+            </div>
+            <div class="span4">
+              <div class="linediv-r">
+                <h3>10</h3> <p>days left</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="span10 offset1">
+          <!-- Bootstrap progress bar -->
+          <!-- http://twitter.github.io/bootstrap/components.html#progress -->
+          <div class="thermometer progress active">
+            <div class="bar bar-success" style="width:60%;"></div>
+            <div class="bar bar-warning" style="width:40%;"></div>
+          </div>
+        </div>
+        <div class="span6 offset3 order">
+          <!-- Standard Bootstrap button. -->
+          <!-- http://twitter.github.io/bootstrap/base-css.html#buttons -->
+          <button class="btn btn-success btn-large">Preorder</button>
+        </div>
+        <div class="span8 offset2 social">
+          <!-- Social buttons are not included in default Bootstrap. -->
+          <!-- See: http://noizwaves.github.io/bootstrap-social-buttons -->
+          <button class="btn btn-twitter"><i class="icon-twitter"></i> | Twitter</button>
+          <button class="btn btn-facebook"><i class="icon-facebook"></i> | Facebook</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beyond this part the marketing copy begins. -->
+    <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/text-align -->
+    <!-- http://twitter.github.io/bootstrap/base-css.html#images -->
+    <!-- http://placehold.it -->
+    <div class="row-fluid section1">
+      <div class="span5 offset1 asset">
+        <img class="img-polaroid" src="./imag/respect-your-readers.jpg" alt="books">
+      </div>
+      <div class="span5 copy">
+        <p>Reading online can be a better experience than reading printed matter.</p>
+        <p>The purpose of SRAid is to enhance the on-screen reading experience in order to make it better than on-paper reading, by leveraging the computer capabilities.</p>
+        <p>It benefits both the *publishers or authors* and the *readers*.</p>
+        <p>Firstly, more comfortable reading is good news to both parts: the reader is interested in reading, and the publisher or author is interested in being read.</p>
+        <p>The enhanced experience will allow the readers to read more, which is the shared craving.</p>
+        <p>Although it's focused mainly on rather lengthy texts, like books or papers, it is also amenable for much-shorter blogs or articles</div></p>
+    </div>
+
+    <div class="row-fluid section2">
+      <div class="span5 offset1 copy copy-right">
+        <p>Moreover, in addition to enhancing the on-screen reading, the SRAid builds a record of the readers' wanderings along the text, like how much time they spent on each section or chapter of the publication.</p>
+        <p>This might be of some interest or the reader, like for example to evaluate the remaining time needed to finish studying a subject based on the time used so far.</p>
+        <p>The publisher doesn't see the individual records, but the big picture, that tells her how her readers are doing with the publication, how much effort are they willing to spend in its consumption, where they quit, and additional data like where are they in the world.</p>
+      </div>
+      <div class="span5 asset">
+        <img class="img-polaroid" src="./imag/reading_2258968b.jpg" alt="books">
+      </div>
+    </div>
+
+    <div class="row-fluid section3">
+      <div class="span5 offset1 asset">
+        <img class="img-polaroid" src="./imag/article-new-ehow-images-a06-36-7r-create-bookmarks-800x800.jpg" alt="books">
+      </div>
+      <div class="span5 copy">
+        <p>The SRAid comes with a number of advantage features, things that a paper can't do.</p>
+        <p>Like for example remembering the reading position across devices, like you read in your desktop computer before going to bed, then the other day you open the publication in your tablet to continue reading in the train and of course it opens exactly where you left the night before. And so on, across all your devices.</p>
+        <p>Like for example that the text scrolls the way you want it to, precisely and softly, for example by paragraph.</p>
+        <p>Like SRAid remembers your reading positions to get you back to the right point in the text after a detour to check something in a previous chapter.</p>
+      </div>
+    </div>
+
+    <div class="row-fluid section4">
+      <div class="span8 offset2 asset">
+        <img class="img-polaroid" src="./imag/facts-figures-reading.jpg" alt="books">
+      </div>
+    </div>
+    <div class="row-fluid section4">
+      <div class="span10 offset1 copy copy-right">
+        <p>SRAid is for HTML documents. It can be used even with documents not specifically published with SRAid features.</p>
+        <p>There are <em>client features</em> and <em>server features</em>.</p>
+        <p>The client features are things that happen in the browser.</p>
+        <p>The driving idea is to make SRAid as minimalistic as possible, not cluttering the page with a number of artifacts. Actually, there is a single button that brings up the SRAid user interface containing the necessary buttons.</p>
+        <p>One such button is the TOC (Table Of Contents) control. When selected, the TOC is displayed overlying the current page. It contains additional data:</p>
+        <ul>
+          <li>The TOC items link to any bookmarks and notes related to each item.</li>
+          <li>The parts of the document that are already read appear different than the untouched sections.</li>
+          <li>The entries in the TOC can be used to display additional information like when a section was read, during how much time.</li>
+        </ul>
+        <p>After the reader is done with the TOC and dismisses it, she is taken back where to the original reading point where the detour started, even if it included seeing other sections of the document.</p>
+        <p>Some elements of the document like images and tables can be "detached" to allow seeing then simultaneously with the text (provided that there is enough screen real estate available). This is to spare the annoyance of reading an explanation to something that is out of sight, like for example on the other side of a page.</p>
+        <p>Scrolling the text with SRAid is a smooth experience. You can use the regular scrolling control which will perform as usual, but SRAid adds a <em>paragraph scroller</em> controlled by the space bar in computers with keyboards, and with an equally convenient control in other devices. The paragraph scroller will normally scroll forward a paragraph, parking it softly and precisely at the top of your reading window. It doesn't try to bring up the illusion of the turn of a page, is simply repositions the content so you can see it, and does it in a way so that you can clearly see what's happened.</p>
+      </div>
+    </div>
+
+    <div class="row-fluid about" id="about">
+      <div class="span10 offset1 copy copy-right">
+        <h3>About</h3>
+        <p>About the product itself, now it's in a stage of prototyping. </p>
+        <p>Its design, which is based on deep knowledge and practice on usability matters, 
+        is being put to test and checked against reality. Actually, what it does is to
+        enhance the online reading experience with a severe usability boost.  </p>
+        <p>&nbsp;</p>
+        <p>As of today, it's still not clear how the product will be monetized. </p>
+        <p>Because it is of interest both for the publishers and for the readers, then
+        there might be different versions. </p>
+        <p>Firstly, a free version, as is customary with the internet products that are
+        to be consumed by the millions. </p> 
+        <p>The free version will be functional for a number of users, and at the same time 
+        it will not tax our resources because of its limitations. </p>
+        <p>The second version is the individual's. It's for the readers. It will work
+        the same as the free version (a browser extension) but the user's data will be
+        persisted in the database, allowing the user to leverage the full potential of
+        the tool. </p>
+        <p>The last version is for publishers. A company that publishes lengthy documents,
+        like for example <a href="https://www.10gen.com/">10gen (the owners of MongoDB)</a>, 
+        might want to enhance their users' reading experience by publishing their documents
+        with SRAid and gets a license to run the data services on their premises, or to use
+        our's at a price. </p>
+        <p>The license can be a free one (for non-profit organizations) or a paid one for
+        companies that pursue revenue. In the example, 10gen needs bost, one for the database
+        documents (because it's free) and the other for the site where they sell services. </p>
+        <p>&nbsp;</p>
+      </div>
+    </div>
+
+    <div class="row-fluid contact">
+      <div class="span10 offset1 copy copy-right" id="contact">
+        <h3>Contact</h3>
+        <p>You can reach me at my primary email address: <strong>juan.lanus at gmail</strong>. 
+        I'll be happy to receive your questions and to answer them ASAP. </p>
+        <p>I live and work in Buenos Aires, Argentina. To meet me I suggest you phone me at my
+        cellphone <strong>+5411 6795 7549</strong> or at our home landline <strong>+5411 4786 0529</strong>. </p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+      </div>
+    </div>
+
+    <div class="row-fluid footer">
+      <div class="span12">
+        <p>This work is Copyright &copy; 2013 Juan Lanus</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

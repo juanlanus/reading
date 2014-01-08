@@ -1,0 +1,218 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Language" content="en">
+  <title>rt: about scrolling</title>
+  <link rel="stylesheet" href="res/rtDoc.css" type="text/css">
+  <script type="text/javascript" src="res/jquery-1.8.3.js">
+ </script>
+  <script type="text/javascript" src="res/tocBuilder.js">
+ </script>
+  <link href="res/tocBuilder.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#tocContainer').tocBuilder({
+        type: 'headings',
+        backLinkText: 'TOC',
+        startLevel: 3,
+        endLevel: 6
+      });
+    });
+  </script>
+  <script type="text/javascript" src="res/rt.js">
+ </script>
+</head>
+
+<body>
+
+<div class="imgR miniMenu">
+
+<div>
+<ul style="list-style-type:none;">
+  <li><a href="index.html">index</a> </li>
+  <li><a href="tasks.html">tasks&nbsp;&amp;&nbsp;bugs</a> </li>
+  <li><a href="comparison.html">comparison</a></li>
+  <li><a href="rtech.html">technical defs</a></li>
+  <li><a href="database.html">database</a></li>
+  <li><a href="notes.html">notes &amp; links</a></li>
+  <li><a href="aboutScrolling.html">about scrolling</a></li>
+</ul>
+</div>
+</div>
+
+<div id="rtHeader">
+
+<div class="fixedHeader">
+<h1 style="display:inline; " id="L54">rt: about scrolling</h1>
+</div>
+</div>
+
+<div id="rtBody">
+
+<div id="tocContainer" class="tocContainer">
+<!-- Header levels
+h1 global title
+h2 source book from CA library: IDLB22PR.boo
+h3 book chapter
+h3 book section
+h4, h5 subsections
+-->
+
+<p> </p>
+
+<div class="toc">
+<ul>
+  <li><a href="#L54">rt: about scrolling</a> 
+    <ul>
+      <li><a href="#Notes">About scrolling</a> 
+        <ul>
+          <li><a href="#L83">A scrollable arrangement</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#L102">Content title</a></li>
+</ul>
+<ul>
+  <li><a href="#L162">Related CSS properties</a> 
+    <ul>
+      <li><a href="#L277"><code><a
+        href="https://developer.mozilla.org/en-US/docs/CSS/overflow">overflow</a></code></a></li>
+      <li><a href="#L448">overflow-y</a></li>
+      <li><a href="#L180"><code><a
+        href="https://developer.mozilla.org/en-US/docs/CSS/white-space">white-space</a></code>
+        </a></li>
+      <li><a href="#L209">text-overflow</a></li>
+      <li><a href="#L294">word-wrap</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+</div>
+
+<h2 id="Notes">About scrolling</h2>
+
+<h3 id="L83">A scrollable arrangement</h3>
+
+<p>A scroll bar shows when there is a tall element (by sure a DIV) inside
+another element with a smaller height, with the appropriate
+<code>overflow</code> style. For example: </p>
+<pre>  &lt;style&gt;
+    div#rtContainer { height:200px; overflow:auto;}
+    div#rtContent   {  }
+  &lt;/style&gt;
+  &lt;div id="rtContainer"&gt;
+      &lt;div id="rtContent"&gt;
+        &lt;h1&gt;Content title&lt;/h1&gt;
+        &lt;p&gt;...&lt;/p&gt;
+        &lt;p&gt;...&lt;/p&gt;
+        &lt;p&gt;...&lt;/p&gt;
+        &lt;p&gt;...&lt;/p&gt;
+        &lt;p&gt;...&lt;/p&gt;
+        &lt;p&gt;...&lt;/p&gt;
+        &lt;p&gt;...&lt;/p&gt;
+      &lt;/div&gt;
+  &lt;/div&gt;</pre>
+
+<p>If the <code>rtContent</code> DIV is taller than the
+<code>rtContainer</code> DIV then the latter will display a scroll bar. </p>
+
+<div class="framed">
+<style>
+    div#rtContainer { height:200px; overflow:auto; }
+    div#rtContent   {  }</style>
+
+<div id="rtContainer">
+
+<div id="rtContent">
+<h1 id="L102">Content title</h1>
+
+<p>...</p>
+
+<p>...</p>
+
+<p>...</p>
+
+<p>...</p>
+
+<p>...</p>
+
+<p>...</p>
+</div>
+</div>
+</div>
+
+<p>This arrangement will usually display two vertical scroll bars, one for the
+BODY element and other for the container. </p>
+
+<p>The BODY should be similarly manipulated in order to make it hide its
+vertical scroll bar. Its height should be equal or less than the viewport's
+height, or its <code>overflow</code> CSS property set to <code>hidden</code>.
+</p>
+
+<p>To check if the content is taller than the container, <a
+href="http://stackoverflow.com/questions/9333379/javascript-css-check-if-overflow">this
+function</a> will return a boolean value if the DOM element is overflowed: </p>
+<pre>function isOverflowed(element){
+    return element.scrollHeight &gt; element.clientHeight 
+    || element.scrollWidth &gt; element.clientWidth;
+}</pre>
+
+<p>It should be adapted to work on <code>overflow-x</code> only. </p>
+
+<p>Also, there is <a href="http://jsfiddle.net/qrt42/">a function that links a
+click with the text clicked</a> (<a
+href="http://stackoverflow.com/questions/8105824/how-to-determine-the-position-of-a-character-in-a-div-element">from
+SO</a>). </p>
+
+<p></p>
+
+<h3 id="L162">Related CSS properties</h3>
+
+<h4 id="L277"><code><a
+href="https://developer.mozilla.org/en-US/docs/CSS/overflow">overflow</a></code></h4>
+<pre>overflow:  visible | hidden | scroll | auto | inherit</pre>
+
+<h4 id="L448"><a
+href="https://developer.mozilla.org/en-US/docs/CSS/overflow-y">overflow-y</a></h4>
+<pre>overflow-y:  visible | hidden | scroll | auto</pre>
+
+<h4 id="L180"><code><a
+href="https://developer.mozilla.org/en-US/docs/CSS/white-space">white-space</a></code>
+</h4>
+<pre>white-space:  normal | pre | nowrap | pre-wrap | pre-line | inherit</pre>
+
+<h4 id="L209"><a
+href="https://developer.mozilla.org/en-US/docs/CSS/text-overflow">text-overflow</a></h4>
+<pre>text-overflow: inherit
+text-overflow: clip | ellipsis | <em>string</em> (experimental)</pre>
+
+<h4 id="L294"><a
+href="https://developer.mozilla.org/en-US/docs/CSS/word-wrap">word-wrap</a></h4>
+<pre>word-wrap:  normal | break-word</pre>
+
+<p>This tag is experimental. </p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p> </p>
+</div>
+</body>
+</html>

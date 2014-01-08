@@ -1,0 +1,4269 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Language" content="en">
+  <title>CA Ideal</title>
+  <link rel="stylesheet" href="res/rt.css">
+  <script src="res/jquery.js"></script>
+  <script src="res/rt.js"></script>
+  <script src="res/toc.js"></script>
+  <script src="res/rangy/uncompressed/rangy-core.js"></script>
+  <script src="res/rangy/uncompressed/rangy-cssclassapplier.js"></script>
+  <script src="./res/animatescroll.js"></script>
+  <script>
+    $(document).ready(function () {
+
+      // activate reading control (pass a selector to the function)
+      rt('#rtOuter', 1);
+
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <div id="rtHeader" style="display:none;"> 
+    <div class="ZZZ_fixedHeader">
+      <h1 style="display:inline; ">CA Ideal language</h1>
+    </div> 
+  </div>
+
+  <div id="rtOuter" style="height:100%; overflow:auto; position:relative; ">
+
+
+    <div id="rtBody" tabindex="0" style="margin-left:80px; outline:none; 
+    font-family: Helvetica, Arial, sans-serif; ">
+      <h2>CA-Ideal Procedure Language IDLB22PR.boo</h2>
+
+      <h3>2- Procedure Definition Language Concepts and Language Elements</h3>
+
+      <h4>PDL Language Elements</h4>
+
+      <div style="display:none">
+        <p>Hidden element test</p>
+      </div>
+
+      <p>Condition: One of the following: </p>
+      <ul>
+        <li>AND/OR condition
+        <pre>IF A=B AND C&lt;D AND E&gt;1
+IF FOUND AND NOT RED
+IF NOT $NUMERIC (AMOUNT) OR LIMIT&gt;100</pre>
+        <p>Implied subjects and implied relational operators are also valid</p>
+        <pre>A = 'B' OR &gt; 'C' is equivalent to A = 'B' OR A &gt; 'C'
+A = 'B' OR 'C' is equivalent to A = 'B' OR A = 'C'
+A = 'B' OR IS NULL OR = 'C' is allowed</pre>
+        </li>
+        <li>Boolean function
+        <p>A function that can evaluate to a value of True, False, or Unknown.
+        Boolean functions that can evaluate to Unknown include $ALPHABETIC,
+        $NUMERIC, $VERIFY, and $VERIFY-DATE. </p>
+      <pre>$NUMERIC(field1) to determine if a field has valid numeric content</pre>
+        </li>
+        <li>condition-name flag
+        <p>The 1- to 32-character name of the condition that exists when a
+        designated field has a given value. Condition names are defined with a type
+        of "C". </p>
+        <pre>1     W_HUE        X 1
+        RED        C       'R'
+        YELLOW     C       'Y'
+        BLUE       C       'B'
+        NO_HUE     C      NULL</pre>
+        </li>
+        <li>NOT condition
+        <p>Negates a conditional expression.</p>
+        <pre>IF NOT (TYPE = 'A' AND COLOR = 'BLUE')
+IF NOT (A = B)</pre>
+        </li>
+        <li>NULL expression
+        <p>A conditional expression that tests for null values.</p>
+        <pre>IF STATE IS NULL
+IF STATE IS NOT NULL</pre>
+        </li>
+        <li>relational-expression
+        <p>A condition where two operands are compared using a relational operator,
+        yielding a value of true, false, or unknown (when the value of either
+        operand is null). </p>
+        <p>The operators can be written thus: </p>
+        <pre> ____________________________________________________________
+ =          EQ             EQUAL
+ ____________________________________________________________
+ ,=         NE             NOT EQUAL         NOT=
+ ____________________________________________________________
+ &gt;          GT             GREATER [THAN]
+ ____________________________________________________________
+ &gt;=         GE             NOT LESS          NOT&lt;        ,&lt;
+ ____________________________________________________________
+ &lt;          LT             LESS [THAN]
+ ____________________________________________________________
+ &lt;=         LE             NOT GREATER       NOT&gt;        ,&gt;
+ ____________________________________________________________
+ CONTAINS   NOT CONTAINS</pre>
+        <p>For all of the relational operators, the symbol <code>,</code> can
+        replace <code>NOT</code>, <code>=</code> or <code>EQ</code> can replace
+        <code>EQUAL</code>, <code>&gt;</code> or <code>GT</code> can replace
+        <code>GREATER</code>, and you can use <code>&lt;</code> or <code>LT</code>
+        <code>LESS</code>. The reserved word <code>THAN</code> after
+        <code>GREATER</code> or <code>LESS</code> is optional. You can add it for
+        clarity. You can add the reserved word <code>IS</code> before any operator
+        for clarity.</p>
+        <p>Operands:</p>
+        <p>An operand can be a numeric expression (numeric field, date field,
+        arithmetic expression, numeric literal, numeric function), an alphanumeric
+        expression (alphanumeric field, alphanumeric function, alphanumeric
+        literal, or an alpha group), or a non-alpha group. </p>
+        <p>Alpha fields are right-padded with spaces. </p>
+        <p>You can compare an alphanumeric expression to a numeric expression,
+        however, a warning is issued. A $NUMBER function is automatically applied
+        to the alpha expression. </p>
+        <p>A non-alpha group is treated as an alphanumeric field with the size of
+        the group. Subordinate fields are not converted</p>
+        </li>
+        <li>search condition
+        <p>A condition used in a FOR construct to access a database using SQL. A
+        search condition conforms to the SQL syntax with the exceptions described
+        with the FOR statement for SQL.</p>
+        </li>
+        <li>where condition
+        <p>A condition used in a FOR construct to determine which record or row to
+        access. Qualifications on its use are described with the FOR statement for
+        each respective type of dataview.</p>
+        </li>
+        <li>Notes:
+        <ul>
+          <li>FOR constructs restriction: <br>
+          You can only use CONTAINS and NOT CONTAINS in FOR constructs for
+          CA-DATACOM/DB native access dataviews.</li>
+          <li>WHERE constructs restriction: <br>
+          You can only use LIKE, IN, BETWEEN, and NOT LIKE, NOT IN, and NOT
+          BETWEEN in where conditions in FOR constructs for SQL dataviews.</li>
+          <li>Mask character: <br>
+          A character (default *) used in a WHERE condition CONTAINS clause (in a
+          FOR statement for CA-DATACOM native command access only) to mark the
+          position of a character to ignore in the comparison of a character
+          string. For example *AB* represents "any character followed by AB
+          followed by any character". See $FIXED-MASK. &gt;&gt;&gt;&gt;</li>
+          <li>Data item:
+          <p>A field, group, or literal. </p>
+          </li>
+          <li>Data types:
+          <ul>
+            <li>CA-Ideal supports the following data types:
+            <ul>
+              <li>Alphanumeric (type X) </li>
+              <li>Variable length alphanumeric (type V) </li>
+              <li>Signed numeric (type N) </li>
+              <li>Unsigned numeric (type U) </li>
+              <li>Date (type D) </li>
+              <li>Flag (type F) </li>
+              <li>Condition (type C)</li>
+            </ul>
+            </li>
+            <li>Internal Format of Data Items
+
+            <table border="1">
+              <col>
+              <col>
+              <col>
+              <col>
+              <col>
+              <col>
+              <tbody>
+                <tr>
+                  <th>name</th>
+                  <th>T</th>
+                  <th>I</th>
+                  <th>CH/DG</th>
+                  <th>storage size</th>
+                  <th>observations</th>
+                </tr>
+                <tr>
+                  <td>alphanumeric</td>
+                  <td>X</td>
+                  <td></td>
+                  <td>x</td>
+                  <td>x characters</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>alphanumeric</td>
+                  <td>V</td>
+                  <td></td>
+                  <td>y</td>
+                  <td>2 + y characters</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>halfword</td>
+                  <td>N</td>
+                  <td>B</td>
+                  <td>1~4 digits</td>
+                  <td>2</td>
+                  <td>non-aligned</td>
+                </tr>
+                <tr>
+                  <td>fullword</td>
+                  <td>N</td>
+                  <td>B</td>
+                  <td>5~9 digits</td>
+                  <td>4</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>not supported</td>
+                  <td>N</td>
+                  <td>B</td>
+                  <td>+9 digits</td>
+                  <td>?</td>
+                  <td>flagged</td>
+                </tr>
+                <tr>
+                  <td>zoned decimal</td>
+                  <td>N</td>
+                  <td>Z</td>
+                  <td>n</td>
+                  <td>n</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>packed decimal</td>
+                  <td>N</td>
+                  <td>P</td>
+                  <td>m</td>
+                  <td>(n + 1) / 2 </td>
+                  <td>rounded up</td>
+                </tr>
+                <tr>
+                  <td>date</td>
+                  <td>D</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>number of days since Dec 31, 1900</td>
+                </tr>
+                <tr>
+                  <td>flag</td>
+                  <td>F</td>
+                  <td></td>
+                  <td></td>
+                  <td>1</td>
+                  <td>values <code>TRUE</code> or <code>FALSE</code>, contains
+                    "T" or "F"</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>Add 2 to the field size if it's nullable </p>
+            </li>
+            <li>At runtime, CA-Ideal enforces the number of declared digits. </li>
+            <li>Panel fields are zoned. </li>
+          </ul>
+          </li>
+          <li>Expressions
+          <ul>
+            <li>Alphanumeric expression
+            <p>An alphanumeric literal, elementary alphanumeric field, variable
+            length field, alpha group, or alphanumeric function. </p>
+            </li>
+            <li>Arithmetic expression
+            <p>A series of arithmetic operands and operators that can be
+            reduced to a single numeric value.</p>
+            <p>Operands are: <code>+ - / * **</code> </p>
+            <p>An arithmetic expression that contains one or more null values
+            results in a null value. </p>
+            <p>Up to 12 levels of parenthetic and function nesting are
+            permitted. </p>
+            <p>You cannot use non-alpha groups, condition names, flags, and
+            alphanumeric literals in arithmetic expressions. </p>
+            </li>
+            <li>Numeric expression
+            <p>A numeric literal, numeric field, date field, numeric function,
+            or arithmetic expression. </p>
+            <p>You can convert alphanumeric fields or alpha groups to numeric
+            using the $NUMBER function in place of numeric expressions, but a
+            compile-time warning is issued.</p>
+            </li>
+          </ul>
+          </li>
+          <li>Field
+          <ul>
+            <li>Alphanumeric field
+            <p>A field with a type of X. The maximum length is 32,000
+            characters. </p>
+            </li>
+            <li>Date field
+            <p>A field with a data type of D. </p>
+            <p>The date field has a numeric value indicating an integer number
+            of days from December 31, 1900 (day zero), plus or minus. You can
+            use date fields anywhere numeric fields can be used, except where
+            noted. </p>
+            <p>You cannot transmit date fields to a panel. First convert the
+            date field to alphanumeric using the $DATE or $STRING function. </p>
+            <p>CA-Ideal processes dates between 2000 BC and 9999 AD. Any other
+            date causes a runtime error. </p>
+            </li>
+            <li>SQL DATE, TIME, and TIMESTAMP fields are supported for CA-DATACOM
+            native access; however, they are converted to character (Type X)
+            with the following lengths:
+            <ul>
+              <li>DATE 10 </li>
+              <li>TIME 8 </li>
+              <li>TIMESTAMP 26</li>
+            </ul>
+            <p>These fields are stored as binary, unsigned, integer fields.</p>
+            <p>When a record is added with a FOR NEW statement, any DATE, TIME,
+            or TIMESTAMP fields are initialized using the system date and time.
+            </p>
+            </li>
+            <li>Flag
+            <p>A field with a type of F that has a value of TRUE or FALSE. You
+            can use flags in SET or MOVE statements where they are assigned the
+            value TRUE or FALSE (see SET or MOVE Format 3) as all or part of a
+            condition or in a LIST statement where they appear as the values T
+            or F (see the description of the LIST Statement). Flags take one
+            byte of storage and contain a T or an F.</p>
+            <p>Use flags in SET or MOVE statements. </p>
+            </li>
+          </ul>
+          </li>
+          <li>Group
+          <p>A named logical collection of one or more fields or groups. Panels
+          and dataviews are treated as groups.</p>
+          <ul>
+            <li>Alpha group
+            <p>A group in which all subordinate fields are either alphanumeric
+            fields, redefinitions of alphanumeric fields, or alpha groups. The
+            group must be in a dataview, in working data, or in an
+            identical-match parameter group. </p>
+            <p>You can use an alpha group interchangeably with an alphanumeric
+            field. </p>
+            </li>
+            <li>Non-alpha group
+            <p>Groups that are not alpha groups. You can use all non-alpha
+            groups in the following contexts: </p>
+            <ul>
+              <li>In SET/MOVE _ BY POSITION/NAME statements. </li>
+              <li>As dynamic match parameters on CALL statements. </li>
+              <li>As operands of some alphanumeric functions.</li>
+            </ul>
+            <p>There are restrictions for non-alpha groups that contain
+            CA_Ideal internal fields: </p>
+            <ul>
+              <li>Groups that were passed as dynamic parameters </li>
+              <li>Groups containing subordinate variable length fields </li>
+              <li>Groups containing subordinate nullable fields </li>
+              <li>Panel groups. </li>
+            </ul>
+            <p>You cannot use restricted groups in the following contexts: </p>
+            <ul>
+              <li>As source operands in SET/MOVE statements that move a value
+              to an elementary numeric or alphanumeric field. </li>
+              <li>As operands in simple relations in conditional expressions.
+              </li>
+              <li>As identical match parameters on CALL statements. </li>
+            </ul>
+            </li>
+          </ul>
+          </li>
+          <li>Nullable field
+          <p>A field defined as eligible to receive null values. The initial
+          value, if not specified, is the null value. </p>
+          <p>Fields in working data, parameter data, panels, and dataviews
+          defined through SQL can be nullable. </p>
+          <p>You cannot redefine nullable fields or groups that contain
+          subordinate nullable fields. Groups that contain subordinate nullable
+          fields are restricted. </p>
+          <p>Null values display as question marks (?) in reports. </p>
+          <p>Panel fields with null values are treated as empty ($EMPTY is true).
+          Null values display as question marks (?) in panels. </p>
+          </li>
+          <li>Numeric field
+          <p>A field with a type of N (numeric) or U (unsigned numeric) and a
+          numeric value. </p>
+          <p>The maximum length of the value of a numeric field in CA-Ideal is 31
+          digits. </p>
+          </li>
+          <li>Subordinate field
+          <p>A field that is in a group or alpha group. </p>
+          </li>
+          <li>Variable length field
+          <p>A field with a type of V. </p>
+          <p>The size of the field depends on its value, up to the specified
+          characters/digits length. </p>
+          <p>The maximum length of a variable length field is 32,000 characters.
+          </p>
+          <p>You cannot redefine variable length fields or groups containing
+          subordinate variable length fields. Groups that contain subordinate
+          variable length fields are restricted non-alpha groups. </p>
+          </li>
+          <li>Functions
+          <p>Requests that return values for various common services. </p>
+          <p>PDL functions are documented in Chapter 5 &gt;&gt;&gt;&gt;. </p>
+          <p>PDL function names start with a dollar sign like $NUMBER. </p>
+          <p>The four types of built-in functions are numeric, alphanumeric,
+          Boolean, and pseudo functions. </p>
+          <p>Appendix D &gt;&gt;&gt;&gt; contains a listing of the PDL built-in
+          functions and their operands. </p>
+          </li>
+          <li>Identifier
+          <p>The name of a group or field defined in working data or parameter
+          data optionally qualified and subscripted. </p>
+          <p>Restrictions: </p>
+          <ul>
+            <li>All level-1 identifiers (dataviews, panels, or the highest level
+            (level-1) of working data or parameter data) must be unique. </li>
+            <li>Identifiers must be unique in dataviews, panels, or the highest
+            level (level-1) of working data or parameter data. </li>
+            <li>You can use reserved words as identifiers at level 2 or lower.
+            They must be qualified regardless of whether they appear more than
+            once. </li>
+            <li>You can use SQL reserved words as identifiers in PDL (but not in
+            embedded SQL). </li>
+            <li>You can use PDL reserved words as identifiers in SQL. </li>
+          </ul>
+          <p>Examples: </p>
+          <pre>         PANEL1
+         PAYROLL.NAME
+         EMPLOYEE.ADDRESS
+         PAYROLL.ADDRESSMONTH(7)
+         DAY(COUNT+1) </pre>
+          </li>
+          <li>Literal
+          <p>A sequence of symbols whose value is implicit in the characters
+          themselves. </p>
+          <p>Every literal must be contained entirely on one line. </p>
+          <ul>
+            <li>Numeric literal
+            <p>Any series of one to 31 digits, with one optional decimal point,
+            and no embedded blanks, optionally preceded by a sign ("" or "-").
+            </p>
+            <pre>         5
+         22.3
+         -16
+         -17.3
+         +92
+         1745375 </pre>
+            </li>
+            <li>Alphanumeric literal
+            <p>Any series of characters, including blanks, surrounded by double
+            quotes (") or apostrophes ('). </p>
+            <pre>         "12345"
+         'CITY'
+         "REENTER CODE"
+         'STATE'
+         'COUNTY #124-A***'
+         "***ERROR***"
+         "O'REILLY, SCHWARTZ, &amp; SMITH ASSOCIATES" </pre>
+            </li>
+            <li>Boolean literal
+            <p>The value TRUE or FALSE. No delimiters. </p>
+            </li>
+          </ul>
+          </li>
+          <li>Rules for Valid Names
+          <ul>
+            <li>Begins with a letter (A through Z) or national character ($, @,
+            #). </li>
+            <li>Consists only of numerals, letters, national characters, embedded
+            underlines or hyphens. </li>
+            <li>The last character cannot be a hyphen or underline. </li>
+            <li>Maximum Name Lengths:
+            <ul>
+              <li>Field or group - 32 characters </li>
+              <li>Dataview definition for CA-DATACOM/DB native command access
+              or sequential file - 18 characters </li>
+              <li>Dataview definition for SQL access - 27 characters </li>
+              <li>Object name - 18 characters </li>
+              <li>Period - 1 character </li>
+              <li>Authorization (or creator) ID - 8 characters </li>
+              <li>Program definition - 8 characters </li>
+              <li>Panel definition - 8 characters </li>
+              <li>Report definition - 8 characters</li>
+            </ul>
+            </li>
+            <li>Assignment Name Restrictions
+            <ul>
+              <li>Dataview definition fully qualified names must be unique
+              across CA-Ideal. </li>
+              <li>Object names without qualification must be unique in each
+              program. </li>
+              <li>Panel definition names, program definition names, and report
+              definition names must be unique across CA-Ideal systems. </li>
+            </ul>
+            </li>
+            <li>Qualified name
+            <p>If a name appears in more than one dataview, panel, or level-1
+            working or parameter data item, it must be qualified. </p>
+            <p>The name is qualified by prefixing it with the appropriate
+            dataview name, panel name, working data level-1 name, or parameter
+            data level-1 name, and a period. </p>
+            </li>
+            <li>Subscripted name
+            <p>Subscripts are required when the definition of the field or
+            group contains a number of occurrences.</p>
+            <p>You can include one to three subscripts after the field or group
+            name, separated by commas and enclosed in parentheses. </p>
+            <p>Thus, an identifier consists of a name, optionally preceded by a
+            qualifier, and optionally followed by one to three subscripts. The
+            syntax for the identifier is as follows: </p>
+            <pre>[{dataview-name | panel-name | level-1-name}.] name [(sub[,sub]])]
+  sub:
+{name | numeric literal} [ {-|- } {name | numeric literal }] </pre>
+            <p>Names used in subscripts can be qualified, but cannot be
+            subscripted, and name data items without decimals. </p>
+            <p>The value of a subscript must be an integer between one and the
+            number of occurrences of the name being subscripted. </p>
+            </li>
+          </ul>
+          </li>
+          <li>NULL
+          <p>The null value. </p>
+          </li>
+          <li>Parameter
+          <p>A data item used in a CALL statement or a RUN command. </p>
+          </li>
+          <li>Procedure
+          <p>A named, functional collection of statements. </p>
+          </li>
+          <li>Reserved word
+          <p>A word with a special meaning to PDL. </p>
+          </li>
+          <li>Statements
+          <p>Simple directives in the PDL language, like SET, MOVE, and TRANSMIT,
+          or constructs, such as the IF and FOR constructs. </p>
+          </li>
+          <li>Subprogram
+          <p>Any program called by another program. </p>
+          <p>Subprograms must be specified as resources of a calling program. See
+          the Creating Programs guide &gt;&gt;&gt;&gt; </p>
+          </li>
+        </ul>
+        </li>
+      </ul>
+
+      <h4>PDL Format Rules</h4>
+
+      <p>With the exception of the limitations outlined below, you can enter PDL
+      programs in free format. </p>
+
+      <p>You can continue statements over lines without the use of continuation
+      characters, statements can begin in any column, and there are no spacing rules.
+      </p>
+
+      <p>Different rules apply to embedded SQL (see the section titled Format Rules
+      in Chapter 3 &gt;&gt;&gt;&gt;).</p>
+
+      <h5 id="Lexical">Lexical rules</h5>
+      <ol>
+        <li>The following are valid delimiters for identifiers, reserved words, and
+        numeric literals: space, comma, left parenthesis (, right parenthesis ),
+        less than &lt;, greater than &gt;, equals =, asterisk *, slash /, not ,,
+        ampersand &amp;, vertical bar |, and colon :. </li>
+        <li>You can use apostrophes (') and quotation marks (") interchangeably to
+        delimit alphanumeric literals, but the leading and final delimiter must
+        match. </li>
+        <li>Identifiers, literals, labels, and reserved words can appear in the
+        right-most and left-most columns of the source record. </li>
+        <li>Anything to the right of a colon (:) or double hyphens (--) is treated as
+        a comment. See the description of the use of comments for more information
+        &gt;&gt;&gt;&gt;. </li>
+        <li>You cannot break words from one line to the next. </li>
+        <li>You can leave blank lines. </li>
+        <li>See the definitions of names, identifiers, literals, functions, and so on
+        earlier in this chapter for further information about permitted use. </li>
+        <li>Labels of procedures, FOR constructs, and loops take the form:
+      <pre>  &lt;&lt;name&gt;&gt; </pre>
+        </li>
+      </ol>
+
+      <h4 id="EJECT">EJECT Statement </h4>
+
+      <p>The EJECT statement causes the compilation listing to skip to the top of a
+      page. It must be on a line by itself. </p>
+
+      <h5 id="Comment">Comment</h5>
+
+      <p>Text beginning with : or -- is treated as a comment.</p>
+  <pre>         : this is regarded as a comment.
+         SET A = B + C  :  this is regarded as a comment,
+         SET D = A + 1  -- and this, too, but not the SETs</pre>
+
+      <h4 id="Converting">Converting Between Numeric and Alphanumeric </h4>
+
+      <p>When you use a numeric field in an alphabetic context, it is converted to a
+      display form. See $STRING, $EDIT, LIST, MOVE, and SET. &gt;&gt;&gt;&gt; </p>
+
+      <p>When you use an alphanumeric field in a numeric context, it is converted to
+      numeric form if possible before it is evaluated. See the $NUMBER function.
+      &gt;&gt;&gt;&gt; </p>
+
+      <p>If an alphanumeric value is converted to a numeric value, a compile-time
+      warning message is issued.</p>
+
+      <p>If the source of a conversion to numeric does not contain a valid numeric
+      value, a runtime error occurs. </p>
+
+      <h4 id="Data">Data Definition Conventions </h4>
+
+      <p>CA-Ideal application programs use data from a variety of sources. This data
+      includes: </p>
+      <ul>
+        <li>Working data. </li>
+        <li>Parameter data. </li>
+        <li>The logical structures of a relational database as defined through
+        dataview definitions. </li>
+        <li>The record structures of a sequential file as defined through dataview
+        definitions. </li>
+        <li>The record structures of a VSAM file as defined through dataview
+        definitions.</li>
+      </ul>
+
+      <p>The Creating Programs guide &gt;&gt;&gt;&gt; contains explanations of how
+      working data for CA-Ideal programs and parameter data for both CA-Ideal and
+      non-CA-Ideal subprograms is defined. </p>
+
+      <p>For information on how CA-Ideal applications use dataviews, see the FOR
+      Statement in this guide &gt;&gt;&gt;&gt;. For additional information on how
+      CA-Ideal uses dataviews, see the Creating Dataviews guide &gt;&gt;&gt;&gt;.</p>
+
+      <h3 id="SQLConcepts">3- SQL Concepts and Language Elements</h3>
+
+      <h4 id="Introducti">Introduction</h4>
+
+      <p>CA-Ideal supports SQL access to CA-DATACOM/DB and DB2 in PDL programs. </p>
+
+      <p>You can code embedded SQL statements directly in a CA-Ideal program's
+      procedure section, delimited by the words <code>EXEC SQL</code> and
+      <code>END-EXEC</code>. The EXEC SQL statement is described in Chapter 4.
+      &gt;&gt;&gt;&gt; </p>
+
+      <p>The CA-Ideal editor lets you enter template commands in the margin of the
+      program procedure fill-in. SQL template commands automatically generate
+      syntactically correct SQL statements. SQL template commands are described in
+      the CA-Ideal Command Reference Guide. &gt;&gt;&gt;&gt; </p>
+
+      <p>You can also use the FOR construct to access databases using SQL. When you
+      use the FOR construct with a dataview defined to access an SQL object, CA-Ideal
+      automatically generates optimized SQL statements to perform the same functions.
+      The FOR statement is described in Chapter 4. &gt;&gt;&gt;&gt; </p>
+
+      <p>You can print the generated SQL on the compiler listing. The COMPILE command
+      is described in the CA-Ideal Command Reference Guide. &gt;&gt;&gt;&gt; </p>
+
+      <h4 id="Dataviews">SQL Dataviews </h4>
+
+      <p>A CA-Ideal dataview corresponds to a complete SQL table, view, or synonym.
+      </p>
+
+      <p>To create and use an SQL dataview: </p>
+      <ol>
+        <li>Issue a CATALOG command with the name of the SQL object.
+        <p>The catalog process retrieves the definition of the object from the
+        database and creates a dataview entity-occurrence for the object in the
+        dictionary facility and a dataview object module in the virtual library
+        system. </p>
+        </li>
+        <li>Specify the dataview with the object's authorization ID in a program's
+        resource fill-in.
+        <p>Any embedded Data Manipulation Language (DML) statements or FOR
+        constructs can access the cataloged object from that program. </p>
+        </li>
+      </ol>
+
+      <p>Defining SQL dataviews is described fully in the Creating Dataviews guide.
+      </p>
+
+      <h5 id="CA-DATACOM">CA-DATACOM/DB Access Plans </h5>
+
+      <p>Programs that accesses CA-DATACOM/DB using embedded SQL or FOR constructs
+      must have an access plan unique to that program. </p>
+
+      <p>CA-Ideal builds the plan and binds each SQL statement as part of the
+      compilation. </p>
+
+      <p>The authorization ID and other options are taken from the program
+      environment fill-in (described in the Creating Programs guide
+      &gt;&gt;&gt;&gt;). </p>
+
+      <p>You can change the plan options and rebind a plan without recompiling the
+      program by using the ALTER PROGRAM ENVIRONMENT &gt;&gt;&gt;&gt; command,
+      followed by a REBIND &gt;&gt;&gt;&gt; command. </p>
+
+      <p>You can also define alternate plans for a program and select the appropriate
+      plan at runtime. See the Administration Guide &gt;&gt;&gt;&gt; for more
+      information on defining and maintaining alternate plans. </p>
+
+      <h5 id="Applicatio">DB2 Application Plans and Packages</h5>
+
+      <p>Application plans and packages for DB2 are created in CA-Ideal using the
+      plan definition facility, described in the Administration Guide
+      &gt;&gt;&gt;&gt;. </p>
+
+      <p>The binding of plans and packages is performed in batch CA-Ideal, using the
+      GENERATE PLAN &gt;&gt;&gt;&gt; and GENERATE PACKAGE &gt;&gt;&gt;&gt; commands.
+      </p>
+
+      <p>You can execute programs against DB2 in dynamic or static mode, for both
+      embedded and generated SQL, without any changes to the source code. </p>
+
+      <p>If you generate and use an application plan, the application runs in static
+      mode. You can also have the application switched back to dynamic mode
+      automatically for quick maintenance. </p>
+
+      <h5 id="NULL">SQL NULL Attribute</h5>
+
+      <p>CA-Ideal supports the SQL NULL concept. </p>
+
+      <p id="NULL-2">Fields in dataviews that are defined as null-eligible do not require
+      indicator variables. Rather, the programmer uses the keyword <code>NULL</code>,
+      as in <code>IF FIELD_X IS NULL ...</code>. </p>
+
+      <p>CA-Ideal also handles the null attribute in conditional and arithmetic
+      expressions and in working data, parameter data, and on panels and reports. </p>
+
+      <h5 id="Error">Error Processing</h5>
+
+      <p>A CA-Ideal program can access the SQLCA for the last SQL statement executed.
+      </p>
+
+      <p>You can define the SQLCA work area in the program's working data or
+      parameter data or code <code>$SQL</code> functions in any program procedure or
+      <code>$ERROR</code> functions in the Error procedure. </p>
+
+      <p>The SQLCA is described further in the SQLCA section in this chapter
+      &gt;&gt;&gt;&gt;. </p>
+
+      <p>CA-Ideal also supports the <code>SQL WHENEVER</code> statement (described in
+      the SQL Language Elements section in this chapter &gt;&gt;&gt;&gt;).</p>
+
+      <h5 id="Active">Active Dictionary Facility </h5>
+
+      <p>CA-Ideal keeps track of the application model, which includes systems,
+      programs, dataviews, panels, and reports. </p>
+
+      <p>The dictionary facility is automatically populated as CA-Ideal operates.
+      Dictionary facility information verifies the integrity of developer actions.
+      </p>
+
+      <h5 id="Mixed">Mixed SQL Sites</h5>
+
+      <p>A mixed SQL site can access multiple databases using SQL. </p>
+
+      <p>DML statements, such as <code>INSERT</code>, require a cataloged dataview.
+      The dataview specifies which database is the target. </p>
+
+      <p>The <code>COMMIT</code>, <code>ROLLBACK</code>, and <code>WHENEVER</code>
+      statements affect all the databases. </p>
+
+      <p>Statements such as <code>GRANT</code> and <code>EXECUTE IMMEDIATE</code>
+      that do not access objects defined as dataviews can access only one database
+      from a program, the <em>primary database</em>. The primary database processes
+      supported SQL statements listed in the following two charts as no dataview
+      required. &gt;&gt;&gt;&gt; </p>
+
+      <p>You can specify the primary database as a site or session default, and
+      override it for individual programs. See the <code>SET ENVIRONMENT SQL</code>
+      command in the Command Reference Guide &gt;&gt;&gt;&gt; and the program
+      environment fill-in the Creating Programs guide &gt;&gt;&gt;&gt; for more
+      information. </p>
+
+      <h4 id="Supported">Supported SQL Statements </h4>
+
+      <p>CA-Ideal PDL supports the SQL statements below. </p>
+
+      <h5 id="CA-DATACOM1">CA-DATACOM/DB SQL Statements Supported in PDL:</h5>
+  <pre>     ___________________________________________________________________
+     Statement Type        Statement           Comments
+     ___________________________________________________________________
+     DML                   CLOSE
+     Dataview required in  DECLARE CURSOR
+     program resource      DELETE
+     fill-in               FETCH
+                           INSERT
+                           LOCK TABLE
+                           OPEN
+                           SELECT
+                           UPDATE
+     ___________________________________________________________________
+     DML                   COMMIT              Operates like PDL
+     No dataview required  ROLLBACK            CHECKPOINT.
+                           WHENEVER            Operates like PDL
+                                               BACKOUT.  See the section
+                                               titled WHENEVER
+                                               Statement.
+     ___________________________________________________________________
+     DCL                   COMMENT ON
+     No dataview required  GRANT
+                           REVOKE
+     ___________________________________________________________________</pre>
+
+      <h5 id="Statements">DB2 SQL Statements Supported in PDL:</h5>
+  <pre>     ___________________________________________________________________
+     Statement Type        Statement           Comments
+     ___________________________________________________________________
+     DDL                   CREATE SCHEMA
+     No dataview required  CREATE SYNONYM
+                           CREATE TABLE
+                           CREATE VIEW
+                           DROP
+      ___________________________________________________________________
+     DML
+     Dataview required in  CLOSE
+     program resource      DECLARE CURSOR      FOR FETCH ONLY supported
+     fill-in               DELETE
+                           FETCH
+                           INSERT
+                           LOCK TABLE
+                           OPEN
+                           SELECT
+                           UPDATE              OPTIMIZE FOR supported
+      ___________________________________________________________________
+     DML
+     No dataview required   COMMIT            Operates like PDL
+                            ROLLBACK          CHECKPOINT.
+                            WHENEVER          Operates like PDL BACKOUT.
+                                              See the section titled
+                                              WHENEVER Statement.
+     ___________________________________________________________________
+     DCL
+     No dataview required   Dynamically, using
+                            EXECUTE IMMEDIATE:
+                            ALTER
+                            COMMENT ON
+                            CREATE
+                            DROP
+     ___________________________________________________________________
+     DDL                    Dynamically, using
+     No dataview required   EXECUTE IMMEDIATE:
+                            EXPLAIN
+                            GRANT
+                            LABEL ON
+                            REVOKE
+     ___________________________________________________________________</pre>
+
+      <h5 id="WHENEVER">WHENEVER Statement</h5>
+
+      <p>The SQL WHENEVER statement embedded in a PDL program specifies the action to
+      take when a specified condition occurs during the execution of a subsequent
+      embedded SQL statement and all SQL statements that follow in listing sequence
+      until another WHENEVER statement for that condition overrides it. </p>
+  <pre>  WHENEVER {NOT FOUND | SQLERROR | SQLWARNING }
+  [DO ERROR | DO procedure | PROCESS-NEXT-label | QUIT-label ]</pre>
+
+      <p><code>NOT FOUND</code> | <code>SQLERROR</code> | <code>SQLWARNING</code> is
+      the type of SQL exception condition. </p>
+
+      <p><code>CONTINUE</code> (default) Specifies that execution continues with the
+      next statement. </p>
+
+      <p><code>PROCESS-NEXT-label</code> A <code>PROCESS NEXT</code> statement
+      terminating the current iteration of the current <code>LOOP</code> or <code>FOR
+        EACH</code> construct. See the PROCESS NEXT statement in the next chapter.
+      &gt;&gt;&gt;&gt; </p>
+
+      <p><code>QUIT-label</code> A <code>QUIT</code> statement specifying execution
+      of a PDL QUIT with the specified option. See the <code>QUIT</code> statement in
+      the next chapter. &gt;&gt;&gt;&gt; </p>
+  <pre>         EXEC SQL WHENEVER SQLERROR DO ERRPROC END-EXEC
+         EXEC SQL WHENEVER NOT FOUND PROCESS NEXT MAIN-LOOP END-EXEC
+         EXEC SQL WHENEVER SQLWARNING CONTINUE END-EXEC
+
+     ___________________________________________________________________
+     Condition          Action
+     ___________________________________________________________________
+     SQLERROR           The procedure ERRPROC is executed.
+     ___________________________________________________________________
+     NOT FOUND          The next iteration of MAIN-LOOP is processed.
+     ___________________________________________________________________
+     SQLWARNING         Processing continues with the statement
+                        following the statement that caused the
+                        condition.
+     ___________________________________________________________________</pre>
+
+      <p>If no <code>WHENEVER</code> statement is included in the program for a given
+      condition, the default is <code>CONTINUE</code>. </p>
+
+      <p>The PDL <code>$ERROR</code> functions, error procedure, and the command
+      <code>LIST ERROR</code> do not apply to errors encountered in processing
+      embedded SQL statements. </p>
+
+      <p>PDL <code>FOR</code> constructs, even though they generate SQL requests, are
+      bound by PDL error handling rules, not <code>WHENEVER</code> specifications.
+      </p>
+
+      <p>For a mixed SQL site, the <code>WHENEVER</code> applies to SQL statements
+      accessing any database. You can determine the database accessed by the last SQL
+      statement using the <code>$SQL-DBMS</code> function.</p>
+
+      <h5 id="Extension">Extension to INTO and VALUES Clauses</h5>
+
+      <p>PDL supports the following extension to the SQL INTO and VALUES clauses. </p>
+  <pre>         INTO host-structure [BY POSITION]
+         VALUES host-structure [BY POSITION] </pre>
+
+      <p><code>host-structure</code> is a PDL group identifier. </p>
+
+      <p><code>BY POSITION</code> is to move data between each elementary item of the
+      structure and each column of the acessed row. </p>
+
+      <p>The structures must be compatible. </p>
+
+      <p>You can use the <code>COPY DATAVIEW</code> clause with a Working Data
+      fill-in to automatically create an image of an SQL dataview in a group item.
+      </p>
+
+      <h5 id="Supported1">DB2 SQL Not Supported</h5>
+
+      <p>The CA-Ideal PDL does not support the following DB2 SQL statements and
+      clauses: </p>
+      <ol>
+        <li>SQL clauses used exclusively to process SQL statements dynamically. They
+        are the USING clause and prepared statement-name reference. </li>
+        <li>The SQL statements that serve as documentation and that support extended
+        semantic checking by the IBM precompiler. Their functions are already
+        performed in CA-Ideal. These statements are:
+        <ul>
+          <li>DECLARE TABLE </li>
+          <li>DECLARE STATEMENT </li>
+          <li>The interactive SQL statements and most of the SQL statements that
+          support dynamic SQL. These statements are:
+          <ul>
+            <li>DESCRIBE </li>
+            <li>EXECUTE </li>
+            <li>PREPARE </li>
+            <li>Interactive SELECT</li>
+          </ul>
+          </li>
+        </ul>
+        </li>
+      </ol>
+
+      <h4 id="SQLCA">SQLCA</h4>
+
+      <p>The SQLCA is a structure containing information about the last SQL statement
+      ran. </p>
+
+      <p>You can access SQLCA using: </p>
+      <ul>
+        <li>The $SQL built-in functions return information about the last SQL
+        statement processed in the run unit. See $SQL functions in Chapter 5.
+        &gt;&gt;&gt;&gt; </li>
+        <li>The <code>$ERROR-DVW-STATUS</code> function to return the SQLCODE. The
+        $ERROR functions return information about the last SQL statement generated
+        by a FOR construct in an Error Procedure or <code>WHEN ERROR</code> clause.
+        </li>
+        <li>A copy of the SQLCA in working data or parameter data. You can have a
+        copy for each database. See the COPY SQLCA clause in the Creating Programs
+        guide. &gt;&gt;&gt;&gt; </li>
+        <li>In a non-CICS environment, if a PDL <code>CHECKPOINT</code> or
+        <code>BACKOUT</code> statement is executed and the database was accessed,
+        then CA-Ideal executes a SQL <code>COMMIT</code> or <code>ROLLBACK</code>,
+        changing the contents of the SQLCA. </li>
+      </ul>
+
+      <h4 id="Supported2">Supported SQL Language Elements</h4>
+
+      <h5 id="Condition">Condition</h5>
+
+      <p>The following SQL relational predicates are supported: </p>
+      <ul>
+        <li>ALL </li>
+        <li>ANY </li>
+        <li>BETWEEN </li>
+        <li>EXISTS </li>
+        <li>IN </li>
+        <li>LIKE </li>
+        <li>NULL </li>
+        <li>SOME</li>
+      </ul>
+
+      <p>In addition, you can use the following PDL relational operators in embedded
+      SQL predicates:</p>
+  <pre>     EQUAL                EQ
+     NOT EQUAL            NE
+     GREATER THAN         GT
+     NOT GREATER THAN     LE
+     LESS THAN            LT
+     NOT LESS THAN        GE</pre>
+
+      <p>You can combine conditional expressions using AND and OR. You can use &amp;
+      and | for AND and OR. Implied subjects and operators do not apply in embedded
+      SQL. </p>
+
+      <h5 id="Data1">Data Types</h5>
+  <pre>     __________________________________________________________
+     CA-DATACOM SQL                DB2
+     __________________________________________________________
+     Character                     Fixed-length string
+     Variable length string        Variable length string
+     Small integer                 Small integer
+     Large integer                 Large integer
+     Numeric
+     Decimal                       Decimal
+     Date                          Date
+     Time                          Time
+     Timestamp                     Timestamp
+     __________________________________________________________</pre>
+
+      <p>CA-Ideal fields that correspond to SQL date and time type columns appear to
+      PDL with the following attributes: </p>
+      <ul>
+        <li>Date Columns: X(10) </li>
+        <li>Time Columns: X(8) </li>
+        <li>Timestamp Columns: X(26)</li>
+      </ul>
+
+      <p>For CA-DATACOM SQL, variable length strings are shown as type X, with the
+      maximum length as the length. </p>
+
+      <h5 id="Function">Function</h5>
+
+      <p>All SQL functions are supported in embedded SQL. </p>
+
+      <p>You can use SQL functions in the search condition of a FOR construct with an
+      SQL dataview where the functions are allowed by SQL rules. </p>
+
+      <p>PDL functions are prohibited in embedded SQL and FOR constructs with SQL
+      dataviews. </p>
+
+      <h5 id="Host">Host Variables</h5>
+
+      <p>A CA-Ideal group, field, or parameter defined in a dataview, panel, working
+      data, or parameter data, and is used in embedded SQL. You can prefix a host
+      variable in embedded SQL with a colon; that is: </p>
+  <pre>  :host-identifier</pre>
+
+      <p>For DB2: You can omit the colon when the host identifier is not a reserved
+      word or when it meets any of the conditions listed below.</p>
+
+      <p>For CA-DATACOM/DB: You can omit the colon when each host identifier used in
+      a statement meets the following conditions: </p>
+      <ul>
+        <li>It is qualified by a host structure (group) name that is not a reserved
+        word.
+        <p>For example, you can specify the subsidiary field <code>SUR_NAME</code>,
+        which is part of group <code>LONG_NAME</code>, as <code>:SUR_NAME</code>,
+        as <code>LONG_NAME.SUR_NAME</code>, or as <code>:LONG_NAME.SUR_NAME</code>.
+        </p>
+        </li>
+        <li>It is referenced in a context where column names are illegal (that is, in
+        an <code>INTO</code> or <code>VALUE</code> clause or in the
+        <code>LIKE</code> or <code>IN</code> predicates) and it is not an SQL
+        reserved word or PDL verb. </li>
+      </ul>
+
+      <p>You can use an SQL column name defined in a dataview as a host variable, but
+      only in the logical scope of a FOR statement executed for the dataview. See the
+      FOR Statement for SQL in Chapter 4 for a description of embedded SQL and the
+      FOR. </p>
+
+      <p>An alpha group is treated as an elementary alpha field in embedded SQL
+      except when it is used in an <code>INTO</code> or <code>VALUE</code> clause
+      with <code>BY POSITION</code>. In that case, each subfield in the group is
+      treated as an elementary alpha field. </p>
+
+      <p>You can use a non-alpha group as a host variable only with <code>BY
+        POSITION</code>. In that case, each subfield in the group is treated as an
+      elementary field of the appropriate type. </p>
+
+      <p>You can use <code>COPY DATAVIEW</code> to automatically include an image of
+      an SQL dataview in a working data or parameter data group item. </p>
+
+      <p>Host variables that correspond to SQL date and time columns can be
+      alphanumeric fields that follow the default formats or that follow local date
+      and time default formats specified in a DB2 user exit. You can also use
+      CA-Ideal date fields as host variables that correspond to SQL date columns. You
+      can use a CA-Ideal date field anywhere an SQL date column is acceptable, except
+      as the target of a <code>FETCH INTO</code> when a local default date exit is in
+      effect. </p>
+
+      <h5 id="Indicator">Indicator Variable</h5>
+
+      <p>A host variable identifier must be qualified by a group name if it is not
+      unique in the program. </p>
+
+      <p>For CA-DATACOM/DB: You cannot use a SQL reserved word as a host identifier.
+      </p>
+
+      <p>For DB2: You can use a SQL reserved word as a host variable name if it is
+      qualified by a group name. </p>
+
+      <p>You can omit the leading colon from a qualified host identifier. If you omit
+      the colon and the group-name qualifier is the same as a table, view, or
+      correlation name in the current SQL statement, the reference is assumed to be
+      to a column, not to a host variable. </p>
+
+      <h5 id="Identifier">Identifier </h5>
+
+      <p>The SQL ordinary identifier -a letter followed by 0 to 17 characters- is
+      supported in embedded SQL. CA-Ideal does not support delimited identifiers. </p>
+
+      <h5 id="Literal">Literal</h5>
+
+      <p>CA-Ideal supports the following types of SQL literals in embedded SQL. FOR
+      construct search conditions follow the rules for PDL literals. </p>
+      <ul>
+        <li>Integer constants (for example, +100, 64, -15) </li>
+        <li>Decimal constants (for example, 25.4, -56., 99.) </li>
+        <li>Character strings, delimited by apostrophes (for example, 'literal') or
+        quotation marks (for example, "literal"). </li>
+        <li>In DB2: Hex literals, specified as X followed by a character string (for
+        example, X'FFFF'). </li>
+      </ul>
+
+      <p>To embed an apostrophe (') in a character string, use quotation marks to
+      delimit the character string (for example, "literal's"). To embed quotation
+      marks in a character string, use apostrophes to delimit the string. </p>
+
+      <h5 id="Name">Name Conventions</h5>
+
+      <p>The names of SQL objects and columns in embedded SQL follow the naming
+      conventions of the appropriate database management system. CA-Ideal supports
+      the use of the tables, views, and synonyms in CA-DATACOM and tables and views
+      in DB2. </p>
+
+      <h5 id="Qualified">Qualified Table and View Name</h5>
+
+      <p>You can qualify the names of SQL objects with authorization IDs (schema
+      names) of up to eight characters. For example, you can qualify the table
+      PAYROLL with the authorization ID HOU:</p>
+  <pre>  HOU.PAYROLL</pre>
+
+      <p>The dataviews corresponding to SQL objects must have authorization IDs,
+      either by default (the dataview authorization ID) or coded explicitly in the
+      embedded SQL. In each program resource table that includes a dataview for an
+      SQL object, you must: </p>
+      <ul>
+        <li>Specify a dataview authorization ID. This authorization ID identifies the
+        cataloged dataview corresponding to the object. </li>
+        <li id="testElement">Set the Q (qualifier) column for the dataview to either Y or N. This
+        tells CA-Ideal to use the dataview authorization ID in the SQL when the
+        object name is not qualified in the embedded SQL or allow the database to
+        supply its default authorization ID. </li>
+      </ul>
+
+      <p>You have several options for qualifying an object name based on how its
+      dataview is defined: </p>
+      <ul>
+        <li>You can always use the authorization ID specified in the program resource
+        fill-in. Specify Y in the Q column. Qualifying the name in embedded SQL is
+        allowed, but not necessary. </li>
+        <li>You can have CA-DATACOM/DB supply its default authorization ID. Specify N
+        in the Q column and do not qualify the name in embedded SQL. </li>
+        <li>You can override the default for selected SQL statements by specifying N
+        in the Q column and, qualifying the object name with the authorization ID
+        from the program resource fill-in. </li>
+      </ul>
+
+      <p>This lets you access multiple objects with the same name but different
+      authorization IDs using one dataview. Their structures must be compatible. See
+      the Creating Programs guide for information on defining a program.
+      &gt;&gt;&gt;&gt; </p>
+
+      <h5 id="Example">Example</h5>
+
+      <p>Consider the following program resource table definition:</p>
+  <pre>         Dataview              Auth-id   Q?
+
+         EMPLOYEE              SBL       Y
+         PAYROLL               HOU       N </pre>
+
+      <p>and the following embedded SQL statements: </p>
+  <pre>         EXEC SQL
+           SELECT FROM EMPLOYEE, PAYROLL
+         END-EXEC
+
+         EXEC SQL
+           SELECT ... FROM SBL.EMPLOYEE, HOU.PAYROLL
+         END-EXEC
+
+         EXEC SQL
+           INSERT INTO PAYROLL
+           (SELECT * FROM HOU.PAYROLL ...)
+         END-EXEC </pre>
+
+      <p>CA-Ideal generates the following clauses: </p>
+  <pre>         SELECT ... FROM SBL.EMPLOYEE, PAYROLL
+
+         SELECT ... FROM SBL.EMPLOYEE, HOU.PAYROLL
+
+         INSERT ... INTO PAYROLL (SELECT * FROM HOU.PAYROLL ...)</pre>
+
+      <p>In the first example, the database qualifies the table name PAYROLL with an
+      authorization ID. </p>
+
+      <p>In the second example, both table names are qualified with the dataview
+      authorization ID from the program resource fill-in. </p>
+
+      <p>In the third example, two tables, HOU.PAYROLL and xxx.PAYROLL (where xxx is
+      the CA-DATACOM/DB default authorization ID and is not HOU) are accessed using
+      the PAYROLL dataview specified in the program resource fill-in.</p>
+
+      <p>The <code>ASSIGN AUTHORIZATION</code> command lets you specify an
+      authorization ID to use for all tables or views specified as unqualified in the
+      resource table. </p>
+
+      <p>For DB2: The <code>ASSIGN AUTHORIZATION</code> command also lets you replace
+      the dataview authorization ID specified in the resource table with a new
+      authorization ID or generate an unqualified table or view name. The
+      interactions of the resource table, embedded SQL, and the <code>ASSIGN
+        AUTHORIZATION</code> command are explained in the Command Reference Guide and
+      the Administration Guide. &gt;&gt;&gt;&gt; </p>
+
+      <p>For CA-DATACOM SQL access: The <code>ASSIGN AUTHORIZATION</code> command
+      lets you select an alternate access plan at runtime. </p>
+
+      <h5 id="Qualified1">Qualified Column Name</h5>
+
+      <p>In embedded SQL, you can qualify a column name with the name of an SQL
+      object. CA-Ideal supports up to two levels of qualification. </p>
+
+      <p>For example, column name <code>EMP_NAME</code> can be qualified by the table
+      name <code>EMP_TABLE.EMP_NAME</code> but it cannot be further qualified as in
+      <code>AUTHID.EMP_TABLE.EMP_NAME</code>. </p>
+
+      <p>You can achieve the same result by using correlation names or by letting
+      CA-Ideal qualify the object name using one of the methods described previously.
+      </p>
+
+      <p>CA-Ideal validates column references. It checks that: </p>
+      <ul>
+        <li>The column name is defined in the specified dataview. </li>
+        <li>Null eligible variables select NULL eligible columns. </li>
+        <li>Host variables are of compatible type for the columns selected or
+        compared.</li>
+      </ul>
+
+      <h5 id="Reserved">Reserved Word</h5>
+
+      <p>For CA-DATACOM native access, you cannot use a SQL reserved word as an
+      identifier. For DB2, you can use a qualified SQL reserved word as an
+      identifier. Appendix C contains a list of SQL reserved words. &gt;&gt;&gt;&gt;
+      </p>
+
+      <h4 id="Formatting">SQL Formatting Rules</h4>
+
+      <p>You can embed SQL statements in free format. You can continue statements
+      over lines without continuation characters, statements can begin in any column,
+      and there are no spacing rules. </p>
+
+      <h5 id="Lexical1">Lexical Rules</h5>
+      <ul>
+        <li>SQL statements are delimited by EXEC SQL and END-EXEC. See the EXEC SQL
+        statement. &gt;&gt;&gt;&gt; </li>
+        <li>The following are valid delimiters for identifiers, reserved words, and
+        numeric literals: space, comma, left parenthesis (, right parenthesis ),
+        less than &lt;, greater than &gt;, equals =, asterisk *, slash /, not ,
+        ampersand &amp;, vertical bar |, and colon :. </li>
+        <li>The apostrophe or quotation mark delimits alphanumeric literals. Double
+        apostrophes or double quotation marks indicate a literal apostrophe or
+        literal quotation mark. </li>
+        <li>Identifiers, literals, and reserved words can appear in the right-most
+        and left-most columns of the source record. </li>
+        <li>Double hyphens are comment delimiters in embedded SQL. The colon is not.
+        </li>
+        <li>You cannot break words over lines. </li>
+        <li>You can leave blank lines. </li>
+      </ul>
+
+      <h5 id="Comments">Comments </h5>
+
+      <p>Any line in embedded SQL can contain a comment. The format of a comment is:
+      <code>-- text of comment</code> </p>
+
+      <p>-- (double hyphens) Treats all characters to the right as a comment. </p>
+
+      <h3 id="Procedure1">4- Procedure Definition Language Statements</h3>
+
+      <h4 id="Introducti1">Introduction</h4>
+
+      <p>This chapter describes PDL elements in alphabetical order. </p>
+
+      <h4 id="Statement">ADD Statement</h4>
+  <pre>  syntax:
+             {numeric field     }   {              }
+         ADD {numeric literal   }TO {numeric field }
+             {alphanumeric field}   {date field    }
+  examples:
+         ADD MONTH_SALES TO YEAR_SALES
+         ADD 200 TO NET_INCOME </pre>
+
+      <h4 id="ASSIGN">ASSIGN DATAVIEW Statement (CA-DATACOM Native Access)</h4>
+
+      <p>Use the ASSIGN DATAVIEW statement during execution of a single program to
+      associate a CA-DATACOM native access dataview with a database ID different from
+      the DBID specified when the dataview was cataloged to CA-Ideal. </p>
+  <pre>  Syntax:
+         ASSIGN DATAVIEW name DBID dbid </pre>
+
+      <p>name: Specifies the name of the dataview to associate with the database. You
+      cannot use the abbreviation of DATAVIEW (DVW) in this statement. </p>
+
+      <p>dbid: A numeric literal or the identifier of a numeric or alphanumeric field
+      that identifies the database with which the dataview is associated. The value
+      must consist of three digits or three characters. </p>
+  <pre>  example:
+         LOOP VARYING I FROM 1 THRU 10
+              ASSIGN DATAVIEW CLIENT DBID DBID_TABLE(I)
+              FOR EACH CLIENT
+                  WHERE . . .
+              .
+              .
+              .
+              ENDFOR
+         ENDLOOP </pre>
+
+      <h4 id="ASSIGN1">ASSIGN REPORT Statement</h4>
+
+      <p>This statement overrides the RUN command defaults or any current settings
+      and permits report outputs to be handled individually. </p>
+  <pre>         ASSIGN REPORT name [TO altname]
+
+         [                  {MAIL email-id                 } ]
+         [                  {LIBRARY                       } ]
+         [DESTINATION       { {SYSTEM 'name'  }            } ]
+         [                  { {NETWORK 'name' } [COPIES n] } ]
+         [DISPOSITION 'disp']
+
+         [MAXLINES m]
+
+         [DESCRIPTION 'string']
+
+         [DATE date_field]
+
+         [PAGE NUMBER page start]
+
+         [PAGE SIZE page-size] </pre>
+
+      <p>This statement is also available in command form (see the Command Reference
+      Guide). &gt;&gt;&gt;&gt; </p>
+
+      <p>You can only issue <code>ASSIGN REPORT</code> when the report is not active,
+      that is, before the first <code>PRODUCE</code> or after a <code>RELEASE</code>
+      and before a subsequent <code>PRODUCE</code>.</p>
+
+      <h4 id="BACKOUT">BACKOUT Statement</h4>
+
+      <p>The <code>BACKOUT</code> statement restores activity against tables and
+      files accessed by the application to its most recent stable state. If no PDL
+      <code>CHECKPOINT</code>, <code>BACKOUT</code>, <code>TRANSMIT</code>, SQL
+      <code>COMMIT</code>, or <code>ROLLBACK</code> statement was previously
+      executed, all updates in the run are removed. </p>
+
+      <p>BACKOUT applies to all CA-DATACOM/DB, DB2, and all recoverable VSAM files in
+      CICS . (It does not apply to sequential files, panels, non-CICS VSAM files,
+      panels, working data, or parameter data.) </p>
+
+      <p>Executing a BACKOUT statement executes the following: </p>
+
+      <p>In a CICS environment: - </p>
+      <ul>
+        <li>For a site with native CA-DATACOM access only, the BACKOUT statement
+        executes a LOGTB. </li>
+        <li>For all other sites, the BACKOUT statement executes a CICS SYNCPOINT
+        ROLLBACK. </li>
+      </ul>
+
+      <p>In a non-CICS environment: </p>
+      <ul>
+        <li>For VSAM files, the BACKOUT statement is ignored. </li>
+        <li>For DB2 objects, the BACKOUT statement executes a SQL
+        <code>ROLLBACK</code>. </li>
+        <li>For native CA-DATACOM or SQL access, the <code>BACKOUT</code> statement
+        executes a <code>LOGTB</code>. </li>
+        <li>If more than one database management system is accessed in the same run,
+        the backouts against them are issued sequentially. </li>
+        <li>Execution of a <code>BACKOUT</code> statement has the same effect on a
+        program as execution of an embedded SQL <code>ROLLBACK</code> and reverse.
+        See the SQL documentation for the particular database for more information.
+        </li>
+      </ul>
+
+      <p>Example: </p>
+  <pre>         TRANSMIT
+         FOR EACH x
+             statements : update of x
+         ENDFOR
+         FOR FIRST y
+             statements : update of y
+         ENDFOR
+         FOR NEW z
+             statements : add new z
+         ENDFOR
+         CHECKPOINT   :all modifications up to this point are applied
+                      :and not affected by a subsequent BACKOUT
+         FOR NEW w
+             statements : add new w
+         ENDFOR
+         IF condition
+             THEN BACKOUT
+             ELSE CHECKPOINT
+         ENDIF </pre>
+
+      <p>The example sets a checkpoint after a FOR NEW construct adds records to the
+      database and conditionally backs out the changes at the end of the procedure.
+      Execution of the CHECKPOINT statement applies all modifications up to that
+      point. A subsequent BACKOUT does not affect them. The BACKOUT only affects the
+      FOR NEW insert. If you omit the CHECKPOINT, the BACKOUT rolls back all changes
+      made since the TRANSMIT.</p>
+
+      <h4 id="CALL">CALL Statement</h4>
+
+      <p>A CA-Ideal program can execute another CA-Ideal program or a COBOL, PLI, or
+      Assembler program. </p>
+  <pre>         CALL program_name [USING]  [INPUT data-item-1,_,data-item-n   ]_
+                                    [[UPDATE] data-item-1,_,data-item-n] </pre>
+
+      <p>Examples: </p>
+  <pre>         CALL SUBPGM1
+         CALL SUBPGM2 A
+         CALL SUBPGM3 USING A
+         CALL SUBPGM4 A INPUT 'INIT', 23 </pre>
+
+      <h4 id="CHECKPOINT">CHECKPOINT Statement</h4>
+
+      <p>The <code>CHECKPOINT</code> statement commits all database activity,
+      establishing the most recent stable state for tables and files the application
+      accesses. You can subsequently recover this state with a <code>BACKOUT</code>
+      statement. In long running batch jobs, perform periodic
+      <code>CHECKPOINT</code>s. </p>
+  <pre>         CHECKPOINT </pre>
+
+      <p>A TRANSMIT statement automatically causes a CHECKPOINT. </p>
+
+      <p>Executing a CHECKPOINT statement executes the following: </p>
+
+      <p>In a CICS environment:</p>
+      <ul>
+        <li>For a site with CA-DATACOM CBS access only, the CHECKPOINT statement
+        executes a LOGCP. </li>
+        <li>For all other sites, the CHECKPOINT statement executes a CICS SYNCPOINT.
+        , </li>
+        <li>Only files defined to CICS as recoverable are affected.</li>
+      </ul>
+
+      <p>In a non-CICS environment: </p>
+      <ul>
+        <li>For VSAM files, the CHECKPOINT statement executes a TCLOSE. </li>
+        <li>For DB2 objects, the CHECKPOINT statement executes a SQL COMMIT. </li>
+        <li>For CA-DATACOM SQL access, the CHECKPOINT statement executes a LOGCP.
+        </li>
+        <li>If more than one database is accessed in the same run, the checkpoints
+        against them are issued sequentially.</li>
+      </ul>
+
+      <p>An SQL COMMIT statement is equivalent to a CHECKPOINT statement. </p>
+
+      <h4 id="Comment1">Comment</h4>
+  <pre>         :    text of PDL comment   outside EXEC SQL construct
+         --   text of comment       inside EXEC SQL construct </pre>
+
+      <p> </p>
+  <pre>         : this is regarded as a comment.
+         SET A = B + C  :  this is regarded as a comment,
+         SET D = A + 1  -- and this, too, but not the SETs</pre>
+
+      <h4 id="DELETE">DELETE Statement</h4>
+
+      <p>The <code>DELETE</code> statement deletes the entire current record or row
+      that an updateable dataview references. This applies only to SQL and CA-DATACOM
+      native access dataviews. You can use the <code>DELETE</code> statement only in
+      a <code>FOR FIRST</code>, a <code>FOR EACH</code>, or a <code>FOR ANY</code>
+      construct. </p>
+  <pre>         DELETE dataview_name</pre>
+
+      <p><code>DELETE</code> does not apply to sequential or VSAM EDS files. </p>
+
+      <p>A <code>DELETE</code> is immediate and is not canceled by a
+      <code>QUIT</code> in a <code>FOR</code> construct that contains the
+      <code>DELETE</code>. </p>
+
+      <p>The entire record or row is deleted even if the dataview references only a
+      subset of the fields in the record or row. </p>
+
+      <p>After a <code>DELETE</code>, you cannot reference the deleted record or row.
+      </p>
+  <pre>         FOR FIRST INVEN WHERE ITEM_NO = DESIRED_ITEM_NO
+             DELETE INVEN
+         WHEN NONE
+             DO INVALID_DEL
+         ENDFOR </pre>
+
+      <h4 id="Statement1">DO Statement</h4>
+
+      <p>The DO statement invokes another named procedure in the same program. </p>
+  <pre>         DO  {ERROR           }
+             {procedure_name  } </pre>
+
+      <p><code>ERROR</code> Invokes the error procedure and makes the
+      <code>$ERROR</code> functions available. You can code this statement anywhere
+      in the program procedure. You are responsible for resolving the error with a
+      <code>PROCESS NEXT</code>, <code>QUIT...TRANSFER TO</code>, or <code>QUIT
+        RUN</code> statement. </p>
+
+      <p>For more information on restrictions that apply to the error procedure, see
+      the section titled Error Procedure later in this chapter. procedure-name The 1-
+      to 15-character name of the invoked procedure. &gt;&gt;&gt;&gt; </p>
+  <pre>  
+         &lt;&lt;MAIN&gt;&gt; PROCEDURE
+             LOOP
+                TRANSMIT MAINPNL UNTIL TRANSCODE = 'T'
+                SET MAINPNL.MSG = ' '
+                SELECT TRANS-CODE
+                WHEN 'A'
+                    DO ADD_REC
+                WHEN 'B'
+                    DO DEL_REC
+                WHEN OTHER
+                    DO OTHER_PROC
+                ENDSEL
+             ENDLOOP
+         ENDPROC
+
+         &lt;&lt;ADD-REC&gt;&gt; PROCEDURE
+             TRANSMIT ADDPNL CLEAR
+             FOR NEW EMPLOYEE
+                 SET EMPLOYEE = ADDPNL BY NAME
+                 SET MAINPNL.MSG = 'EMPLOYEE ADDED'
+             WHEN DUPLICATE
+                 SET MAINPNL.MSG = 'RECORD ALREADY ON FILE'
+             ENDFOR
+         ENDPROC </pre>
+
+      <h4 id="EJECT1">EJECT Statement</h4>
+
+      <p>The EJECT statement causes the compilation listing to skip to the top of a
+      page. </p>
+
+      <h4 id="Error1">Error Procedure</h4>
+
+      <p>The error procedure specifies a set of actions to invoke whenever an
+      execution-time error occurs. </p>
+
+      <p>For example, the error procedure can process an invalid numeric value
+      condition and then return control to the processing procedure: </p>
+  <pre>         &lt;&lt;ERROR&gt;&gt; PROC
+              IF $ERROR-CLASS = 'NUM'
+                 LIST ERROR
+                  PROCESS NEXT GET-NEXT-LOOP
+              ELSE
+                 LIST ERROR
+                 BACKOUT
+                 QUIT RUN
+              ENDIF
+         ENDPROC </pre>
+
+      <p>Coding an optional error procedure lets you override the default error
+      procedure, that </p>
+      <ol>
+        <li>Issues a LIST ERROR statement, that varies depending on the type of
+        error. </li>
+        <li>Performs a BACKOUT. </li>
+        <li>Issues a standard message. </li>
+        <li>Performs a QUIT to end the run. </li>
+      </ol>
+  <pre>         &lt;&lt;ERROR&gt;&gt; PROCEDURE
+              statements
+
+          {ENDPROC      }
+          {ENDPROCEDURE } </pre>
+
+      <p>&lt;&lt;ERROR&gt;&gt;: A reserved label. Most statements that refer to
+      labels cannot reference it; however, a DO statement can reference it. For
+      example, <code>QUIT ERROR</code> is an illegal statement, but <code>DO
+        ERROR</code> is valid.</p>
+
+      <p>statements: The action that takes effect when an error occurs. The last
+      statement is commonly a <code>QUIT</code> or <code>PROCESS NEXT</code>. If
+      neither of these statements is issued, the default error procedure runs after
+      the coded error procedure. </p>
+
+      <p>A program can contain only one error procedure. It can be anywhere in the
+      program, but if it is the first procedure, the next procedure becomes the main
+      procedure. When a procedure other than the first procedure becomes the main
+      procedure, you must name the main procedure. </p>
+
+      <p>You can code <code>$ERROR</code> functions in the error procedure to return
+      information about the last error. These functions only return meaningful data
+      in the error procedure. Refer to Chapter 7 of the Creating Programs guide for
+      more information regarding error handling. &gt;&gt;&gt;&gt; </p>
+
+      <p>If you code an error procedure, you must code a <code>BACKOUT</code>
+      statement to reverse the updates and inserts. A <code>QUIT</code> statement
+      without a label and a <code>QUIT PROCEDURE</code> statement are invalid in the
+      error procedure because they imply a <code>QUIT ERROR</code>. </p>
+
+      <p>When an error with <code>$ERROR-CLASS</code> = SYS occurs, your error
+      procedure does not receive control and the default error procedure is invoked.
+      </p>
+
+      <p>A runtime error in the error procedure invokes the default error procedure.
+      </p>
+
+      <p>Generally, the default error procedure sets the value of the
+      <code>$RETURN-CODE</code> function to 12. </p>
+
+      <p>The error procedure is not invoked if there are errors in embedded SQL
+      statements. They are governed by the <code>WHENEVER</code> statement in SQL.
+      However, you can include a <code>DO ERROR</code> statement in embedded SQL to
+      invoke the error procedure. </p>
+
+      <p>You can call the program <code>@I$TIAR</code> from the error procedure to
+      format SQL codes into text messages. See Appendix A for information regarding
+      non-CA-Ideal utility programs. &gt;&gt;&gt;&gt; </p>
+
+      <p>The default error procedure: </p>
+  <pre>         &lt;&lt;ERROR&gt;&gt; PROCEDURE
+             IF $RC LT 12
+                 SET $RC EQ 12
+             ENDIF
+             LIST ERROR
+             BACKOUT
+             QUIT RUN
+         ENDPROC </pre>
+
+      <p>An example error procedure: </p>
+  <pre>         &lt;&lt;ERROR&gt;&gt; PROCEDURE
+             DO LOG-MSG
+             PROCESS NEXT EMP-DVW
+         ENDPROC </pre>
+
+      <h4 id="EXEC">EXEC SQL Statement (SQL Access)</h4>
+
+      <p><code>EXEC SQL</code> and <code>END-EXEC</code> delimit an embedded SQL
+      statement. </p>
+  <pre>         EXEC SQL
+                SQL-statement
+         END-EXEC </pre>
+
+      <p> </p>
+  <pre>         EXEC SQL
+               UPDATE DELINQUENT_ACCT
+                 SET ACCT_NO = :PNL_ACCT_NO
+                 WHERE PAST_DUE GT 90
+         END-EXEC </pre>
+
+      <h4 id="Constructs">FOR Constructs (CA-DATACOM Native Access)</h4>
+
+      <p>The <code>FOR</code> statement is for reading and updating the database. The
+      <code>FOR</code> construct begins with <code>FOR</code> and ends with
+      <code>ENDFOR</code>. </p>
+
+      <p>To define thedatabase fields that are available to the application you must
+      first define a dataview. </p>
+
+      <p>Set Processing: </p>
+
+      <p>The &gt;&gt;&gt;&gt; <code>FOR EACH</code>, <code>FOR FIRST</code>, and
+      <code>FOR ANY</code> constructs retrieve and update a set of records. These
+      constructs are iterative. With each iteration, they return the next record in
+      the requested set. It is not necessary to create an image of the record in
+      working data since the dataview referenced in the FOR construct contains a data
+      structure to hold the record retrieved by each iteration of the
+      <code>FOR</code>. PDL statements can use the fields in this structure. The
+      database is automatically updated at the <code>ENDFOR</code> for the current
+      iteration. </p>
+
+      <p>Inserting Records:</p>
+
+      <p>Use the <code>FOR NEW</code> statement to insert a new record into the
+      database. The <code>FOR NEW</code> statement adds a single record and is not
+      iterative. To repeat processing of a <code>FOR NEW</code> statement, include it
+      in a looping construct. </p>
+
+      <h4 id="Exclusive">Exclusive Control</h4>
+
+      <p>An enqueuing mechanism that CA-DATACOM/DB provides to protect database
+      records against destructive simultaneous update by two or more different tasks.
+      </p>
+
+      <p>Task 1 cannot get update control of a record held by Task 2 until one of the
+      following occurs: </p>
+      <ul>
+        <li>Task 2 completes. </li>
+        <li>Task 2 issues a CHECKPOINT, TRANSMIT or CICS SYNCPOINT command. </li>
+        <li>Task 2 abends and transaction backout completes.</li>
+      </ul>
+
+      <h5 id="Primary">Primary Exclusive Control</h5>
+
+      <p>The dataview in the following example is updateable. </p>
+
+      <p>Example 1 </p>
+  <pre>         FOR EACH DVW
+                 SET...
+                 SET...
+         ENDFOR </pre>
+
+      <p>Each record is read with primary exclusive control and returned to the
+      program one by one. </p>
+
+      <p>At this point, the record is updated. </p>
+
+      <p>While it is held under primary exclusive control, another task cannot read
+      the record with update intent.</p>
+
+      <p>Primary exclusive control is established when the record is selected as part
+      of the set of requested recordsand maintained until after the last statement in
+      the construct before the ENDFOR. </p>
+
+      <p>Only one record of the set that meets the <code>FOR/WHERE/ORDERED BY</code>
+      criteria is under primary exclusive control at any point in time. </p>
+
+      <p>Primary exclusive control begins when the record is read at the
+      <code>FOR</code> statement and ends when the update is done just before the
+      <code>ENDFOR</code> statement. </p>
+
+      <p>Primary exclusive control also ends if a <code>TRANSMIT</code> or a CICS
+      <code>SYNCPOINT</code> command is encountered (see Example 5 &gt;&gt;&gt;&gt;
+      ). </p>
+
+      <h5 id="Secondary">Secondary Exclusive Control</h5>
+
+      <p>Secondary exclusive control gives the application control over when the
+      update of a group of dependent records is committed. </p>
+
+      <p>For instance, you might need to update a master record with totals from
+      three different detail records. The processing requires that the three detail
+      records and the master record either all be updated or all backed out. </p>
+
+      <p>When the record is updated just before the ENDFOR, primary exclusive control
+      ends and secondary exclusive control begins. Thus, as each record is processed
+      and updated, it is added to the group of records the task holds under secondary
+      exclusive control. </p>
+
+      <p>In the above example, if the URT specifies <acronym>TXNUNDO=YES</acronym>
+      &gt;&gt;&gt;&gt; and the MUF master list specifies <code>LOGGING=YES</code>
+      &gt;&gt;&gt;&gt; , secondary exclusive control is in effect, in addition to
+      primary exclusive control. </p>
+
+      <p>A task can have many records under secondary exclusive control at one time.
+      </p>
+
+      <p>As the records that meet the <code>FOR/WHERE/ORDERED BY</code> criteria in
+      the set are processed and updated, they are added to the group of records held
+      under secondary exclusive control. </p>
+
+      <p>Secondary exclusive lasts until the task terminates, until a
+      <code>TRANSMIT</code> is issued, until a <code>CHECKPOINT</code> is issued, or
+      until a CICS <code>SYNCPOINT</code> is issued. </p>
+
+      <p>While a record is held under secondary exclusive control, no other task can
+      read that record with update intent. Therefore, another task cannot
+      simultaneously delete or update the record. </p>
+
+      <h5 id="Batch">Batch Processing</h5>
+
+      <p>Restarting:</p>
+
+      <p>An update to a CA-DATACOM/DB record places it under secondary exclusive
+      control until a LOGCP request is issued. </p>
+
+      <p>To avoid contention, programs should release control with frequent
+      <code>CHECKPOINT</code> statements. This means that you must write database
+      batch programs so that they are restartable at each <code>CHECKPOINT</code>.
+      </p>
+
+      <p>One way to do this is to first load the transaction records onto a
+      CA-DATACOM/DB table. As each transaction record is successfully processed, a
+      record confirming the successful update is written to another table, the
+      transaction record is deleted, and a <code>CHECKPOINT</code> taken. Any
+      transactions that fail are updated to show this or are transferred to a reject
+      table.</p>
+
+      <p>If there is a system failure, you can simply rerun the programs using
+      whatever transaction records remain in the table. </p>
+
+      <p>Sequential Processing:</p>
+
+      <p>CA-Ideal can do multi-block read-aheads of a CA-DATACOM/DB non-SQL table
+      using the <code>GETIT</code> command if certain conditions are met. The URT
+      must have <code>ACCESS=RANSEQ</code> for DB 8.0 (refer to the CA-DATACOM/DB
+      System Administration Guide &gt;&gt;&gt;&gt;). In this case, exclusive control
+      is acquired for an entire block of records as it is read, even though the
+      program might not be updating all records. If you also use
+      <code>AUTODXC=NO</code>, then the exclusive control is maintained up to the
+      next <code>CHECKPOINT</code>, if any. </p>
+
+      <p>There is no way to request a release of exclusive control for a record in
+      that block, even if the application did not read it. So do not use sequential
+      processing if your program needs to have a QUIT in any FOR construct because
+      you cannot release exclusive control of records in the block that were not yet
+      accessed by the FOR. </p>
+
+      <h5 id="EACH">FOR EACH/FIRST/ANY Statement (CA-DATACOM Native Access)</h5>
+
+      <p>The <code>FOR EACH</code>, <code>FOR FIRST</code>, and <code>FOR ANY</code>
+      statements process a set of records (or process a single record) from a
+      CA-DATACOM table. All of the statements in the <code>FOR</code> construct apply
+      to each record selected. </p>
+
+      <p>The <code>FOR</code> construct is iterative. With each iteration, it returns
+      the next record in the requested set. <code></code></p>
+
+      <p><code>FOR FIRST</code>, <code>FOR EACH</code>, and <code>FOR ANY</code> are
+      the only constructs that update or delete a record. </p>
+
+      <p>To process data from the database, you must first define a dataview to
+      CA-Ideal for the data. The dataview defines the fields that are available to
+      the application. </p>
+  <pre>         [<a href="#L4880">&lt;&lt;label&gt;&gt;</a>]
+
+             [<a href="#EACH|ALL">EACH</a>             ]
+         FOR [<a href="#EACH|ALL">ALL</a>              ] <a href="#dataview_n">dataview_name</a>[<a href="#UPDATE">NO UPDATE</a>]
+             [<a href="#L5625">[THE] FIRST [n]</a>  ]
+             [<a href="#n">ANY n</a>            ]
+
+         [<a href="#WHERE">WHERE where-condition</a>]
+
+         [                    [ASCENDING ]             ]
+         [<a href="#ORDERED">ORDERED BY</a> [<a href="#UNIQUE">UNIQUE</a>] [DESCENDING] id [[,]id]_ ]
+         [        [[<a href="#ASCENDING">ASCENDING</a> ]                        ]
+         [        [[<a href="#ASCENDING">DESCENDING</a>] id [[,] id_]           ]
+
+               <a href="#statements">statements</a>
+
+         [<a href="#WHEN1">WHEN NONE</a>    ]
+         [   statements]
+
+         [<a href="#WHEN">WHEN ERROR</a>    ]
+         [    statements]
+
+         ENDFOR </pre>
+
+      <p id="L4880"><code>&lt;&lt;label&gt;&gt;</code> optional 1 to 15-character
+      name of the <code>FOR</code> construct. You can refer to the construct in
+      <code>QUIT</code> and <code>PROCESS NEXT</code> statements and in certain
+      functions such as $COUNT. </p>
+
+      <p id="EACH|ALL"><code>EACH|ALL</code> Indicate that the statements in the
+      <code>FOR</code> construct apply to every record that satisfies the where
+      condition. You can use the reserved words <code>EACH</code> and
+      <code>ALL</code> interchangeably. </p>
+
+      <p id="L5625"><code>[THE] FIRST [n]</code> (default.) Specifies that the
+      statements in the scope of the FOR construct apply to the first n records that
+      satisfy the where condition. n can be a numeric identifier or literal that
+      specifies the number of records to process. The default is <code>FIRST
+        1</code>. You can add the reserved word <code>THE</code> for readability. </p>
+
+      <p>When you use <code>FOR FIRST n</code> with a where condition and an
+      <code>ORDERED BY</code> clause, all records that satisfy the where condition
+      are ordered and then the first n ordered records are selected. The difference
+      between <code>FOR FIRST</code> and <code>FOR ANY</code> is illustrated in
+      example 8 &gt;&gt;&gt;&gt; later in this section. </p>
+
+      <p id="n"><code>ANY n</code> Specifies that the statements in the scope of the
+      FOR construct apply to any n records that satisfy the where condition. n can be
+      anumeric identifier or literal that specifies the number of records to process.
+      n is required for <code>FOR ANY</code>. </p>
+
+      <p>When you use <code>FOR ANY</code> n with a <code>WHERE</code> condition and
+      an <code>ORDERED BY</code> clause, the first n records that satisfy the
+      <code>WHERE</code> condition are selected and then ordered. The difference
+      between <code>FOR FIRST</code> and <code>FOR ANY</code> is illustrated in
+      example 8 &gt;&gt;&gt;&gt; later in this section. </p>
+
+      <p id="dataview_n"><code>dataview_name</code> The name of the dataview
+      processed. </p>
+
+      <p id="UPDATE"><code>NO UPDATE</code> Specifies that the records processed by
+      this FOR construct are not to be held under exclusive control. This applies
+      even if the dataview is defined as updateable. If used, this clause must
+      immediately follow the dataview name. You can use the <code>SET RUN
+        UPDATE</code> &gt;&gt;&gt;&gt; command to temporarily suppress updates;
+      however, <code>SET RUN UPDATE</code> is primarily intended for testing
+      purposes. </p>
+
+      <p id="WHERE"><code>WHERE clause</code> Specifies that the statements in the
+      scope of the FOR construct apply to those records that satisfy the specified
+      condition. </p>
+
+      <p>The <code>where-condition</code> is defined in the PDL Language Elements
+      section in chapter 2 &gt;&gt;&gt;&gt;)<code>specifying: </code></p>
+      <ul>
+        <li>The left-hand operand of each relational-expression must be the
+        identifier of a field or group in the dataview being referenced. </li>
+        <li>If the left-hand operand is an alphanumeric field, the right-hand operand
+        must be an alphanumeric expression. </li>
+        <li>If the left-hand operand is a numeric field, the right-hand operand can
+        be a numeric expression, an alphanumeric expression, or a non-alpha group
+        that is not a panel group or dynamic matching parameter. When the
+        right-hand operand is not a numeric expression, a warning is issued when
+        the program is compiled and, if the right-hand operand cannot be converted
+        to numeric, a runtime error occurs. </li>
+        <li>A field name used as the left-hand operand of a relational-expression in
+        a where condition does not need to be qualified with a dataview name since
+        it refers implicitly to the dataview in the FOR clause. However, reserved
+        words used as operands must always be qualified. </li>
+        <li>The right-hand operand of a relational-expression can be any arithmetic
+        or alphanumeric expression, but cannot reference any fields in the dataview
+        named in the FOR clause. </li>
+        <li>A <code>where-condition</code> is the only condition that can contain the
+        special relational operators <code>CONTAINS</code> and <code>NOT
+          CONTAINS</code>. For an explanation and examples of <code>CONTAINS</code>
+        and <code>NOT CONTAINS</code>, see the definition of the where-condition in
+        the PDL Language Elements section in chapter 2 &gt;&gt;&gt;&gt; and the
+        <code>$FIXED-MASK</code> function in chapter 5 &gt;&gt;&gt;&gt;. </li>
+        <li>If the condition is a condition name, it must be from the dataview being
+        referenced. </li>
+        <li>Where-conditions cannot be Boolean functions or flags. </li>
+        <li>Any subscripts used in the where-condition must not be numeric fields in
+        the dataview being referenced. </li>
+      </ul>
+
+      <p id="ORDERED"><code>ORDERED BY clause</code> Determines the logical order in
+      which the records are processed. If this clause is omitted, the dataview
+      records are processed in an optimal order. This optimal order is determined
+      dynamically at program execution time and can change based on the contents of
+      the database and by the release level of the DBMS. </p>
+
+      <p id="UNIQUE"><code>UNIQUE</code> Specifies that only one record with each
+      unique value of the ORDERED BY identifiers is processed, like SQL's DISTINCT.
+      </p>
+
+      <p id="ASCENDING"><code>ASCENDING/DESCENDING id</code> Specifies the
+      <code>ORDERED BY</code> sort order. <code>ASCENDING</code> is the default and
+      applies to each field until <code>DESCENDING</code> is specified.
+      <code>DESCENDING</code> then remains in effect for each additional field until
+      <code>ASCENDING</code> is specified again. </p>
+
+      <p id="statements"><code>statements</code> The PDL statements in the logical
+      scope of a FOR construct. These statements can access the fields of the last
+      accessed database record. </p>
+
+      <p id="WHEN1"><code>WHEN NONE</code> An optional postscript that specifies that
+      when none of the records meets the where condition, the statements following
+      the <code>WHEN NONE</code> are executed. </p>
+
+      <p id="WHEN"><code>WHEN ERROR</code> Specifies statements to execute when a
+      dataview error is encountered in the scope of the FOR construct. If <code>WHEN
+        ERROR</code> is not specified, user-defined or default error procedures process
+      the errors. </p>
+
+      <p>The statements specified following a <code>WHEN ERROR</code> clause can
+      access <code>$ERROR</code> functions and should resolve the error with either a
+      <code>PROCESS NEXT</code> or <code>DO ERROR</code> statement. If processing
+      falls through to the <code>ENDFOR</code>, the <code>$ERROR</code> functions no
+      longer are available. For an example of <code>WHEN ERROR</code> processing, see
+      example 9 &gt;&gt;&gt;&gt; in this section. </p>
+
+      <p>Only the <code>WHEN ERROR</code> clauses handles dataview errors
+      (<code>$ERROR-CLASS=DVW</code>). User-specified or default error procedures
+      handle system and internal errors. </p>
+
+      <p><code>ENDFOR</code> The end of the FOR construct. If FOR statements are
+      nested, the most recent undelimited FOR construct is delimited by the first
+      occurrence of <code>ENDFOR</code>. Each <code>FOR</code> in a nested FOR
+      construct must have a corresponding <code>ENDFOR</code>.</p>
+
+      <p>The actual update takes place at the <code>ENDFOR</code> for the current
+      iteration for all changes except deletes. </p>
+
+      <p>CA-Ideal suppresses database writes when it can determine that the data was
+      not altered. If a call is made to a subprogram that updates the database,
+      specify <code>UPDATES DB</code> or <code>UPDATES DB2</code> on the subprogram
+      identification panel (described in the Creating Programs guide
+      &gt;&gt;&gt;&gt;). This insures that CA-Ideal does not suppress
+      <code>CHECKPOINT</code>, <code>BACKOUT</code>, <code>ROLLBACK</code>, or
+      <code>SQL COMMIT</code> statements in any transaction where the subprogram is
+      called. </p>
+
+      <p>You cannot nest a FOR construct for a given dataview in another FOR
+      construct for the same dataview. </p>
+
+      <p>If the dataview was defined as updateable, the logical scope of the FOR
+      construct is implicitly the scope over which each successive record is held
+      exclusively. A transmit in the FOR construct releases exclusive control. After
+      the transmit, CA-Ideal ensures the integrity of the record by rereading it and
+      causing an error if it was changed. </p>
+
+      <p>If more than one position (record) of a dataview is needed simultaneously,
+      either</p>
+      <ul>
+        <li>Use two dataviews for the same file, or </li>
+        <li>Save necessary information in working data. </li>
+      </ul>
+
+      <p>Example 1</p>
+  <pre>         FOR EACH DELINQUENT-ACCT WHERE BALANCE &gt; 200
+             DO CONTACT-COLLECTOR      :if qualification needed,
+         ENDFOR                        : use DELINQUENT-ACCT.field </pre>
+
+      <p>Example 2</p>
+  <pre>         &lt;&lt;EMP-SEARCH&gt;&gt;
+         FOR EACH EMPLOYEE
+             WHERE DEPT='D' AND JOB-CODE = 'J'
+                DO CHECK-GOOD-EMP
+                 IF ENOUGH-GOOD-EMP
+                     QUIT EMP-SEARCH
+                ENDIF
+         ENDFOR </pre>
+
+      <p>Example 3</p>
+  <pre>         FOR FIRST INVENTORY-ITEM
+             WHERE QOH &gt; 50 AND PRICE &lt; 500
+                 DO PROCESS-ITEM
+         ENDFOR </pre>
+
+      <p>Example 4</p>
+  <pre>         FOR THE FIRST 5 INVEN
+             WHERE PRICE &lt; 100
+                 DO P-5-CHEAP-ITEMS
+         ENDFOR </pre>
+
+      <p>Example 5</p>
+  <pre>         FOR EACH EMPLOYEE WHERE DEPT = 'D'
+             FOR EACH PAY-REC WHERE PAY-REC.EMP-NO = EMPLOYEE.EMP-NO
+                 DO PROCESS-PAY
+             ENDFOR
+         ENDFOR </pre>
+
+      <p>Example 6</p>
+  <pre>         FOR FIRST ACCT WHERE PAST-DUE &gt; 90 ORDERED BY ACCT-NO
+             : you can refer to or update "ACCT.field" here
+             WHEN NONE
+             DO NO-DELINQ-ACCT
+         ENDFOR
+         : you can now refer to "ACCT.field" if present you
+         : cannot update "ACCT.field" here (unless this is a
+         : procedure performed by a DO from in the FOR) </pre>
+
+      <p>Example 7</p>
+  <pre>         DO FIND-CUSTOMER
+             IF CUST-FOUND
+                 : you can refer to "CUST.field" here
+             ELSE
+                 DO CUST-NOT-FOUND
+             ENDIF
+
+         &lt;&lt;FIND-CUSTOMER&gt;&gt; PROCEDURE
+         FOR THE CUST WHERE CUST-NO = TRANS-CUST-NO
+             SET CUST-FOUND = TRUE
+         WHEN NONE
+             SET CUST-FOUND = FALSE
+         ENDFOR</pre>
+
+      <p>Example 8</p>
+  <pre>         FOR FIRST 20 ITEMS WHERE UNIT-PRICE &gt; 10
+         ORDERED BY SHORT-DESC
+             LIST ITM-ID, SHORT-DESC, UNIT-PRICE
+         WHEN NONE
+             DO INCREASE-PRICE
+         ENDFOR
+
+  Returns...
+         A60009  ADAPTER    24.99
+         A70002  ANTENNA    19.99
+         A70003  ANTENNA    19.99
+         O10002  ARMCHAIR  304.00
+         H20000  BEDBOARD   54.99
+         H20002  BEDWEDGE   18.99</pre>
+
+      <p>Example 9</p>
+  <pre>         FOR FIRST CUSTOMER WHERE CUSTID = PNL-CUST
+             DELETE CUSTOMER
+         WHEN NONE
+             NOTIFY 'NO CUSTOMERS FOUND'
+         WHEN ERROR
+             SELECT FIRST ACTION
+                 WHEN $ERROR-DVW-STATUS = 94 
+                 AND $ERROR-INTERNAL DVW-STATUS = 31
+                     LIST 'Constraint Error: ' $ERROR-CONSTRAINT-NAME
+                     NOTIFY 'Customer ' CUSTID 
+                     "has open orders, can't be deleted"
+                 WHEN $ERROR-DVW-STATUS = 36
+                     NOTIFY 'Contact DB Adminwith error information'
+                 WHEN OTHER
+                     DO ERROR
+             ENDSEL
+         ENDFOR </pre>
+
+      <h5 id="Statement2">FOR NEW Statement (CA-DATACOM Native Access)</h5>
+
+      <p>The <code>FOR NEW</code> statement can insert a new record into a CA-DATACOM
+      table. This statement uses a native command dataview defined to access the
+      table. The <code>FOR NEW</code> statement is not iterative; to repeat
+      processing of a <code>FOR NEW</code>, you must include it in a looping
+      construct. </p>
+  <pre>         [<a href="#L6636">&lt;&lt;label&gt;&gt;</a>]
+            <a href="#NEW">FOR [THE] NEW</a> <a href="#dataview-n">dataview-name</a>
+                <a href="#statements1">statements</a>
+
+            [<a href="#WHEN2">WHEN DUPLICATE</a>  ]
+            [     statements ]
+
+            [WHEN ERROR      ]
+            [     statements ]
+            ENDFOR </pre>
+
+      <p id="L6636"><code>[&lt;&lt;label&gt;&gt;]</code> An optional 1 to
+      15-character name of the <code>FOR NEW</code> construct. You can use it to
+      refer to the construct in a <code>QUIT</code> statement. </p>
+
+      <p id="NEW"><code>FOR [THE] NEW</code> Specifies the action to take to insert
+      or add each new record. </p>
+
+      <p><code>FOR NEW</code> initializes the field values in the new record if the
+      program does not initialize them. The column values are initialized to: </p>
+      <ul>
+        <li>NULL for fields that can have the null value </li>
+        <li>Zeros for numeric fields </li>
+        <li>Zero length for variable-length fields </li>
+        <li>Spaces for alphanumeric fields </li>
+        <li>Current time for time fields </li>
+        <li>Current date for date fields </li>
+        <li>Current timestamp for timestamp fields </li>
+      </ul>
+
+      <p>If initial values were specified for the field in the dictionary, they are
+      used. </p>
+
+      <p>The fields are not defined in the dataview are initialized to spaces in the
+      underlying record, without regard to the data type of the field. Therefore,
+      dataviews used in <code>FOR NEW</code> should span the entire record. </p>
+
+      <p id="dataview-n"><code>dataview-name</code> The name of the dataview that
+      defines the new record inserted. The dataview must be updateable. </p>
+
+      <p id="statements1"><code>statements</code> The statements in the scope of the
+      FOR NEW construct that place values into the new record. </p>
+
+      <p id="WHEN2"><code>WHEN DUPLICATE</code> The <code>WHEN DUPLICATE</code>
+      clause contains statements that are executed when the key value of the new
+      record matches the key of an existing record and the database does not allow
+      duplicate keys. </p>
+
+      <p>If <code>WHEN DUPLICATE</code> is omitted and duplication is not allowed,
+      control passes to the <code>WHEN ERROR</code> statements when a duplicate
+      record is found. If <code>WHEN ERROR</code> is not coded, control passes to the
+      error procedure. </p>
+
+      <p>If the <code>WHEN DUPLICATE</code> clause is included and duplication is
+      allowed, the clause is ignored. </p>
+
+      <p>Although the file is not updated when a duplicate record is found (the
+      duplicate record is not added), the <code>WHEN DUPLICATE</code> clause does not
+      affect the execution of the statements that precede it. The statements in the
+      <code>WHEN DUPLICATE</code> clause are executed when the duplication is
+      detected at the <code>ENDFOR</code>. At that point, all other statements in the
+      scope of the FOR have already executed. If the FOR construct includes
+      statements that increment counters or set messages, you can correct those
+      values in the <code>WHEN DUPLICATE</code> processing. However, you cannot
+      continue executing the FOR construct. </p>
+
+      <p><code>WHEN ERROR</code> Specifies statements to execute when a dataview
+      error is encountered in the scope of the FOR construct. If <code>WHEN
+        ERROR</code> is not specified, errors are processed by the user-defined or
+      default error procedure. The statements specified following a <code>WHEN
+        ERROR</code> clause can use <code>$ERROR</code> functions and should resolve
+      the error with either a <code>PROCESS NEXT</code> or <code>DO ERROR</code>
+      statement. If processing falls through to the <code>ENDFOR</code>, the
+      <code>$ERROR</code> functions are no longer available.</p>
+
+      <p><code>ENDFOR</code> A reserved word that terminates the FOR construct. If
+      FOR constructs are nested, the most recent unterminated FOR construct is
+      terminated. You can reference any recently added field in the dataview record
+      after <code>ENDFOR</code> unless a <code>QUIT</code> statement is used. </p>
+
+      <p>A <code>QUIT</code> in the logical scope of a <code>FOR NEW</code> abandons
+      the creation of the record. Further reference to fields in the dataview outside
+      of the FOR is invalid. </p>
+
+      <p>Insertion of a new record into the database occurs at the
+      <code>ENDFOR</code>. </p>
+
+      <p>You cannot delete a record defined by the dataview specified in the
+      <code>FOR NEW</code> construct in the logical scope of the <code>FOR NEW</code>
+      construct. </p>
+
+      <p>If inserting the new row causes a CA-DATACOM abnormal error, the <code>WHEN
+        ERROR</code> statements executed. If a <code>WHEN ERROR</code> statement is not
+      coded, the error procedure gets control at the <code>ENDFOR</code>. </p>
+
+      <p>You can nest <code>FOR EACH</code> in <code>WHEN DUPLICATE</code>. </p>
+
+      <p>If the record contains a SQL <code>DATE</code>, <code>TIME</code>, or
+      <code>TIMESTAMP</code> field, the field is set to the system date, time, or
+      timestamp before it is converted and written to the database. </p>
+
+      <p>Example:</p>
+
+      <p>In the example below, the FOR NEW construct is included in a LOOP construct
+      to process multiple records. Notice that a WHEN DUPLICATE clause is specified
+      to correct the NEW_COUNT total when the duplicate record was not added. </p>
+  <pre>         LOOP UNTIL TRANSCODE = 'Q'
+             TRANSMIT INVEN_PNL
+             FOR THE NEW INVEN_ITEM
+                 MOVE INVEN_PNL TO INVEN_ITEM BY NAME
+                 SET NEW_COUNT = NEW_COUNT + 1
+             WHEN DUPLICATE
+                 SET NEW_COUNT = NEW_COUNT - 1
+             ENDFOR
+         ENDLOOP</pre>
+
+      <h4 id="Statement3">FOR Statement (SQL Access)</h4>
+
+      <p>The FOR statement is used for reading and updating the database. It is an
+      alternative to coding embedded SQL statements. The FOR construct begins with a
+      FOR and ends with an ENDFOR. </p>
+
+      <p>To process data from the database using a FOR construct, you must first
+      define a CA-Ideal dataview that identifies an SQL object (table, view, or
+      synonym). </p>
+
+      <p>The <code>FOR EACH</code> and <code>FOR FIRST</code> constructs retrieve and
+      update rows from the table or view. These constructs are iterative. With each
+      iteration, they return the next row in the requested set. If a row is updated
+      in the logical scope of the FOR, the database is automatically updated at the
+      <code>ENDFOR</code> for the current iteration. SQL <code>UPDATE</code>
+      statements are not needed. </p>
+
+      <p>You can use the <code>FOR NEW</code> statement to insert a new row into the
+      table. </p>
+
+      <p>A CA-Ideal data structure is automatically generated for the row that each
+      iteration of the FOR retrieves. The fields in this group are identified by the
+      names of columns processed. PDL statements can use them and embedded SQL
+      statements use them as host variables. Embedded SQL statements can also be used
+      independently of a FOR construct to fetch data directly into host structures in
+      working data, parameter data, or panels and to update the database. </p>
+
+      <p>href="#SQLConcepts"The Creating Dataviews &gt;&gt;&gt;&gt; guide describes
+      establishing and maintaining dataviews for SQL access. The Administration Guide
+      &gt;&gt;&gt;&gt; describes preparing and maintaining application plans and
+      packages for DB2 access or access plans for CA-DATACOM SQL access. <a
+        href="#SQLConcepts">Chapter 3 of this guide</a> describes SQL syntax and
+      language elements. </p>
+
+      <h5 id="EACH1">FOR EACH/FIRST Statement (SQL Access)</h5>
+
+      <p>The <code>FOR EACH/FIRST</code> statement processes a set of rows (or
+      process a single row) from an SQL object. All of the statements in the logical
+      scope of the FOR construct apply to each row selected. The FOR construct is
+      iterative. With each iteration, it returns the next row in the requested set.
+      </p>
+  <pre>  
+         [&lt;&lt;label&gt;&gt;]
+
+             [EACH           ]
+         FOR [ALL            ] dataview_name[NO UPDATE]
+             [[THE]  FIRST [n]]
+
+         [WHERE search-condition]
+
+         [           [ASCENDING  ]  column [[,] column]...  ]
+         [ORDERED BY [DESCENDING ]                          ]
+         [                                                  ]
+         [[[ASCENDING    ]                      ]           ]
+         [[[DESCENDING   ] column [[,] column...] ]         ]
+
+                    statements
+
+         [WHEN NONE     ]
+         [    statements]
+
+         [WHEN ERROR    ]
+         [    statements]
+
+         ENDFOR </pre>
+
+      <p> </p>
+  <pre>  Example 1
+
+         FOR EACH DELINQUENT_ACCT
+              WHERE BALANCE &gt; 200
+                  DO CONTACT_COLLECTOR    : if qualification needed,
+         ENDFOR                           : use DELINQUENT_ACCT.field
+
+
+   Example 2
+
+         &lt;&lt;EMP_SEARCH&gt;&gt;
+              FOR EACH EMPLOYEE
+             WHERE DEPT='D' AND JOB_CODE IN ('J','K','L')
+               DO CHECK_GOOD_EMP
+               IF ENOUGH_GOOD_EMP
+                    QUIT EMP_SEARCH
+               ENDIF
+              ENDFOR
+
+
+   Example 3
+
+         FOR FIRST INVENTORY_ITEM
+              WHERE QOH &gt; 50 AND PRICE BETWEEN 100 AND 500
+                  DO PROCESS_ITEM
+                ENDFOR
+
+
+   Example 4
+
+         FOR THE FIRST 5 INVEN
+              WHERE PRICE &lt; COST + 100
+                   DO P_5_CHEAP_ITEMS
+                ENDFOR
+
+
+   Example 5
+
+         FOR EACH EMPLOYEE
+             WHERE DEPT = 'D'
+            FOR EACH PAY_REC
+                WHERE PAY_REC.EMP_NO = EMPLOYEE.EMP_NO
+                   DO PROCESS_PAY
+            ENDFOR
+         ENDFOR
+
+
+   Example 6
+
+         FOR FIRST ACCT
+             WHERE PAST_DUE &gt; 90
+            ORDERED BY ACCT_NO
+                 : you can refer to or update "ACCT.field" here
+               WHEN NONE
+             DO NO_DELINQ_ACCT
+                ENDFOR
+                 : or you can now refer to "ACCT.field" if present
+                 : you cannot update "ACCT.field" here (unless this
+                 : is a procedure performed by a DO from in the
+                 : FOR)
+
+
+   Example 7
+
+         DO FIND_CUSTOMER
+                IF CUST_FOUND
+                  : you can refer to "CUST.field" here
+                ELSE
+             DO CUST_NOT_FOUND
+         ENDIF
+         &lt;&lt;FIND_CUSTOMER&gt;&gt; PROCEDURE
+         FOR THE CUST
+             WHERE CUST_NO = TRANS_CUST_NO
+                SET CUST_FOUND = TRUE
+         WHEN NONE
+                SET CUST_FOUND = FALSE
+         ENDFOR
+         ENDPROC
+
+
+   Example 8    For CA-DATACOM SQL access:
+
+         FOR FIRST CUSTOMER
+           WHERE CUSTID = PNL-CUST
+             DELETE CUSTOMER
+         WHEN NONE
+           NOTIFY 'NO CUSTOMERS FOUND IN' STATE
+         WHEN ERROR
+           SELECT FIRST ACTION
+             WHEN $ERROR-DVW-STATUS = -175
+                LIST 'Referential Integrity Error: '
+                $ERROR-CONSTRAINT-NAME
+                NOTIFY 'Customer ' CUSTID
+                "has open orders, can't be deleted"
+            WHEN OTHER
+                 DO ERROR
+           ENDSEL
+         ENDFOR
+
+
+   For DB2:
+
+         FOR FIRST CUSTOMER
+           WHERE CUSTID = PNL-CUST
+             DELETE CUSTOMER
+         WHEN NONE
+           NOTIFY 'NO CUSTOMERS FOUND IN ' STATE
+         WHEN ERROR
+           SELECT FIRST ACTION
+             WHEN $ERROR-DVW-STATUS = -530
+                LIST 'Referential Integrity Error: '
+                $ERROR-CONSTRAINT-NAME
+                NOTIFY 'Customer ' CUSTID
+                "has open orders, can't be deleted"
+            WHEN OTHER
+                 DO ERROR
+           ENDSEL
+         ENDFOR </pre>
+
+      <h5 id="Statement4">FOR NEW Statement (SQL Access)</h5>
+
+      <p>The <code>FOR NEW</code> statement inserts new rows in an SQL object using a
+      dataview defined for the object. The <code>FOR NEW</code> statement is not
+      iterative. To repeat processing of a <code>FOR NEW</code>, you must include it
+      in a looping construct. </p>
+  <pre>         &lt;&lt;label&gt;&gt;
+              FOR [THE] NEW dataview_name
+                     statements
+
+          [ WHEN DUPLICATE ]
+          [     statements ]
+          [ WHEN ERROR     ]
+          [     statements ]
+           ENDFOR </pre>
+
+      <p>Example 1</p>
+
+      <p>In this example, one row is added to the <code>INVEN_ITEM</code> table with
+      column values of a numeric literal, an alphanumeric literal, a working data
+      item, and a panel field.</p>
+  <pre>         FOR THE NEW INVEN_ITEM
+             MOVE 1915464 TO CODE
+             MOVE 'WIDGETS' TO DESC
+             MOVE WORK.COST TO INVEN_ITEM.COST
+             MOVE PNL_ASK.QTY TO INVEN_ITEM.QTY
+         ENDFOR </pre>
+
+      <p>example 2</p>
+
+      <p>In the example below, the <code>FOR NEW</code> construct is included in a
+      <code>LOOP</code> construct to process multiple records. Notice that a
+      <code>WHEN DUPLICATE</code> clause is specified to correct the
+      <code>NEW_COUNT</code> total when the duplicate record was not added. </p>
+  <pre>         LOOP UNTIL TRANSCODE = 'Q'
+               TRANSMIT INVEN_PNL
+               FOR THE NEW INVEN_ITEM
+                 MOVE INVEN_PNL TO INVEN_ITEM BY NAME
+                 SET NEW_COUNT = NEW_COUNT + 1
+               WHEN DUPLICATE
+                 SET NEW_COUNT = NEW_COUNT - 1
+               ENDFOR
+         ENDLOOP </pre>
+
+      <h4 id="Statement5">FOR Statement (Sequential Files)</h4>
+
+      <p>The FOR statement is used for reading and updating sequential files. </p>
+
+      <p>The FOR construct begins with a FOR and ends with an ENDFOR. </p>
+
+      <p>To retrieve data from a file, you must first define a CA-Ideal dataview for
+      the data. The dataview defines the record available to the application. </p>
+
+      <p>You can use the following FOR statements for sequential files: </p>
+      <ul>
+        <li>The <code>FOR EACH</code>, <code>FOR FIRST</code>, and <code>FOR
+          ANY</code> constructs retrieve records.
+        <p>These constructs are iterative. With each iteration, they return the
+        next record in the requested set. </p>
+        </li>
+        <li>The <code>FOR NEXT</code> statement accesses a single record from the
+        file. </li>
+        <li>Records are added to the file using <code>FOR NEW</code>. </li>
+      </ul>
+
+      <h5 id="EACH2">FOR EACH/FIRST/ANY Statement (Sequential Files)</h5>
+
+      <p>The FOR EACH, FOR FIRST, and FOR ANY statements process records from a
+      sequential file defined in the specified dataview. </p>
+  <pre>         [&lt;&lt;label&gt;&gt;]
+
+             [EACH            ]
+         FOR [ALL             ] dataview_name
+             [[THE]  FIRST [n] ]
+             [ANY n           ]
+
+                    [WHERE where-condition]
+
+                           statements
+
+                    [WHEN NONE     ]
+                    [    statements]
+
+                    [WHEN ERROR    ]
+                    [    statements]
+         ENDFOR </pre>
+
+      <p>You cannot read sequential files online under CICS. </p>
+
+      <p>You cannot modify sequential files in the scope of a FOR EACH construct,
+      even if the dataview is marked updateable. Sequential files are updated by
+      writing records to a new file. </p>
+
+      <p>The keyword QUIT in the logical scope of a FOR EACH abandons processing of
+      the set of records. See the QUIT statement &gt;&gt;&gt;&gt;. </p>
+
+      <h5 id="NEXT">FOR NEXT Statement (Sequential Files)</h5>
+
+      <p>The FOR NEXT statement specifies a series of statements that apply only to
+      the next record of a sequential file dataview. If a previous FOR FIRST was
+      executed for the same dataview, the next record in sequence is accessed. If no
+      previous FOR FIRST was executed, FOR NEXT accesses the first record. </p>
+
+      <p>This statement is not iterative. To repeat execution of this statement, you
+      must code it in a LOOP construct. </p>
+  <pre>         &lt;&lt;label&gt;&gt;
+              FOR [THE] NEXT dataview_name
+                     statements
+
+            [ WHEN NONE      ]
+            [     statements ]
+
+            [ WHEN ERROR     ]
+            [     statements ]
+
+           ENDFOR </pre>
+
+      <p>The FOR EACH construct is used for most sequential processing. The FOR NEXT
+      construct is used in situations where only one record, following the current
+      record, is required. </p>
+  <pre>  Example 1
+
+         FOR NEXT EMPLOYEE
+            IF STATUS = 'T'
+              SET MSG = 'EMPLOYEE TERMINATED'
+           ENDIF
+         ENDFOR
+
+
+   Example 2
+
+         &lt;&lt;MAIN&gt;&gt;PROCEDURE
+
+         &lt;&lt;LOAD&gt;&gt; LOOP
+           FOR NEXT STUDENT_QSAM
+             IF STUDENT_QSAM.CUM_GPA &gt;= 3.5
+                PRODUCE JEDEANS
+             ENDIF
+           WHEN NONE
+             IF $COUNT (LOAD) = 0
+                 LIST 'NO RECORDS IN STUDENT_QSAM'
+             ELSE
+                 SET RECORDS = $COUNT (LOAD)
+                LIST RECORDS 'RECORDS PROCESSED ' SKIP
+                 LIST '***END OF FILE ***'
+            ENDIF
+             QUIT RUN
+           ENDFOR
+
+           FOR NEW STUDENT_LOAD
+             MOVE STUDENT_QSAM TO STUDENT_LOAD BY NAME
+           WHEN DUPLICATE
+             LIST 'STUDENT #'
+             STUDENT_QSAM.STUDENT.NR 'ALREADY EXISTS'
+          ENDFOR
+         ENDLOOP </pre>
+
+      <h5 id="Statement6">FOR NEW Statement (Sequential Files)</h5>
+
+      <p>The FOR NEW statement adds new records to the end of a sequential file using
+      a dataview for that file. The FOR NEW statement is not iterative. To repeat
+      processing of a FOR NEW, you must include it in a looping construct. </p>
+  <pre>         [&lt;&lt;label&gt;&gt;]
+         FOR [THE] NEW dataview-name
+              statements
+
+             [ WHEN ERROR     ]
+             [     statements ]
+         ENFOR </pre>
+
+      <p>Example 1</p>
+  <pre>         FOR THE NEW INVEN_ITEM
+               MOVE TRANS_INFO TO INVEN_ITEM BY NAME
+         ENDFOR </pre>
+
+      <p>Example 2<br>
+      The following example illustrates the differences in the processing of a
+      sequential file when the disposition parameter is set to OLD or MOD in MVS. </p>
+  <pre>___________________________________________________________________
+Statements          Result DISP=OLD          DISP=MOD
+___________________________________________________________________
+FOR EACH dvwname    Reads existing records   Reads existing records
+statements
+ENDFOR
+___________________________________________________________________
+LOOP 3 TIMES FOR    Purges existing records  Peeps original records
+NEW dvwname         and adds three new       and adds three new
+statements to add   records to beginning of  records to end of file
+three new records   file
+ENFOR
+ENDLOOP
+___________________________________________________________________
+FOR EACH dvwname    Reads three new records  Reads original records
+statements          that were just added     and three newly added
+ENDFOR                                       records
+___________________________________________________________________
+
+
+___________________________________________________________________
+LOOP 2 TIMES FOR
+NEW dvwname         Purges three newly added Keeps original records
+statements to add 2 records and adds two new and three added
+new records         records                  records and adds two
+ENDFOR                                       new records to the end
+                                             of the file
+___________________________________________________________________
+FOR EACH dvwname    Reads only the two most  Reads original records
+. . .               recently added records   plus five new records
+___________________________________________________________________</pre>
+
+      <h4 id="Statement7">FOR Statement (VSAM Files)</h4>
+
+      <p>The <code>FOR</code> - <code>ENDFOR</code> construct is used for reading and
+      updatingVSAM files of any kind (ESDS, KSDS, RRDS) previously defined in
+      dataviews. </p>
+
+      <p>Requires the CA-Ideal VSAM support option installed. </p>
+
+      <p>There are two kinds of variable length records: </p>
+      <ul>
+        <li>Variable-occurrence records include a field or group defined using an
+        <code>OCCURS DEPENDING ON</code>. </li>
+        <li>Variable-segment records include different fields, based on a record type
+        included in a fixed portion of the record. The varying sets of fields
+        (segments) are defined using the <code>REDEFINES</code> clause to establish
+        different overlapping formats. The longest segment must be the first one
+        defined. </li>
+      </ul>
+
+      <p>ESDS files are not required to have a fixed-length segment. </p>
+
+      <p>KSDS files require a fixed-length segment containing the kets. </p>
+
+      <p>For RRDS files, variable length records are not supported. </p>
+
+      <p>Variable-segment actual records are padded with binary zeros to create
+      fixed-length records when written. </p>
+
+      <p><em>The FOR EACH and FOR FIRST constructs retrieve and update one record at
+        a time. These constructs are iterative; with each iteration, they return the
+        next requested record. It is not necessary to create an image of the record in
+        working data. CA-Ideal maintains a data structure that contains the record
+        retrieved by each iteration of the FOR. PDL statements can use the fields in
+        this structure. If a record is updated in the scope of the FOR (and updating is
+        allowed), the data set is automatically updated at the ENDFOR for the current
+        iteration. </em></p>
+
+      <p><em>To insert a new record into the file, use the FOR NEW statement. The FOR
+        NEW statement adds a single record that is not iterative. To repeat processing
+        of a FOR NEW statement, place the statement in a looping structure, such as a
+        LOOP construct. </em></p>
+
+      <h5 id="EACH3">FOR EACH/FIRST Statement (VSAM Files)</h5>
+
+      <p>The <code>FOR EACH</code> and <code>FOR FIRST</code> statements process a
+      set of records from a VSAM file. The FOR construct is iterative. With each
+      iteration, it returns the next record in the requested set. All of the
+      statements in the scope of the FOR apply to each record selected. <code>FOR
+        FIRST</code> and <code>FOR EACH</code> are the only constructs that update or
+      delete a record. </p>
+  <pre>         &lt;&lt;label&gt;&gt;
+
+             [EACH            ]
+         FOR [ALL             ]   dataview_name[NO UPDATE]
+             [[THE]  FIRST [n] ]
+
+               [WHERE where-condition ]
+
+               [ORDERED BY  [ASCENDING ] [FIELD-NAME ]]
+               [            [DESCENDING]              ]
+
+                        statements
+
+                 [WHEN NONE     ]
+                 [    statements]
+
+                 [WHEN ERROR     ]
+                 [     statements]
+
+         ENDFOR </pre>
+
+      <p>KSDS VSAM records are updated only through the primary index. Before
+      updating a record, CA-Ideal rereads the record with exclusive control, using
+      the primary key. CA-Ideal can then verify that the record was not deleted or
+      changed since the original access before updating or deleting the record. </p>
+
+      <h5 id="Statement8">FOR NEW Statement (VSAM Files)</h5>
+
+      <p>The <code>FOR NEW</code> statement inserts a single record into a VSAM file
+      using a dataview defined for the file. The <code>FOR NEW</code> statement is
+      not iterative. </p>
+  <pre>         &lt;&lt;label&gt;&gt;
+            FOR [THE] NEW dataview-name
+                [WHERE $RRN = value]
+
+                    statements
+
+                [WHEN DUPLICATE]
+                [    statements]
+
+                [WHEN ERROR    ]
+                [    statements]
+            ENDFOR </pre>
+
+      <p><code>WHERE $RRN = value</code> Specifies the relative record number of the
+      new record in an RRDS data set. This statement is required for RRDS files, but
+      cannot be used for ESDS files or KSDS files, <code>value</code> &ge; 1. </p>
+
+      <p>Example 1:</p>
+
+      <p>In this example, the FOR NEW construct is included in a LOOP construct to
+      process multiple records. Notice that a <code>WHEN DUPLICATE</code> clause is
+      specified to correct the <code>NEW-COUNT</code> total when the duplicate record
+      was not added. </p>
+  <pre>         LOOP UNTIL TRANSCODE = 'Q'
+            TRANSMIT INVEN-PNL
+            FOR THE NEW INVEN-ITEM
+               MOVE INVEN-PNL TO INVEN-ITEM BY NAME
+               SET NEW-COUNT = NEW-COUNT + 1
+               WHEN DUPLICATE
+                  SET NEW-COUNT = NEW-COUNT - 1
+            ENDFOR
+         ENDLOOP </pre>
+
+      <p>Example 2: </p>
+
+      <p>In this example, the <code>$RRN</code> function determines the location of
+      the new record. First, the file is read in descending order to determine the
+      relative record number of the last existing record. Then the new records are
+      added, starting with the next relative record number. </p>
+  <pre>         FOR FIRST PAYROLL ORDERED BY DESCENDING
+             SET NEXT-REC = $RRN(PAYROLL) + 1
+           WHEN NONE
+             SET NEXT-REC = 1
+         ENDFOR
+         LOOP UNTIL DONE
+            FOR NEW PAYROLL
+                WHERE $RRN = NEXT-REC
+                   DO NEW-SETUP
+                   SET NEXT-REC = $RRN(PAYROLL) + 1
+                   MOVE NEW-PAY TO PAYROLL BY NAME
+            ENDFOR
+         ENDLOOP </pre>
+
+      <h5 id="VSAM">VSAM Support: Backout and Recovery</h5>
+
+      <p>In non-CICS environments, the CA-Ideal PDL CHECKPOINT statement results in a
+      CLOSE (Type=T) operation in MVS and a TCLOSE operation in VSE. The ROLLBACK
+      statement has no effect. </p>
+
+      <p>Under CICS, CICS command level functions are actually used to access VSAM
+      files. CICS provides the facilities that ensure the integrity of VSAM files. If
+      these facilities are installed and enabled for VSAM files accessed in a
+      CA-Ideal program, the Procedure Definition statements <code>CHECKPOINT</code>
+      and <code>BACKOUT</code> function as expected for VSAM files: A
+      <code>CHECKPOINT</code> results in a CICS <code>SYNCPOINT</code> and a
+      <code>BACKOUT</code> statement results in a <code>SYNCPOINT ROLLBACK</code>.
+      </p>
+
+      <p>In addition, if CICS VSAM files are accessed along with CA-DATACOM/DB and
+      DB2, the CICS SYNCPOINT and SYNCPOINT ROLLBACK facilities help synchronize VSAM
+      files with the other databases (each of which has its own recovery
+      facilities).</p>
+
+      <p>Define VSAM clusters with the following steps, which set up the CICS
+      facilities to enable CA-Ideal applications to ensure the integrity of VSAM
+      files. </p>
+      <ol>
+        <li>VSAM clusters that CA-Ideal is to maintain and for which data integrity
+        is required must be defined to CICS as recoverable resources with
+        synchronous journaling using a SYSTEM journal. Changes are required in the
+        SIT, JCT, PLT, PCT, and PPT tables of CICS. </li>
+        <li>Include the parameter DTB=YES on every PCT entry that defines a CA-Ideal
+        transaction. This includes transactions that do not use VSAM, including
+        transactions for CA-Ideal signon and execution. However, no change or
+        recompile is required for existing CA-Ideal applications. If this parameter
+        is not included in PCT entries, CICS ASPE abends result when a PDL
+        CHECKPOINT or BACKOUT statement is issued. This requirement already exists
+        for CA-Ideal DB2 sites and is required for CA-Ideal Release 2.1 users who
+        want to use the CA-DATACOM/DB SQL option. </li>
+        <li>Implement CICS recovery utilities to handle abends of the entire CICS
+        partition. Transaction abends are handled automatically through dynamic
+        transaction backout as long as the partition is active</li>
+      </ol>
+
+      <p>If you choose to use the CICS DTB (dynamic transaction backout) facility
+      without a SYSTEM journal (see step 2, preceding), CA-Ideal runs, but CICS does
+      not synchronize the VSAM data with other database recovery in the case of an
+      abend. </p>
+
+      <h4 id="Statement9">IF Statement</h4>
+  <pre>         IF condition
+
+         [THEN         ]
+         [   statements]
+
+         [ELSE        ]
+         [   statement]
+
+         ENDIF </pre>
+
+      <p><code>condition</code> A user-defined condition (see the definition of a
+      condition in chapter one &gt;&gt;&gt;&gt;). Statements that immediately follow
+      the <code>IF [THEN]</code> condition are executed only if the condition is
+      true. </p>
+
+      <p><code>THEN</code> Can be added for readability. </p>
+
+      <p><code>ELSE</code> Marks the start of a set of statements to execute if the
+      condition is False or Unknown. </p>
+
+      <p><code>ENDIF</code> Terminates the <code>IF</code> construct. When IF
+      statements are nested, it terminates the most recent unterminated
+      <code>IF</code> construct. </p>
+  <pre>  Example 1
+
+         IF QUANT_ON_HAND &gt; QUANT_ORDERED
+             SUBTRACT QUANT_ORDERED FROM QUANT_ON_HAND
+         ELSE
+             MOVE "OUT OF STOCK" TO MESSAGE
+             PRODUCE EX_LINE
+         ENDIF
+
+
+   Example 2
+
+         IF NOT SUFF_ON_HAND
+             DO REORDER_ITEM
+         ENDIF
+
+
+   Example 3
+
+         IF (EMP_DEPT = 'D' AND JOB_CODE = 'J') OR RECENTLY_HIRED
+             DO PROCESS_JUNIOR
+         ENDIF
+
+
+   Example 4
+
+     &lt;&lt;MAIN&gt;&gt; PROCEDURE
+
+         FOR EACH PAYROLL WHERE YTD_COMMISSION &gt; 7500
+               FOR EMPLOYEE WHERE NUMBER = PAYROLL.NUMBER
+                  SET W_YTD_NET = (YTD_WAGES + YTD_COMMISSION)
+                  IF ACTIVITY_CODE = 'A'               :ACTIVE
+                     IF ACTIVITY_STATUS = 'S'          :S=SALARIED
+                        SET W_TAG = 'SALARIED'
+                     ELSE                              :H=HOURLY
+                        SET W_TAG = 'HOURLY'
+                     ENDIF
+                  ELSE                                 :INACTIVE
+                     SET W_TAG = 'INACTIVE'
+                  ENDIF
+               LIST EMPLOYEE.NUMBER EMPLOYEE.NAME
+                  W_YTD_NET  W_TAG
+               WHEN NONE
+               ENDFOR
+         ENDFOR
+     ENDPROC </pre>
+
+      <h4 id="INITIATE">INITIATE Statement</h4>
+
+      <p>The INITIATE statement runs a CA-Ideal program asynchronously online. </p>
+  <pre>         INITIATE pgm-name [USING INPUT parm] </pre>
+
+      <p><code>pgm-name</code> The name of the CA-Ideal program to execute as an
+      asynchronous task. The specified program must be a valid resource of the
+      program that contains this statement and must not contain a
+      <code>TRANSMIT</code> statement. A non-CA-Ideal subprogram cannot be invoked by
+      <code>INITIATE</code>, although it can be <code>CALL</code>ed by the CA-Ideal
+      program that was <code>INITIATE</code>d. </p>
+
+      <p><code>parm</code> The name of a field that contains data or a literal to
+      pass as an input-only parameter to the program. Only one parameter can be
+      passed and that parameter cannot be a group field. </p>
+
+      <p>The asynchronous task uses the same selected system as the current run.
+      Therefore, the initiated program must be in the same system as the main program
+      executed by the RUN command. </p>
+
+      <p>When the asynchronous subprogram completes, a message is sent to the
+      initiating session. You can use the <code>SET ASYNCMSG</code> command to
+      suppress this message. </p>
+
+      <p>Example: </p>
+
+      <p>The following code is part of an inventory update procedure. On the
+      <em>INCOMING</em> panel where the user enters the data on the incoming
+      shipments of stocked items (some of which were backordered), the PF5 key is
+      defined to print a report of all outstanding orders for a back-ordered product.
+      With the <code>INITIATE</code> statement, you can produce this report as an
+      asynchronous task so you can proceed to other tasks online. </p>
+  <pre>         &lt;&lt;PROCESS-INCOMING&gt;&gt; PROCEDURE
+            TRANSMIT INCOMING
+            SELECT FIRST ACTION
+               WHEN $PF3
+                  QUIT PROCEDURE
+               WHEN $PF5
+                  DO UPDATE-ITEM
+                  INITIATE PRTORDER USING INPUT INCOMING.ITEM-ID
+               WHEN $ENTER-KEY
+                  DO UPDATE-ITEM
+               WHEN NONE
+                  DO ERROR
+            ENDSEL
+         ENDPROC</pre>
+
+      <h4 id="INVERT">INVERT Statement</h4>
+
+      <p>The INVERT statement reverses the order of characters in a given
+      alphanumeric field or alphanumeric group. </p>
+  <pre>                {alpha_field}
+         INVERT {alpha_group} </pre>
+
+      <p>Example:</p>
+
+      <p>The following example shows how you can use <code>INVERT</code> in text
+      processing to find the start of the last word in a sentence. <em>W-WORK</em> is
+      defined as type V for a variable length field. </p>
+  <pre>         SET W_SENTENCE = 'THIS IS A SENTENCE
+         'SET W_WORK = $TRIM(W_SENTENCE,RIGHT=' ')
+         INVERT W_WORK
+         SET N = $INDEX(W_WORK,SEARCH= ' ')
+         SET W_LAST_WORD = $SUBSTR(W_WORK,LEN=(N - 1 ))
+         INVERT W_LAST_WORDSET W_SENTENCE =
+         $SUBSTR(W_WORK,START=(N + 1))
+         INVERT W_SENTENCE </pre>
+
+      <h4 id="LIST">LIST Statement</h4>
+
+      <p>The LIST statement sends data to the RUNLIST output file. LIST is useful for
+      displaying simple messages or for displaying the contents of fields for
+      debugging. </p>
+
+      <p>The first format <code>LIST</code> sends variables or literals to the
+      <code>RUNLIST</code> output file. In MVS batch, this is the file with the
+      <code>RUNLIST DD</code> name. In VSE batch, this is <code>SYSLIST</code>. This
+      is the file in the output library with an output name identical to the main
+      program. You can browse or print this output later. </p>
+  <pre>               [list_specification]
+          LIST [ERROR             ] </pre>
+
+      <p><code>list_specification</code> Specifies the data to list. The format is:
+      </p>
+  <pre>            {numeric_field   }[     {numeric_field    }]
+            {date_field      }[     {date_field       }]
+            {alpha_expression}[ [,] {alpha_expression }]
+            {flag            }[     {flag             }] ...
+            {SKIP            }[     {SKIP             }]
+            {PANEL panelname }[     {PANEL panelname  }]
+            {NEWPAGE         }[     {NEWPAGE          }]</pre>
+
+      <p><code>SKIP</code> Causes the listing to skip to a new line. </p>
+
+      <p><code>PANEL panelname</code> Writes an image of the named panel with the
+      current field values. A panel wider than 132 characters is truncated. </p>
+
+      <p><code>NEWPAGE</code> Causes the listing to skip to the top of the next page.
+      </p>
+
+      <p><code>ERROR</code> (Only in an error procedure or <code>WHEN ERROR</code>
+      clause.) Lists information about an error condition that terminated a run.
+      <code>LIST ERROR</code> automatically displays the value of the
+      <code>$RETURN-CODE</code> function. For further information on error
+      conditions, refer to the <code>$ERROR</code> and <code>$RETURN-CODE</code>
+      functions in Chapter 5 &gt;&gt;&gt;&gt; and error procedure in this chapter
+      &gt;&gt;&gt;&gt;</p>
+
+      <p>On output, items on the same line are separated from each other by one
+      blank. </p>
+
+      <p>If a numeric or date field is identified in a
+      <code>list_specification</code>, the value of the field is first converted
+      internally with <code>$STRING</code> and the result is listed. </p>
+
+      <p>For a variable length field, the actual length is listed. </p>
+
+      <p>An item with a value of null is listed as a question mark (?) or by the
+      character specified using the <code>SET REPORT NULLSYM</code> command. </p>
+
+      <p>You can override the destination of the <code>LIST</code> output with an
+      <code>ASSIGN REPORT RUNLIST</code> statement or command. See the <code>ASSIGN
+        REPORT</code> command in the Command Reference Guide &gt;&gt;&gt;&gt;. </p>
+
+      <p>Exa,ple:</p>
+  <pre>         LIST 'THE ANSWER IS' X, Y 'ON', Z
+         :  This results in the concatenation of the values
+         :  of the designated literals and identifiers
+         :  with one blank between each. </pre>
+
+      <h4 id="LOOP">LOOP Statement</h4>
+
+      <p>The LOOP statement executes one or more statements repeatedly under the
+      control of one or more conditions. </p>
+  <pre>  Syntax 1
+
+         [&lt;&lt;label&gt;&gt;]
+            LOOP
+
+                statements
+
+            [ {WHILE}           ]
+            [ {UNTIL} condition ] ...
+            [    statements     ]
+
+            ENDLOOP
+
+
+   Syntax 2
+
+         [&lt;&lt;label&gt;&gt;]
+            LOOP numeric_expression_1 TIMES
+             statements
+
+            [{WHILE}           ]
+            [{UNTIL} condition ] ...
+            [     statements   ]
+
+            ENDLOOP
+
+
+   Syntax 3
+
+         [&lt;&lt;label&gt;&gt;]
+            LOOP VARYING identifier
+                [FROM numeric_expression_2]
+                [BY numeric_expression_3]
+              [[ UP  ]                          ]
+              [[DOWN] THRU numeric_expression_4]
+                          statements
+         [ {WHILE} condition ] ...
+         [ {UNTIL}           ]
+         [     statements    ]
+            ENDLOOP </pre>
+
+      <p><code>&lt;&lt;label&gt;&gt;</code> Optional 1 to 15-character label. You can
+      use it to refer to the <code>LOOP</code> from other statements, such as
+      <code>QUIT</code> or <code>PROCESS NEXT</code>, or as the operand of certain
+      functions, such as <code>$COUNT</code>. </p>
+
+      <p><code>WHILE condition</code> Indicates that the loop executes while the
+      condition remains true. If the condition is false or unknown, the loop is
+      terminated. You can use multiple <code>WHILE</code> clauses. </p>
+
+      <p><code>UNTIL condition</code> Indicates that the loop executes repeatedly
+      until the condition becomes true (as long as the condition remains false or
+      unknown). You can use multiple UNTIL clauses. </p>
+
+      <p><code>numeric_expression_1 TIMES</code> The maximum number of times the loop
+      executes. If the value of this expression is less than 1, no iterations are
+      performed. If the <code>TIMES</code> clause results in a number that has
+      decimal places, the number of iterations is rounded to the next higher integer.
+      </p>
+
+      <p><code>VARYING identifier</code> Specifies a numeric field to be incremented
+      by<code>numeric_expression_3</code> each time through the loop. </p>
+
+      <p><code>FROM numeric_expression_2</code> Specifies an initial value for the
+      <code>VARYING</code> target. </p>
+
+      <p><code>DIRECTION</code> clause Specifies the direction of incrementation
+      through the loop and a value to compare with the value of the identifier. The
+      direction clause has the following format: </p>
+  <pre>              [UP  ]
+   [DOWN] THRU numeric_expression_4</pre>
+
+      <p>The loop is terminated when using UP and the value of the identifier exceeds
+      this value or when using DOWN and the value of the identifier falls below this
+      value. </p>
+
+      <p><code>ENDLOOP</code> End of the <code>LOOP</code> construct. </p>
+
+      <p>The numeric expressions in this statement can't be nullable. </p>
+
+      <p>The location of the tests in the loop is determined by the placement of the
+      WHILE and UNTIL statements. Statements can appear before and after a
+      <code>WHILE</code> or <code>UNTIL</code> clause. Placement of the statements in
+      relation to the tests affects whether the statements ever executes. </p>
+
+      <p>When a <code>PROCESS NEXT</code> statement is encountered in a loop, the
+      current iteration ends and the loop is reiterated. </p>
+
+      <p>When a <code>QUIT</code> statement is encountered in a loop, execution
+      continues with the statement that follows <code>ENDLOOP</code>. </p>
+
+      <p>In the following loop, the test is made before any statements are processed.
+      </p>
+  <pre>            LOOP
+            UNTIL/WHILE condition
+              statements
+            ENDLOO</pre>
+
+      <p>In the following loop, the test is made after the statements are processed.
+      Tthe statements execute at least once. </p>
+  <pre>            LOOP
+              statements
+            UNTIL/WHILE condition
+
+            ENDLOOP </pre>
+
+      <p>In the next example the test is performed after the first set of statements
+      processes and can exit the <code>LOOP</code> before the second set of
+      statements is processed. </p>
+  <pre>            LOOP
+              statements_1
+            UNTIL/WHILE condition
+              statements_2
+            ENDLOOP </pre>
+
+      <p>In the following loop, the <code>VARYING</code> clause processes array items
+      backwards beginning at 10 and continuing until 1. After the loop ends,
+      <code>LOOP-INDEX</code> has a value of zero. </p>
+  <pre>            LOOP
+            VARYING LOOP-INDEX FROM 10 BY -1 DOWN THRU 1
+                CALL CHECK USING A (LOOP-INDEX)
+            ENDLOOP</pre>
+
+      <p>You can use FROM, BY, and THRU clauses in any order.</p>
+
+      <p>The following is an infinite loop. </p>
+  <pre>            LOOP
+            VARYING LOOP-INDEX FROM 100 BY 1 DOWN THRU 100
+                statements
+            ENDLOOP </pre>
+
+      <p>This loop repeatedly transmits a panel until you enter <code>TRANSCODE
+        T</code> on the panel or press the PF3 key. If the <code>TRANSMIT</code> does
+      not present the application with terminating data, <code>TRANSCODE</code>
+      determines further processing on each subsequent <code>LOOP</code> iteration.
+      </p>
+  <pre>            &lt;&lt;MAIN&gt;&gt; PROCEDURE
+              LOOP
+               TRANSMIT MAINPNL
+              UNTIL $PF3
+              UNTIL TRANSCODE = 'T'
+              SET MAINPNL.MSG = ' '
+              SELECT TRANSCODE
+              WHEN 'A'
+               DO ADD_REC
+              WHEN 'B'
+               DO DEL_REC
+              WHEN OTHER
+               DO OTHER_PROC
+              ENDSEL
+             ENDLOOP
+            ENDPROC </pre>
+
+      <p>This loop processes a sequential file until the first header record is
+      encountered. </p>
+  <pre>            &lt;&lt;POSITION-HDR&gt;&gt;
+              LOOP
+                 FOR NEXT MASTER-FILE
+                    : BYPASS
+                 WHEN NONE
+                     QUIT POSITION-HDR
+                 ENDFOR
+              UNTIL MASTER-FILE.RECORD-TYPE = 'A'
+              ENDLOOP
+              DO PROCESS-A </pre>
+
+      <p>More examples: </p>
+  <pre>  Example 1
+
+         LOOP UNTIL BALANCE NOT &gt; AMOUNT
+            DO PRINT-BALANCE
+            SUBTRACT AMOUNT FROM BALANCE
+         ENDLOOP
+
+
+   Example 2
+
+         LOOP VARYING I FROM 1 BY 1 THRU N
+            MOVE STATE(I) TO X-STATE
+         WHILE NOT ERROR-COND
+            DO PROC-STATE
+         ENDLOOP
+
+
+   Example 3
+
+         LOOP
+            statements
+         WHILE condition-1
+            statements
+         WHILE condition-2
+            statements
+         ENDLOOP
+
+
+   Example 4
+
+         LOOP VARYING I FROM X + 3 BY 2 THRU (A + B)/2
+             statements
+         ENDLOOP </pre>
+
+      <h4 id="MOVE">MOVE Statement</h4>
+
+      <p>The MOVE statement copies data from a source to a target. </p>
+  <pre>  Syntax 1  (MOVE TO Numeric Field):
+
+              {alphanumeric_expression}
+         MOVE {numeric_expression     }  TO numeric_field ...
+              {NULL                   } </pre>
+
+      <p> If both fields are numeric the value is moved aligning an implicit decimal
+      point, truncating of low-order decimal digits. If high order digits are lost,
+      an overflow error condition is raised and the error procedure is executed. </p>
+
+      <p>If the target is a date field, then the source cannot be an alphanumeric.
+      </p>
+
+      <p>When analphanumeric value is moved to a non-date numeric target, the value
+      is converted with the $NUMBER &gt;&gt;&gt;&gt; function. If the source contains
+      non-numeric characters, an execution-time error occurs. </p>
+
+      <p>If the source is NULL the target field must be nullable. </p>
+
+      <p>  </p>
+  <pre>  Syntax 2  (MOVE TO Alpha Field):
+
+              {alphanumeric_expression }
+              {numeric_field           }
+         MOVE {numeric_literal         } TO alphanumeric_field ...
+              {group                   }
+              {NULL                    } </pre>
+
+      <p>Syntax 2 moves a value to an elementary alphanumeric field. </p>
+
+      <p>The source value is truncatted or padded with blanks as needed. It the
+      target is variable length then its size is adjusted. </p>
+
+      <p>If the source is a non-alpha group, it is treated as a single alphanumeric
+      field. You cannot specify restricted groups. </p>
+
+      <p>When low values are moved to an alphanumeric panel field, CA-Ideal considers
+      the field EMPTY. The next TRANSMIT fills this EMPTY field with the Output Fill
+      Character when it is next displayed. </p>
+
+      <p>When a non-date numeric source is moved to an alphanumeric target, the data
+      is first converted with the <code>$STRING</code> function (see the section on
+      the $STRING function in Chapter 5 &gt;&gt;&gt;&gt;). If you do not want to use
+      <code>$STRING</code>, you can specify a <code>$EDIT</code> function. Use the
+      default <code>PIC</code> or specify othe pattern. See the section on $EDIT in
+      chapter 5 &gt;&gt;&gt;&gt;). </p>
+
+      <p>You cannot move an arithmetic expression or numeric function to an
+      alphanumeric target without first moving it to a numeric target. </p>
+
+      <p>You cannot move a date type source to an alphanumeric target. Use the
+      <code>$DATE</code> function to convert the date. </p>
+
+      <p>If the source is NULL the target field must be nullable. </p>
+
+      <p> </p>
+  <pre>  Syntax 3  (MOVE TO Group):
+
+MOVE group1 TO group2{BY NAME     } [USING {$EDIT   } [RULES]]
+                     {BY POSITION } [      {$STRING }        ] </pre>
+
+      <p><code>Syntax 3 moves data from one group to another. </code></p>
+
+      <p>Moving a value from each field in the source group to a field in the target
+      group is subject to the rules for moving values described in Formats 1 and 2.
+      </p>
+
+      <p><code>BY NAME</code> moves the value from each field in the source group to
+      an identically named field in the target group, if one exists. </p>
+
+      <p>Redefinitions in the sending group are not eligible sources; however,
+      redefinitions in the receiving group are eligible targets. </p>
+
+      <p>A compile-time error message is issued if the number of occurrences does not
+      match. A runtime error occurs if the number of occurs depending on or parameter
+      field occurrences does not match. </p>
+
+      <p><code>BY POSITION</code> moves the value of the first elementary field in
+      the source group item to the first elementary field in the target group item,
+      the second to the second, and so on. </p>
+
+      <p>The group structures must be compatible as follows:</p>
+      <ul>
+        <li>Structures must have the same number of elementary fields. </li>
+        <li><code>OCCUR</code>s values must be identical and at the same relative
+        level. </li>
+      </ul>
+
+      <p>Using $EDIT rules: </p>
+
+      <p>In a group move only, specifies to convert numeric fields to alphanumeric by
+      applying a <code>$EDIT</code> function with an edit pattern of <code>PIC
+        9(n)</code>, where n is the number of integer places in the field. The default
+      uses a <code>$STRING</code> conversion. </p>
+
+      <p>Using $STRING rules (default.): </p>
+
+      <p>In a group move only, performs numeric conversion using the $STRING rules.
+      </p>
+
+      <p>Examples: </p>
+  <pre>         MOVE QUANTITY_ORDERED * UNIT_PRICE TO CHARGE</pre>
+
+      <p>Syntax 1: </p>
+  <pre>         MOVE CURRENT_AMOUNT TO AMOUNT_RQRD
+         MOVE $NUMBER (PAY_AMT) TO PAY_AMT_NUMERIC
+         MOVE ((Y + Z)*W)/(A - B) TO Z
+         MOVE A + ($REMAINDER(M,N) - $ROUND(J,1))/3.6 TO L </pre>
+
+      <p>Syntax 2: </p>
+  <pre>         MOVE $STRING (X,Y,Z) TO ALPHA </pre>
+
+      <p>Syntax 3 - Example 1: </p>
+  <pre>       Level  Field   Type  Int   Chars   Occur   Value/Comments
+   1)  1      A
+        2      B                            3
+         3      C      X           2        4
+         3      D      X           2
+         3      E      X           2
+
+       Level  Field   Type  Int   Chars   Occur   Value/Comments
+   2)  1      X
+        2      C       X           2       4
+        2      D       X           2 </pre>
+
+      <p> </p>
+  <pre>         MOVE B(1) TO X BY NAME </pre>
+
+      <p>The values of all occurrences of C(1,n) and D(1) in structure 1 are moved to
+      C and D in structure 2 (B is a group). </p>
+  <pre>         MOVE A TO X BY NAME </pre>
+
+      <p>Invalid MOVE because structures 1 and 2 do not match. The number of
+      subscripts for C in structure 1 is 2, and the number for C in structure 2 is
+      1.</p>
+
+      <p> </p>
+
+      <p>Syntax 3 - Example 2: </p>
+  <pre>    Level  Field   Type  Int   Chars   Occur   Value/Comments
+1)  1      A
+     2      B                            3
+      3      C      X           2        5
+      3      D      X           2
+      3      E      X           2
+
+    Level  Field   Type  Int   Chars   Occur   Value/Comments
+2)  1      X
+      3     C       X           2       4
+      3     D       X           2 </pre>
+
+      <p> </p>
+  <pre>MOVE B(1) TO X BY NAME </pre>
+
+      <p> Invalid MOVE because OCCUR of 5 for C in structure 1 and OCCUR of 4 for C
+      in structure 2 cause the structures not to match. </p>
+
+      <p>Syntax 3 - Example 2: </p>
+  <pre>    Level  Field   Type  Int   Chars   Occur   Value/Comments
+1)  1      A
+     2      B                            3
+      3      C      X           1        4
+      3      D      X           1
+      3      E      X           1
+
+    Level  Field   Type  Int   Chars   Occur   Value/Comments
+2)  1      AA
+     2      BB      X           1
+      3      E      X           1       3
+       4      C                         4
+     2        D     X                   3 </pre>
+
+      <p> </p>
+  <pre>         MOVE A TO BB BY NAME </pre>
+
+      <p>Moves only the values of all occurrences of C because it is the only
+      elementary field that has the same name in both structures. Although E is part
+      of BB, it is not moved because it is a group. </p>
+
+      <p> </p>
+  <pre>         MOVE A TO AA BY NAME</pre>
+
+      <p>Moves the values of all occurrences of C and D because both C and D are the
+      only elementary fields that have the same names in both structures. </p>
+
+      <p>Syntax 3 - Example 3: </p>
+
+      <p>This first example of MOVE BY POSITION illustrates the rules by which data
+      structures are tested for compatibility using the rules outlined in the
+      description of MOVE BY POSITION. Subsequent examples are simpler and their
+      explanations assume the reader understands the rules illustrated in this first
+      detailed example. </p>
+  <pre>    Level  Field   Type  Int   Chars   Occur   Value/Comments
+1)  2      A                            2      REDEFINED Y
+     3      B      X           5        5
+     3      C      X           5
+     3      D                                  REDEFINES C
+      4      E     X           2
+      4      F     X           3
+     3      G      N           2
+
+    Level  Field   Type  Int   Chars   Occur   Value/Comments
+2)  2      M                            2      REDEFINES Q
+     3      N
+      4      O      X           5       5
+      4      P      X           4              REDEFINES P
+      4      Q      X           4
+      4      R      X           1 </pre>
+
+      <p> </p>
+  <pre>         MOVE A TO M BY POSITION </pre>
+
+      <p>This is a valid move. The structures are tested for compatibility with the
+      following steps: </p>
+
+      <p>1. Removes any OCCURs values from group entries in both the source and
+      target. After applying 1., the OCCUR values 2 in structure 1 and 2 in structure
+      2 are removed. </p>
+
+      <p>2. Removes any fields or groups with REDEFs in both the source and target.
+      If a group is removed, all its subordinate fields are also removed. After
+      applying 2., the fields D, E and F in structure 1 and Q in structure 2 are
+      removed. </p>
+
+      <p>3. Removes each subordinate group entry except any that has OCCURs. After
+      applying 3., the field N in structure 2 is removed. </p>
+
+      <p>4. Finally, the levels are renumbered for the remaining fields. After
+      applying 4., the result is: </p>
+  <pre>    Level  Field   Type  Int   Chars   Occur   Value/Comments
+1)  1      A
+     2      B       X           5        5
+     2       C      X           5
+     2       G      N           2
+
+    Level  Field   Type  Int   Chars   Occur   Value/Comments
+2)  1      M
+     2      O       X           5       5
+     2      P       X           4
+     2      R       X           1 </pre>
+
+      <p>The move is now formed as follows: The values of all occurrences of B are
+      moved to O, the value of C is moved to P, the value of G is moved to R. </p>
+
+      <h4 id="NOTIFY">NOTIFY Statement</h4>
+
+      <p>The NOTIFY statement transmits data or a message to the message line in an
+      online or batch environment. You can also send the message to the operator
+      console. NOTIFY is useful for displaying a message with information about
+      errors, instructions to continue, warnings, and so on, to the user's or
+      operator's terminal. </p>
+  <pre>         NOTIFY list_specification [TO CONSOLE] </pre>
+
+      <p><code>list_specification</code> Specifies the data to transmit. The format
+      is: </p>
+  <pre>   {flag                   }[    flag                    ]
+   {numeric_field          }[    numeric_field           ]
+   {date_field             }[[,] date_field              ] ...
+   {alphanumeric_expression}[    alphanumeric_expression ] </pre>
+
+      <p><code>TO CONSOLE</code> The <code>CONSOLE</code> clause lets the application
+      send a message to the operator console. The message is also sent to the MVS
+      JESLOG or VSE POWER LOG in batch or to the CICS System Message Block online.
+      </p>
+
+      <p>The <code>NOTIFY</code> message is sent from the program to the message line
+      when the next <code>TRANSMIT</code> statement executes. If there are multiple
+      <code>NOTIFY</code> statements, only the last <code>NOTIFY</code> message
+      before the <code>TRANSMIT</code> is sent. </p>
+
+      <p>The <code>NOTIFY</code> message is cleared from the message line when the
+      next statement in the program executes after the <code>TRANSMIT</code>. If no
+      <code>TRANSMIT</code> occurs between <code>NOTIFY</code> and the end of a run,
+      the message appears on the next CA-Ideal system panel. In this instance, the
+      <code>NOTIFY</code> message overrides the <code>RUN COMPLETED</code> message.
+      </p>
+
+      <p>If the <code>TO CONSOLE</code> clause is used, the message is sent to the
+      operator's console when the <code>NOTIFY</code> statement is executed. </p>
+
+      <p>The maximum length of a <code>NOTIFY</code> message is 79 characters. </p>
+
+      <p>The maximum length of a <code>NOTIFY</code> message sent to a console is 72
+      characters. </p>
+
+      <p>A null data item is shown as a question mark (?) or the character specified
+      using the <code>SET REPORT NULLSYM</code> command. </p>
+
+      <h4 id="Procedure2">Procedure</h4>
+
+      <p>A named, functional, collection of statements. </p>
+  <pre>         &lt;&lt;procedure_name&gt;&gt; {PROC      }
+                            {PROCEDURE }
+                  statements
+         [ENDPROC     ]
+         [ENDPROCEDURE] </pre>
+
+      <p><code>procedure_name</code> 1 to 15-characterprocedure label. The chevrons
+      &lt;&lt; and &gt;&gt; are requiredand are not included in the label length. </p>
+
+      <p><code>PROC|PROCEDURE</code> Designates the beginning of a new procedure. The
+      procedure name and this word are optional for the first or main procedure of
+      the program. </p>
+
+      <p><code>ENDPROC|ENDPROCEDURE</code> Designates the end of the procedure. It is
+      optional, when omitted the next procedure or the end of the program terminates
+      the procedure. </p>
+
+      <p>Any statements occurring after an ENDPROCEDURE and before the next PROCEDURE
+      are treated as errors. </p>
+
+      <p>A procedure named <code>&lt;&lt;ERROR&gt;&gt;</code> will handle execution
+      time errors at runtime without necessarily aborting the RUN. Refer also to the
+      description of the Error Procedure &gt;&gt;&gt;&gt; in this chapter. </p>
+  <pre>       &lt;&lt;MAIN&gt;&gt; PROCEDURE
+           LOOP
+               TRANSMIT MAINPNL UNTIL TRANSCODE = 'T'
+               SET MAINPNL.MSG = ' '
+               SELECT TRANS_CODE
+               WHEN 'A'
+                   DO ADD_REC
+               WHEN 'B'
+                   DO DEL_REC
+               WHEN OTHER
+                   DO OTHER_PROC
+               ENDSEL
+           ENDLOOP
+       ENDPROC
+
+       &lt;&lt;ADD_REC&gt;&gt; PROCEDURE
+           TRANSMIT ADDPNL CLEAR
+           FOR NEW EMPLOYEE
+               SET EMPLOYEE = ADDPNL BY NAME
+               SET MAINPNL.MSG = 'EMPLOYEE ADDED'
+           WHEN DUPLICATE
+               SET MAINPNL.MSG = 'RECORD ALREADY ON FILE'
+           ENDFOR
+       ENDPROC </pre>
+
+      <h4 id="PROCESS">PROCESS NEXT Statement</h4>
+
+      <p>Terminates the current iteration and initiates the next one of a
+      <code>LOOP</code>, <code>FOR EACH/FIRST n/ANY</code> construct. If the current
+      construct is a FOR, any record acquired for update is released and no updates
+      take place (except <code>DELETE</code>). The process continues with the next
+      record. </p>
+  <pre>         PROCESS NEXT [label] </pre>
+
+      <p><code>PROCESS NEXT</code> without label must appear in the lexical scope of
+      a <code>LOOP</code> or <code>FOR EACH</code> construct. With label, it must
+      appear in its logical scope. </p>
+
+      <p><code>label</code> is the label of the terminated <code>LOOP</code> or
+      <code>FOR</code> construct. </p>
+
+      <p>When <code>PROCESS NEXT</code> executes, the <code>ENDLOOP</code> or
+      <code>ENDFOR</code> statements are not executed. </p>
+  <pre>  Example 1
+
+         &lt;&lt;EMP&gt;&gt;
+             FOR EACH EMPLOYEE WHERE DEPT = 'D' AND JOB_CODE = 'J'
+                 DO NOTE_DJ_EMP
+                     &lt;&lt;DEP&gt;&gt; FOR EACH DEPENDENT
+                         DO NOTE_DEP
+                         IF DEP_AGE &gt; 21
+                             DO TOO_OLD
+                             PROCESS NEXT DEP
+                         ENDIF
+                         DO ANAL_DEP
+                     ENDFOR
+                 IF FOUND_ENOUGH_EMPQUIT EMP
+                 ENDIF
+             ENDFOR
+
+
+   Example 2
+
+         &lt;&lt;MAIN&gt;&gt; PROCEDURE
+             SET EMPLOYEE_CO = 0
+             &lt;&lt;EMP&gt;&gt; FOR EACH EMPLOYEE
+                 SET FOURTH_QTR_SALES = SALES (10) + SALES (11)
+                 + SALES (12)
+                 IF FOURTH_QTR_SALES &lt; 1000
+                     PROCESS NEXT EMP
+                 ENDIF
+                 MOVE 0 TO TOTAL_SALES
+                 MOVE 1 TO LOW_SUB
+                 MOVE 1 TO HIGH_SUB
+                 LOOP VARYING SEARCH_SUB FROM 1 BY 1 THRU 12
+                     ADD SALES (SEARCH_SUB) TO TOTAL_SALES
+                     IF SALES (LOW_SUB) &gt; SALES (SEARCH_SUB)
+                         MOVE SEARCH_SUB TO LOW_SUB
+                     ENDIF
+                     IF SALES(HIGH_SUB) &lt; SALES(SEARCH_SUB)
+                         MOVE SEARCH_SUB TO HIGH_SUB
+                     ENDIF
+                 ENDLOOP
+                 LIST EMPLOYEE.NAME SALES(LOW_SUB) SALES(HIGH_SUB)
+                 TOTAL_SALES
+                 ADD 1 TO EMPLOYEE_COUNT
+                 IF EMPLOYEE_COUNT &gt; 99 :illustration only,
+                     QUIT EMP           :could have been done
+                 ENDIF                  :with
+             ENDFOR                         :FOR FIRST 99 EMPLOYEE
+                                            :at beginning
+                                            :of EMP PROCEDURE
+         ENDPROC </pre>
+
+      <h4 id="PRODUCE">PRODUCE Statement</h4>
+
+      <p>The <code>PRODUCE</code> statement generates a report that must be
+      previously defined with the Report Definition Facility and specified in the
+      program's resource table. </p>
+
+      <p>The <code>PRODUCE</code> statement usually is contained in a
+      <code>FOR</code> or <code>LOOP</code> structure. Each execution of the
+      <code>PRODUCE</code> statement generates one detail group comprising one or
+      more physical lines. (For more information, see the Generating Reports guide
+      &gt;&gt;&gt;&gt;.) The <code>PRODUCE</code> command (see the Command Reference
+      Guide &gt;&gt;&gt;&gt;) generates a report facsimile. </p>
+  <pre>         PRODUCE report_name[group_name] </pre>
+
+      <p><code>report_name</code> The one- to eight-character name of the report
+      definition. </p>
+
+      <p><code>group_name</code> The three- to eight-character name of a group in the
+      detail section of the report. If omitted, the primary group is assumed. </p>
+
+      <p>Page breaks, control breaks, headings, summaries, and so on, are produced
+      automatically according to the report specification (see the Generating Reports
+      guide &gt;&gt;&gt;&gt;). </p>
+
+      <p>In batch, each eight-character <code>report-name</code> corresponds to the
+      name of a DD statement and, therefore, must be unique in the run. If the
+      <code>report-name</code> contains hyphens (-) or underscores (_), you must use
+      an <code>ASSIGN</code> statement to provide a legal DD name to the operating
+      system. </p>
+
+      <p>All fields in the detail group must have values at the time the
+      <code>PRODUCE</code> statement is issued or a runtime error is produced. </p>
+
+      <p>A <code>PRODUCE</code> statement activates a report and it remains active
+      until the application terminates or the program or the report is released. See
+      the <a href="#RELEASE"><code>RELEASE</code> statement</a>. </p>
+
+      <p>A maximum of 15 reports can be active simultaneously. </p>
+  <pre>   Example
+            FOR EACH EMPLOYEE WHERE STATE_ADDRESS = 'TX' 
+            AND CITY_ADDRESS = 'DALLAS'
+                PRODUCE EMPRPT
+            ENDFOR</pre>
+
+      <h4 id="QUIT">QUIT Statement</h4>
+
+      <p>The <code>QUIT</code> statement causes the flow of control to abandon one or
+      more current constructs, procedures, or the current program, and optionally to
+      transfer control to another procedure. Subsequent flow of control continues as
+      if the affected constructs, procedures, or program were exited normally. </p>
+  <pre>              [label-of-FOR-or-LOOP                         ]
+              [PROGRAM                                      ]
+              [RUN                                          ]
+         QUIT [label-of-procedure [TRANSFER [TO] procedure] ]
+              [PROCEDURE [TRANSFER [TO] procedure]          ]
+              [ALL TRANSFER [TO] procedure                  ] </pre>
+
+      <p><code>QUIT</code> with no operands, terminates the current <code>FOR</code>
+      or <code>LOOP</code> construct or procedure. The statement following the
+      <code>ENDFOR</code>, <code>ENDLOOP</code>, or <code>ENDPROC</code> executes
+      next. When a <code>QUIT</code> statement applies to a <code>FOR</code>
+      construct, no updates to the current record are applied. </p>
+
+      <p><code>QUIT label-of-FOR-or-LOOP</code> terminates the labeled construct.
+      This <code>QUIT</code> statement can only execute in the logical scope of that
+      labeled construct or in an <code>ERROR PROCEDURE</code> construct. </p>
+
+      <p><code>QUIT PROGRAM</code> terminates the current program or subprogram.
+      <code>QUIT PROGRAM</code> is not required at the normal end of a program since
+      the end of the main procedure implies a <code>QUIT PROGRAM</code>. </p>
+
+      <p><code>QUIT RUN</code> terminates the current program and all other programs
+      currently active in the run-unit. </p>
+
+      <p><code>QUIT label-of-procedure</code> terminates the labeled procedure with
+      optional transfer of control. This must be the current procedure or an active
+      procedure that directly or indirectly invoked the current procedure. When used
+      without a <code>TRANSFER</code> clause, control returns to the invoking
+      procedure. </p>
+
+      <p><code>QUIT PROCEDURE</code> terminates the current procedure and
+      (optionally) transfers control to another procedure. When used without a
+      transfer clause, control returns to the invoking procedure. If issued for the
+      main procedure, it is the equivalent of <code>QUIT PROGRAM</code>. </p>
+
+      <p><code>QUIT ALL</code> terminates the current procedure and all invoking
+      procedures and transfers control to the named procedure. <code>QUIT ALL</code>
+      must have a transfer clause. </p>
+
+      <p><code>TRANSFER [TO] procedure</code> An optional clause that passes control
+      to the procedure named in the clause. In the case of <code>QUIT ALL</code>,
+      this procedure becomes the new main procedure. </p>
+
+      <p>A <code>QUIT PROCEDURE</code> is implicit at the end of each procedure and
+      control returns to the invoking procedure. </p>
+
+      <p>A <code>QUIT</code> without a label and a <code>QUIT PROCEDURE</code>
+      statement are invalid in the error procedure because they imply a <code>QUIT
+        ERROR</code>. </p>
+
+      <p>Use of the <code>TRANSFER</code> clause can render a program difficult to
+      understand and maintain. Avoid or restrict using this clause. Its purpose is to
+      assist in writing error recovery logic in error procedures. </p>
+
+      <p>You cannot transfer control to an active procedure (passage of control
+      cannot be recursive). A procedure can transfer control to itself if it first
+      <code>QUIT</code>s itself, for example, <code>QUIT B TRANSFER TO B</code>. </p>
+  <pre>   Example
+
+         &lt;&lt;UP_DATE&gt;&gt; PROCEDURE
+             &lt;&lt;FOR_1&gt;&gt; FOR NEW updatable_dvw_name
+                 MOVE 'X' TO dvw_field
+                 DO DETERMINE_CONT
+                 IF condition
+                     DO EXIT
+                 ENDIF
+                 DO REST_UPDATE
+             ENDFOR
+         ENDPROC
+
+         &lt;&lt;EXIT&gt;&gt; PROCEDURE
+             QUIT UP_DATE
+         ENDPROC </pre>
+
+      <p>You can prevent <code>TRANSFER TO</code> for the site using the option
+      <code>PDLTRAN=</code> in the <code>IDOPTSCB</code> member. For information on
+      how to change the <code>IDOPTSCB</code> member, see the Administration Guide
+      &gt;&gt;&gt;&gt;. </p>
+
+      <h4 id="REFRESH">REFRESH Statement</h4>
+
+      <p>The <code>REFRESH</code> statement resets all fields in the named panel to
+      their initial values and attributes as defined in the panel definition. The
+      <code>REFRESH</code> statement ensures that a fresh copy of the panel is
+      available. </p>
+
+      <p>The Creating Panel Definitions guide &gt;&gt;&gt;&gt; describes how to
+      define and maintain screen panels. Several statements and built-in functions
+      provide symbolic high-level panel processing (see the <code>TRANSMIT</code>,
+      <code>SET ATTRIBUTE</code> and <code>RESET</code> statements). </p>
+  <pre>         REFRESH panel_name </pre>
+
+      <p><code>panel_name</code> The one- to eight-character name of the panel,
+      defined in the <code>RESOURCE</code> section of the program. </p>
+
+      <p>Fields with an initial value set in <code>LAYOUT</code> are refreshed with
+      that value, whether their initial attribute is protected or unprotected. </p>
+
+      <p>Fields without an initial value LAYOUT (for example, spaces between
+      start-field and end-field) are initialized to input-fill characters. When
+      <code>TRANSMIT</code> occurs, fields still set to input-fill are reset with
+      output-fill. </p>
+
+      <p><code>REFRESH</code> often restores a panel for a new set of data after an
+      old set completes processing. You can perform restoration of initial values and
+      attributes here in a single operation rather than many <code>RESET</code> and
+      <code>SET ATTRIBUTE</code> statements. </p>
+
+      <p>If you only need to reinitialize a few fields, use <code>RESET</code> on
+      individual fields with <code>SET ATTRIBUTE</code> as an alternative to
+      <code>REFRESH</code>. The <code>REFRESH</code> statement refreshes the panel
+      object in memory with the panel object from the file; <code>RESET</code> and
+      <code>SET ATTRIBUTE</code> change the panel object in memory. </p>
+
+      <h4 id="RELEASE">RELEASE Statement</h4>
+
+      <p>Releases a panel, report, or subprogram after it is no longer needed. You
+      can use the <code>RELEASE PROGRAM</code> statement with a CA-Ideal subprogram
+      or a non-CA-Ideal subprogram run in batch that is defined not to load a new
+      copy on each call. </p>
+
+      <p>If a subprogram is not explicitly released, it remains in memory ready to be
+      called again until the run is completed. Releasing programs that are no longer
+      needed frees machine resources, especially with batch applications or online
+      runs that do not cross transaction boundaries. See the section Effective Use of
+      Subprogram Storage &gt;&gt;&gt;&gt; in the CA-Ideal Administration Guide. </p>
+  <pre>                 {PANEL panel_name              }
+         RELEASE {REPORT rpt-name [[WITH] ABORT }
+                 {PROGRAM [subprogram]          } </pre>
+
+      <p><code>panel_name</code> The name of the panel to release. You cannot use the
+      abbreviation <code>PNL</code> in this statement. </p>
+
+      <p><code>rpt_name</code> The name of the report to release or the word
+      <code>RUNLIST</code>. You cannot use the abbreviation <code>RPT</code> in this
+      statement. </p>
+
+      <p><code>WITH ABORT</code> Prints the data specifications on the lines
+      following the <code>&lt;&lt;ABORT&gt;&gt;</code> group heading on the Heading
+      fill-in before releasing the report. This is useful for printing messages when
+      a report is terminated abnormally. </p>
+
+      <p><code>subprogram</code> The name of the subprogram to release. You cannot
+      use the abbreviation <code>PGM</code> in this statement. If you omit the name,
+      the <code>RELEASE</code> applies to the current program. </p>
+
+      <p>When a report is released, final control footings and summary lines are
+      produced. If <code>RELEASE REPORT</code> is issued and no data was printed, the
+      data specifications on the lines following the
+      <code>&lt;&lt;EMPTY&gt;&gt;</code> group heading are printed when the report is
+      released. </p>
+
+      <p>The <code>RELEASE REPORT RUNLIST</code> statement releases the output of a
+      <a href="#LIST"><code>LIST</code> statement</a>. This keeps the outputs of a
+      series of <code>LIST</code> statements separate rather than accumulating them
+      as a single <code>RUNLIST</code> output. </p>
+
+      <p>You can issue the <code>RELEASE PROGRAM</code> statement from either the
+      calling program or the called program. When issued from the called program
+      without specifying a program name, the statement implies a <code>QUIT
+        PROGRAM</code> and the <code>RELEASE</code>. This statement does not affect the
+      logic of the calling program. </p>
+
+      <p>You cannot <code>RELEASE</code> a program that directly or indirectly called
+      the current program. </p>
+
+      <h4 id="RESET">RESET Statement</h4>
+
+      <p>Initializes a panel field or an entire panel to the input fill character.
+      Other terminal attributes, such as panel color, protection, and highlight
+      attributes are unchanged. </p>
+
+      <p>The Creating Panel Definitions guide &gt;&gt;&gt;&gt; describes how screen
+      panels are defined and maintained. Several statements and built-in functions
+      provide symbolic high-level panel processing (see the <a
+        href="#REFRESH"><code>REFRESH</code> statement</a> and the <a
+        href="#TRANSMIT"><code>TRANSMIT</code> statement</a> in this chapter). </p>
+  <pre>               [panel_field]
+         RESET [panel_name ] </pre>
+
+        <p><code>panel_field</code> The identifier of a panel field to reset. </p>
+
+        <p><code>panel_name</code> The one- to eight-character name of a previously
+        defined panel. </p>
+
+        <p>A single field (either protected or unprotected) is reset when a panel field
+        identifier is specified. </p>
+
+        <p>All unprotected fields in a panel are reset if a panel name is specified.
+        </p>
+
+        <p>CA-Ideal transforms any field that was initialized to the input fill
+        character with a <a href="#RESET"><code>RESET</code> statement</a> and was not
+        modified by the program before <code>TRANSMIT</code> into output-fill
+        characters before presentation as panel-output. </p>
+
+        <h4>SELECT Statement</h4>
+
+        <p>Executes one or more of several courses of action based on one or more
+        conditions. The SELECT statement has three formats. </p>
+
+        <p>Format 1 selects the set of statements that follows the first
+        <code>WHEN</code> value that matches the value of the select-subject. Only the
+        set of statements that follows the first matching value executes. </p>
+  <pre>         SELECT select_subject
+
+                  {numeric_expression } [   {numeric_expression} ]
+             WHEN {alpha_expression   } [OR {alpha_expression  } ]...
+                  {NULL               } [   {NULL              ] ]
+
+               statements
+
+                  {numeric_expression } [   {numeric_expression} ]
+             WHEN {alpha_expression   } [OR {alpha_expression  } ]
+          ...     {NULL               } [   {NULL              } ]
+
+               statements
+             .
+             .
+             .
+            [     {NONE  } ]
+            [WHEN {OTHER } ]
+            [   statements ]
+
+            [WHEN ANY     ]
+                     [   statements]
+
+          {ENDSEL    }
+          {ENDSELECT } </pre>
+
+        <p><code>select_subject</code> The identifier of a numeric or alphanumeric
+        expression whose value determines the action selected. </p>
+
+        <p><code>WHEN</code> clause Specifies a possible value (or values). If the
+        value specified matches the value of s<code>elect_subject</code>, the
+        statements that follow the <code>WHEN</code> clause execute. In Format 1, only
+        the statements that follow the first <code>WHEN</code> condition to test true
+        execute, optionally followed by a <code>WHEN ANY</code> clause. </p>
+
+        <p><code>numeric_expression|alpha_expression|NULL</code> The value that
+        compares against <code>select_subject</code>. You can combine expressions,
+        including <code>NULL</code>, using <code>OR</code>. </p>
+
+        <p><code>WHEN OTHER|NONE</code> An optional postscript that specifies that when
+        none of the values listed matches the value of select_subject, the statements
+        following the <code>WHEN OTHER|NONE</code> execute. <code>OTHER</code> and
+        <code>NONE</code> are interchangeable. </p>
+
+        <p><code>WHEN ANY</code> An optional postscript that specifies that when any
+        <code>WHEN</code> value matches the value of select_subject, the statements
+        that follow the <code>WHEN ANY</code> execute after the statements that follow
+        the equal case. </p>
+
+        <p><code>ENDSEL|ENDSELECT</code> Terminates the <code>SELECT</code> construct.
+        If <code>SELECT</code> constructs are nested, the most recent unterminated
+        SELECT is terminated. Each <code>SELECT</code> in a nested <code>SELECT</code>
+        construct must have a corresponding <code>ENDSEL</code> or
+        <code>ENDSELECT</code>. </p>
+
+        <p>A select_subject that evaluates to the null value matches <code>NULL</code>
+        in a <code>WHEN</code> clause. It does not match an expression in a
+        <code>WHEN</code> clause that also evaluates to the null value. </p>
+  <pre>    Syntax 1 example
+
+         SELECT TRANS_CODE
+         WHEN 'A'
+            DO ADD_RECORD_PROC
+         WHEN 'D'
+            DO DEL_RECORD_PROC
+         WHEN 'P'
+            DO PURCHASE_PROC
+         WHEN 'R'
+            DO RECEIPT_PROC
+         WHEN ANY
+            DO LOG_TRANS
+         WHEN OTHER
+            DO INVALID_CODE
+         ENDSEL </pre>
+
+        <p>Format 2 selects the statements that follow the first true condition in a
+        series of conditions. Only the statements that follow the first true condition
+        execute. </p>
+  <pre>         SELECT [FIRST [ACTION]]
+            WHEN condition
+               statements
+
+                [WHEN condition]
+                [statements    ] ...
+
+            [     {NONE  }]
+            [WHEN {OTHER }]
+                     [  statements ]
+
+            [WHEN ANY     ]
+                     [  statements ]
+
+            {ENDSEL    }
+            {ENDSELECT } </pre>
+
+        <p><code>[FIRST [ACTION]]</code> Optional words for readability. </p>
+
+        <p><code>WHEN condition</code> (For an explanation of valid conditions
+        &gt;&gt;&gt;&gt;, see Chapter 1.) If this is the first true condition in the
+        SELECT, only the statements that follow it execute, followed by a WHEN ANY
+        clause if one is specified. If more than one condition is true, only the
+        statements associated with the first condition execute.</p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <h4 id="TRANSMIT">TRANSMIT Statement</h4>
+
+        <p>The TRANSMIT statement sends a previously defined screen and receives the
+        data the user entered. When input is received from the user, the TRANSMIT
+        statement automatically validates and edits all the data according to editing
+        rules specified in the panel definition.</p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <pre id="docPathLog" style="font-size:80%;"></pre>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p> </p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+        <p></p>
+
+      <div id="tocContainerZZZ" class="tocContainer" style="font-size=70%;>
+      <!-- Header levels
+        h1     global title
+        h2     source book from CA library: IDLB22PR.boo
+        h3     book chapter
+        h3     book section
+        h4, h5 subsections
+      -->
+        <p> </p>
+
+        <div class="toc">
+        </div>
+      </div>
+
+
+<div id="helpContentText" style="display:none;">
+
+  <h3>Operation of the UI</h3>
+
+  <p><strong>Smart scroll: </strong>
+  This is a feature aimed at preventing <a href="http://en.wikipedia.org/wiki/Asthenopia"
+  target="_blank">eye strain</a>. <br>
+  Once you have read about half of the page, press the space bar: the text will scroll
+  gently and reposition at the top of a paragraph or whatever. <br>
+  If there is a header, the header will be set atop the top of the window, no split test
+  lines. <br>
+  Pressing shift + spacebar repositions the content back, in smaller chunks (single paragraph). 
+  </p>
+
+  <p>There are a few features showcased, from dozens that will come. </p>
+  <p style="color:rgb(80,80,80);">Warning: please close each feature before opening another, the
+  appropriate logic is not yet implemented. </p>
+
+  <p><strong>Progress indicator: </strong>
+  The top-left element is intended to show the reader the current position withing the lengthy text. </p>
+  <p>The numbers are the number of pages already read (23) and not-yet-read(77) . The gray bar represents the 
+  current reading position, that will move down as the reading progresses: it is like those bookmarks
+  inserted between a paper book's pages. </p>
+  <p>Of course, reopening the page, may be in another device, will take the reader to the exact previous
+  position. </p>
+
+  <p><strong>Menu: </strong>
+  This icon slides a "control panel" over the reading area, that in the future will have useful data
+  for the reader, and configuration options. Clicking again the icon or the panel hides it. </p>
+
+  <p><strong>Table of content</strong>
+  Clicking this icon makes the TOC visible, clicking again hides it. </p>
+  <p>The TOC contains the article's headings. Clicking one takes the reader to the corresponding
+  reading position and hides the TOC. </p>
+  <p>The TOC is organized as a hierarchy of headers and sub-headers. Clicking in the [-] and [+] icons
+  conceals or reveals a branch of said hierarchy. </p>
+
+  <p><strong>Highlighting: </strong>
+  The reader can highlight text by selecting it and clicking the yellow button. <p>
+  <p>Currently the highlights are not persisted, as will be in the real application. </p>
+
+  <p><strong>Help: </strong>
+  This icon displays this that you are reading now (thanks!). Clicking again hides this text. </p>
+
+  <h3>Purpose and description of the application</h3>
+
+  <h4>You are a reader (or, as an evaluator, you are impersonating one)</h4>
+
+  <p>You, as a user, are a person who reads on screen. Not just a glimpse at the
+  news, or a facebook posting: you really read, you are a <em>reader</em>. </p>
+
+  <p>Historically the web has been providing more and more content, but not much
+  has been done in order to help <em>readers</em>&nbsp;to overcome many of the
+  problems that stem from reading on screen content. Albeit sites are much better
+  than years ago, and also screens, published pages haven't changed much. </p>
+
+  <h4>What do the editors do?</h4>
+
+  <p>Those who publish, the <em>editors</em>, are focused on providing you the
+  best content thay can. At the same time, they remain oblivious of what can they
+  do in order to relief their beloved readers from that eye strain or neck ache.
+  </p>
+
+  <p>The purpose of this application is to enhance the online published pages in
+  order to make the on-screen reading experience better. </p>
+
+  <p>The method is twofold. It is about helping to control strain, and also
+  providing additional useful features not available on paper. </p>
+
+  <p>The editors will be interested in implementing this because it comes with a
+  lot of back-end features like detailed tracking of the usage of the texts,
+  useful for the authors to realize what parts are read, where the readers quit,
+  and more. </p>
+
+  <h4>What does this application do?</h4>
+
+  <p>In order to manage the eye strain produced by on-screen reading, it has a
+  new soft scroll functionality that slides the text in a natural way, slowly,
+  unlike the normal instant page jums that come with the browsers. This allows
+  the reader to be more confident that the text will remain there allowing them
+  to <em>blink</em> more frequently (eye strain comes, in part, from not blinking
+  enough which produces dry eyes). </p>
+
+  <h4>Some paper features available</h4>
+
+  <p><strong>Highlighting:</strong> On paper the readers can highlight the most
+  interesting parts of the text, to be able to review it quickly. This UI has an
+  easy to use highlighting feature: the reader highlights the text with the mouse
+  (and later by touching it) and clicks the yellow highlight button. </p>
+
+  <p>In the finished app the highlights are persisted in the backend, in this
+  prototype one can highlight text fragments but they are not persisted, not even
+  locally. </p>
+
+  <p><strong>Notes:</strong>&nbsp;It will be possible to take notes that will be
+  persisted in the backend. </p>
+</div>
+
+<pre id="docPathLog" style="padding-left:80px; line-height:90%; font-size:75%; ">
+</pre>
+
+<div id="agendaBody" style="display:none; overflow:scroll;">
+<h1 id="usability">Usability Test Instructions</h1>
+
+<p><strong>The Books Smart Reader</strong></p>
+
+<p></p>
+
+<p></p>
+<style>
+  .testInstructions li { padding:8px; }</style>
+
+<p>Please perform the following steps:</p>
+<ol class="testInstructions">
+  <li>Take note that the test is not on you, but on the system. If you
+    experience problems it's not your fault, it's because we aren't done honing
+    the system's UI. Hence this test. Your critic feedback is very valuable for
+    us, much more than a patronizing "very nice". </li>
+  <li>We are thankful with those who help us taking this test. If you left your
+    email, and this project takes off, we'll let you know. </li>
+  <li style="display:none;">
+    <div style="float:right; padding-left:2em; ">
+    <img alt="the help icon" src="res/chromeLogo.png" width="63" height="63"></div>
+    <p>Using the Chrome browser, open the following page: 
+      <a href="http://ec2-54-227-184-202.compute-1.amazonaws.com:8080/tlotfc/tlotfc2.html"
+      >The Loneliness Of The Female Coder</a>
+    </p>
+  </li>
+  <li>Wait for a while, until the page fully loads. It is hosted in a free
+    facility, which is not the fastest, kindly provided by Amazon Web
+  Services.</li>
+  <li>
+    <div style="float:right; padding-left:2em; ">
+    <img alt="the help icon" src="res/iconhelp2.png" width="55" height="55"></div>
+    Display the help text by clicking the question mark (?) icon and read the
+    <em>Operation of the UI</em> section (where "UI" stands for "User
+    Interface").</li>
+  <li>Optionally, if you want increased insight, read the other part of the
+    help text, intitled "Purpose and description of the application". You are
+    welcome.</li>
+  <li>When you are done dimiss the help panel by clicking the help button
+    again. </li>
+  <li>
+    <div style="float:right; padding-left:2em; ">
+    <img alt="the menu icon" src="res/iconmenu.png" width="55" height="55"></div>
+    <p>You don't need to remember the instructions in full, during the test
+    they will be available by clicling the menu icon. Click once to show the
+    instructions, click again to hide them. </p>
+  </li>
+  <li><strong><em>Smart scroll </em> test:</strong> 
+    <p>After having clicked the <em>Continue</em>&nbsp;button, read all or part of
+    the article that shows for about 10 minutes, more if you want. It's
+    intitled "The Loneliness Of The Female Coder" and is about sexism in
+    software development workspaces. </p>
+    <p>To progress in the reading use the <em>smart scroll</em>&nbsp;feature, that
+    is, advance the text ("scroll") by pressing the space bar and use shift +
+    space bar to back up. </p>
+    <p><img alt="shift + spacebar" src="res/ShiftAndSpacebar.png"></p>
+    <p>The idea is to use the <em>smart scroll</em>&nbsp;feature for enough time 
+    to get used to it. </p>
+  </li>
+  <li><strong>Progress indicator</strong> 
+    <p>Notice the <em>progress indicator</em>&nbsp;in the top left corner of the
+    screen and check how it changes as you read. </p>
+  </li>
+  <li><strong>TOC</strong> 
+    <p>Using the TOC (table of content) locate a title and select it. </p>
+  </li>
+  <li><strong>Highlighting</strong> 
+    <p>Select text (by dragging the mouse over it) and highlight
+    it with the yellow highlight button. </p>
+    <p style="display:none;">Select several pieces of text (holding down the "Ctrl" key) and
+    highlight them with a single click of the highlight button. </p>
+  </li>
+  <li><strong>Finish</strong> 
+    <p>Once you are done, or if you don't want to continue, click the "End"
+    button to proceed to the survey about the test results. </p>
+    <p></p>
+  </li>
+</ul>
+
+<div class="framed" style="padding:18px;">
+
+<form action="">
+  <label></label> 
+
+  <div style="text-align:right; ">
+  <button id="continue" name="continue" style="font-size:133%; padding:6px; margin-right:2em;" disabled="disabled">proceed to the test</button> </div>
+</form>
+</div>
+
+        <p></p> 
+        <p></p> 
+        <p></p> 
+        <p></p> 
+        <p></p> 
+        <p></p> 
+        <p></p> 
+        <p></p> 
+        <p></p> 
+        <p></p> 
+        <p></p> 
+        <p></p> 
+        <p></p>
+      </div>
+    </div>
+
+
+    <!-- contains HTML for the control panel, that is applied with js -->
+    <div style="display:none;">
+        <!-- progress indicator -->
+        <div id="rtProgressTemplate" class="rtProgress">
+            <div class="rtProgressDone"
+            title="already read"> </div> 
+            <div class="rtProgressCurrent"
+            title="current page"> </div> 
+            <div class="rtProgressRemaining"
+            title="not yet read"> </div> 
+        </div>
+    </div>
+
+
+  </body>
+</html>

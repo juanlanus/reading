@@ -1,0 +1,457 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Language" content="en">
+  <title>rt: node RESTful server setup</title>
+  <link rel="stylesheet" href="res/rtDoc.css" type="text/css">
+  <script type="text/javascript" src="res/jquery-1.8.3.js">
+ </script>
+  <script type="text/javascript" src="res/tocBuilder.js">
+ </script>
+  <link href="res/tocBuilder.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#tocContainer').tocBuilder({
+        type: 'headings',
+        backLinkText: 'TOC',
+        startLevel: 2,
+        endLevel: 6
+      });
+    });
+  </script>
+  <script type="text/javascript" src="res/rt.js">
+ </script>
+</head>
+
+<body>
+
+<div class="imgR miniMenu">
+
+<div>
+<ul>
+  <li><a href="index.html">index</a> </li>
+  <li><a href="tasks.html">tasks &amp; bugs</a> </li>
+  <li><a href="comparison.html">comparison</a></li>
+  <li><a href="nodeServerSetup.html">technical defs</a></li>
+  <li><a href="notes.html">notes &amp; links</a></li>
+  <li><a href="aboutScrolling.html">about scrolling</a></li>
+</ul>
+</div>
+</div>
+
+<div id="rtHeader">
+
+<div class="fixedHeader">
+<h1 style="display:block; padding-top:0; ">rt: RESTful server development</h1>
+</div>
+</div>
+
+<div id="rtBody" style="clear:none;">
+
+<div class="toc" style="clear:none;">
+<ul>
+  <li><a href="#L4991">Getting the server to work</a> 
+    <ul>
+      <li><a href="#L1265">Defining the schema</a> 
+        <ul>
+          <li><a href="#L1440">users</a></li>
+          <li><a href="#L1353">documents</a></li>
+          <li><a href="#L1521">actions</a></li>
+        </ul>
+      </li>
+      <li><a href="#L517">installing <code>restify</code></a></li>
+      <li><a href="#L544">testing <code>restify</code></a></li>
+      <li><a href="#L430">links </a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<h2 id="L4991">Getting the server to work</h2>
+
+<p>The next step is about moving from a carefully installed node server, to a
+server capable of responding to RESTful request from the application. </p>
+
+<p>There are a bunch of frameworks offering support for restfun web services.
+I'm not using any of those because most of them are like frameworks, requiring
+the presence of other middleware programs and making the size of my application
+too much. Another reason is that this first part of the applicaction will
+impact a limited number of document types, many times. </p>
+
+<p>This is the part of the application that saves the data of the user actions
+as they use the reading UI, saving lots of small movements. </p>
+
+<p>Querying the data and viewing usage reports will behave like a web site and
+will need a number of different data formats. The development of that part of
+the system will benefit from the use of some middleware. It will be made up of
+its own pages (instead of published documents) and some pages will be rather
+complex. </p>
+
+<h3 id="L1265">Defining the schema</h3>
+
+<p>MongoDB is touted as a schema-less database, and it is, but a schema is
+needed in order to do proper development. </p>
+
+<p>So I start working on an usable data schema. I write small JSON documents
+within an insert statement and run then against MongoDB to create sample
+documents in the database. </p>
+
+<p>In the server command window I start MongoDB and open the database console
+with the <code>mongo</code> command. Then I paste the code lines into the
+commandline with Alt-Space-E-P. </p>
+
+<h4 id="L1440">users</h4>
+<pre>db.users.insert({
+    "uid": "Juan Lanus",
+    "pass": ""
+});</pre>
+
+<p>This is a minimalistic user for now, with a user id and a password. The _id
+is added by MongoDB and conveys the date and time the user registered. </p>
+
+<h4 id="L1353">documents</h4>
+<pre>db.documents.insert({
+    "_id": 123,
+    "slug": "CAIdeal",
+    "publisher": "Juan Lanus",
+    "currentVersion": {
+        "number": "1",
+        "URI":
+           "http://localhost/box/public/reading/doc/CAIdeal.html",
+           "date_published": "2012-11-12",
+    },
+    "description": "Abbreviated manual of CA's Ideal ancient 
+    programming language"
+});</pre>
+
+<p>In this case I plan to provide the _id in order to make it short, a few
+digits instead of 24 hex characters plus quotes. </p>
+
+<p>The document's reference is inside a <code>currentVersion</code> container
+because in the future there will be a need to support multiple document
+versions. </p>
+
+<p>All the other fields are self-explanatory. </p>
+
+<h4 id="L1521">actions</h4>
+<pre>db.actions.insert({
+    "doc": 123,
+    "u": 111,
+    "acts": [
+        { "t":1364131430888, "dp":"0,0,1,2,2,3,0,1", "a":1 },
+        { "t":1364131442135, "dp":"0,0,1,3,18,3,0,1", "p100":33 },
+        { "t":1364131461255, "dp":"0,0,1,1,1,0,0,3,9,1,5,1,1,1,6",
+          "a":1, "t":"Flag (typeF) " },
+        { "t":1364131448333, "dp":"0,0,1,1,1,0,0,3,9,1,5,1,1,1,6",
+          "a":9 }
+    ]
+});</pre>
+
+<p>This documents represent the click-stream-like data recording of the reader
+actions, especially the scroll actions. </p>
+
+<p>Each document is set to contain an array of actions performed in the same
+date. This is so because the client will store this data in batches to avoid
+frequently banging the server. </p>
+
+<p>Each element of the array contains the time it happened, the
+<em>position</em> data, and the type of action (default is 1="scroll"). </p>
+
+<p>The position data is the information needed to identify one element of the
+document, the one at the current reading position, like for example a
+paragraph. It's a semi-semantical identification, compact but related to the
+document structure, called <em>docPath</em>. </p>
+
+<p>Data names are abbreviated for storage performance, because the volume of
+this kind of data is expected to be huge.</p>
+
+<p>The abbreviated property names and their meanings are:</p>
+<ul>
+  <li><code>doc</code> - id of the document</li>
+  <li><code>u</code> - id of the user or reader</li>
+  <li><code>acts</code> - an array of user actions, each one contains: 
+    <ul>
+      <li><code>t</code> - the UTC time the action happened, in the internal js
+        format</li>
+      <li><code>dp</code> - the "docPath" where the action landed, it's a
+        semi-semantinc position in the document</li>
+      <li><code>a</code> - the action type, will be encoded as a single
+        character 
+        <ul>
+          <li><code>1</code> - scroll, is the default action and will be
+          omitted</li>
+          <li><code>2</code> - smart scroll</li>
+          <li><code>9</code> - session end (window closed)</li>
+          <li><code>...</code> - bookmark, cite, see TOC, jump via TOC, ...</li>
+        </ul>
+      </li>
+      <li><code>p</code> - percent scrolled of the element targeted by the
+        docPath, only for taller elements</li>
+      <li><code>t</code> - text content of the beginning of the target element,
+        only for debugging</li>
+    </ul>
+  </li>
+</ul>
+
+<p>With the examples above it is possible to start developing the application.
+</p>
+
+<p>In local storage the records look like this: </p>
+
+<p style="margin-left:2em;"><code>RT-1364136976249
+{"dp":"0,0,1,1,1,0,0,3,9,1,16,1,4,1,8","p":5,"text":"Panel definition - 8
+characters "}</code></p>
+
+<p>where the first part is a fixed prefix <code>TR-</code> followed by the
+datetime when the action happened in the internal js date format (milliseconds
+since the UNIX epoch). </p>
+
+<p>Another format, considering the use of PUT HTTP actions: </p>
+
+<p>_id: timestamp + document + reader</p>
+
+<p>dp: current docPath + percent scrolled </p>
+
+<p>a: action type</p>
+
+<p>ip: IP address (or, store it into a sessions collection) </p>
+
+<p>Actually, the data (especially the high-volume <code>actions</code> data)
+doesn't have to be sent in JSON format, a positional hex string is fine and
+less bandwith wasting. The string is to be processed in the server and stored
+as a BSON document in the database. </p>
+
+<p>Convert a number to hexadecimal string with:</p>
+<pre>hexString = yourNumber.toString(16);</pre>
+
+<p>This function doesn't return any left zeros, even if the result has an odd
+number of digits. For example <code>(634581).toString(16)</code> returns
+<code>'9aed5'</code>. </p>
+
+<p>and reverse the process with:</p>
+<pre>yourNumber = parseInt(hexString, 16);</pre>
+
+<p>Using these functions, a more efficient encoding would be base 32 instead of
+base 16: <code>(634581).toString(32)</code> returns <code>'jbml'</code>. Or,
+why not, the highest allowed radix, 36? </p>
+
+<p>Dates become much shorter strings: <code>Date.now().toString(32)</code>
+returns <code>'17moljddl'</code> and <code>Date.now().toString(36)</code>
+returns <code>'heu07mxj'</code> for the <code>1364480055589</code> decimal
+value; 13 decimal digits shrink into 8 base-36 digits. </p>
+
+<p>A record would be, then, a string of comma-separated base-36 values, and the
+meaning of each value is derived from its ordinal position in the string. Thus:
+</p>
+<ol>
+  <li>date and time in milliseconds</li>
+  <li>document</li>
+  <li>reader</li>
+  <li>docPath and optional percent scrolled separated by a dot</li>
+  <li>action code </li>
+</ol>
+
+<h4>Storing the data</h4>
+
+<p>In this application the data is stored in the browser's <em>local
+storage</em> when it happens, and periodically the client uploads it to the
+server. </p>
+
+<p>First step, then, is to have the program store data in local storage, and
+later on the same data is to be uploaded to the server. </p>
+
+<p>In local storage the data is somehow different. Firstly, is doesn't require
+neither the user id nor the document id, because those are givens during the
+session. So the actions data consists only on the date and the actions. </p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p>Reading articles in the web it looks like I could do what I want to with the
+least complications by using <code><a
+href="http://mcavage.github.com/node-restify/">restify</a></code>, a REST
+framework that only does that. The author says <em>"restify is a smallish
+framework, similar to <code>express</code> for building REST APIs."</em> </p>
+
+<p>The express module mentioned is the framework for running web sites, but for
+the moment I'll only publish a RESTful web service, no site. Express has an
+plugin to publish REST data, but restify seems more popular for this single
+purpose.</p>
+
+<h3 id="L517">installing <code>restify</code></h3>
+
+<p></p>
+
+<p>To install <code>restify</code> I use <code>npm</code>. The command </p>
+<pre>npm install restify</pre>
+
+<p>should be enough. But it isn't. </p>
+
+<p>It happens that restify depends on DTrace which is not available for
+Windows, it has to be compiled, and for that it needs a C++ compiler. </p>
+<pre>gyp ERR! build error
+gyp ERR! stack Error: Can't find "msbuild.exe". Do you have Microsoft Visual Studio C++ 2010 installed?
+gyp ERR! stack     at X:\server\bin\node\node_modules\npm\node_modules\node-gyp\lib\build.js:128:20
+gyp ERR! stack     at Object.oncomplete (fs.js:297:15)
+gyp ERR! System Windows_NT 5.1.2600
+gyp ERR! command "node" "X:\\server\\bin\\node\\node_modules\\npm\\node_modules\\node-gyp\\bin\\node-gyp.js" "rebuild"
+gyp ERR! cwd X:\server\node_modules\restify\node_modules\dtrace-provider
+gyp ERR! node -v v0.8.6
+gyp ERR! node-gyp -v v0.6.3
+gyp ERR! not ok</pre>
+
+<p>So I had to install Microsoft Visual Studio C++ 2010 as the message
+suggested. The installation took a lot of time and required two reboots
+(reminding me why I' m using non-MS technologies), and after setting the
+compiler the <code>restify</code> module installed with no complains. </p>
+
+<h3 id="L544">testing <code>restify</code></h3>
+
+<p>from: https://github.com/mcavage/node-restify/issues/100</p>
+<pre>X:\server&gt;npm --version
+1.1.48
+
+X:\server&gt;</pre>
+
+<p>To work smoothly with npm install restify, this <strong>will require npm
+1.1.5</strong>, as that will take new action on the optionalDependencies block,
+whereby npm will still install restify successfully, even if node-waf ...
+fails. In this case, we'd have an installed restify without a dtrace
+dependency. The code change then just attempts to load dtrace, assuming it
+might fail, and in the cases it does fail, just creates a stub. This should
+solve both windows and the heroku et al cases. </p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<h3 id="L430">links</h3>
+<ul>
+  <li><a
+    href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/percent.mspx?mfr=true">Windows:
+    Using batch parameters</a> </li>
+  <li><a
+    href="http://technet.microsoft.com/en-us/library/bb490890.aspx">Windows:
+    Command-line reference A-Z</a> </li>
+  <li><a
+    href="http://imsky.co/notes/nodejs-portable-windows-version-15">Portable
+    node.js for Windows</a> </li>
+  <li><a href="http://www.portablepython.com/">Portable Python for Windows
+    site</a> </li>
+  <li><a href="http://rubyinstaller.org/downloads/">Ruby installers</a> </li>
+  <li><a
+    href="https://www.google.com.ar/#hl=en&amp;newwindow=1&amp;safe=off&amp;tbo=d&amp;sclient=psy-ab&amp;q=node+js+restful+service+tutorial&amp;oq=node+js+restful+service+tutorial&amp;gs_l=hp.3..33i29.2061.10845.2.11580.9.9.0.0.0.0.403.2538.2-7j1j1.9.0.les%3B..0.0...1c.1.fBdcE6BX-10&amp;pbx=1&amp;bav=on.2,or.r_gc.r_pw.r_cp.r_qf.&amp;bvm=bv.1357700187,d.eWU&amp;fp=289c44b9a42ca71c&amp;biw=1044&amp;bih=819">search
+    for REST with node</a> </li>
+  <li><a
+    href="http://stackoverflow.com/questions/2099389/node-js-rest-framework">Node.js
+    REST framework? [closed]</a> </li>
+  <li><a href="http://mcavage.github.com/node-restify">restify tutorial</a>
+  </li>
+  <li><a
+    href="http://howtonode.org/node-js-and-mongodb-getting-started-with-mongojs">Node.js
+    and MongoDB - Getting started with MongoJS</a> </li>
+  <li><a href="http://docs.mongodb.org/manual/">The MongoDB Manual</a> </li>
+  <li><a href="http://docs.mongodb.org/manual/reference/sql-comparison/">SQL to
+    MongoDB Mapping Chart</a> </li>
+  <li><a href="http://docs.mongodb.org/manual/reference/commands/">Database
+    Commands Quick Reference</a> </li>
+  <li><a href="http://docs.mongodb.org/manual/reference/glossary/">mongodb
+    glossary</a> </li>
+  <li><a href="http://www.10gen.com/reference">MongoDB Quick Reference
+    Cards</a> </li>
+  <li><a href="http://docs.mongodb.org/manual/">The MongoDB Manual</a> </li>
+  <li><a
+    href="http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/">Install
+    MongoDB on Windows</a> </li>
+</ul>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p> </p>
+</div>
+</body>
+</html>

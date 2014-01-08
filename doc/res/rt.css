@@ -1,0 +1,76 @@
+  /************ from CAIdeal.html ************/
+  body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote,
+  th, td { margin:0; padding:0; direction:ltr; }
+  html                  { padding:0; margin:0; }
+  body                  { padding:0; margin:0; }
+  p                     { max-width:38em; }
+  li                    { max-width:38em; }
+  pre                   { font-size:90%; padding-left:0; white-space:pre-wrap; }
+
+  #containerInner       { outline:none; }
+  #TOCContainer         { font-size:85%; font-family:Helvetica, Arial, sans-serif;}
+  #TOCContainer ul      { list-style-type:none; }
+  #TOCContainer li      { line-height:110%; }
+  #TOCContainer a       { display:inline-block; color:black; padding-bottom:4px; padding-top:4px; }
+  #TOCContainer a:hover { background-color:rgb(255,255,128); }
+  #TOCPanel             { float:left; height:100%; background:rgb(240,240,240); 
+                          display:none; position:fixed; top:0; left:0;
+                          width:100%; height:100%; margin-left:0; }
+  .toc                  { padding-left:70px; height:100%; overflow-y:scroll; } /* for scroll */
+
+  /* menu containing the usability test instructions */
+  #menuContainer        { overflow-y:auto; font-family:Helvetica, Arial, sans-serif;}
+  #menuContainer ul     {  }
+  #menuContainer a      { display:inline-block; }
+  #menuPanel            { float:left; height:100%; background:rgb(240,240,240); 
+                          display:none; position:fixed; top:0; left:0;
+                          width:100%; margin-left:0; }
+  .menu                 { padding-left:70px; height:100%; } 
+
+  /*
+  #menuContainer        { font-size:85%; font-family:Helvetica, Arial, sans-serif;}
+  #menuContainer ul     { list-style-type:none; }
+  #menuContainer a      { display:inline-block; }
+  #menuPanel            { float:left; height:100%; background:rgb(240,240,240); 
+                          display:none; position:fixed; top:0; left:0;
+                          width:100%; margin-left:0; }
+  .menu                 { padding-left:70px; height:100%; } 
+  */
+
+  #rtPanelLeft          { position:fixed; top:0; left:0; background:rgb(240,240,240); 
+                          width:62px; height:100%; float:left; z-index:999; padding-left:10px; 
+                          font-size:.7rem; -webkit-font-smoothing:subpixel-antialiased !important; 
+                          font-family:Helvetica, Arial, sans-serif; }
+
+  #rtBurgerMenu         { text-align:center; margin-top:16px; margin-left:-6px; cursor:pointer; opacity:.3; }
+  #rtBurgerMenu img     { max-width:100%; height:auto; -ms-interpolation-mode:bicubic; }
+  #rtProgressDiagram    { text-align:center; margin-top:14px; opacity:.6; }
+  #rtTOCIcon            { text-align:center; margin-left:-6px;  cursor:pointer; opacity:.3; }
+  #rtTOCIcon img        { max-width:100%; height:auto; -ms-interpolation-mode:bicubic; }
+
+  #rtHighlightIcon img  { width:60px; height:60px; cursor:pointer; }
+  .rtHigh1              { background-color:rgb(255,255,128); }
+  #rtHighlightIcon      { margin-left:-6px; }
+  #rtHelpIcon img       { width:42px; height:40px; cursor:pointer; opacity:.3; margin-right:6px; }
+  #helpContainer        { width:100%; background:rgb(240,240,240); }
+  #helpPanel            { float:left; height:90%; background:rgb(240,240,240); 
+                          display:none; position:fixed; top:0; left:0;
+                          margin-left:0; padding-left:70px; overflow-y:scroll; }
+
+  .rtOpenCloseIcon      { width:28px; display:inline-block; text-align:center; }
+  .rtOpenCloseIcon img  { width:16px; height:16px; vertical-align:middle; }
+  .rtCollapsed          { cursor:url(TriangleArrow-Down.ico) 7 15, default; }
+  .rtExpanded           { cursor:url(TriangleArrow-Right.ico) 15 7, default; }
+
+  .rtProgress           { width:40px; height:140px; border:1px solid rgb(255,255,255); 
+                        background-color:rgb(222,222,222); 
+                        font-size:125%; color:rgb(160,160,160); font-weight:bold; }
+  .rtProgressDone       { width:100%; line-height:90%; padding-top:1px; }
+  .rtProgressCurrent    { width:100%; background-color:rgb(255,255,255); }
+  .rtProgressRemaining  { width:100%; line-height:90%; padding-top:1px; }
+
+  /* highlight the scroll target during scroll */
+  .rtScrolltarget       { outline:2px solid yellow; }
+
+  #rtEndTest            { margin-top:8em; }
+

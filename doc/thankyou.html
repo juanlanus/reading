@@ -1,0 +1,84 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Language" content="es, en">
+  <title>Instructions - Books Smart Reader</title>
+  <link rel="stylesheet" href="res/agenda.css" type="text/css">
+  <script type="text/javascript" src="res/jquery-1.8.3.js">
+ </script>
+  <script type="text/javascript">
+  $(function() {
+
+    // store the query string
+    var qs = window.location.search.replace('?','').split('&'), request = {};
+    $.each(qs, function(i,v) {
+      var pair = v.split('=');
+      return request[pair[0]] = pair[1];
+    });
+    console.log(request);
+    localStorage.setItem('thankyou', JSON.stringify( request ) );
+
+    $('#consentStudy').on(
+      'click', 
+      function(e) {
+        $('#continue').prop('disabled', ! this.checked);
+      }
+    )
+
+  });
+  </script>
+</head>
+
+<body>
+
+<div id="agendaBody">
+<h1 id="usability">Usability Test Thanks Page</h1>
+
+<p><strong>The Books Smart Reader</strong></p>
+
+<p></p>
+
+<p style="text-align:center; font-size:800%; ">Thank you very much!</p>
+
+<p></p>
+
+<div class="framed" style="padding:18px;">
+
+<form action="tlotfc2.html">
+
+  <div style="text-align:right; ">
+  <button id="continue" name="continue"
+  style="font-size:133%; padding:6px; margin-right:2em;"
+  onclick="window.location = 'instructions.html';">start over</button> </div>
+</form>
+</div>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+</div>
+</body>
+</html>

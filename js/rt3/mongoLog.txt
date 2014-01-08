@@ -1,0 +1,107 @@
+Sat Dec 28 21:07:34.680 [initandlisten] MongoDB starting : pid=31623 port=27017 dbpath=/media/D/mongoData 64-bit host=juan-T61
+Sat Dec 28 21:07:34.709 [initandlisten] db version v2.4.6
+Sat Dec 28 21:07:34.709 [initandlisten] git version: b9925db5eac369d77a3a5f5d98a145eaaacd9673
+Sat Dec 28 21:07:34.709 [initandlisten] build info: Linux ip-10-2-29-40 2.6.21.7-2.ec2.v1.2.fc8xen #1 SMP Fri Nov 20 17:48:28 EST 2009 x86_64 BOOST_LIB_VERSION=1_49
+Sat Dec 28 21:07:34.709 [initandlisten] allocator: tcmalloc
+Sat Dec 28 21:07:34.709 [initandlisten] options: { dbpath: "/media/D/mongoData", smallfiles: true }
+Sat Dec 28 21:07:34.827 [initandlisten] journal dir=/media/D/mongoData/journal
+Sat Dec 28 21:07:34.828 [initandlisten] recover : no journal files present, no recovery needed
+Sat Dec 28 21:07:35.206 [FileAllocator] allocating new datafile /media/D/mongoData/local.ns, filling with zeroes...
+Sat Dec 28 21:07:35.206 [FileAllocator] creating directory /media/D/mongoData/_tmp
+Sat Dec 28 21:07:37.523 [FileAllocator] done allocating datafile /media/D/mongoData/local.ns, size: 16MB,  took 2.192 secs
+Sat Dec 28 21:07:37.524 [FileAllocator] allocating new datafile /media/D/mongoData/local.0, filling with zeroes...
+Sat Dec 28 21:07:39.813 [FileAllocator] done allocating datafile /media/D/mongoData/local.0, size: 16MB,  took 2.288 secs
+Sat Dec 28 21:07:39.836 [initandlisten] command local.$cmd command: { create: "startup_log", size: 10485760, capped: true } ntoreturn:1 keyUpdates:0  reslen:37 4630ms
+Sat Dec 28 21:07:39.837 [websvr] admin web console waiting for connections on port 28017
+Sat Dec 28 21:07:39.867 [initandlisten] waiting for connections on port 27017
+Sat Dec 28 21:07:41.430 [initandlisten] connection accepted from 127.0.0.1:54022 #1 (1 connection now open)
+Sat Dec 28 21:07:45.856 [conn1] end connection 127.0.0.1:54022 (0 connections now open)
+Sat Dec 28 21:10:18.590 [initandlisten] connection accepted from 127.0.0.1:54026 #2 (1 connection now open)
+Sat Dec 28 21:10:18.603 [conn2] end connection 127.0.0.1:54026 (0 connections now open)
+Sat Dec 28 21:10:18.608 [initandlisten] connection accepted from 127.0.0.1:54027 #3 (1 connection now open)
+Sat Dec 28 21:10:18.609 [initandlisten] connection accepted from 127.0.0.1:54028 #4 (2 connections now open)
+Sat Dec 28 21:10:18.610 [initandlisten] connection accepted from 127.0.0.1:54029 #5 (3 connections now open)
+Sat Dec 28 21:10:18.610 [initandlisten] connection accepted from 127.0.0.1:54030 #6 (4 connections now open)
+Sat Dec 28 21:10:18.611 [initandlisten] connection accepted from 127.0.0.1:54031 #7 (5 connections now open)
+Sat Dec 28 21:58:35.406 [PeriodicTask::Runner] task: DBConnectionPool-cleaner took: 10ms
+Sat Dec 28 21:58:35.515 [PeriodicTask::Runner] task: WriteBackManager::cleaner took: 41ms
+Sat Dec 28 21:58:36.258 [TTLMonitor] query local.system.indexes query: { expireAfterSeconds: { $exists: true } } ntoreturn:0 ntoskip:0 nscanned:0 keyUpdates:0 locks(micros) r:563354 nreturned:0 reslen:20 563ms
+Sat Dec 28 22:05:36.245 [PeriodicTask::Runner] task: DBConnectionPool-cleaner took: 21ms
+Sat Dec 28 22:05:36.652 [PeriodicTask::Runner] task: WriteBackManager::cleaner took: 97ms
+Sat Dec 28 22:05:40.987 [TTLMonitor] query local.system.indexes query: { expireAfterSeconds: { $exists: true } } ntoreturn:0 ntoskip:0 nscanned:0 keyUpdates:0 locks(micros) r:2241360 nreturned:0 reslen:20 2241ms
+Sat Dec 28 22:06:37.077 [PeriodicTask::Runner] task: DBConnectionPool-cleaner took: 65ms
+Sat Dec 28 22:06:37.438 [PeriodicTask::Runner] task: WriteBackManager::cleaner took: 137ms
+Sat Dec 28 22:06:42.998 [TTLMonitor] query local.system.indexes query: { expireAfterSeconds: { $exists: true } } ntoreturn:0 ntoskip:0 nscanned:0 keyUpdates:0 locks(micros) r:323854 nreturned:0 reslen:20 323ms
+Sun Dec 29 03:55:45.152 [TTLMonitor] query local.system.indexes query: { expireAfterSeconds: { $exists: true } } ntoreturn:0 ntoskip:0 nscanned:0 keyUpdates:0 locks(micros) r:284041 nreturned:0 reslen:20 284ms
+Sun Dec 29 03:56:40.492 [PeriodicTask::Runner] task: DBConnectionPool-cleaner took: 21ms
+Sun Dec 29 03:56:40.754 [PeriodicTask::Runner] task: WriteBackManager::cleaner took: 75ms
+Sun Dec 29 03:56:47.659 [TTLMonitor] query local.system.indexes query: { expireAfterSeconds: { $exists: true } } ntoreturn:0 ntoskip:0 nscanned:0 keyUpdates:0 locks(micros) r:933913 nreturned:0 reslen:20 933ms
+Sun Dec 29 03:58:41.003 [PeriodicTask::Runner] task: DBConnectionPool-cleaner took: 54ms
+Sun Dec 29 03:58:41.231 [PeriodicTask::Runner] task: WriteBackManager::cleaner took: 36ms
+Sun Dec 29 03:58:48.782 [TTLMonitor] query local.system.indexes query: { expireAfterSeconds: { $exists: true } } ntoreturn:0 ntoskip:0 nscanned:0 keyUpdates:0 locks(micros) r:496784 nreturned:0 reslen:20 496ms
+Sun Dec 29 09:14:10.434 [conn4] end connection 127.0.0.1:54028 (4 connections now open)
+Sun Dec 29 09:14:10.434 [conn6] end connection 127.0.0.1:54030 (4 connections now open)
+Sun Dec 29 09:14:10.434 [conn7] end connection 127.0.0.1:54031 (4 connections now open)
+Sun Dec 29 09:14:10.434 [conn5] end connection 127.0.0.1:54029 (4 connections now open)
+Sun Dec 29 09:14:10.434 [conn3] end connection 127.0.0.1:54027 (4 connections now open)
+Sun Dec 29 09:17:45.915 [signalProcessingThread] got signal 15 (Terminated), will terminate after current cmd ends
+Sun Dec 29 09:17:46.012 [signalProcessingThread] now exiting
+Sun Dec 29 09:17:46.012 dbexit: 
+Sun Dec 29 09:17:46.012 [signalProcessingThread] shutdown: going to close listening sockets...
+Sun Dec 29 09:17:46.012 [signalProcessingThread] closing listening socket: 9
+Sun Dec 29 09:17:46.012 [signalProcessingThread] closing listening socket: 10
+Sun Dec 29 09:17:46.012 [signalProcessingThread] closing listening socket: 11
+Sun Dec 29 09:17:46.012 [signalProcessingThread] removing socket file: /tmp/mongodb-27017.sock
+Sun Dec 29 09:17:46.013 [signalProcessingThread] shutdown: going to flush diaglog...
+Sun Dec 29 09:17:46.013 [signalProcessingThread] shutdown: going to close sockets...
+Sun Dec 29 09:17:46.067 [signalProcessingThread] shutdown: waiting for fs preallocator...
+Sun Dec 29 09:17:46.067 [signalProcessingThread] shutdown: lock for final commit...
+Sun Dec 29 09:17:46.067 [signalProcessingThread] shutdown: final commit...
+Sun Dec 29 09:17:46.067 [signalProcessingThread]   msync errno:107 Transport endpoint is not connected
+Sun Dec 29 09:17:46.067 [signalProcessingThread]   msync errno:107 Transport endpoint is not connected
+Sun Dec 29 09:17:46.067 [signalProcessingThread] shutdown: closing all files...
+Sun Dec 29 09:17:46.174 [signalProcessingThread] closeAllFiles() finished
+Sun Dec 29 09:17:46.215 [signalProcessingThread] journalCleanup...
+Sun Dec 29 09:17:46.215 [signalProcessingThread] removeJournalFiles
+Sun Dec 29 09:17:46.347 [signalProcessingThread] error removing journal files boost::filesystem::directory_iterator::construct: No such file or directory: "/media/D/mongoData/journal"
+Sun Dec 29 09:17:46.347 [signalProcessingThread] error couldn't remove journal file during shutdown boost::filesystem::directory_iterator::construct: No such file or directory: "/media/D/mongoData/journal"
+Sun Dec 29 09:17:46.365 shutdown failed with exception
+Sun Dec 29 09:17:46.365 dbexit: really exiting now
+Sun Dec 29 11:53:25.955 [initandlisten] MongoDB starting : pid=9697 port=27017 dbpath=/media/D/mongoData 64-bit host=juan-T61
+Sun Dec 29 11:53:25.969 [initandlisten] db version v2.4.6
+Sun Dec 29 11:53:25.969 [initandlisten] git version: b9925db5eac369d77a3a5f5d98a145eaaacd9673
+Sun Dec 29 11:53:25.969 [initandlisten] build info: Linux ip-10-2-29-40 2.6.21.7-2.ec2.v1.2.fc8xen #1 SMP Fri Nov 20 17:48:28 EST 2009 x86_64 BOOST_LIB_VERSION=1_49
+Sun Dec 29 11:53:25.969 [initandlisten] allocator: tcmalloc
+Sun Dec 29 11:53:25.969 [initandlisten] options: { dbpath: "/media/D/mongoData", smallfiles: true }
+Sun Dec 29 11:53:26.238 [initandlisten] journal dir=/media/D/mongoData/journal
+Sun Dec 29 11:53:26.238 [initandlisten] recover begin
+Sun Dec 29 11:53:26.238 [initandlisten] info no lsn file in journal/ directory
+Sun Dec 29 11:53:26.238 [initandlisten] recover lsn: 0
+Sun Dec 29 11:53:26.238 [initandlisten] recover /media/D/mongoData/journal/j._0
+Sun Dec 29 11:53:26.486 [initandlisten] recover create file /media/D/mongoData/local.ns 16MB
+Sun Dec 29 11:53:27.751 [initandlisten] recover create file /media/D/mongoData/local.0 16MB
+Sun Dec 29 11:53:28.956 [initandlisten] recover cleaning up
+Sun Dec 29 11:53:28.956 [initandlisten] removeJournalFiles
+Sun Dec 29 11:53:29.089 [initandlisten] recover done
+Sun Dec 29 11:53:29.094 [initandlisten] preallocating a journal file /media/D/mongoData/journal/prealloc.0
+Sun Dec 29 11:53:35.960 [initandlisten] waiting for connections on port 27017
+Sun Dec 29 11:53:35.960 [websvr] admin web console waiting for connections on port 28017
+Sun Dec 29 11:53:46.105 [signalProcessingThread] got signal 2 (Interrupt), will terminate after current cmd ends
+Sun Dec 29 11:53:46.105 [signalProcessingThread] now exiting
+Sun Dec 29 11:53:46.105 dbexit: 
+Sun Dec 29 11:53:46.105 [signalProcessingThread] shutdown: going to close listening sockets...
+Sun Dec 29 11:53:46.105 [signalProcessingThread] closing listening socket: 9
+Sun Dec 29 11:53:46.105 [signalProcessingThread] closing listening socket: 10
+Sun Dec 29 11:53:46.105 [signalProcessingThread] closing listening socket: 11
+Sun Dec 29 11:53:46.105 [signalProcessingThread] removing socket file: /tmp/mongodb-27017.sock
+Sun Dec 29 11:53:46.105 [signalProcessingThread] shutdown: going to flush diaglog...
+Sun Dec 29 11:53:46.105 [signalProcessingThread] shutdown: going to close sockets...
+Sun Dec 29 11:53:46.105 [signalProcessingThread] shutdown: waiting for fs preallocator...
+Sun Dec 29 11:53:46.105 [signalProcessingThread] shutdown: lock for final commit...
+Sun Dec 29 11:53:46.105 [signalProcessingThread] shutdown: final commit...
+Sun Dec 29 11:53:46.193 [signalProcessingThread] shutdown: closing all files...
+Sun Dec 29 11:53:46.193 [signalProcessingThread] closeAllFiles() finished
+Sun Dec 29 11:53:46.194 [signalProcessingThread] journalCleanup...
+Sun Dec 29 11:53:46.194 [signalProcessingThread] removeJournalFiles
+Sun Dec 29 11:53:46.416 [signalProcessingThread] shutdown: removing fs lock...
+Sun Dec 29 11:53:46.416 dbexit: really exiting now

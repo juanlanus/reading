@@ -1,0 +1,250 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Language" content="en">
+  <title>rt: localStorage</title>
+  <link rel="stylesheet" href="res/rtDoc.css" type="text/css">
+  <script type="text/javascript" src="res/jquery-1.8.3.js">
+ </script>
+  <script type="text/javascript" src="res/tocBuilder.js">
+ </script>
+  <link href="res/tocBuilder.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#tocContainer').tocBuilder({
+        type: 'headings',
+        backLinkText: 'TOC',
+        startLevel: 3,
+        endLevel: 6
+      });
+    });
+  </script>
+  <script type="text/javascript" src="res/rt.js">
+ </script>
+</head>
+
+<body>
+
+<div class="imgR miniMenu">
+
+<div>
+<ul style="list-style-type:none;">
+  <li><a href="index.html">index</a> </li>
+  <li><a href="tasks.html">tasks</a> </li>
+  <li><a href="comparison.html">comparison</a></li>
+  <li><a href="rtech.html">technical defs</a></li>
+  <li><a href="notes.html">notes &amp; links</a></li>
+  <li><a href="aboutScrolling.html">about scrolling</a></li>
+</ul>
+</div>
+</div>
+
+<div id="rtHeader">
+
+<div class="fixedHeader">
+<h1 style="display:inline; ">rt: localStorage</h1>
+</div>
+</div>
+
+<div id="rtBody">
+
+<div id="tocContainer" class="tocContainer">
+<!-- Header levels
+h1 global title
+h2 source book from CA library: IDLB22PR.boo
+h3 book chapter
+h3 book section
+h4, h5 subsections
+-->
+
+<p> </p>
+
+<div class="toc">
+<ul>
+  <li><a href="#Notes">HTML5 localStorage notes &amp; links</a></li>
+</ul>
+</div>
+</div>
+
+<h2 id="Notes">HTML5 localStorage notes &amp; links</h2>
+
+<p>There are two main web storage types: local storage and session storage,
+behaving similarly to persistent cookies and session cookies respectively.</p>
+
+<p>The main difference is that the localStorage persists over different tabs or
+windows, and even if we close the browser, accordingly with the domain security
+policy and user choices about quota limit. </p>
+
+<p>LocalStorage is shared using the &ldquo;origin&rdquo;, ie scheme + host +
+port. It means any page on the same origin will have access to the same
+localStorage. </p>
+<ul>
+  <li><a href="https://developer.mozilla.org/en-US/docs/DOM/Storage">MDN DOM
+    Storage</a> </li>
+  <li><a href="http://www.w3.org/TR/webstorage/#storage">W3C Web Storage</a>
+  </li>
+  <li><a href="http://code.google.com/p/sessionstorage/">HTML5 sessionStorage
+    for "every" browsers</a> (Polyfill)</li>
+  <li><a
+    href="http://html5doctor.com/storing-data-the-simple-html5-way-and-a-few-tricks-you-might-not-have-known/">Storing
+    Data the Simple HTML5 Way (and a few tricks you might not have known)</a> 
+    <p>The API: </p>
+    <ul>
+      <li><code>.setItem(key, value);</code></li>
+      <li><code>.getItem(key)</code></li>
+      <li><code>.removeItem(key)</code></li>
+      <li><code>.clear()</code></li>
+      <li><code>.key(index)</code></li>
+      <li><code>.length</code> </li>  </ul>
+      <p>The storage behaves like a JS object, so the setter and getter methods
+      are duplicated by the regular property assignment syntax. </p>
+  
+  </li>
+  <li><a
+    href="http://stackoverflow.com/questions/3138564/looping-through-localstorage-in-html5-and-javascript">Looping
+    through localStorage in HTML5 and JavaScript</a> 
+    <p>You can use the key method. localStorage.key(index) returns the indexth
+    key (the order is implementation-defined but constant until you add or
+    remove keys). </p>
+    <pre>for (var i = 0; i &lt; localStorage.length; i++){
+    $('body').append(localStorage.getItem(localStorage.key(i)));
+}</pre>
+    <p>Another one: </p>
+    <pre>function listAllItems(){  
+    for (i=0; i&lt;=localStorage.length-1; i++)  
+    {  
+        key = localStorage.key(i);  
+        console.log(key + ': ' + localStorage.getItem(key));
+    }  
+}</pre>
+    <p>It might be useful to <a
+    href="http://stackoverflow.com/questions/1160137/execute-background-task-in-javascript">run
+    this in background</a>. </p>
+  </li>
+  <li><a href="http://www.jstorage.info/">jStorage</a> </li>
+  <li>Displaying stored data: 
+    <pre>var output = "LOCALSTORAGE DATA:\n------------------------------------\n";
+if (localStorage) {
+    if (localStorage.length) {
+       for (var i = 0; i &lt; localStorage.length; i++) {
+           output += localStorage.key(i) + ': ' + localStorage.getItem(localStorage.key(i)) + '\n';
+       }
+    } else {
+       output += 'There is no data stored for this domain.';
+    }
+} else {
+    output += 'Your browser does not support local storage.'
+}
+console.log(output); </pre>
+  </li>
+  <li>Seeing the toString type coertion: 
+    <pre>// Store an object instead of a string
+localStorage.setItem('key', {name: 'value'});
+alert(typeof localStorage.getItem('key')); // string
+ 
+// Store an integer instead of a string
+localStorage.setItem('key', 1);
+alert(typeof localStorage.getItem('key')); // string
+ 
+// Store an object using JSON
+localStorage.setItem('key', JSON.stringify({name: 'value'}));
+alert(JSON.parse(localStorage.getItem('key')).name); // value</pre>
+  </li>
+  <li>From the <a href="view-source:http://html5demos.com/storage">HTML5
+    sampler</a>: this saves what you write onkeyup and shows it when the page
+    is reloaded. 
+    <pre>&lt;script&gt;
+
+function getStorage(type) {
+  var storage = window[type + 'Storage'],
+    delta = 0,
+    li = document.createElement('li');
+
+  if (!window[type + 'Storage']) return;
+
+  if (storage.getItem('value')) {
+    delta = ((new Date()).getTime() - (new Date()).setTime(storage.getItem('timestamp'))) / 1000;
+    
+    li.innerHTML = type + 'Storage: ' + storage.getItem('value') + ' (last updated: ' + delta + 's ago)';
+  } else {
+    li.innerHTML = type + 'Storage is empty';
+  }
+
+  document.querySelector('#previous').appendChild(li);
+}
+
+getStorage('session');
+getStorage('local');
+
+addEvent(document.querySelector('#session'), 'keyup', function () {
+  sessionStorage.setItem('value', this.value);
+  sessionStorage.setItem('timestamp', (new Date()).getTime());
+});
+
+addEvent(document.querySelector('#local'), 'keyup', function () {
+  localStorage.setItem('value', this.value);
+  localStorage.setItem('timestamp', (new Date()).getTime());
+});
+
+addEvent(document.querySelector('#clear'), 'click', function () {
+  sessionStorage.clear();
+  localStorage.clear();
+  
+  document.querySelector('#previous').innerHTML = '';
+  getStorage('local');
+  getStorage('session');
+});
+
+&lt;/script&gt;</pre>
+  </li>
+  <li><a
+    href="http://www.sitepoint.com/cookieless-javascript-session-variables/">Cookie-less
+    Session Variables in JavaScript (<code>window.name</code>)</a> (<a
+    href="http://phrogz.net/tmp/data-through-window.name/">demo</a>)</li>
+</ul>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p> </p>
+</div>
+</body>
+</html>

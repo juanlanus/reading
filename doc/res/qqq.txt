@@ -1,0 +1,13 @@
+RT.setId 						= function(docPath, theElement) {
+RT.getCurrentReadingPosition 	= function(e) {
+RT.writeScrollRecord 			= function() {
+RT.buildPath 					= function($context, docPath, level) {
+RT.storeHeaderScrollTops 		= function() {
+RT.getRelativeTop 				= function( elem ) {
+RT.scrollToElement 				= function( $topElement, duration ) {
+RT.drillDown 					= function( startElement, steps, animDuration ) {
+RT.scrollToPosition 			= function(scrollData) {
+RT.buildTopsMap 				= function() {
+RT.topsMapGetIdxByElement 		= function( element ) { 
+RT.isBlockElement 				= function( theElement ) {
+RT.smartScrollToNextElement 	= function() {

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)file:///home/jlanus/Dropbox/Public/reading/doc/rtech.html -->
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Language" content="en">
+  <title>rt: database</title>
+  <link rel="stylesheet" href="res/rtDoc.css" type="text/css">
+  <script type="text/javascript" src="res/jquery.js">
+ </script>
+  <script type="text/javascript" src="res/tocBuilder.js">
+ </script>
+  <link href="res/tocBuilder.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#tocContainer').tocBuilder({
+        type: 'headings',
+        backLinkText: 'TOC',
+        startLevel: 2,
+        endLevel: 6
+      });
+    });
+  </script>
+  <script type="text/javascript" src="./database_files/rt.js">
+ </script>
+</head>
+
+<body>
+
+<div class="imgR miniMenu">
+
+<div>
+<ul style="list-style-type:none;">
+  <li><a href="index.html">index</a></li>
+  <li><a href="tasks.html">tasks &amp; bugs</a></li>
+  <li><a href="comparison.html">comparison</a></li>
+  <li><a href="rtech.html">technical defs</a></li>
+  <li><a href="database.html">database</a></li>
+  <li><a href="notes.html">notes &amp; links</a></li>
+  <li><a href="aboutScrolling.html">about scrolling</a></li>
+</ul>
+</div>
+</div>
+
+<div id="rtHeader">
+
+<div class="fixedHeader">
+<h1 style="display:inline; ">rt: database definitions</h1>
+</div>
+</div>
+
+<div id="rtBody" style="clear:none;">
+
+<div id="tocContainer" class="tocContainer" style="clear: none;">
+
+<div class="toc">
+<ul>
+  <li><a href="#collecting_data">Collecting data</a> 
+    <ul>
+      <li><a href="#L2819">Local storage</a> 
+        <ul>
+          <li><a href="#L193">Disconnected operation</a></li>
+        </ul>
+      </li>
+      <li><a href="#L2842">Data model</a> 
+        <ul>
+          <li><a href="#L104">Documents</a></li>
+          <li><a href="#L144">Publishers</a></li>
+          <li><a href="#L1441">Readers</a></li>
+          <li><a href="#L2907">Actions</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+</div>
+</div>
+
+<h2>Definitions</h2>
+
+<h3>Test DBs</h3>
+
+<p>The local instance stores data in <br>
+<code> /media/D/mongoData</code><br>
+and starts with <br>
+<code> sudo mongod --smallfiles --dbpath /media/D/mongoData</code></p>
+
+<p><br>
+</p>
+
+<p>The remote instance stores data in<br>
+<code> /var/lib/mongodb</code> <br>
+and starts with <br>
+<code> sudo service mongodb restart</code> </p>
+
+<p> </p>
+
+<p>Both in the local and the remote computers the name of the database is
+<code>rtdb</code> and the collections are:</p>
+<ul>
+  <li>users</li>
+  <li>documents</li>
+  <li>actions </li>
+</ul>
+
+<h3>Server requests</h3>
+
+<h4>User and document: <code>numid</code></h4>
+
+<p>When a session starts the client asks for data about the user and the
+document, all in a single swoop. </p>
+
+<p>For the purpose of reporting actions the client needs to know the user
+number and the document number, passing the textual user id and the document
+URL. </p>
+
+<p><strong>Request: <code></code></strong></p>
+
+<p><code> /d/numid?u=userid&amp;d=docURL</code> </p>
+
+<p><strong>Response: </strong></p>
+<pre>{ "unum"="12345", "dnum"="98765" name="John Doe" }
+{ "unum"="?", "dnum"="?" }</pre>
+
+<p>The <code>"?"</code> value can come in any of the fields, if it's key is not
+present in the DB. </p>
+
+<p>The client stores these numbers and uses them to identify the upcoming
+requests. </p>
+
+<p>If the user is not known the client can initiate the registration sequence.
+</p>
+
+<p>If the document is not known, the server can registrate it. </p>
+
+<p><strong>Process: </strong></p>
+
+<p>The "u" parameter is used to query the users collection. Return the
+following: </p>
+<ul>
+  <li>id number</li>
+  <li>name</li>
+</ul>
+
+<p>The "d" parameter is used to query the documents collection, return: </p>
+<ul>
+  <li>id number</li>
+</ul>
+
+<h3 id="L2842">Data model</h3>
+
+<h4 id="L1441">users</h4>
+
+<p>A registered user. </p>
+<ul>
+  <li><code>_id</code> default database _id</li>
+  <li><code>userid</code> login name</li>
+  <li><code>name</code> user name</li>
+  <li><code>pw</code> password hash</li>
+  <li><code>unum</code> user number, short numeric internal user identifier
+  </li>
+</ul>
+<pre>db.users.save( { userid: "jdoe", name: "John doe", unum: 1 } );</pre>
+
+<h4 style="clear:none;" id="L104">Documents</h4>
+
+<p>Identifies a version of a published document. </p>
+<ul>
+  <li>id 
+    <p>This is an integer, system assigned, in order to save disk space. </p>
+    <p>Use a technique described under "<a
+    href="http://docs.mongodb.org/manual/tutorial/create-an-auto-incrementing-field/#a-counters-collection">A
+    Counters Collection</a>". It doesn't seem to be a performance issue because
+    the rate of new documents insertion will never be that high. </p>
+  </li>
+  <li>publisher</li>
+  <li>current version</li>
+  <li>current URI</li>
+  <li>date published</li>
+</ul>
+
+<h4 id="L144">Publishers</h4>
+
+<p>A documents publisher. </p>
+<ul>
+  <li>id 
+    <p>Same considerations as with the documents id. </p>
+  </li>
+  <li>name</li>
+</ul>
+
+<h4 id="L2907">Actions</h4>
+
+<p>History of the actions performed by each reader and the current reading
+positions in the document. Actually, this is like a click-stream, recording the
+user's actions of any type, like scrolls, focus changes or page closings. </p>
+<ul>
+  <li>_id</li>
+  <li>document</li>
+  <li>user</li>
+  <li>date and time of action</li>
+  <li>position docpath</li>
+  <li>position percent</li>
+  <li>action code 
+    <p>(scrolled up, scrolled down, lost focus, closed page, clicked link,
+    ...)</p>
+  </li>
+  <li>action-specific data, like IP number or geospatial coordinates in session
+    start</li>
+</ul>
+
+<p>Action codes: </p>
+<ul>
+  <li>1 scroll (scroll event) (default, can be ommitted) </li>
+  <li>2 click on intra-page link (#something) </li>
+  <li>3 click on link to other page of the same document</li>
+  <li>4 click on external link </li>
+  <li>5 open TOC</li>
+  <li>6 click on TOC element</li>
+  <li>7 close window (onbeforeunload event) </li>
+</ul>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<h2 style="clear:none;" id="collecting_data">Collecting data</h2>
+
+<h3 id="L2819">Local storage</h3>
+
+<p>There is some information about data collected in <a
+href="localStorage.html">the localstorage page</a>. It's more about the
+<code>localStorage</code> object and its rechnicalities, than about the data
+itself. </p>
+
+<h5 id="L193">Disconnected operation</h5>
+
+<p>This introduces the idea of a disconnected operation capability, where the
+client stores the data locally, compiles it, and sends it to the server if it
+ever becomes available. This approach might allow the reader to have personal
+detailed information, and the server to have aggregate data, with less traffic.
+</p>
+
+<p>It will work when the reader does not allow the replicaqtion of his data to
+the server. </p>
+
+<p>In addition to remembering the reading position, the aggregation of this
+data makes the reading history of the document for the reader, and the
+aggregation of all the readers makes the document's reading history for the
+author. </p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p> </p>
+</div>
+</body>
+</html>

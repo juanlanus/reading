@@ -1,0 +1,28 @@
+<!DOCTYPE html >
+<html>
+  <head>
+    <title>Space capture test</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <script type="text/javascript">
+      $(function() {
+          alert( 'space capture test' );
+          $('#theScrolled').on(
+            'keydown',
+            function( ev ) {
+              ev.preventDefault();
+              alert( 'spacebar pressed' );
+            }
+          );
+        });
+    </script>
+  </head>
+
+  <body> 
+    <div id="theScrolled" tabindex="999"
+      style="border:1px solid black; width:333px; height:9999px;
+      background:rgb(240,240,240);">
+    </div>
+  </body>
+</html>
+

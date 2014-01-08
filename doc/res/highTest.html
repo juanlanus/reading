@@ -1,0 +1,78 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Language" content="en">
+  <title>highlight test</title>
+  <link rel="stylesheet" href="rt.css">
+  <style>
+    .rtHigh1 { background-color:yellow; }
+  </style>
+  <script src="jquery.js"></script>
+  <script src="rangy/uncompressed/rangy-core.js"></script>
+  <script src="rangy/uncompressed/rangy-cssclassapplier.js"></script>
+  <script>
+    $(document).ready(function () {
+
+      rangy.init(); 
+      var cssClassApplierModule = rangy.modules.CssClassApplier; 
+      var highlight1Applier = rangy.createCssClassApplier("rtHigh1"); 
+
+      $('#highlight').on(
+        'click',
+        function() {
+          highlight1Applier.toggleSelection();
+          if( document.selection ) {
+            document.selection.empty();
+          } else {
+            if( window.getSelection() ) {
+              window.getSelection().removeAllRanges();
+            }
+          }
+          return false;
+        }
+      )
+    });
+
+  </script>
+</head>
+
+<body>
+    <div id="all" style="max-width:34em;">
+      <div id="div1" style="border:1px dotted red; padding:8px;">
+        <p>Lorem ipsum dolor sit amet, cum ne illum vivendum, ad pri illud eirmod splendide. Illud mazim in eos. Exerci deterruisset eam ea, eum alia officiis tacimates ex, vix ea malis intellegat. Facer diceret pericula ne sit, duo et regione conceptam delicatissimi. Latine gloriatur definitiones at mel, in mandamus ocurreret intellegebat sed.</p>
+        <p>Vel et postea partiendo, mea perfecto imperdiet ad. Quo an ridens omittantur. Pro falli docendi ei, cum errem patrioque in. Utinam scribentur vel an, at malorum noluisse sadipscing mel, vim id impedit definiebas.</p>
+      </div>
+
+      <div id="div2" style="border:1px dotted blue; padding:8px; ">
+        <p>Mei ei mazim decore persequeris. Eu ius posse molestie, mea ex tale patrioque moderatius. Est vero malis te, eirmod iisque moderatius est ei. Per noster suavitate ex. Ex his liber dicam concludaturque, eu vim dolorem perpetua abhorreant. Sea te dolores mandamus assentior, facete dissentias mediocritatem nam in./p>
+        <p>Labore laoreet theophrastus cu quo. Et quot feugait vivendo mea, cu quo quaeque alienum. Dictas deserunt posidonium ei eam. Vix ea dolor iudico tantas, perpetua principes nam ne, volumus phaedrum antiopam usu at.</p>
+      </div>
+
+      <div id="div3" style="border:1px dotted yellow; padding:8px; ">
+        <p>Illud adversarium id cum. Ferri affert ancillae sea eu, qui labores consectetuer ne, aperiri alienum no quo. Eam in veri vulputate definitionem. Vis ne persius meliore. Mel eu nominati recteque interpretaris, commodo facilis periculis et mel. Pri quas splendide ne, assum aperiam mentitum vel cu.</p>
+      </div>
+
+      <div id="controlpanel">
+        <button id="highlight">
+          <img src="iconhighlight.png" style="width:80px; height:80px;">
+          <br>highlight
+
+
+        </button>
+
+      </div>
+
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+
+    </div>
+</body>
+</html>
+
+
