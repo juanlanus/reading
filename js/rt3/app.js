@@ -14,7 +14,9 @@ MongoClient.connect('mongodb://localhost:27017/rtdb', function(err, db) {
     // throw err;
     console.log( 'Error attempting to connect to the database' );
     console.log( 'error: ' + err.message );
-    if( !! err.lineNumber ) { console.log( 'in line #' + err.lineNumber ); };
+    if( !! err.lineNumber ) { 
+        console.log( 'in line #' + err.lineNumber ); 
+    };
     return false;
   };
 
@@ -23,6 +25,8 @@ MongoClient.connect('mongodb://localhost:27017/rtdb', function(err, db) {
   var serverPagesPort = process.env.PORT || 3000;
   ServerPages.serverPages( serverPagesPort, db );
 
+app.use(express.favicon());
+app.use(express.logger('dev'));
 
   // DATA SERVER *****************************************************************
   var ServerData = require('./serverData');

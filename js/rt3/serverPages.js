@@ -5,7 +5,6 @@ function serverPages( HPPTPort, db ) {
   var http = require('http');
   var path = require('path');
   var express = require('express');
-  var appData = express();
   var routes = require('./routes');
   // http://stackoverflow.com/questions/16548586/adding-a-new-route-to-node-express
 

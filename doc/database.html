@@ -81,9 +81,9 @@
 <h3>Test DBs</h3>
 
 <p>The local instance stores data in <br>
-<code> /media/D/mongoData</code><br>
+<code> /D/mongoData</code><br>
 and starts with <br>
-<code> sudo mongod --smallfiles --dbpath /media/D/mongoData</code></p>
+<code> sudo mongod --smallfiles --dbpath /D/mongoData</code></p>
 
 <p><br>
 </p>
@@ -91,7 +91,7 @@ and starts with <br>
 <p>The remote instance stores data in<br>
 <code> /var/lib/mongodb</code> <br>
 and starts with <br>
-<code> sudo service mongodb restart</code> </p>
+<code> sudo service mongodb [re]start</code> </p>
 
 <p> </p>
 
@@ -155,7 +155,7 @@ following: </p>
 <ul>
   <li><code>_id</code> default database _id</li>
   <li><code>userid</code> login name</li>
-  <li><code>name</code> user name</li>
+  <li><code>name</code> actual user name</li>
   <li><code>pw</code> password hash</li>
   <li><code>unum</code> user number, short numeric internal user identifier
   </li>
@@ -195,7 +195,8 @@ following: </p>
 positions in the document. Actually, this is like a click-stream, recording the
 user's actions of any type, like scrolls, focus changes or page closings. </p>
 <ul>
-  <li>_id</li>
+  <li>_id &larr; what is this _id? (it's stored in the server, not sent by the
+    client)</li>
   <li>document</li>
   <li>user</li>
   <li>date and time of action</li>
@@ -206,7 +207,7 @@ user's actions of any type, like scrolls, focus changes or page closings. </p>
     ...)</p>
   </li>
   <li>action-specific data, like IP number or geospatial coordinates in session
-    start</li>
+    start, or mouse coordinates of a mouse click</li>
 </ul>
 
 <p>Action codes: </p>

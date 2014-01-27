@@ -14,11 +14,16 @@ MongoClient.connect('mongodb://localhost:27017/rtdb', function(err, db) {
     // throw err;
     console.log( 'Error attempting to connect to the database' );
     console.log( 'error: ' + err.message );
-    if( !! err.lineNumber ) { console.log( 'in line #' + err.lineNumber ); };
+    if( !! err.lineNumber ) { 
+        console.log( 'in line #' + err.lineNumber ); 
+    };
     return false;
   };
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  // PAGES SERVER ****************************************************************
+  var ServerPages = require('./serverPages');
+  var serverPagesPort = process.env.PORT || 3000;
+  ServerPages.serverPages( serverPagesPort, db );
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -30,14 +35,6 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
-node_modules/**
-**/node_modules/**
-[._]*.s[a-w][a-z]
-[._]s[a-w][a-z]
-*.un~
-Session.vim
-.netrwhist
-*~
 
 // development only
 if ('development' == app.get('env')) {

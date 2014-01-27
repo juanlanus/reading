@@ -6,6 +6,7 @@ function serverData( HPPTPort, db ) {
   var http = require('http');
   var path = require('path');
   var express = require('express');
+  var appData = express();
   var routes = require('./routes');
   var cors = require('cors');
   
