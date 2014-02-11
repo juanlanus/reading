@@ -8,3 +8,5 @@ node_modules/**
 *.un~
 Session.vim
 .netrwhist
+mongoLog.txt
+**/qqq*

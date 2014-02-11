@@ -9,6 +9,9 @@ var RT = {
   readerNumberEncoded: '4mkbm',       // reader id in base36
   $container: null,                   // the element DIV or BODY with scrolled content
   $content: null,                     // the element that scrolls inside $container, a DIV
+  contentCss: {                       // stype to apply to container (so it plays nice with left bar)
+    'padding-left': '86px' 
+  }, 
 
   leftTopVisiblePix: {                // container's top left corner coordinates, used
       left: 222,                      // to detect visibility using method
@@ -708,7 +711,8 @@ RT.displayProgress = function() {
   var pri = document.getElementById('rtProgressDiagram');
   var hPri = $pri.height();
   var hTotal = RT.$container[0].clientHeight;
-  var hDone = RT.elementAtTop.offsetTop;
+  var hDone = 0;
+  if( RT.elementAtTop ) { hDone = RT.elementAtTop.scrollTop; };
   var hCurrent = window.innerHeight;
   var hPending;
   // done part: proportional to current scroll position
@@ -724,6 +728,26 @@ RT.displayProgress = function() {
   $('#rtProgressDiagram .rtProgressRemaining').css( 'height', hPending + '%' )
   .text( hPending < 10 ? '' : hPending + '%' );
 };
+
+  // build the document structure map used for semantic positioning
+  RT.buildDocMap = function() {
+    RT.docMap = {};
+    // init structure values: item [0] is the page, items [1] to [6] correspond
+    // to headers H1 through H6, then comes the element number and the element
+    // internal subtree
+    // TEST: log the docPaths in a PRE element $('#docPathLog')
+    // $('#docPathLog').clear;
+    var docPath = [RT.pageNumber, 0, 0, 0, 0, 0, 0];
+    var $context = RT.$content;         // will iterate over the DOM elements
+    RT.tagCount = 0;
+    RT.buildPath($context, docPath, 0); // start at level 0 = before first tag
+    // calculate the value of the scrollTop of all headers (used to identify 
+    // the topmost element in the scroll event) 
+    RT.storeHeaderScrollTops();
+
+    // build the tops map with the scroll position of every text node
+    RT.buildTopsMap();
+  };
 
 
 /* RT - set it to work ********************************************************/
@@ -745,23 +769,12 @@ RT.displayProgress = function() {
       return false;
     }
 
-    // build the document structure map used for semantic positioning
-    RT.docMap = {};
-    // init structure values: item [0] is the page, items [1] to [6] correspond
-    // to headers H1 through H6, then comes the element number and the element
-    // internal subtree
-    // TEST: log the docPaths in a PRE element $('#docPathLog')
-    // $('#docPathLog').clear;
-    var docPath = [RT.pageNumber, 0, 0, 0, 0, 0, 0];
-    var $context = RT.$content;         // will iterate over the DOM elements
-    RT.tagCount = 0;
-    RT.buildPath($context, docPath, 0); // start at level 0 = before first tag
-    // calculate the value of the scrollTop of all headers (used to identify 
-    // the topmost element in the scroll event) 
-    RT.storeHeaderScrollTops();
+    // apply the content container the CSS styles it needs in order to play nice 
+    // with the control panel
+    RT.$content.css( RT.contentCss );
 
-    // build the tops map with the scroll position of every text node
-    RT.buildTopsMap();
+    // build the document structure map used for semantic positioning
+    RT.buildDocMap();
 
     // On page load, scroll to the last recorded position: check starting from the
     // last key until a scroll record is found
