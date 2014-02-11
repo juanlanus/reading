@@ -276,20 +276,21 @@ RT.writeScrollRecord = function() {
 
 RT.buildPath = function($context, docPath, level) {
 // recursively visit the elements of a DOM tree level and record their docPath data
-  // $context: process the children of this
-  // docPath: copy of the docPath as of now, buid on it
-  // level: non-H tags deph level, 0 = first one, in docPath[7]
+  // $context: process the children of this element
+  // docPath: starting docPath, buid on it
+  // level: non-H (subtree) tags deph level, 0 = first one, in docPath[7]
   // TODO: get a list of the block tagnames
-  // path: page, six headers and zero or more "other tag" counters
+  // TODO: this function assumes that the headers tree is correctly structured
   // TODO: elements positioned absolute or fixed are taken from the normal flow
-  // and are not in the normal flow
+  // and should be handled especially
   $context.children().not('[float=left]').not('[float=right]').each(
     function(i) {
-      var checkHeading = /^[hH][1-6]$/;
+    // build the docPaths of the subtree of this
       $this = $(this);
-      // if the current element is a header, increment the header level count
-      // and reset the ritgh-hand part of docPath
-      if( checkHeading.test(this.tagName) ) { // it's a header H1...6
+      // if the current element is a header, increment the header level number
+      // and reset the rigth-hand part of docPath
+      var checkHeading = /^[hH][1-6]$/;
+      if( checkHeading.test(this.tagName) ) { // it's a header h1...6
         // update header count
         var headerLevel = parseInt(this.tagName.substring(1, 2), 10);
         if( headerLevel > 0 && headerLevel < 7 ) {
@@ -733,9 +734,9 @@ RT.displayProgress = function() {
   RT.buildDocMap = function() {
     RT.docMap = {};
     // init structure values: item [0] is the page, items [1] to [6] correspond
-    // to headers H1 through H6, then comes the element number and the element
+    // to headers H1 through H6, then comes the element number and the element's
     // internal subtree
-    // TEST: log the docPaths in a PRE element $('#docPathLog')
+    // DEBUG: log the docPaths in a PRE element $('#docPathLog')
     // $('#docPathLog').clear;
     var docPath = [RT.pageNumber, 0, 0, 0, 0, 0, 0];
     var $context = RT.$content;         // will iterate over the DOM elements
