@@ -1,8 +1,8 @@
 // namespace for rt stuff
 // TODO: flock the options in an RT.options object
 var RT = {
-  documentNumber: 123456,             // identification of the document
-  documentNumberEncoded: '2n9c',      // document id in base36
+  documentNumber: 123457,             // identification of the document
+  documentNumberEncoded: '2n9d',      // document id in base36
   pageNumber: 0,                      // "page" sequence, first level in the headers
                                       // hierarchy built into docPath, before H1 sequence
   readerNumber: 7771234,              // identification of the reader
@@ -235,7 +235,10 @@ RT.writeScrollRecord = function() {
   // get the current reading position in RT.scrollData (and in topsMapElement)
   RT.topsMapElement = RT.getCurrentReadingPosition();
   // save the scroll data in localStorage
-  localStorage.setItem('RT-' + RT.scrollTime.getTime(), JSON.stringify(RT.scrollData));
+  localStorage.setItem(
+    'RT-' + documentNumberEncoded + '-' + RT.scrollTime.getTime(),
+    JSON.stringify(RT.scrollData)
+  );
   // aggregate scroll records in the reading time stats
   // TODO: contiguous scrolls with less than 1 second are merged
   // RT.compileReadTimeStats();
@@ -367,9 +370,6 @@ RT.storeHeaderScrollTops = function() {
     RT.headerId[oneHeader].offsetTop 
     = RT.getRelativeTop( document.getElementById( RT.headerId[oneHeader].id ));
     // DEBUG: console.log( oneHeader + ' ' + RT.headerId[oneHeader].id );
-    if( !( oneHeader + ' ' + RT.headerId[oneHeader].id )) {
-      debugger;
-    };
   };
 };
 
@@ -418,7 +418,7 @@ RT.drillDown = function( startElement, steps, animDuration ) {
   return $initialElement;
 };
 
-RT.scrollToPosition = function(scrollData) {
+RT.scrollToPosition = function( scrollData ) {
 // reposition the content according to the scrollData argument
   // check if the data is available ...
   if( scrollData && scrollData.dp ) {
@@ -454,7 +454,7 @@ RT.scrollToPosition = function(scrollData) {
         RT.scrollToElement( $targetElement, RT.scrollDuration );
       };
     };
-  }
+  };
 };
 
 
@@ -785,6 +785,38 @@ RT.displayProgress = function() {
     RT.buildTopsMap();
   };
 
+  // return the last recorded position of the document docNumber
+  RT.getLastRecordPosition = function( documentNumber ) {
+    if( !localStorage ) { return null; };
+    // loop backwards looking for a scroll record of this document (has an
+    // "RT-nnnn-xxxx" key where nnnn is the document id encoded and xxxx is
+    // the time)
+    var lsi = localStorage.length;
+    var latestTime = { time: -1, index: -1};
+    //  loop over keys looking for the latest scroll record for this doc
+    for( var i = lsi - 1; i >= 0; i-- ) {
+      var k = localStorage.key(i);
+      if( k.substring( 0, 3 ) === 'RT-' ) {
+	// split k in its parts
+	var part = k.split( '-' );
+	if( part.length === 3 ) {
+	  // check that it's related to this document
+	  if( part[1] === documentNumber ) {  
+	    // compare time and save if newer than latestTime
+	    if( part[2] > latestTime.time ) {
+	      // TODO: yes it's later, check that it has .dp
+	      // yes it's later: save in latest
+	      latestTime.time = part[2];
+	      latestTime.index = i;
+	    };
+	  };
+	};
+      };
+    };
+    // was there a scroll record for this doc?
+    if( latestTime.index === -1 ) { return null; };
+    return JSON.parse(localStorage.getItem( latestTime.index )); 
+  };
 
 /* RT - set it to work ********************************************************/
 
@@ -812,28 +844,14 @@ RT.displayProgress = function() {
     // build the document structure map used for semantic positioning
     RT.buildDocMap();
 
-    // On page load, scroll to the last recorded position: check starting from the
-    // last key until a scroll record is found
-    // get the scroll info saved in localStorage
-    if( localStorage ) {
-      if( localStorage.length ) {
-        var lsi = localStorage.length;
-        //  loop backwards looking for a scroll record (has an "RT-..." key)
-        for( var i = lsi; i > 0; i-- ) {
-          var k = localStorage.key(i - 1);
-          if( k.substring( 0, 3) === 'RT-' ) {
-            // there is a scroll position recorded, get it
-            RT.scrollData = JSON.parse(localStorage.getItem(k)); 
-            // TODO: some paths are wrong, with an empty element: ignore them
-            if( RT.scrollData.dp && RT.scrollData.dp.indexOf( ',,' ) === -1 ) {
-              RT.scrollToPosition( RT.scrollData );
-              break;
-            };
-          }
-        }
-      }
+    // get the last recorded scroll position or null and scroll to it
+    RT.scrollData = RT.getLastRecordPosition( RT.documentNumber );
+    if( RT.scrollData ) {
+      RT.scrollToPosition( RT.scrollData );
+    } else {
+      // scroll to ... 
     };
-
+    
     // when the reader leaves this page store an end of session scroll record
     window.onbeforeunload = function(e) { 
       RT.scrollData = {};
