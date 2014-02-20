@@ -465,57 +465,92 @@ RT.buildTopsMap = function() {
 // to be used for finding the "next" paragraph when the user scrolls
 // it contains a reference to each DOM element and it's scroll position
 // relative to the top of the document
-  var topsMapIterator = document.createNodeIterator(
-    RT.$content.get()[0],           // root, 
-    NodeFilter.SHOW_ELEMENT,        // whatToShow, 
-    // Object containing the function to use for the acceptNode method of the NodeFilter
-      { acceptNode: function(node) {
-        // accept nodes containing something other than all whitespace
-        if ( ! /^\s*$/.test(node.data) ) {
-          return NodeFilter.FILTER_ACCEPT;
-        } else {
-          return NodeFilter.FILTER_SKIP;
-        }
-      }
-    },
-    null    // not used but required by IE9?
-  );
+          /*
+          var topsMapIterator = document.createNodeIterator(
+            RT.$content.get()[0],           // root, 
+            NodeFilter.SHOW_ELEMENT,        // whatToShow, 
+            // Object containing the function to use for the acceptNode method of the NodeFilter
+              { acceptNode: function(node) {
+                // accept nodes containing something other than all whitespace
+                if ( ! /^\s*$/.test(node.data) ) {
+                  return NodeFilter.FILTER_ACCEPT;
+                } else {
+                  return NodeFilter.FILTER_SKIP;
+                }
+              }
+            },
+            null    // not used but required by IE9?
+          );
+          */
 
   // now build the topsMap array
   RT.topsMap = [];
   var topsMapNeedsSort = false;
   var thisNode;
   var previousNodeTop = -100000;
-  for( ; true; ) {
-    thisNode = topsMapIterator.nextNode();
-    if( thisNode == null ) {  // no more nodes
-      topsMapIterator.detach(); 
-      break; 
+
+  $('*', RT.$content).each( 
+    function( index, thisNode ) {
+      RT.topsMap.push({ 
+        node: thisNode, 
+        top: RT.getRelativeTop( thisNode )
+      });
+
+      var topsMapN = RT.topsMap.length;
+      // DEBUG: 
+      // console.log( RT.topsMap.length + ' ' + thisNode.nodeName + ' ' + RT.topsMap[topsMapN - 1].top);
+      // DEBUG: check how the same top value appears more than once
+      if( RT.debug ) { 
+        if( RT.topsMap[topsMapN - 1].top == previousNodeTop ) {
+          console.log( 'top value repeated: ' + RT.topsMap[topsMapN - 1].node.nodeName 
+          + ' ' +  previousNodeTop );
+        }
+      };
+
+      // check that tops are sorted
+      if( RT.topsMap[topsMapN - 1] < previousNodeTop ) { topsMapNeedsSort = true; }
+      previousNodeTop = RT.topsMap[topsMapN - 1];
+
     }
-    // TODO: ignore padding para's at the bottom of the document
-    RT.topsMap.push({ 
-      node: thisNode, 
-      top: RT.getRelativeTop( thisNode )
-    });
-    var topsMapN = RT.topsMap.length;
-    // DEBUG: 
-    // console.log( RT.topsMap.length + ' ' + thisNode.nodeName + ' ' + RT.topsMap[topsMapN - 1].top);
-    // DEBUG: check how the same top value appears more than once
-    if( RT.debug ) { 
-      if( RT.topsMap[topsMapN - 1].top == previousNodeTop ) {
-        console.log( 'top value repeated: ' + RT.topsMap[topsMapN - 1].node.nodeName 
-        + ' ' +  previousNodeTop );
-      }
-    };
-    // check that tops are sorted
-    if( RT.topsMap[topsMapN - 1] < previousNodeTop ) { topsMapNeedsSort = true; }
-    previousNodeTop = RT.topsMap[topsMapN - 1];
-    // sort topsMap on position order if needed
-    // TODO: NYI
-    if( topsMapNeedsSort ) { /* RT.topsMapSort() */ }
-    // prepare for the index of the top element
-    RT.topsMapIdx = 0;
-  };
+  );
+  // sort topsMap on position order if needed
+  // TODO: NYI
+  if( topsMapNeedsSort ) { /* RT.topsMapSort() */ }
+  // prepare for the index of the top element
+  RT.topsMapIdx = 0;
+
+  /* TODO: delete this previous version
+          for( ; true; ) {
+            thisNode = topsMapIterator.nextNode();
+            if( thisNode == null ) {  // no more nodes
+              topsMapIterator.detach(); 
+              break; 
+            }
+            // TODO: ignore padding para's at the bottom of the document
+            RT.topsMap.push({ 
+              node: thisNode, 
+              top: RT.getRelativeTop( thisNode )
+            });
+            var topsMapN = RT.topsMap.length;
+            // DEBUG: 
+            // console.log( RT.topsMap.length + ' ' + thisNode.nodeName + ' ' + RT.topsMap[topsMapN - 1].top);
+            // DEBUG: check how the same top value appears more than once
+            if( RT.debug ) { 
+              if( RT.topsMap[topsMapN - 1].top == previousNodeTop ) {
+                console.log( 'top value repeated: ' + RT.topsMap[topsMapN - 1].node.nodeName 
+                + ' ' +  previousNodeTop );
+              }
+            };
+            // check that tops are sorted
+            if( RT.topsMap[topsMapN - 1] < previousNodeTop ) { topsMapNeedsSort = true; }
+            previousNodeTop = RT.topsMap[topsMapN - 1];
+            // sort topsMap on position order if needed
+            // TODO: NYI
+            if( topsMapNeedsSort ) { // RT.topsMapSort() // }
+            // prepare for the index of the top element
+            RT.topsMapIdx = 0;
+          };
+    */
 };
 
 RT.topsMapGetIdxByElement = function( element ) { 
@@ -788,10 +823,10 @@ RT.displayProgress = function() {
           var k = localStorage.key(i - 1);
           if( k.substring( 0, 3) === 'RT-' ) {
             // there is a scroll position recorded, get it
-            scrollData = JSON.parse(localStorage.getItem(k)); 
+            RT.scrollData = JSON.parse(localStorage.getItem(k)); 
             // TODO: some paths are wrong, with an empty element: ignore them
-            if( scrollData.dp && scrollData.dp.indexOf( ',,' ) === -1 ) {
-              RT.scrollToPosition( scrollData );
+            if( RT.scrollData.dp && RT.scrollData.dp.indexOf( ',,' ) === -1 ) {
+              RT.scrollToPosition( RT.scrollData );
               break;
             };
           }
