@@ -1,8 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Language" content="en">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="A short course (~30') for the non-technical about binary numbers and related concepts.">
   <title>Binary number system</title>
@@ -21,62 +20,22 @@
       rt('#agendaBody', 1);
     });
   </script> 
-  <script type="text/javascript">
-    $(document).ready(function () {
-    });
-  </script>
   <style>
     /* .onePage { border:4px solid blue; } */
   </style>
 </head>
 
-<body>
+<body lang="en">
 
-<div id="agendaHeader">
+<div id="agendaBody" style="height:100%; overflow:auto; position:relative;">
 
-<div class="fixedHeader">
-<h1 style="display:inline; line-height:1em; ">Binary number system</h1>
-</div>
+  <div id="agendaContent" style=" articleBody" tabindex="0">
 
-  <div id="agendaLinks">
-
-  <div class="toc">
-  <ul>
-    <li><a href="#L366">The decimal number system</a> 
-      <ul>
-        <li><a href="#L113">Counting with fingers</a></li>
-      </ul>
-    </li>
-    <li><a href="#L3661">The binary number system</a> 
-      <ul>
-        <li><a href="#L764">Who would want to count in such a contrived
-        way?</a></li>
-        <li><a href="#L778">bit</a></li>
-        <li><a href="#L1729">Binary numbers are horrible</a></li>
-        <li><a href="#L792">byte</a></li>
-        <li><a href="#L1106">Measures: kilo, mega, giga ...</a> 
-          <ul>
-            <li><a href="#L1294">Bytes</a></li>
-            <li><a href="#L1313">Hz</a></li>
-            <li><a href="#L1326">bit/sec </a></li>
-          </ul>
-        </li>
-        <li><a href="#L906121">Bytes and characters</a></li>
-        <li><a href="#L91654">Bytes and colors </a></li>
-        <li><a href="#L2139">Binary numbers</a></li>
-        <li><a href="#L2511">Finally ...</a></li>
-      </ul>
-    </li>
-  </ul>
-  </div>
-
-  <p>&nbsp;</p>
-  <hr>
-  </div>
-</div>
-
-<div id="agendaBody">
-  <div id="agendaContent">
+    <div id="agendaHeader">
+      <div class="fixedHeader">
+      <h1 style="display:inline; line-height:1em; ">Binary number system</h1>
+      </div>
+    </div>
 
     <div class="framed">
       <p>Course description: </p>
@@ -1092,20 +1051,20 @@
     blue. </p>
 
     <div id="rgb-demo">
-    <script type="text/javascript">
+      <script>
     $(document).ready( function(){
-        // restore properties deleted by Amaya ("type" can't be changed!)
-        // $('#inputR').attr( { type: 'range', inputmode: 'numeric', max: '255', min: '0', step: '1', value: '0' } );
-        // $('#inputG').attr( { type: 'range', inputmode: 'numeric', max: '255', min: '0', step: '1', value: '0' } );
-        // $('#inputB').attr( { type: 'range', inputmode: 'numeric', max: '255', min: '0', step: '1', value: '0' } );
+        // restore properties deleted by Amaya
+        $('#inputR').attr( { type: 'range', inputmode: 'numeric', max: '255', min: '0', step: '1', value: '0' } );
+        $('#inputG').attr( { type: 'range', inputmode: 'numeric', max: '255', min: '0', step: '1', value: '0' } );
+        $('#inputB').attr( { type: 'range', inputmode: 'numeric', max: '255', min: '0', step: '1', value: '0' } );
 
         $('#rgb-demo input').on('input change', function() {
           // build the RGB color and set the target area
-          $('#rgb-demo #valueR').text( '' + $('#rgb-demo #inputR').val() );
-          $('#rgb-demo #valueG').text( '' + $('#rgb-demo #inputG').val() );
-          $('#rgb-demo #valueB').text( '' + $('#rgb-demo #inputB').val() );
-          var theColor = 'rgb(' + $('#rgb-demo #valueR').text() + ',' + $('#rgb-demo #valueG').text() + ',' + $('#rgb-demo #valueB').text() + ')';
-          $('#rgb-demo #rgb-target').css( 'background-color', theColor );
+          $('#valueR').text( '' + $('#inputR').val() );
+          $('#valueG').text( '' + $('#inputG').val() );
+          $('#valueB').text( '' + $('#inputB').val() );
+          var theColor = 'rgb(' + $('#valueR').text() + ',' + $('#valueG').text() + ',' + $('#valueB').text() + ')';
+          $('#rgb-target').css( 'background-color', theColor );
 
           // display the RGB color in binary and hexadecimal
           function editColorComponent( theInputId, theRadix ) {
@@ -1132,16 +1091,16 @@
             // return parseInt( document.getElementById( theInputId ).value, 10 ).toString( theRadix );
           };
 
-          $('#rgb-demo #rgb-binValue').text( 'bin: ' 
-        + editColorComponent('inputR', 2 ) + ' ' 
-        + editColorComponent('inputG', 2 ) + ' ' 
-        + editColorComponent('inputB', 2 ) 
-        );
-          $('#rgb-demo #rgb-hexValue').text( 'hex: ' 
-        + editColorComponent('inputR', 16) + ' ' 
-        + editColorComponent('inputG', 16) + ' ' 
-        + editColorComponent('inputB', 16) 
-        );
+            $('#rgb-binValue').text( 'bin: ' 
+            + editColorComponent('inputR', 2 ) + ' ' 
+            + editColorComponent('inputG', 2 ) + ' ' 
+            + editColorComponent('inputB', 2 ) 
+            );
+            $('#rgb-hexValue').text( 'hex: ' 
+            + editColorComponent('inputR', 16) + ' ' 
+            + editColorComponent('inputG', 16) + ' ' 
+            + editColorComponent('inputB', 16) 
+            );
           }).trigger('change');
           });       // this "trigger" is not working</script>
     <style>
@@ -1164,16 +1123,16 @@
                   <td colspan="2" class="rgb-blah">Use the sliders to set the RGB color</td>
                 </tr>
                 <tr>
-                  <td><span class="rgb-rgb">R</span><input id="inputR" class="rgb-input" type="range" inputmode="numeric" max="255" min="0" step="1" maxLength="3"></td>
+                  <td><span class="rgb-rgb">R</span><input id="inputR" class="rgb-input" value="0" type="text" maxLength="3"></td>
                   <td id="valueR" class="rgb-value">0</td>
                 </tr>
                 <tr>
-                  <td><span class="rgb-rgb">G</span><input id="inputG" class="rgb-input" type="range" inputmode="numeric" max="255" min="0" step="1" maxLength="3"></td>
+                  <td><span class="rgb-rgb">G</span><input id="inputG" class="rgb-input" value="0" type="text" maxLength="3"></td>
                   <td id="valueG" class="rgb-value">0</td>
                 </tr>
                 <tr>
                   <!-- <td>B <input id="inputB" class="rgb-input" type="range" inputmode="numeric" max="255" min="0" step="1" value="0"></td> -->
-                  <td><span class="rgb-rgb">B</span><input id="inputB" class="rgb-input" type="range" inputmode="numeric" max="255" min="0" step="1" maxLength="3"></td>
+                  <td><span class="rgb-rgb">B</span><input id="inputB" class="rgb-input" value="0" type="text" maxLength="3"></td>
                   <td id="valueB" class="rgb-value">0</td>
                 </tr>
                 <tr>
@@ -1256,7 +1215,7 @@
     was stored in consecutive memory "positions" then to access the 12th. contact
     the program would have to calculate its address, thus: </p>
 
-    <p><code>&nbsp;&nbsp;&nbsp;&nbsp;address of first contact + 120 &nbsp; (contact number &minus;
+    <p><code>&nbsp;&nbsp;&nbsp;&nbsp;address of first contact + 120 × (contact number &minus;
     1)</code></p>
 
     <p>This is address arithmetic and it happens a lot of times. It is done with
@@ -1497,7 +1456,7 @@
 <pre id="docPathLog" style="padding-left:80px; line-height:90%; font-size:75%; ">
 </pre>
 
-<div id="agendaBody" style="display:none; overflow:scroll;">
+<div id="agendaBody2" style="display:none; overflow:scroll;">
 <h1 id="usability">Usability Test Instructions</h1>
 
 <p><strong>The Books Smart Reader</strong></p>

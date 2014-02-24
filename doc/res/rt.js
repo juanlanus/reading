@@ -9,8 +9,11 @@ var RT = {
   readerNumberEncoded: '4mkbm',       // reader id in base36
   $container: null,                   // the element DIV or BODY with scrolled content
   $content: null,                     // the element that scrolls inside $container, a DIV
-  contentCss: {                       // stype to apply to container (so it plays nice with left bar)
+  containerCss: {                     // stype to apply to container
     'padding-left': '86px' 
+  }, 
+  contentCss: {                       // stype to apply to content
+    'outline-width': '0'
   }, 
 
   leftTopVisiblePix: {                // container's top left corner coordinates, used
@@ -236,7 +239,7 @@ RT.writeScrollRecord = function() {
   RT.topsMapElement = RT.getCurrentReadingPosition();
   // save the scroll data in localStorage
   localStorage.setItem(
-    'RT-' + documentNumberEncoded + '-' + RT.scrollTime.getTime(),
+    'RT-' + RT.documentNumberEncoded + '-' + RT.scrollTime.getTime(),
     JSON.stringify(RT.scrollData)
   );
   // aggregate scroll records in the reading time stats
@@ -385,7 +388,11 @@ RT.scrollToElement = function( $topElement, duration ) {
   $topElement.addClass( 'rtScrolltarget' ).offsetTop;
   window.setTimeout(
     function(e){ 
-      $topElement.animatescroll({ scrollSpeed:duration, easing:'easeOutQuint' });
+      $topElement.animatescroll({ 
+        scrollSpeed: duration, 
+        easing: 'easeInOutQuart',
+        element: RT.$container[0]
+      });
       window.setTimeout(
         function(e){ $topElement.removeClass( 'rtScrolltarget' )},
         600
@@ -737,15 +744,13 @@ RT.smartScrollToNextElement = function() {
 
 // calculate progress indicator
 RT.displayProgress = function() {
-  // set the progress diagram: slap rtProgressTemplate over rtProgressDiagram 
   var $pd = $('#rtProgressDiagram');
+  // set the progress diagram: slap rtProgressTemplate over rtProgressDiagram 
   $pd.html( $('#rtProgressTemplate').html() );
   $pd.addClass('rtProgress');
 
   // calculate the proportional heights
-  var $pri = $('#rtProgressDiagram');
-  var pri = document.getElementById('rtProgressDiagram');
-  var hPri = $pri.height();
+  var hPri = $pd.height();
   var hTotal = RT.$container[0].clientHeight;
   var hDone = 0;
   if( RT.elementAtTop ) { hDone = RT.elementAtTop.scrollTop; };
@@ -785,37 +790,40 @@ RT.displayProgress = function() {
     RT.buildTopsMap();
   };
 
-  // return the last recorded position of the document docNumber
+  // return the last recorded position of the document docNumber or null
   RT.getLastRecordPosition = function( documentNumber ) {
     if( !localStorage ) { return null; };
-    // loop backwards looking for a scroll record of this document (has an
-    // "RT-nnnn-xxxx" key where nnnn is the document id encoded and xxxx is
-    // the time)
-    var lsi = localStorage.length;
+    // loop backwards over localStorage keys looking for a scroll record of
+    // this document (has an "RT-nnnn-xxxx" key where nnnn is the document
+    // id encoded and xxxx is the time)
     var latestTime = { time: -1, index: -1};
     //  loop over keys looking for the latest scroll record for this doc
-    for( var i = lsi - 1; i >= 0; i-- ) {
+    for( var i = localStorage.length - 1; i >= 0; i-- ) {
       var k = localStorage.key(i);
       if( k.substring( 0, 3 ) === 'RT-' ) {
-	// split k in its parts
-	var part = k.split( '-' );
-	if( part.length === 3 ) {
-	  // check that it's related to this document
-	  if( part[1] === documentNumber ) {  
-	    // compare time and save if newer than latestTime
-	    if( part[2] > latestTime.time ) {
-	      // TODO: yes it's later, check that it has .dp
-	      // yes it's later: save in latest
-	      latestTime.time = part[2];
-	      latestTime.index = i;
-	    };
-	  };
-	};
+        var part = k.split( '-' );
+        if( part.length === 3 ) {
+          // check that it's related to this document
+          if( part[1] === documentNumber ) {  
+            // compare times and save if newer than latestTime
+            if( part[2] > latestTime.time ) {
+              // yes it's later, check that it has .dp
+              var data = JSON.parse(localStorage.getItem( i )); 
+              // yes it's later: save in latest
+              if( latestTime.data.dp ) {
+                latestTime.time = part[2];
+                latestTime.index = i;
+                latestTime.data = data;
+              };
+            };
+          };
+        };
       };
     };
     // was there a scroll record for this doc?
     if( latestTime.index === -1 ) { return null; };
-    return JSON.parse(localStorage.getItem( latestTime.index )); 
+    // success: return the read scrolldata
+    return latestTime.data;
   };
 
 /* RT - set it to work ********************************************************/
@@ -839,6 +847,7 @@ RT.displayProgress = function() {
 
     // apply the content container the CSS styles it needs in order to play nice 
     // with the control panel
+    RT.$container.css( RT.containerCss );
     RT.$content.css( RT.contentCss );
 
     // build the document structure map used for semantic positioning
@@ -866,6 +875,10 @@ RT.displayProgress = function() {
     // TODO: don't prevent default if the space goes into an input or editable element
     // TODO: scrolling the current element's height does not ensure being at the top of 
     // TODO: must scroll back when shift+space shows
+    // enable the content element to receive keyboard input
+    RT.$content.attr('tabindex', '0');
+    RT.$content.focus();
+    // set the event handler
     RT.$content.on(
       'keydown',
       function(e) {
@@ -890,9 +903,6 @@ RT.displayProgress = function() {
         };
       }
     );
-    // enable the content element to receive keyboard input
-    RT.$content.attr('tabindex', '0');
-    RT.$content.focus();
 
     // capture the resize event
     $(window).on(
