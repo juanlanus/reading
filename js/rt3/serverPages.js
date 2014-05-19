@@ -12,9 +12,11 @@ function serverPages( HPPTPort, db ) {
   appPages.set('port',  HPPTPort);
   appPages.use(express.favicon());
 
+
   // appPages.set('views', __dirname + '/views');
   // appPages.set('view engine', 'ejs');
   // appPages.use(express.logger('short'));
+  appPages.use(express.logger('dev'));
   // appPages.use(express.bodyParser());
   // appPages.use(express.methodOverride());
   // appPages.use(express.cookieParser('your secret here'));

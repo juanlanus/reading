@@ -1,0 +1,42 @@
+<html><head>
+<title>Simple Cookie Test</title>
+<script type="text/javascript">
+<!--
+function setCookie(name,value) {
+  document.cookie = name + "=" +escape(value)
+}
+
+function getCookie(name) {
+  var start = document.cookie.indexOf(name + "=")
+  if (start < 0)
+    return null
+  var len = start + name.length + 1
+  var end = document.cookie.indexOf(";", len)
+  if (end < 0)
+    end = document.cookie.length
+  return unescape(document.cookie.substring(len, end))
+}
+
+function deleteCookie(name) {
+  if (getCookie(name))
+    document.cookie = name + "="
+}
+
+function showCookie(name) {
+  var val = getCookie(name)
+  document.getElementById("cookie").firstChild.data =
+    name + " = " + (val ? val : "<none>")
+}
+// -->
+</script>
+</head>
+<body>
+<input type="button" value="Set Cookie"
+        onclick="setCookie('chocolate', 'chip'); showCookie('chocolate')">
+<input type="button" value="Reset Cookie"
+        onclick="deleteCookie('chocolate'); showCookie('chocolate')">
+<span id="cookie">
+  &lt;none&gt;
+</span>
+</body></html>
+

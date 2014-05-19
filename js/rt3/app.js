@@ -4,12 +4,11 @@
 
 /** Module dependencies  */
 var MongoClient = require('mongodb').MongoClient;
-
 var serverData = require('./serverData');
 
-// DATABASE CONNECTION *********************************************************
+// DATABASE CONNECTION ********************************************************
 MongoClient.connect('mongodb://localhost:27017/rtdb', function(err, db) {
-  // everything runs into this db connection callback
+  // everything data server runs into this db connection callback
   if(err) {
     // throw err;
     console.log( 'Error attempting to connect to the database' );
@@ -20,15 +19,12 @@ MongoClient.connect('mongodb://localhost:27017/rtdb', function(err, db) {
     return false;
   };
 
-  // PAGES SERVER ****************************************************************
+  // PAGES SERVER **************************************************************
   var ServerPages = require('./serverPages');
   var serverPagesPort = process.env.PORT || 3000;
   ServerPages.serverPages( serverPagesPort, db );
 
-app.use(express.favicon());
-app.use(express.logger('dev'));
-
-  // DATA SERVER *****************************************************************
+  // DATA SERVER ***************************************************************
   var ServerData = require('./serverData');
   var serverDataPort = 3333;
   ServerData.serverData( serverDataPort, db );

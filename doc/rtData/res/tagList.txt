@@ -1,0 +1,1220 @@
++++ H2 	 0,0,1,0,0,0,0  	  id:RT-0-0-1-0-0-0-0 	 offsetTop:18  	CA-Ideal Procedure Language IDLB22PR.boo
++++ H3 	 0,0,1,1,0,0,0  	  id:RT-0-0-1-1-0-0-0 	 offsetTop:67  	2- Procedure Definition Language Concepts and Lang
++++ H4 	 0,0,1,1,1,0,0  	  id:RT-0-0-1-1-1-0-0 	 offsetTop:135  	PDL Language Elements
+DIV 	 0,0,1,1,1,0,0,1 	 offsetTop:165  	                
+   IMG 	 0,0,1,1,1,0,0,1,1 	 offsetTop:187
+P 	 0,0,1,1,1,0,0,2 	 offsetTop:168  	Condition: One of the following: 
+UL 	 0,0,1,1,1,0,0,3 	 offsetTop:190  	         AND/OR condition                  IF A=B 
+   LI 	 0,0,1,1,1,0,0,3,1 	 offsetTop:190  	AND/OR condition                  IF A=B AND C
+       PRE 	 0,0,1,1,1,0,0,3,1,1 	 offsetTop:224  	         IF A=B AND C<d and="" e="" docpath="0,0,1,3,34,0,0,6,1">1          IF FOUND </d>
+       P 	 0,0,1,1,1,0,0,3,1,2 	 offsetTop:284  	Implied subjects and implied relational operators 
+       PRE 	 0,0,1,1,1,0,0,3,1,3 	 offsetTop:319  	         A = 'B' OR &gt; 'C' is equivalent to A = 'B'
+   LI 	 0,0,1,1,1,0,0,3,2 	 offsetTop:379  	Boolean function         A function that can evalu
+       P 	 0,0,1,1,1,0,0,3,2,1 	 offsetTop:399  	A function that can evaluate to a value of True, F
+       PRE 	 0,0,1,1,1,0,0,3,2,2 	 offsetTop:471  	         $NUMERIC(field1) to determine if a field 
+   LI 	 0,0,1,1,1,0,0,3,3 	 offsetTop:501  	condition-name flag         The 1- to 32-character
+       P 	 0,0,1,1,1,0,0,3,3,1 	 offsetTop:521  	The 1- to 32-character name of the condition that 
+       PRE 	 0,0,1,1,1,0,0,3,3,2 	 offsetTop:574  	         1     W_HUE        X 1                  R
+   LI 	 0,0,1,1,1,0,0,3,4 	 offsetTop:664  	NOT condition         Negates a conditional expres
+       P 	 0,0,1,1,1,0,0,3,4,1 	 offsetTop:684  	Negates a conditional expression.
+       PRE 	 0,0,1,1,1,0,0,3,4,2 	 offsetTop:719  	         IF NOT (TYPE = 'A' AND COLOR = 'BLUE')   
+   LI 	 0,0,1,1,1,0,0,3,5 	 offsetTop:764  	NULL expression         A conditional expression t
+       P 	 0,0,1,1,1,0,0,3,5,1 	 offsetTop:784  	A conditional expression that tests for null value
+       PRE 	 0,0,1,1,1,0,0,3,5,2 	 offsetTop:818  	         IF STATE IS NULL          IF STATE IS NOT
+   LI 	 0,0,1,1,1,0,0,3,6 	 offsetTop:863  	relational-expression         A condition where tw
+       P 	 0,0,1,1,1,0,0,3,6,1 	 offsetTop:883  	A condition where two operands are compared using 
+       P 	 0,0,1,1,1,0,0,3,6,2 	 offsetTop:942  	The operators can be written thus: 
+       PRE 	 0,0,1,1,1,0,0,3,6,3 	 offsetTop:976  	     _____________________________________________
+       P 	 0,0,1,1,1,0,0,3,6,4 	 offsetTop:1202  	For all of the relational operators, the symbol , 
+       P 	 0,0,1,1,1,0,0,3,6,5 	 offsetTop:1280  	Operands:
+       P 	 0,0,1,1,1,0,0,3,6,6 	 offsetTop:1301  	An operand can be a numeric expression (numeric fi
+       P 	 0,0,1,1,1,0,0,3,6,7 	 offsetTop:1379  	Alpha fields are right-padded with spaces. 
+       P 	 0,0,1,1,1,0,0,3,6,8 	 offsetTop:1400  	You can compare an alphanumeric expression to a nu
+       P 	 0,0,1,1,1,0,0,3,6,9 	 offsetTop:1459  	A non-alpha group is treated as an alphanumeric fi
+   LI 	 0,0,1,1,1,0,0,3,7 	 offsetTop:1499  	search condition         A condition used in a FOR
+       P 	 0,0,1,1,1,0,0,3,7,1 	 offsetTop:1519  	A condition used in a FOR construct to access a da
+   LI 	 0,0,1,1,1,0,0,3,8 	 offsetTop:1578  	where condition         A condition used in a FOR 
+       P 	 0,0,1,1,1,0,0,3,8,1 	 offsetTop:1598  	A condition used in a FOR construct to determine w
+   LI 	 0,0,1,1,1,0,0,3,9 	 offsetTop:1657  	Notes:                    FOR constructs restricti
+       UL 	 0,0,1,1,1,0,0,3,9,1 	 offsetTop:1678  	           FOR constructs restriction:            
+           LI 	 0,0,1,1,1,0,0,3,9,1,1 	 offsetTop:1678  	FOR constructs restriction:            You can onl
+           LI 	 0,0,1,1,1,0,0,3,9,1,2 	 offsetTop:1736  	WHERE constructs restriction:            You can o
+           LI 	 0,0,1,1,1,0,0,3,9,1,3 	 offsetTop:1794  	Mask character:            A character (default *)
+           LI 	 0,0,1,1,1,0,0,3,9,1,4 	 offsetTop:1909  	Data item:           A field, group, or literal.  
+               P 	 0,0,1,1,1,0,0,3,9,1,4,1 	 offsetTop:1929  	A field, group, or literal. 
+           LI 	 0,0,1,1,1,0,0,3,9,1,5 	 offsetTop:1950  	Data types:                        CA-Ideal suppor
+               UL 	 0,0,1,1,1,0,0,3,9,1,5,1 	 offsetTop:1971  	             CA-Ideal supports the following data 
+                   LI 	 0,0,1,1,1,0,0,3,9,1,5,1,1 	 offsetTop:1971  	CA-Ideal supports the following data types:       
+                       UL 	 0,0,1,1,1,0,0,3,9,1,5,1,1,1 	 offsetTop:1992  	               Alphanumeric (type X)              
+                           LI 	 0,0,1,1,1,0,0,3,9,1,5,1,1,1,1 	 offsetTop:1992  	Alphanumeric (type X) 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,5,1,1,1,2 	 offsetTop:2012  	Variable length alphanumeric (type V) 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,5,1,1,1,3 	 offsetTop:2032  	Signed numeric (type N) 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,5,1,1,1,4 	 offsetTop:2052  	Unsigned numeric (type U) 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,5,1,1,1,5 	 offsetTop:2072  	Date (type D) 
+>>>>>>>>>>>>>>>>>>>>       LI 	 0,0,1,1,1,0,0,3,9,1,5,1,1,1,6 	 offsetTop:2092  	Flag (type F)           should be about 2300
+                           LI 	 0,0,1,1,1,0,0,3,9,1,5,1,1,1,7 	 offsetTop:2112  	Condition (type C)
+                   LI 	 0,0,1,1,1,0,0,3,9,1,5,1,2 	 offsetTop:2139  	Internal Format of Data Items                     
+                       TABLE 	 0,0,1,1,1,0,0,3,9,1,5,1,2,1 	 offsetTop:2158  	                                                  
+                               TR 	 0,0,1,1,1,0,0,3,9,1,5,1,2,1,2,1 	 offsetTop:0  	                   name                   T       
+                               TR 	 0,0,1,1,1,0,0,3,9,1,5,1,2,1,2,2 	 offsetTop:20  	                   alphanumeric                   
+                               TR 	 0,0,1,1,1,0,0,3,9,1,5,1,2,1,2,3 	 offsetTop:61  	                   alphanumeric                   
+                               TR 	 0,0,1,1,1,0,0,3,9,1,5,1,2,1,2,4 	 offsetTop:102  	                   halfword                   N   
+                               TR 	 0,0,1,1,1,0,0,3,9,1,5,1,2,1,2,5 	 offsetTop:143  	                   fullword                   N   
+                               TR 	 0,0,1,1,1,0,0,3,9,1,5,1,2,1,2,6 	 offsetTop:184  	                   not supported                  
+                               TR 	 0,0,1,1,1,0,0,3,9,1,5,1,2,1,2,7 	 offsetTop:225  	                   zoned decimal                  
+                               TR 	 0,0,1,1,1,0,0,3,9,1,5,1,2,1,2,8 	 offsetTop:266  	                   packed decimal                 
+                               TR 	 0,0,1,1,1,0,0,3,9,1,5,1,2,1,2,9 	 offsetTop:307  	                   date                   D       
+                               TR 	 0,0,1,1,1,0,0,3,9,1,5,1,2,1,2,10 	 offsetTop:348  	                   flag                   F       
+                       P 	 0,0,1,1,1,0,0,3,9,1,5,1,2,2 	 offsetTop:2549  	Add 2 to the field size if it's nullable 
+                   LI 	 0,0,1,1,1,0,0,3,9,1,5,1,3 	 offsetTop:2570  	At runtime, CA-Ideal enforces the number of declar
+                   LI 	 0,0,1,1,1,0,0,3,9,1,5,1,4 	 offsetTop:2590  	Panel fields are zoned. 
+           LI 	 0,0,1,1,1,0,0,3,9,1,6 	 offsetTop:2617  	Expressions                        Alphanumeric ex
+               UL 	 0,0,1,1,1,0,0,3,9,1,6,1 	 offsetTop:2638  	             Alphanumeric expression             A
+                   LI 	 0,0,1,1,1,0,0,3,9,1,6,1,1 	 offsetTop:2638  	Alphanumeric expression             An alphanumeri
+                       P 	 0,0,1,1,1,0,0,3,9,1,6,1,1,1 	 offsetTop:2658  	An alphanumeric literal, elementary alphanumeric f
+                   LI 	 0,0,1,1,1,0,0,3,9,1,6,1,2 	 offsetTop:2698  	Arithmetic expression             A series of arit
+                       P 	 0,0,1,1,1,0,0,3,9,1,6,1,2,1 	 offsetTop:2718  	A series of arithmetic operands and operators that
+                       P 	 0,0,1,1,1,0,0,3,9,1,6,1,2,2 	 offsetTop:2758  	Operands are: + - / * ** 
+                       P 	 0,0,1,1,1,0,0,3,9,1,6,1,2,3 	 offsetTop:2779  	An arithmetic expression that contains one or more
+                       P 	 0,0,1,1,1,0,0,3,9,1,6,1,2,4 	 offsetTop:2819  	Up to 12 levels of parenthetic and function nestin
+                       P 	 0,0,1,1,1,0,0,3,9,1,6,1,2,5 	 offsetTop:2840  	You cannot use non-alpha groups, condition names, 
+                   LI 	 0,0,1,1,1,0,0,3,9,1,6,1,3 	 offsetTop:2880  	Numeric expression             A numeric literal, 
+                       P 	 0,0,1,1,1,0,0,3,9,1,6,1,3,1 	 offsetTop:2900  	A numeric literal, numeric field, date field, nume
+                       P 	 0,0,1,1,1,0,0,3,9,1,6,1,3,2 	 offsetTop:2940  	You can convert alphanumeric fields or alpha group
+           LI 	 0,0,1,1,1,0,0,3,9,1,7 	 offsetTop:3005  	Field                        Alphanumeric field   
+               UL 	 0,0,1,1,1,0,0,3,9,1,7,1 	 offsetTop:3026  	             Alphanumeric field             A fiel
+                   LI 	 0,0,1,1,1,0,0,3,9,1,7,1,1 	 offsetTop:3026  	Alphanumeric field             A field with a type
+                       P 	 0,0,1,1,1,0,0,3,9,1,7,1,1,1 	 offsetTop:3046  	A field with a type of X. The maximum length is 32
+                   LI 	 0,0,1,1,1,0,0,3,9,1,7,1,2 	 offsetTop:3067  	Date field             A field with a data type of
+                       P 	 0,0,1,1,1,0,0,3,9,1,7,1,2,1 	 offsetTop:3087  	A field with a data type of D. 
+                       P 	 0,0,1,1,1,0,0,3,9,1,7,1,2,2 	 offsetTop:3108  	The date field has a numeric value indicating an i
+                       P 	 0,0,1,1,1,0,0,3,9,1,7,1,2,3 	 offsetTop:3186  	You cannot transmit date fields to a panel. First 
+                       P 	 0,0,1,1,1,0,0,3,9,1,7,1,2,4 	 offsetTop:3226  	CA-Ideal processes dates between 2000 BC and 9999 
+                   LI 	 0,0,1,1,1,0,0,3,9,1,7,1,3 	 offsetTop:3266  	SQL DATE, TIME, and TIMESTAMP fields are supported
+                       UL 	 0,0,1,1,1,0,0,3,9,1,7,1,3,1 	 offsetTop:3325  	               DATE 10                TIME 8      
+                           LI 	 0,0,1,1,1,0,0,3,9,1,7,1,3,1,1 	 offsetTop:3325  	DATE 10 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,7,1,3,1,2 	 offsetTop:3345  	TIME 8 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,7,1,3,1,3 	 offsetTop:3365  	TIMESTAMP 26
+                       P 	 0,0,1,1,1,0,0,3,9,1,7,1,3,2 	 offsetTop:3392  	These fields are stored as binary, unsigned, integ
+                       P 	 0,0,1,1,1,0,0,3,9,1,7,1,3,3 	 offsetTop:3413  	When a record is added with a FOR NEW statement, a
+                   LI 	 0,0,1,1,1,0,0,3,9,1,7,1,4 	 offsetTop:3472  	Flag             A field with a type of F that has
+                       P 	 0,0,1,1,1,0,0,3,9,1,7,1,4,1 	 offsetTop:3492  	A field with a type of F that has a value of TRUE 
+                       P 	 0,0,1,1,1,0,0,3,9,1,7,1,4,2 	 offsetTop:3608  	Use flags in SET or MOVE statements. 
+           LI 	 0,0,1,1,1,0,0,3,9,1,8 	 offsetTop:3635  	Group           A named logical collection of one 
+               P 	 0,0,1,1,1,0,0,3,9,1,8,1 	 offsetTop:3655  	A named logical collection of one or more fields o
+               UL 	 0,0,1,1,1,0,0,3,9,1,8,2 	 offsetTop:3695  	             Alpha group             A group in wh
+                   LI 	 0,0,1,1,1,0,0,3,9,1,8,2,1 	 offsetTop:3695  	Alpha group             A group in which all subor
+                       P 	 0,0,1,1,1,0,0,3,9,1,8,2,1,1 	 offsetTop:3715  	A group in which all subordinate fields are either
+                       P 	 0,0,1,1,1,0,0,3,9,1,8,2,1,2 	 offsetTop:3793  	You can use an alpha group interchangeably with an
+                   LI 	 0,0,1,1,1,0,0,3,9,1,8,2,2 	 offsetTop:3833  	Non-alpha group             Groups that are not al
+                       P 	 0,0,1,1,1,0,0,3,9,1,8,2,2,1 	 offsetTop:3853  	Groups that are not alpha groups. You can use all 
+                       UL 	 0,0,1,1,1,0,0,3,9,1,8,2,2,2 	 offsetTop:3893  	               In SET/MOVE _ BY POSITION/NAME stat
+                           LI 	 0,0,1,1,1,0,0,3,9,1,8,2,2,2,1 	 offsetTop:3893  	In SET/MOVE _ BY POSITION/NAME statements. 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,8,2,2,2,2 	 offsetTop:3913  	As dynamic match parameters on CALL statements. 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,8,2,2,2,3 	 offsetTop:3933  	As operands of some alphanumeric functions.
+                       P 	 0,0,1,1,1,0,0,3,9,1,8,2,2,3 	 offsetTop:3960  	There are restrictions for non-alpha groups that c
+                       UL 	 0,0,1,1,1,0,0,3,9,1,8,2,2,4 	 offsetTop:4000  	               Groups that were passed as dynamic 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,8,2,2,4,1 	 offsetTop:4000  	Groups that were passed as dynamic parameters 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,8,2,2,4,2 	 offsetTop:4020  	Groups containing subordinate variable length fiel
+                           LI 	 0,0,1,1,1,0,0,3,9,1,8,2,2,4,3 	 offsetTop:4040  	Groups containing subordinate nullable fields 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,8,2,2,4,4 	 offsetTop:4060  	Panel groups. 
+                       P 	 0,0,1,1,1,0,0,3,9,1,8,2,2,5 	 offsetTop:4087  	You cannot use restricted groups in the following 
+                       UL 	 0,0,1,1,1,0,0,3,9,1,8,2,2,6 	 offsetTop:4108  	               As source operands in SET/MOVE stat
+                           LI 	 0,0,1,1,1,0,0,3,9,1,8,2,2,6,1 	 offsetTop:4108  	As source operands in SET/MOVE statements that mov
+                           LI 	 0,0,1,1,1,0,0,3,9,1,8,2,2,6,2 	 offsetTop:4147  	As operands in simple relations in conditional exp
+                           LI 	 0,0,1,1,1,0,0,3,9,1,8,2,2,6,3 	 offsetTop:4167  	As identical match parameters on CALL statements. 
+           LI 	 0,0,1,1,1,0,0,3,9,1,9 	 offsetTop:4194  	Nullable field           A field defined as eligib
+               P 	 0,0,1,1,1,0,0,3,9,1,9,1 	 offsetTop:4214  	A field defined as eligible to receive null values
+               P 	 0,0,1,1,1,0,0,3,9,1,9,2 	 offsetTop:4254  	Fields in working data, parameter data, panels, an
+               P 	 0,0,1,1,1,0,0,3,9,1,9,3 	 offsetTop:4294  	You cannot redefine nullable fields or groups that
+               P 	 0,0,1,1,1,0,0,3,9,1,9,4 	 offsetTop:4353  	Null values display as question marks (?) in repor
+               P 	 0,0,1,1,1,0,0,3,9,1,9,5 	 offsetTop:4374  	Panel fields with null values are treated as empty
+           LI 	 0,0,1,1,1,0,0,3,9,1,10 	 offsetTop:4414  	Numeric field           A field with a type of N (
+               P 	 0,0,1,1,1,0,0,3,9,1,10,1 	 offsetTop:4434  	A field with a type of N (numeric) or U (unsigned 
+               P 	 0,0,1,1,1,0,0,3,9,1,10,2 	 offsetTop:4474  	The maximum length of the value of a numeric field
+           LI 	 0,0,1,1,1,0,0,3,9,1,11 	 offsetTop:4514  	Subordinate field           A field that is in a g
+               P 	 0,0,1,1,1,0,0,3,9,1,11,1 	 offsetTop:4534  	A field that is in a group or alpha group. 
+           LI 	 0,0,1,1,1,0,0,3,9,1,12 	 offsetTop:4555  	Variable length field           A field with a typ
+               P 	 0,0,1,1,1,0,0,3,9,1,12,1 	 offsetTop:4575  	A field with a type of V. 
+               P 	 0,0,1,1,1,0,0,3,9,1,12,2 	 offsetTop:4596  	The size of the field depends on its value, up to 
+               P 	 0,0,1,1,1,0,0,3,9,1,12,3 	 offsetTop:4636  	The maximum length of a variable length field is 3
+               P 	 0,0,1,1,1,0,0,3,9,1,12,4 	 offsetTop:4657  	You cannot redefine variable length fields or grou
+           LI 	 0,0,1,1,1,0,0,3,9,1,13 	 offsetTop:4716  	Functions           Requests that return values fo
+               P 	 0,0,1,1,1,0,0,3,9,1,13,1 	 offsetTop:4736  	Requests that return values for various common ser
+               P 	 0,0,1,1,1,0,0,3,9,1,13,2 	 offsetTop:4757  	PDL functions are documented in Chapter 5 &gt;&gt;&gt;&gt;. 
+               P 	 0,0,1,1,1,0,0,3,9,1,13,3 	 offsetTop:4778  	PDL function names start with a dollar sign like $
+               P 	 0,0,1,1,1,0,0,3,9,1,13,4 	 offsetTop:4799  	The four types of built-in functions are numeric, 
+               P 	 0,0,1,1,1,0,0,3,9,1,13,5 	 offsetTop:4839  	Appendix D &gt;&gt;&gt;&gt; contains a listing of the PDL buil
+           LI 	 0,0,1,1,1,0,0,3,9,1,14 	 offsetTop:4879  	Identifier           The name of a group or field 
+               P 	 0,0,1,1,1,0,0,3,9,1,14,1 	 offsetTop:4899  	The name of a group or field defined in working da
+               P 	 0,0,1,1,1,0,0,3,9,1,14,2 	 offsetTop:4939  	Restrictions: 
+               UL 	 0,0,1,1,1,0,0,3,9,1,14,3 	 offsetTop:4960  	             All level-1 identifiers (dataviews, p
+                   LI 	 0,0,1,1,1,0,0,3,9,1,14,3,1 	 offsetTop:4960  	All level-1 identifiers (dataviews, panels, or the
+                   LI 	 0,0,1,1,1,0,0,3,9,1,14,3,2 	 offsetTop:4999  	Identifiers must be unique in dataviews, panels, o
+                   LI 	 0,0,1,1,1,0,0,3,9,1,14,3,3 	 offsetTop:5038  	You can use reserved words as identifiers at level
+                   LI 	 0,0,1,1,1,0,0,3,9,1,14,3,4 	 offsetTop:5096  	You can use SQL reserved words as identifiers in P
+                   LI 	 0,0,1,1,1,0,0,3,9,1,14,3,5 	 offsetTop:5135  	You can use PDL reserved words as identifiers in S
+               P 	 0,0,1,1,1,0,0,3,9,1,14,4 	 offsetTop:5162  	Examples: 
+               PRE 	 0,0,1,1,1,0,0,3,9,1,14,5 	 offsetTop:5196  	         PANEL1          PAYROLL.NAME          EMP
+           LI 	 0,0,1,1,1,0,0,3,9,1,15 	 offsetTop:5286  	Literal           A sequence of symbols whose valu
+               P 	 0,0,1,1,1,0,0,3,9,1,15,1 	 offsetTop:5306  	A sequence of symbols whose value is implicit in t
+               P 	 0,0,1,1,1,0,0,3,9,1,15,2 	 offsetTop:5346  	Every literal must be contained entirely on one li
+               UL 	 0,0,1,1,1,0,0,3,9,1,15,3 	 offsetTop:5367  	             Numeric literal             Any serie
+                   LI 	 0,0,1,1,1,0,0,3,9,1,15,3,1 	 offsetTop:5367  	Numeric literal             Any series of one to 3
+                       P 	 0,0,1,1,1,0,0,3,9,1,15,3,1,1 	 offsetTop:5387  	Any series of one to 31 digits, with one optional 
+                       PRE 	 0,0,1,1,1,0,0,3,9,1,15,3,1,2 	 offsetTop:5440  	         5          22.3          -16          -17
+                   LI 	 0,0,1,1,1,0,0,3,9,1,15,3,2 	 offsetTop:5545  	Alphanumeric literal             Any series of cha
+                       P 	 0,0,1,1,1,0,0,3,9,1,15,3,2,1 	 offsetTop:5565  	Any series of characters, including blanks, surrou
+                       PRE 	 0,0,1,1,1,0,0,3,9,1,15,3,2,2 	 offsetTop:5619  	         "12345"          'CITY'          "REENTER
+                   LI 	 0,0,1,1,1,0,0,3,9,1,15,3,3 	 offsetTop:5739  	Boolean literal             The value TRUE or FALS
+                       P 	 0,0,1,1,1,0,0,3,9,1,15,3,3,1 	 offsetTop:5759  	The value TRUE or FALSE. No delimiters. 
+           LI 	 0,0,1,1,1,0,0,3,9,1,16 	 offsetTop:5786  	Rules for Valid Names                        Begin
+               UL 	 0,0,1,1,1,0,0,3,9,1,16,1 	 offsetTop:5807  	             Begins with a letter (A through Z) or
+                   LI 	 0,0,1,1,1,0,0,3,9,1,16,1,1 	 offsetTop:5807  	Begins with a letter (A through Z) or national cha
+                   LI 	 0,0,1,1,1,0,0,3,9,1,16,1,2 	 offsetTop:5827  	Consists only of numerals, letters, national chara
+                   LI 	 0,0,1,1,1,0,0,3,9,1,16,1,3 	 offsetTop:5866  	The last character cannot be a hyphen or underline
+                   LI 	 0,0,1,1,1,0,0,3,9,1,16,1,4 	 offsetTop:5886  	Maximum Name Lengths:                            F
+                       UL 	 0,0,1,1,1,0,0,3,9,1,16,1,4,1 	 offsetTop:5907  	               Field or group - 32 characters     
+                           LI 	 0,0,1,1,1,0,0,3,9,1,16,1,4,1,1 	 offsetTop:5907  	Field or group - 32 characters 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,16,1,4,1,2 	 offsetTop:5927  	Dataview definition for CA-DATACOM/DB native comma
+                           LI 	 0,0,1,1,1,0,0,3,9,1,16,1,4,1,3 	 offsetTop:5966  	Dataview definition for SQL access - 27 characters
+                           LI 	 0,0,1,1,1,0,0,3,9,1,16,1,4,1,4 	 offsetTop:5986  	Object name - 18 characters 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,16,1,4,1,5 	 offsetTop:6006  	Period - 1 character 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,16,1,4,1,6 	 offsetTop:6026  	Authorization (or creator) ID - 8 characters 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,16,1,4,1,7 	 offsetTop:6046  	Program definition - 8 characters 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,16,1,4,1,8 	 offsetTop:6066  	Panel definition - 8 characters 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,16,1,4,1,9 	 offsetTop:6086  	Report definition - 8 characters
+                   LI 	 0,0,1,1,1,0,0,3,9,1,16,1,5 	 offsetTop:6113  	Assignment Name Restrictions                      
+                       UL 	 0,0,1,1,1,0,0,3,9,1,16,1,5,1 	 offsetTop:6134  	               Dataview definition fully qualified
+                           LI 	 0,0,1,1,1,0,0,3,9,1,16,1,5,1,1 	 offsetTop:6134  	Dataview definition fully qualified names must be 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,16,1,5,1,2 	 offsetTop:6173  	Object names without qualification must be unique 
+                           LI 	 0,0,1,1,1,0,0,3,9,1,16,1,5,1,3 	 offsetTop:6212  	Panel definition names, program definition names, 
+                   LI 	 0,0,1,1,1,0,0,3,9,1,16,1,6 	 offsetTop:6258  	Qualified name             If a name appears in mo
+                       P 	 0,0,1,1,1,0,0,3,9,1,16,1,6,1 	 offsetTop:6278  	If a name appears in more than one dataview, panel
+                       P 	 0,0,1,1,1,0,0,3,9,1,16,1,6,2 	 offsetTop:6318  	The name is qualified by prefixing it with the app
+                   LI 	 0,0,1,1,1,0,0,3,9,1,16,1,7 	 offsetTop:6377  	Subscripted name             Subscripts are requir
+                       P 	 0,0,1,1,1,0,0,3,9,1,16,1,7,1 	 offsetTop:6397  	Subscripts are required when the definition of the
+                       P 	 0,0,1,1,1,0,0,3,9,1,16,1,7,2 	 offsetTop:6437  	You can include one to three subscripts after the 
+                       P 	 0,0,1,1,1,0,0,3,9,1,16,1,7,3 	 offsetTop:6477  	Thus, an identifier consists of a name, optionally
+                       PRE 	 0,0,1,1,1,0,0,3,9,1,16,1,7,4 	 offsetTop:6549  	         [{dataview-name | panel-name | level-1-na
+                       P 	 0,0,1,1,1,0,0,3,9,1,16,1,7,5 	 offsetTop:6609  	Names used in subscripts can be qualified, but can
+                       P 	 0,0,1,1,1,0,0,3,9,1,16,1,7,6 	 offsetTop:6649  	The value of a subscript must be an integer betwee
+           LI 	 0,0,1,1,1,0,0,3,9,1,17 	 offsetTop:6695  	NULL           The null value.            
+               P 	 0,0,1,1,1,0,0,3,9,1,17,1 	 offsetTop:6715  	The null value. 
+           LI 	 0,0,1,1,1,0,0,3,9,1,18 	 offsetTop:6736  	Parameter           A data item used in a CALL sta
+               P 	 0,0,1,1,1,0,0,3,9,1,18,1 	 offsetTop:6756  	A data item used in a CALL statement or a RUN comm
+           LI 	 0,0,1,1,1,0,0,3,9,1,19 	 offsetTop:6777  	Procedure           A named, functional collection
+               P 	 0,0,1,1,1,0,0,3,9,1,19,1 	 offsetTop:6797  	A named, functional collection of statements. 
+           LI 	 0,0,1,1,1,0,0,3,9,1,20 	 offsetTop:6818  	Reserved word           A word with a special mean
+               P 	 0,0,1,1,1,0,0,3,9,1,20,1 	 offsetTop:6838  	A word with a special meaning to PDL. 
+           LI 	 0,0,1,1,1,0,0,3,9,1,21 	 offsetTop:6859  	Statements           Simple directives in the PDL 
+               P 	 0,0,1,1,1,0,0,3,9,1,21,1 	 offsetTop:6879  	Simple directives in the PDL language, like SET, M
+           LI 	 0,0,1,1,1,0,0,3,9,1,22 	 offsetTop:6919  	Subprogram           Any program called by another
+               P 	 0,0,1,1,1,0,0,3,9,1,22,1 	 offsetTop:6939  	Any program called by another program. 
+               P 	 0,0,1,1,1,0,0,3,9,1,22,2 	 offsetTop:6960  	Subprograms must be specified as resources of a ca
++++ H4 	 0,0,1,1,2,0,0  	  id:RT-0-0-1-1-2-0-0 	 offsetTop:7011  	PDL Format Rules
+P 	 0,0,1,1,2,0,0,1 	 offsetTop:7044  	With the exception of the limitations outlined bel
+P 	 0,0,1,1,2,0,0,2 	 offsetTop:7092  	You can continue statements over lines without the
+P 	 0,0,1,1,2,0,0,3 	 offsetTop:7140  	Different rules apply to embedded SQL (see the sec
++++ H5 	 0,0,1,1,2,1,0  	  id:Lexical 	 offsetTop:7191  	Lexical rules
+OL 	 0,0,1,1,2,1,0,1 	 offsetTop:7213  	         The following are valid delimiters for id
+   LI 	 0,0,1,1,2,1,0,1,1 	 offsetTop:7213  	The following are valid delimiters for identifiers
+   LI 	 0,0,1,1,2,1,0,1,2 	 offsetTop:7290  	You can use apostrophes (') and quotation marks ("
+   LI 	 0,0,1,1,2,1,0,1,3 	 offsetTop:7348  	Identifiers, literals, labels, and reserved words 
+   LI 	 0,0,1,1,2,1,0,1,4 	 offsetTop:7387  	Anything to the right of a colon (:) or double hyp
+   LI 	 0,0,1,1,2,1,0,1,5 	 offsetTop:7445  	You cannot break words from one line to the next. 
+   LI 	 0,0,1,1,2,1,0,1,6 	 offsetTop:7465  	You can leave blank lines. 
+   LI 	 0,0,1,1,2,1,0,1,7 	 offsetTop:7485  	See the definitions of names, identifiers, literal
+   LI 	 0,0,1,1,2,1,0,1,8 	 offsetTop:7524  	Labels of procedures, FOR constructs, and loops ta
+       PRE 	 0,0,1,1,2,1,0,1,8,1 	 offsetTop:7558  	  &lt;<name docpath="0,0,1,3,34,0,0,6,2">&gt; </name>
++++ H4 	 0,0,1,1,3,0,0  	  id:EJECT 	 offsetTop:7588  	EJECT Statement 
+P 	 0,0,1,1,3,0,0,1 	 offsetTop:7621  	The EJECT statement causes the compilation listing
++++ H5 	 0,0,1,1,3,1,0  	  id:Comment 	 offsetTop:7671  	Comment
+P 	 0,0,1,1,3,1,0,1 	 offsetTop:7700  	Text beginning with : or -- is treated as a commen
+PRE 	 0,0,1,1,3,1,0,2 	 offsetTop:7735  	         : this is regarded as a comment.         
++++ H4 	 0,0,1,1,4,0,0  	  id:Converting 	 offsetTop:7796  	Converting Between Numeric and Alphanumeric 
+P 	 0,0,1,1,4,0,0,1 	 offsetTop:7829  	When you use a numeric field in an alphabetic cont
+P 	 0,0,1,1,4,0,0,2 	 offsetTop:7877  	When you use an alphanumeric field in a numeric co
+P 	 0,0,1,1,4,0,0,3 	 offsetTop:7944  	If an alphanumeric value is converted to a numeric
+P 	 0,0,1,1,4,0,0,4 	 offsetTop:7992  	If the source of a conversion to numeric does not 
++++ H4 	 0,0,1,1,5,0,0  	  id:Data 	 offsetTop:8044  	Data Definition Conventions 
+P 	 0,0,1,1,5,0,0,1 	 offsetTop:8077  	CA-Ideal application programs use data from a vari
+UL 	 0,0,1,1,5,0,0,2 	 offsetTop:8118  	         Working data.          Parameter data.   
+   LI 	 0,0,1,1,5,0,0,2,1 	 offsetTop:8118  	Working data. 
+   LI 	 0,0,1,1,5,0,0,2,2 	 offsetTop:8138  	Parameter data. 
+   LI 	 0,0,1,1,5,0,0,2,3 	 offsetTop:8158  	The logical structures of a relational database as
+   LI 	 0,0,1,1,5,0,0,2,4 	 offsetTop:8197  	The record structures of a sequential file as defi
+   LI 	 0,0,1,1,5,0,0,2,5 	 offsetTop:8236  	The record structures of a VSAM file as defined th
+P 	 0,0,1,1,5,0,0,3 	 offsetTop:8283  	The Creating Programs guide &gt;&gt;&gt;&gt; contains explanat
+P 	 0,0,1,1,5,0,0,4 	 offsetTop:8350  	For information on how CA-Ideal applications use d
++++ H3 	 0,0,1,2,0,0,0  	  id:SQLConcepts 	 offsetTop:8424  	3- SQL Concepts and Language Elements
++++ H4 	 0,0,1,2,1,0,0  	  id:Introducti 	 offsetTop:8465  	Introduction
+P 	 0,0,1,2,1,0,0,1 	 offsetTop:8498  	CA-Ideal supports SQL access to CA-DATACOM/DB and 
+P 	 0,0,1,2,1,0,0,2 	 offsetTop:8527  	You can code embedded SQL statements directly in a
+P 	 0,0,1,2,1,0,0,3 	 offsetTop:8594  	The CA-Ideal editor lets you enter template comman
+P 	 0,0,1,2,1,0,0,4 	 offsetTop:8680  	You can also use the FOR construct to access datab
+P 	 0,0,1,2,1,0,0,5 	 offsetTop:8766  	You can print the generated SQL on the compiler li
++++ H4 	 0,0,1,2,2,0,0  	  id:Dataviews 	 offsetTop:8819  	SQL Dataviews 
+P 	 0,0,1,2,2,0,0,1 	 offsetTop:8852  	A CA-Ideal dataview corresponds to a complete SQL 
+P 	 0,0,1,2,2,0,0,2 	 offsetTop:8881  	To create and use an SQL dataview: 
+OL 	 0,0,1,2,2,0,0,3 	 offsetTop:8903  	         Issue a CATALOG command with the name of 
+   LI 	 0,0,1,2,2,0,0,3,1 	 offsetTop:8903  	Issue a CATALOG command with the name of the SQL o
+       P 	 0,0,1,2,2,0,0,3,1,1 	 offsetTop:8923  	The catalog process retrieves the definition of th
+   LI 	 0,0,1,2,2,0,0,3,2 	 offsetTop:8982  	Specify the dataview with the object's authorizati
+       P 	 0,0,1,2,2,0,0,3,2,1 	 offsetTop:9021  	Any embedded Data Manipulation Language (DML) stat
+P 	 0,0,1,2,2,0,0,4 	 offsetTop:9068  	Defining SQL dataviews is described fully in the C
++++ H5 	 0,0,1,2,2,1,0  	  id:CA-DATACOM 	 offsetTop:9099  	CA-DATACOM/DB Access Plans 
+P 	 0,0,1,2,2,1,0,1 	 offsetTop:9128  	Programs that accesses CA-DATACOM/DB using embedde
+P 	 0,0,1,2,2,1,0,2 	 offsetTop:9176  	CA-Ideal builds the plan and binds each SQL statem
+P 	 0,0,1,2,2,1,0,3 	 offsetTop:9224  	The authorization ID and other options are taken f
+P 	 0,0,1,2,2,1,0,4 	 offsetTop:9272  	You can change the plan options and rebind a plan 
+P 	 0,0,1,2,2,1,0,5 	 offsetTop:9339  	You can also define alternate plans for a program 
++++ H5 	 0,0,1,2,2,2,0  	  id:Applicatio 	 offsetTop:9408  	DB2 Application Plans and Packages
+P 	 0,0,1,2,2,2,0,1 	 offsetTop:9437  	Application plans and packages for DB2 are created
+P 	 0,0,1,2,2,2,0,2 	 offsetTop:9485  	The binding of plans and packages is performed in 
+P 	 0,0,1,2,2,2,0,3 	 offsetTop:9533  	You can execute programs against DB2 in dynamic or
+P 	 0,0,1,2,2,2,0,4 	 offsetTop:9581  	If you generate and use an application plan, the a
++++ H5 	 0,0,1,2,2,3,0  	  id:NULL 	 offsetTop:9650  	SQL NULL Attribute
+P 	 0,0,1,2,2,3,0,1 	 offsetTop:9679  	CA-Ideal supports the SQL NULL concept. 
+P 	 0,0,1,2,2,3,0,2 	 offsetTop:9708  	Fields in dataviews that are defined as null-eligi
+P 	 0,0,1,2,2,3,0,3 	 offsetTop:9775  	CA-Ideal also handles the null attribute in condit
++++ H5 	 0,0,1,2,2,4,0  	  id:Error 	 offsetTop:9825  	Error Processing
+P 	 0,0,1,2,2,4,0,1 	 offsetTop:9854  	A CA-Ideal program can access the SQLCA for the la
+P 	 0,0,1,2,2,4,0,2 	 offsetTop:9883  	You can define the SQLCA work area in the program'
+P 	 0,0,1,2,2,4,0,3 	 offsetTop:9950  	The SQLCA is described further in the SQLCA sectio
+P 	 0,0,1,2,2,4,0,4 	 offsetTop:9979  	CA-Ideal also supports the SQL WHENEVER statement 
++++ H5 	 0,0,1,2,2,5,0  	  id:Active 	 offsetTop:10029  	Active Dictionary Facility 
+P 	 0,0,1,2,2,5,0,1 	 offsetTop:10058  	CA-Ideal keeps track of the application model, whi
+P 	 0,0,1,2,2,5,0,2 	 offsetTop:10106  	The dictionary facility is automatically populated
++++ H5 	 0,0,1,2,2,6,0  	  id:Mixed 	 offsetTop:10157  	Mixed SQL Sites
+P 	 0,0,1,2,2,6,0,1 	 offsetTop:10186  	A mixed SQL site can access multiple databases usi
+P 	 0,0,1,2,2,6,0,2 	 offsetTop:10215  	DML statements, such as INSERT, require a cataloge
+P 	 0,0,1,2,2,6,0,3 	 offsetTop:10263  	The COMMIT, ROLLBACK, and WHENEVER       statement
+P 	 0,0,1,2,2,6,0,4 	 offsetTop:10292  	Statements such as GRANT and EXECUTE IMMEDIATE    
+   EM 	 0,0,1,2,2,6,0,4,3 	 offsetTop:10331  	primary database
+P 	 0,0,1,2,2,6,0,5 	 offsetTop:10378  	You can specify the primary database as a site or 
++++ H4 	 0,0,1,2,3,0,0  	  id:Supported 	 offsetTop:10468  	Supported SQL Statements 
+P 	 0,0,1,2,3,0,0,1 	 offsetTop:10501  	CA-Ideal PDL supports the SQL statements below. 
++++ H5 	 0,0,1,2,3,1,0  	  id:CA-DATACOM1 	 offsetTop:10532  	CA-DATACOM/DB SQL Statements Supported in PDL:
+PRE 	 0,0,1,2,3,1,0,1 	 offsetTop:10567  	     _____________________________________________
++++ H5 	 0,0,1,2,3,2,0  	  id:Statements 	 offsetTop:10943  	DB2 SQL Statements Supported in PDL:
+PRE 	 0,0,1,2,3,2,0,1 	 offsetTop:10978  	     _____________________________________________
++++ H5 	 0,0,1,2,3,3,0  	  id:WHENEVER 	 offsetTop:11623  	WHENEVER Statement
+P 	 0,0,1,2,3,3,0,1 	 offsetTop:11652  	The SQL WHENEVER statement embedded in a PDL progr
+PRE 	 0,0,1,2,3,3,0,2 	 offsetTop:11763  	  WHENEVER {NOT FOUND | SQLERROR | SQLWARNING }   
+P 	 0,0,1,2,3,3,0,3 	 offsetTop:11808  	NOT FOUND | SQLERROR | SQLWARNING is       the typ
+P 	 0,0,1,2,3,3,0,4 	 offsetTop:11837  	CONTINUE (default) Specifies that execution contin
+P 	 0,0,1,2,3,3,0,5 	 offsetTop:11866  	PROCESS-NEXT-label A PROCESS NEXT statement       
+P 	 0,0,1,2,3,3,0,6 	 offsetTop:11933  	QUIT-label A QUIT statement specifying execution  
+PRE 	 0,0,1,2,3,3,0,7 	 offsetTop:11988  	         EXEC SQL WHENEVER SQLERROR DO ERRPROC END
+P 	 0,0,1,2,3,3,0,8 	 offsetTop:12228  	If no WHENEVER statement is included in the progra
+P 	 0,0,1,2,3,3,0,9 	 offsetTop:12276  	The PDL $ERROR functions, error procedure, and the
+P 	 0,0,1,2,3,3,0,10 	 offsetTop:12324  	PDL FOR constructs, even though they generate SQL 
+P 	 0,0,1,2,3,3,0,11 	 offsetTop:12372  	For a mixed SQL site, the WHENEVER applies to SQL 
++++ H5 	 0,0,1,2,3,4,0  	  id:Extension 	 offsetTop:12441  	Extension to INTO and VALUES Clauses
+P 	 0,0,1,2,3,4,0,1 	 offsetTop:12470  	PDL supports the following extension to the SQL IN
+PRE 	 0,0,1,2,3,4,0,2 	 offsetTop:12505  	         INTO host-structure [BY POSITION]        
+P 	 0,0,1,2,3,4,0,3 	 offsetTop:12550  	host-structure is a PDL group identifier. 
+P 	 0,0,1,2,3,4,0,4 	 offsetTop:12579  	BY POSITION is to move data between each elementar
+P 	 0,0,1,2,3,4,0,5 	 offsetTop:12627  	The structures must be compatible. 
+P 	 0,0,1,2,3,4,0,6 	 offsetTop:12656  	You can use the COPY DATAVIEW clause with a Workin
++++ H5 	 0,0,1,2,3,5,0  	  id:Supported1 	 offsetTop:12706  	DB2 SQL Not Supported
+P 	 0,0,1,2,3,5,0,1 	 offsetTop:12735  	The CA-Ideal PDL does not support the following DB
+OL 	 0,0,1,2,3,5,0,2 	 offsetTop:12776  	         SQL clauses used exclusively to process S
+   LI 	 0,0,1,2,3,5,0,2,1 	 offsetTop:12776  	SQL clauses used exclusively to process SQL statem
+   LI 	 0,0,1,2,3,5,0,2,2 	 offsetTop:12815  	The SQL statements that serve as documentation and
+       UL 	 0,0,1,2,3,5,0,2,2,1 	 offsetTop:12874  	           DECLARE TABLE            DECLARE STATEM
+           LI 	 0,0,1,2,3,5,0,2,2,1,1 	 offsetTop:12874  	DECLARE TABLE 
+           LI 	 0,0,1,2,3,5,0,2,2,1,2 	 offsetTop:12894  	DECLARE STATEMENT 
+           LI 	 0,0,1,2,3,5,0,2,2,1,3 	 offsetTop:12914  	The interactive SQL statements and most of the SQL
+               UL 	 0,0,1,2,3,5,0,2,2,1,3,1 	 offsetTop:12954  	             DESCRIBE              EXECUTE        
+                   LI 	 0,0,1,2,3,5,0,2,2,1,3,1,1 	 offsetTop:12954  	DESCRIBE 
+                   LI 	 0,0,1,2,3,5,0,2,2,1,3,1,2 	 offsetTop:12974  	EXECUTE 
+                   LI 	 0,0,1,2,3,5,0,2,2,1,3,1,3 	 offsetTop:12994  	PREPARE 
+                   LI 	 0,0,1,2,3,5,0,2,2,1,3,1,4 	 offsetTop:13014  	Interactive SELECT
++++ H4 	 0,0,1,2,4,0,0  	  id:SQLCA 	 offsetTop:13047  	SQLCA
+P 	 0,0,1,2,4,0,0,1 	 offsetTop:13080  	The SQLCA is a structure containing ingormation ab
+P 	 0,0,1,2,4,0,0,2 	 offsetTop:13128  	You can access SQLCA using: 
+UL 	 0,0,1,2,4,0,0,3 	 offsetTop:13150  	         The $SQL built-in functions return inform
+   LI 	 0,0,1,2,4,0,0,3,1 	 offsetTop:13150  	The $SQL built-in functions return information abo
+   LI 	 0,0,1,2,4,0,0,3,2 	 offsetTop:13189  	The $ERROR-DVW-STATUS function to return the SQLCO
+   LI 	 0,0,1,2,4,0,0,3,3 	 offsetTop:13247  	A copy of the SQLCA in working data or parameter d
+   LI 	 0,0,1,2,4,0,0,3,4 	 offsetTop:13305  	In a non-CICS environment, if a PDL CHECKPOINT or 
++++ H4 	 0,0,1,2,5,0,0  	  id:Supported2 	 offsetTop:13375  	Supported SQL Language Elements
++++ H5 	 0,0,1,2,5,1,0  	  id:Condition 	 offsetTop:13411  	Condition
+P 	 0,0,1,2,5,1,0,1 	 offsetTop:13440  	The following SQL relational predicates are suppor
+UL 	 0,0,1,2,5,1,0,2 	 offsetTop:13462  	         ALL          ANY          BETWEEN        
+   LI 	 0,0,1,2,5,1,0,2,1 	 offsetTop:13462  	ALL 
+   LI 	 0,0,1,2,5,1,0,2,2 	 offsetTop:13482  	ANY 
+   LI 	 0,0,1,2,5,1,0,2,3 	 offsetTop:13502  	BETWEEN 
+   LI 	 0,0,1,2,5,1,0,2,4 	 offsetTop:13522  	EXISTS 
+   LI 	 0,0,1,2,5,1,0,2,5 	 offsetTop:13542  	IN 
+   LI 	 0,0,1,2,5,1,0,2,6 	 offsetTop:13562  	LIKE 
+   LI 	 0,0,1,2,5,1,0,2,7 	 offsetTop:13582  	NULL 
+   LI 	 0,0,1,2,5,1,0,2,8 	 offsetTop:13602  	SOME
+P 	 0,0,1,2,5,1,0,3 	 offsetTop:13630  	In addition, you can use the following PDL relatio
+PRE 	 0,0,1,2,5,1,0,4 	 offsetTop:13684  	     EQUAL                EQ      NOT EQUAL       
+P 	 0,0,1,2,5,1,0,5 	 offsetTop:13789  	You can combine conditional expressions using AND 
++++ H5 	 0,0,1,2,5,2,0  	  id:Data1 	 offsetTop:13858  	Data Types
+PRE 	 0,0,1,2,5,2,0,1 	 offsetTop:13893  	     _____________________________________________
+P 	 0,0,1,2,5,2,0,2 	 offsetTop:14103  	CA-Ideal fields that correspond to SQL date and ti
+UL 	 0,0,1,2,5,2,0,3 	 offsetTop:14144  	         Date Columns: X(10)          Time Columns
+   LI 	 0,0,1,2,5,2,0,3,1 	 offsetTop:14144  	Date Columns: X(10) 
+   LI 	 0,0,1,2,5,2,0,3,2 	 offsetTop:14164  	Time Columns: X(8) 
+   LI 	 0,0,1,2,5,2,0,3,3 	 offsetTop:14184  	Timestamp Columns: X(26)
+P 	 0,0,1,2,5,2,0,4 	 offsetTop:14212  	For CA-DATACOM SQL, variable length strings are sh
++++ H5 	 0,0,1,2,5,3,0  	  id:Function 	 offsetTop:14263  	Function
+P 	 0,0,1,2,5,3,0,1 	 offsetTop:14292  	All SQL functions are supported in embedded SQL. 
+P 	 0,0,1,2,5,3,0,2 	 offsetTop:14321  	You can use SQL functions in the search condition 
+P 	 0,0,1,2,5,3,0,3 	 offsetTop:14369  	PDL functions are prohibited in embedded SQL and F
++++ H5 	 0,0,1,2,5,4,0  	  id:Host 	 offsetTop:14419  	Host Variables
+P 	 0,0,1,2,5,4,0,1 	 offsetTop:14448  	A CA-Ideal group, field, or parameter defined in a
+PRE 	 0,0,1,2,5,4,0,2 	 offsetTop:14521  	  :host-identifier
+P 	 0,0,1,2,5,4,0,3 	 offsetTop:14551  	For DB2: You can omit the colon when the host iden
+P 	 0,0,1,2,5,4,0,4 	 offsetTop:14599  	For CA-DATACOM/DB: You can omit the colon when eac
+UL 	 0,0,1,2,5,4,0,5 	 offsetTop:14640  	         It is qualified by a host structure (grou
+   LI 	 0,0,1,2,5,4,0,5,1 	 offsetTop:14640  	It is qualified by a host structure (group) name t
+       P 	 0,0,1,2,5,4,0,5,1,1 	 offsetTop:14660  	For example, you can specify the subsidiary field 
+   LI 	 0,0,1,2,5,4,0,5,2 	 offsetTop:14719  	It is referenced in a context where column names a
+P 	 0,0,1,2,5,4,0,6 	 offsetTop:14785  	You can use an SQL column name defined in a datavi
+P 	 0,0,1,2,5,4,0,7 	 offsetTop:14871  	An alpha group is treated as an elementary alpha f
+P 	 0,0,1,2,5,4,0,8 	 offsetTop:14938  	You can use a non-alpha group as a host variable o
+P 	 0,0,1,2,5,4,0,9 	 offsetTop:15005  	You can use COPY DATAVIEW to automatically include
+P 	 0,0,1,2,5,4,0,10 	 offsetTop:15053  	Host variables that correspond to SQL date and tim
++++ H5 	 0,0,1,2,5,5,0  	  id:Indicator 	 offsetTop:15179  	Indicator Variable
+P 	 0,0,1,2,5,5,0,1 	 offsetTop:15208  	A host variable identifier must be qualified by a 
+P 	 0,0,1,2,5,5,0,2 	 offsetTop:15256  	For CA-DATACOM/DB: You cannot use a SQL reserved w
+P 	 0,0,1,2,5,5,0,3 	 offsetTop:15285  	For DB2: You can use a SQL reserved word as a host
+P 	 0,0,1,2,5,5,0,4 	 offsetTop:15333  	You can omit the leading colon from a qualified ho
++++ H5 	 0,0,1,2,5,6,0  	  id:Identifier 	 offsetTop:15422  	Identifier 
+P 	 0,0,1,2,5,6,0,1 	 offsetTop:15451  	The SQL ordinary identifier -a letter followed by 
++++ H5 	 0,0,1,2,5,7,0  	  id:Literal 	 offsetTop:15501  	Literal
+P 	 0,0,1,2,5,7,0,1 	 offsetTop:15530  	CA-Ideal supports the following types of SQL liter
+UL 	 0,0,1,2,5,7,0,2 	 offsetTop:15571  	         Integer constants (for example, +100, 64,
+   LI 	 0,0,1,2,5,7,0,2,1 	 offsetTop:15571  	Integer constants (for example, +100, 64, -15) 
+   LI 	 0,0,1,2,5,7,0,2,2 	 offsetTop:15591  	Decimal constants (for example, 25.4, -56., 99.) 
+   LI 	 0,0,1,2,5,7,0,2,3 	 offsetTop:15611  	Character strings, delimited by apostrophes (for e
+   LI 	 0,0,1,2,5,7,0,2,4 	 offsetTop:15650  	In DB2: Hex literals, specified as X followed by a
+P 	 0,0,1,2,5,7,0,3 	 offsetTop:15697  	To embed an apostrophe (') in a character string, 
++++ H5 	 0,0,1,2,5,8,0  	  id:Name 	 offsetTop:15766  	Name Conventions
+P 	 0,0,1,2,5,8,0,1 	 offsetTop:15795  	The names of SQL objects and columns in embedded S
++++ H5 	 0,0,1,2,5,9,0  	  id:Qualified 	 offsetTop:15883  	Qualified Table and View Name
+P 	 0,0,1,2,5,9,0,1 	 offsetTop:15912  	You can qualify the names of SQL objects with auth
+PRE 	 0,0,1,2,5,9,0,2 	 offsetTop:15985  	  HOU.PAYROLL
+P 	 0,0,1,2,5,9,0,3 	 offsetTop:16015  	The dataviews corresponding to SQL objects must ha
+UL 	 0,0,1,2,5,9,0,4 	 offsetTop:16094  	         Specify a dataview authorization ID. This
+   LI 	 0,0,1,2,5,9,0,4,1 	 offsetTop:16094  	Specify a dataview authorization ID. This authoriz
+   LI 	 0,0,1,2,5,9,0,4,2 	 offsetTop:16133  	Set the Q (qualifier) column for the dataview to e
+P 	 0,0,1,2,5,9,0,5 	 offsetTop:16218  	You have several options for qualifying an object 
+UL 	 0,0,1,2,5,9,0,6 	 offsetTop:16259  	         You can always use the authorization ID s
+   LI 	 0,0,1,2,5,9,0,6,1 	 offsetTop:16259  	You can always use the authorization ID specified 
+   LI 	 0,0,1,2,5,9,0,6,2 	 offsetTop:16317  	You can have CA-DATACOM/DB supply its default auth
+   LI 	 0,0,1,2,5,9,0,6,3 	 offsetTop:16356  	You can override the default for selected SQL stat
+P 	 0,0,1,2,5,9,0,7 	 offsetTop:16422  	This lets you access multiple objects with the sam
++++ H5 	 0,0,1,2,5,10,0  	  id:Example 	 offsetTop:16492  	Example
+P 	 0,0,1,2,5,10,0,1 	 offsetTop:16521  	Consider the following program resource table defi
+PRE 	 0,0,1,2,5,10,0,2 	 offsetTop:16556  	         Dataview              Auth-id   Q?       
+P 	 0,0,1,2,5,10,0,3 	 offsetTop:16631  	and the following embedded SQL statements: 
+PRE 	 0,0,1,2,5,10,0,4 	 offsetTop:16666  	         EXEC SQL            SELECT FROM EMPLOYEE,
+P 	 0,0,1,2,5,10,0,5 	 offsetTop:16861  	CA-Ideal generates the following clauses: 
+PRE 	 0,0,1,2,5,10,0,6 	 offsetTop:16897  	         SELECT ... FROM SBL.EMPLOYEE, PAYROLL    
+P 	 0,0,1,2,5,10,0,7 	 offsetTop:16987  	In the first example, the database qualifies the t
+P 	 0,0,1,2,5,10,0,8 	 offsetTop:17035  	In the second example, both table names are qualif
+P 	 0,0,1,2,5,10,0,9 	 offsetTop:17083  	In the third example, two tables, HOU.PAYROLL and 
+P 	 0,0,1,2,5,10,0,10 	 offsetTop:17150  	The ASSIGN AUTHORIZATION command lets you specify 
+P 	 0,0,1,2,5,10,0,11 	 offsetTop:17198  	For DB2: The ASSIGN AUTHORIZATION command also let
+P 	 0,0,1,2,5,10,0,12 	 offsetTop:17322  	For CA-DATACOM SQL access: The ASSIGN AUTHORIZATIO
++++ H5 	 0,0,1,2,5,11,0  	  id:Qualified1 	 offsetTop:17372  	Qualified Column Name
+P 	 0,0,1,2,5,11,0,1 	 offsetTop:17401  	In embedded SQL, you can qualify a column name wit
+P 	 0,0,1,2,5,11,0,2 	 offsetTop:17449  	For example, column name EMP_NAME can be qualified
+P 	 0,0,1,2,5,11,0,3 	 offsetTop:17516  	You can achieve the same result by using correlati
+P 	 0,0,1,2,5,11,0,4 	 offsetTop:17564  	CA-Ideal validates column references. It checks th
+UL 	 0,0,1,2,5,11,0,5 	 offsetTop:17586  	         The column name is defined in the specifi
+   LI 	 0,0,1,2,5,11,0,5,1 	 offsetTop:17586  	The column name is defined in the specified datavi
+   LI 	 0,0,1,2,5,11,0,5,2 	 offsetTop:17606  	Null eligible variables select NULL eligible colum
+   LI 	 0,0,1,2,5,11,0,5,3 	 offsetTop:17626  	Host variables are of compatible type for the colu
++++ H5 	 0,0,1,2,5,12,0  	  id:Reserved 	 offsetTop:17675  	Reserved Word
+P 	 0,0,1,2,5,12,0,1 	 offsetTop:17704  	For CA-DATACOM native access, you cannot use a SQL
++++ H4 	 0,0,1,2,6,0,0  	  id:Formatting 	 offsetTop:17776  	SQL Formatting Rules
+P 	 0,0,1,2,6,0,0,1 	 offsetTop:17809  	You can embed SQL statements in free format. You c
++++ H5 	 0,0,1,2,6,1,0  	  id:Lexical1 	 offsetTop:17878  	Lexical Rules
+UL 	 0,0,1,2,6,1,0,1 	 offsetTop:17900  	         SQL statements are delimited by EXEC SQL 
+   LI 	 0,0,1,2,6,1,0,1,1 	 offsetTop:17900  	SQL statements are delimited by EXEC SQL and END-E
+   LI 	 0,0,1,2,6,1,0,1,2 	 offsetTop:17939  	The following are valid delimiters for identifiers
+   LI 	 0,0,1,2,6,1,0,1,3 	 offsetTop:18016  	The apostrophe or quotation mark delimits alphanum
+   LI 	 0,0,1,2,6,1,0,1,4 	 offsetTop:18074  	Identifiers, literals, and reserved words can appe
+   LI 	 0,0,1,2,6,1,0,1,5 	 offsetTop:18113  	Double hyphens are comment delimiters in embedded 
+   LI 	 0,0,1,2,6,1,0,1,6 	 offsetTop:18152  	You cannot break words over lines. 
+   LI 	 0,0,1,2,6,1,0,1,7 	 offsetTop:18172  	You can leave blank lines. 
++++ H5 	 0,0,1,2,6,2,0  	  id:Comments 	 offsetTop:18202  	Comments 
+P 	 0,0,1,2,6,2,0,1 	 offsetTop:18231  	Any line in embedded SQL can contain a comment. Th
+P 	 0,0,1,2,6,2,0,2 	 offsetTop:18279  	-- (double hyphens) Treats all characters to the r
++++ H3 	 0,0,1,3,0,0,0  	  id:Procedure1 	 offsetTop:18315  	4- Procedure Definition Language Statements
++++ H4 	 0,0,1,3,1,0,0  	  id:Introducti1 	 offsetTop:18356  	Introduction
+P 	 0,0,1,3,1,0,0,1 	 offsetTop:18389  	This chapter describes PDL elements in alphabetica
++++ H4 	 0,0,1,3,2,0,0  	  id:Statement 	 offsetTop:18422  	ADD Statement
+PRE 	 0,0,1,3,2,0,0,1 	 offsetTop:18462  	  syntax:              {numeric field     }   {   
++++ H4 	 0,0,1,3,3,0,0  	  id:ASSIGN 	 offsetTop:18582  	ASSIGN DATAVIEW Statement (CA-DATACOM Native Acces
+P 	 0,0,1,3,3,0,0,1 	 offsetTop:18615  	Use the ASSIGN DATAVIEW statement during execution
+PRE 	 0,0,1,3,3,0,0,2 	 offsetTop:18688  	  Syntax:          ASSIGN DATAVIEW name DBID dbid 
+P 	 0,0,1,3,3,0,0,3 	 offsetTop:18733  	name: Specifies the name of the dataview to associ
+P 	 0,0,1,3,3,0,0,4 	 offsetTop:18781  	dbid: A numeric literal or the identifier of a num
+PRE 	 0,0,1,3,3,0,0,5 	 offsetTop:18854  	  example:          LOOP VARYING I FROM 1 THRU 10 
++++ H4 	 0,0,1,3,4,0,0  	  id:ASSIGN1 	 offsetTop:19020  	ASSIGN REPORT Statement
+P 	 0,0,1,3,4,0,0,1 	 offsetTop:19053  	This statement overrides the RUN command defaults 
+PRE 	 0,0,1,3,4,0,0,2 	 offsetTop:19107  	         ASSIGN REPORT name [TO altname]          
+P 	 0,0,1,3,4,0,0,3 	 offsetTop:19377  	This statement is also available in command form (
+P 	 0,0,1,3,4,0,0,4 	 offsetTop:19425  	You can only issue ASSIGN REPORT when the report i
++++ H4 	 0,0,1,3,5,0,0  	  id:BACKOUT 	 offsetTop:19477  	BACKOUT Statement
+P 	 0,0,1,3,5,0,0,1 	 offsetTop:19510  	The BACKOUT statement restores activity against ta
+P 	 0,0,1,3,5,0,0,2 	 offsetTop:19596  	BACKOUT applies to all CA-DATACOM/DB, DB2, and all
+P 	 0,0,1,3,5,0,0,3 	 offsetTop:19663  	Executing a BACKOUT statement executes the followi
+P 	 0,0,1,3,5,0,0,4 	 offsetTop:19692  	In a CICS environment: - 
+UL 	 0,0,1,3,5,0,0,5 	 offsetTop:19714  	         For a site with native CA-DATACOM access 
+   LI 	 0,0,1,3,5,0,0,5,1 	 offsetTop:19714  	For a site with native CA-DATACOM access only, the
+   LI 	 0,0,1,3,5,0,0,5,2 	 offsetTop:19753  	For all other sites, the BACKOUT statement execute
+P 	 0,0,1,3,5,0,0,6 	 offsetTop:19800  	In a non-CICS environment: 
+UL 	 0,0,1,3,5,0,0,7 	 offsetTop:19822  	         For VSAM files, the BACKOUT statement is 
+   LI 	 0,0,1,3,5,0,0,7,1 	 offsetTop:19822  	For VSAM files, the BACKOUT statement is ignored. 
+   LI 	 0,0,1,3,5,0,0,7,2 	 offsetTop:19842  	For DB2 objects, the BACKOUT statement executes a 
+   LI 	 0,0,1,3,5,0,0,7,3 	 offsetTop:19862  	For native CA-DATACOM or SQL access, the BACKOUT s
+   LI 	 0,0,1,3,5,0,0,7,4 	 offsetTop:19901  	If more than one database management system is acc
+   LI 	 0,0,1,3,5,0,0,7,5 	 offsetTop:19940  	Execution of a BACKOUT statement has the same effe
+P 	 0,0,1,3,5,0,0,8 	 offsetTop:20006  	Example: 
+PRE 	 0,0,1,3,5,0,0,9 	 offsetTop:20042  	         TRANSMIT          FOR EACH x             
+P 	 0,0,1,3,5,0,0,10 	 offsetTop:20342  	The example sets a checkpoint after a FOR NEW cons
++++ H4 	 0,0,1,3,6,0,0  	  id:CALL 	 offsetTop:20470  	CALL Statement
+P 	 0,0,1,3,6,0,0,1 	 offsetTop:20503  	A CA-Ideal program can execute another CA-Ideal pr
+PRE 	 0,0,1,3,6,0,0,2 	 offsetTop:20557  	         CALL program_name [USING]  [INPUT data-it
+P 	 0,0,1,3,6,0,0,3 	 offsetTop:20603  	Examples: 
+PRE 	 0,0,1,3,6,0,0,4 	 offsetTop:20638  	         CALL SUBPGM1          CALL SUBPGM2 A     
++++ H4 	 0,0,1,3,7,0,0  	  id:CHECKPOINT 	 offsetTop:20713  	CHECKPOINT Statement
+P 	 0,0,1,3,7,0,0,1 	 offsetTop:20746  	The CHECKPOINT statement commits all database acti
+PRE 	 0,0,1,3,7,0,0,2 	 offsetTop:20838  	         CHECKPOINT 
+P 	 0,0,1,3,7,0,0,3 	 offsetTop:20868  	A TRANSMIT statement automatically causes a CHECKP
+P 	 0,0,1,3,7,0,0,4 	 offsetTop:20897  	Executing a CHECKPOINT statement executes the foll
+P 	 0,0,1,3,7,0,0,5 	 offsetTop:20926  	In a CICS environment:
+UL 	 0,0,1,3,7,0,0,6 	 offsetTop:20948  	         For a site with CA-DATACOM CBS access onl
+   LI 	 0,0,1,3,7,0,0,6,1 	 offsetTop:20948  	For a site with CA-DATACOM CBS access only, the CH
+   LI 	 0,0,1,3,7,0,0,6,2 	 offsetTop:20987  	For all other sites, the CHECKPOINT statement exec
+   LI 	 0,0,1,3,7,0,0,6,3 	 offsetTop:21026  	Only files defined to CICS as recoverable are affe
+P 	 0,0,1,3,7,0,0,7 	 offsetTop:21054  	In a non-CICS environment: 
+UL 	 0,0,1,3,7,0,0,8 	 offsetTop:21076  	         For VSAM files, the CHECKPOINT statement 
+   LI 	 0,0,1,3,7,0,0,8,1 	 offsetTop:21076  	For VSAM files, the CHECKPOINT statement executes 
+   LI 	 0,0,1,3,7,0,0,8,2 	 offsetTop:21096  	For DB2 objects, the CHECKPOINT statement executes
+   LI 	 0,0,1,3,7,0,0,8,3 	 offsetTop:21116  	For CA-DATACOM SQL access, the CHECKPOINT statemen
+   LI 	 0,0,1,3,7,0,0,8,4 	 offsetTop:21155  	If more than one database is accessed in the same 
+P 	 0,0,1,3,7,0,0,9 	 offsetTop:21202  	An SQL COMMIT statement is equivalent to a CHECKPO
++++ H4 	 0,0,1,3,8,0,0  	  id:Comment1 	 offsetTop:21236  	Comment
+PRE 	 0,0,1,3,8,0,0,1 	 offsetTop:21275  	         :    text of PDL comment   outside EXEC S
+P 	 0,0,1,3,8,0,0,2 	 offsetTop:21320  	&nbsp;
+PRE 	 0,0,1,3,8,0,0,3 	 offsetTop:21355  	         : this is regarded as a comment.         
++++ H4 	 0,0,1,3,9,0,0  	  id:DELETE 	 offsetTop:21415  	DELETE Statement
+P 	 0,0,1,3,9,0,0,1 	 offsetTop:21448  	The DELETE statement deletes the entire current re
+PRE 	 0,0,1,3,9,0,0,2 	 offsetTop:21541  	         DELETE dataview_name
+P 	 0,0,1,3,9,0,0,3 	 offsetTop:21571  	DELETE does not apply to sequential or VSAM EDS fi
+P 	 0,0,1,3,9,0,0,4 	 offsetTop:21600  	A DELETE is immediate and is not canceled by a    
+P 	 0,0,1,3,9,0,0,5 	 offsetTop:21648  	The entire record or row is deleted even if the da
+P 	 0,0,1,3,9,0,0,6 	 offsetTop:21696  	After a DELETE, you cannot reference the deleted r
+PRE 	 0,0,1,3,9,0,0,7 	 offsetTop:21731  	         FOR FIRST INVEN WHERE ITEM_NO = DESIRED_I
++++ H4 	 0,0,1,3,10,0,0  	  id:Statement1 	 offsetTop:21821  	DO Statement
+P 	 0,0,1,3,10,0,0,1 	 offsetTop:21854  	The DO statement invokes another named procedure i
+PRE 	 0,0,1,3,10,0,0,2 	 offsetTop:21889  	         DO  {ERROR           }              {proc
+P 	 0,0,1,3,10,0,0,3 	 offsetTop:21935  	ERROR Invokes the error procedure and makes the   
+P 	 0,0,1,3,10,0,0,4 	 offsetTop:22021  	For more information on restrictions that apply to
+PRE 	 0,0,1,3,10,0,0,5 	 offsetTop:22094  	            &lt;<main docpath="0,0,1,3,34,0,0,6,3">&gt; PROCEDURE              LOOP  </main>
++++ H4 	 0,0,1,3,11,0,0  	  id:EJECT1 	 offsetTop:22484  	EJECT Statement
+P 	 0,0,1,3,11,0,0,1 	 offsetTop:22517  	The EJECT statement causes the compilation listing
++++ H4 	 0,0,1,3,12,0,0  	  id:Error1 	 offsetTop:22550  	Error Procedure
+P 	 0,0,1,3,12,0,0,1 	 offsetTop:22583  	The error procedure specifies a set of actions to 
+P 	 0,0,1,3,12,0,0,2 	 offsetTop:22631  	For example, the error procedure can process an in
+PRE 	 0,0,1,3,12,0,0,3 	 offsetTop:22685  	         &lt;<error docpath="0,0,1,3,34,0,0,6,4">&gt; PROC               IF $ERROR-CL</error>
+P 	 0,0,1,3,12,0,0,4 	 offsetTop:22851  	Coding an optional error procedure lets you overri
+OL 	 0,0,1,3,12,0,0,5 	 offsetTop:22892  	         Issues a LIST ERROR statement, that varie
+   LI 	 0,0,1,3,12,0,0,5,1 	 offsetTop:22892  	Issues a LIST ERROR statement, that varies dependi
+   LI 	 0,0,1,3,12,0,0,5,2 	 offsetTop:22912  	Performs a BACKOUT. 
+   LI 	 0,0,1,3,12,0,0,5,3 	 offsetTop:22932  	Issues a standard message. 
+   LI 	 0,0,1,3,12,0,0,5,4 	 offsetTop:22952  	Performs a QUIT to end the run. 
+PRE 	 0,0,1,3,12,0,0,6 	 offsetTop:22986  	         &lt;<error docpath="0,0,1,3,34,0,0,6,5">&gt; PROCEDURE               stateme</error>
+P 	 0,0,1,3,12,0,0,7 	 offsetTop:23076  	&lt;<error docpath="0,0,1,3,34,0,0,6,6">&gt;: A reserved label. Most statements that </error>
+P 	 0,0,1,3,12,0,0,8 	 offsetTop:23143  	statements: The action that takes effect when an e
+P 	 0,0,1,3,12,0,0,9 	 offsetTop:23210  	A program can contain only one error procedure. It
+P 	 0,0,1,3,12,0,0,10 	 offsetTop:23296  	You can code $ERROR functions in the error procedu
+P 	 0,0,1,3,12,0,0,11 	 offsetTop:23382  	If you code an error procedure, you must code a BA
+P 	 0,0,1,3,12,0,0,12 	 offsetTop:23449  	When an error with $ERROR-CLASS = SYS occurs, your
+P 	 0,0,1,3,12,0,0,13 	 offsetTop:23497  	A runtime error in the error procedure invokes the
+P 	 0,0,1,3,12,0,0,14 	 offsetTop:23526  	Generally, the default error procedure sets the va
+P 	 0,0,1,3,12,0,0,15 	 offsetTop:23574  	The error procedure is not invoked if there are er
+P 	 0,0,1,3,12,0,0,16 	 offsetTop:23660  	You can call the program @I$TIAR from the error pr
+P 	 0,0,1,3,12,0,0,17 	 offsetTop:23727  	The default error procedure: 
+PRE 	 0,0,1,3,12,0,0,18 	 offsetTop:23762  	         &lt;<error docpath="0,0,1,3,34,0,0,6,7">&gt; PROCEDURE              IF $RC L</error>
+P 	 0,0,1,3,12,0,0,19 	 offsetTop:23897  	An example error procedure: 
+PRE 	 0,0,1,3,12,0,0,20 	 offsetTop:23933  	         &lt;<error docpath="0,0,1,3,34,0,0,6,8">&gt; PROCEDURE              DO LOG-M</error>
++++ H4 	 0,0,1,3,13,0,0  	  id:EXEC 	 offsetTop:24008  	EXEC SQL Statement (SQL Access)
+P 	 0,0,1,3,13,0,0,1 	 offsetTop:24041  	EXEC SQL and END-EXEC delimit an embedded SQL     
+PRE 	 0,0,1,3,13,0,0,2 	 offsetTop:24076  	         EXEC SQL                 SQL-statement   
+P 	 0,0,1,3,13,0,0,3 	 offsetTop:24136  	&nbsp;
+PRE 	 0,0,1,3,13,0,0,4 	 offsetTop:24171  	         EXEC SQL                UPDATE DELINQUENT
++++ H4 	 0,0,1,3,14,0,0  	  id:Constructs 	 offsetTop:24262  	FOR Constructs (CA-DATACOM Native Access)
+P 	 0,0,1,3,14,0,0,1 	 offsetTop:24295  	The FOR statement is for reading and updating the 
+P 	 0,0,1,3,14,0,0,2 	 offsetTop:24343  	To define thedatabase fields that are available to
+P 	 0,0,1,3,14,0,0,3 	 offsetTop:24391  	Set Processing: 
+P 	 0,0,1,3,14,0,0,4 	 offsetTop:24420  	The &gt;&gt;&gt;&gt; FOR EACH, FOR FIRST, and       FOR ANY co
+P 	 0,0,1,3,14,0,0,5 	 offsetTop:24563  	Inserting Records:
+P 	 0,0,1,3,14,0,0,6 	 offsetTop:24592  	Use the FOR NEW statement to insert a new record i
++++ H4 	 0,0,1,3,15,0,0  	  id:Exclusive 	 offsetTop:24663  	Exclusive Control
+P 	 0,0,1,3,15,0,0,1 	 offsetTop:24696  	An enqueuing mechanism that CA-DATACOM/DB provides
+P 	 0,0,1,3,15,0,0,2 	 offsetTop:24744  	Task 1 cannot get update control of a record held 
+UL 	 0,0,1,3,15,0,0,3 	 offsetTop:24785  	         Task 2 completes.          Task 2 issues 
+   LI 	 0,0,1,3,15,0,0,3,1 	 offsetTop:24785  	Task 2 completes. 
+   LI 	 0,0,1,3,15,0,0,3,2 	 offsetTop:24805  	Task 2 issues a CHECKPOINT, TRANSMIT or CICS SYNCP
+   LI 	 0,0,1,3,15,0,0,3,3 	 offsetTop:24825  	Task 2 abends and transaction backout completes.
++++ H5 	 0,0,1,3,15,1,0  	  id:Primary 	 offsetTop:24855  	Primary Exclusive Control
+P 	 0,0,1,3,15,1,0,1 	 offsetTop:24884  	The dataview in the following example is updateabl
+P 	 0,0,1,3,15,1,0,2 	 offsetTop:24913  	Example 1 
+PRE 	 0,0,1,3,15,1,0,3 	 offsetTop:24948  	         FOR EACH DVW                  SET...     
+P 	 0,0,1,3,15,1,0,4 	 offsetTop:25023  	Each record is read with primary exclusive control
+P 	 0,0,1,3,15,1,0,5 	 offsetTop:25071  	At this point, the record is updated. 
+P 	 0,0,1,3,15,1,0,6 	 offsetTop:25100  	While it is held under primary exclusive control, 
+P 	 0,0,1,3,15,1,0,7 	 offsetTop:25148  	Primary exclusive control is established when the 
+P 	 0,0,1,3,15,1,0,8 	 offsetTop:25215  	Only one record of the set that meets the FOR/WHER
+P 	 0,0,1,3,15,1,0,9 	 offsetTop:25263  	Primary exclusive control begins when the record i
+P 	 0,0,1,3,15,1,0,10 	 offsetTop:25311  	Primary exclusive control also ends if a TRANSMIT 
++++ H5 	 0,0,1,3,15,2,0  	  id:Secondary 	 offsetTop:25362  	Secondary Exclusive Control
+P 	 0,0,1,3,15,2,0,1 	 offsetTop:25391  	Secondary exclusive control gives the application 
+P 	 0,0,1,3,15,2,0,2 	 offsetTop:25439  	For instance, you might need to update a master re
+P 	 0,0,1,3,15,2,0,3 	 offsetTop:25506  	When the record is updated just before the ENDFOR,
+P 	 0,0,1,3,15,2,0,4 	 offsetTop:25592  	In the above example, if the URT specifies TXNUNDO
+   ACRONYM 	 0,0,1,3,15,2,0,4,1 	 offsetTop:25593  	TXNUNDO=YES
+P 	 0,0,1,3,15,2,0,5 	 offsetTop:25659  	A task can have many records under secondary exclu
+P 	 0,0,1,3,15,2,0,6 	 offsetTop:25688  	As the records that meet the FOR/WHERE/ORDERED BY 
+P 	 0,0,1,3,15,2,0,7 	 offsetTop:25755  	Secondary exclusive lasts until the task terminate
+P 	 0,0,1,3,15,2,0,8 	 offsetTop:25803  	While a record is held under secondary exclusive c
++++ H5 	 0,0,1,3,15,3,0  	  id:Batch 	 offsetTop:25872  	Batch Processing
+P 	 0,0,1,3,15,3,0,1 	 offsetTop:25901  	Restarting:
+P 	 0,0,1,3,15,3,0,2 	 offsetTop:25930  	An update to a CA-DATACOM/DB record places it unde
+P 	 0,0,1,3,15,3,0,3 	 offsetTop:25978  	To avoid contention, programs should release contr
+P 	 0,0,1,3,15,3,0,4 	 offsetTop:26045  	One way to do this is to first load the transactio
+P 	 0,0,1,3,15,3,0,5 	 offsetTop:26150  	If there is a system failure, you can simply rerun
+P 	 0,0,1,3,15,3,0,6 	 offsetTop:26198  	Sequential Processing:
+P 	 0,0,1,3,15,3,0,7 	 offsetTop:26227  	CA-Ideal can do multi-block read-aheads of a CA-DA
+P 	 0,0,1,3,15,3,0,8 	 offsetTop:26370  	There is no way to request a release of exclusive 
++++ H5 	 0,0,1,3,15,4,0  	  id:EACH 	 offsetTop:26477  	FOR EACH/FIRST/ANY Statement (CA-DATACOM Native Ac
+P 	 0,0,1,3,15,4,0,1 	 offsetTop:26506  	The FOR EACH, FOR FIRST, and FOR ANY       stateme
+P 	 0,0,1,3,15,4,0,2 	 offsetTop:26573  	The FOR construct is iterative. With each iteratio
+P 	 0,0,1,3,15,4,0,3 	 offsetTop:26621  	FOR FIRST, FOR EACH, and FOR ANY are       the onl
+P 	 0,0,1,3,15,4,0,4 	 offsetTop:26669  	To process data from the database, you must first 
+PRE 	 0,0,1,3,15,4,0,5 	 offsetTop:26742  	         [&lt;<label docpath="0,0,1,3,34,0,0,6,9">&gt;]               [EACH          </label>
+P 	 0,0,1,3,15,4,0,6  	  id:L4880 	 offsetTop:27102  	&lt;<label docpath="0,0,1,3,34,0,0,6,10">&gt; optional 1 to 15-character       name of</label>
+P 	 0,0,1,3,15,4,0,7  	  id:EACH|ALL 	 offsetTop:27169  	EACH|ALL Indicate that the statements in the      
+P 	 0,0,1,3,15,4,0,8  	  id:L5625 	 offsetTop:27236  	[THE] FIRST [n] (default.) Specifies that the     
+P 	 0,0,1,3,15,4,0,9 	 offsetTop:27322  	When you use FOR FIRST n with a where condition an
+P 	 0,0,1,3,15,4,0,10  	  id:n 	 offsetTop:27408  	ANY n Specifies that the statements in the scope o
+P 	 0,0,1,3,15,4,0,11 	 offsetTop:27475  	When you use FOR ANY n with a WHERE condition and 
+P 	 0,0,1,3,15,4,0,12  	  id:dataview_n 	 offsetTop:27561  	dataview_name The name of the dataview       proce
+P 	 0,0,1,3,15,4,0,13  	  id:UPDATE 	 offsetTop:27590  	NO UPDATE Specifies that the records processed by 
+P 	 0,0,1,3,15,4,0,14  	  id:WHERE 	 offsetTop:27695  	WHERE clause Specifies that the statements in the 
+P 	 0,0,1,3,15,4,0,15 	 offsetTop:27743  	The where-condition is defined in the PDL Language
+UL 	 0,0,1,3,15,4,0,16 	 offsetTop:27784  	         The left-hand operand of each relational-
+   LI 	 0,0,1,3,15,4,0,16,1 	 offsetTop:27784  	The left-hand operand of each relational-expressio
+   LI 	 0,0,1,3,15,4,0,16,2 	 offsetTop:27823  	If the left-hand operand is an alphanumeric field,
+   LI 	 0,0,1,3,15,4,0,16,3 	 offsetTop:27862  	If the left-hand operand is a numeric field, the r
+   LI 	 0,0,1,3,15,4,0,16,4 	 offsetTop:27977  	A field name used as the left-hand operand of a re
+   LI 	 0,0,1,3,15,4,0,16,5 	 offsetTop:28054  	The right-hand operand of a relational-expression 
+   LI 	 0,0,1,3,15,4,0,16,6 	 offsetTop:28112  	A where-condition is the only condition that can c
+   LI 	 0,0,1,3,15,4,0,16,7 	 offsetTop:28208  	If the condition is a condition name, it must be f
+   LI 	 0,0,1,3,15,4,0,16,8 	 offsetTop:28247  	Where-conditions cannot be Boolean functions or fl
+   LI 	 0,0,1,3,15,4,0,16,9 	 offsetTop:28267  	Any subscripts used in the where-condition must no
+P 	 0,0,1,3,15,4,0,17  	  id:ORDERED 	 offsetTop:28314  	ORDERED BY clause Determines the logical order in 
+P 	 0,0,1,3,15,4,0,18  	  id:UNIQUE 	 offsetTop:28419  	UNIQUE Specifies that only one record with each   
+P 	 0,0,1,3,15,4,0,19  	  id:ASCENDING 	 offsetTop:28467  	ASCENDING/DESCENDING id Specifies the       ORDERE
+P 	 0,0,1,3,15,4,0,20  	  id:statements 	 offsetTop:28534  	statements The PDL statements in the logical      
+P 	 0,0,1,3,15,4,0,21  	  id:WHEN1 	 offsetTop:28582  	WHEN NONE An optional postscript that specifies th
+P 	 0,0,1,3,15,4,0,22  	  id:WHEN 	 offsetTop:28649  	WHEN ERROR Specifies statements to execute when a 
+P 	 0,0,1,3,15,4,0,23 	 offsetTop:28716  	The statements specified following a WHEN ERROR cl
+P 	 0,0,1,3,15,4,0,24 	 offsetTop:28821  	Only the WHEN ERROR clauses handles dataview error
+P 	 0,0,1,3,15,4,0,25 	 offsetTop:28869  	ENDFOR The end of the FOR construct. If FOR statem
+P 	 0,0,1,3,15,4,0,26 	 offsetTop:28936  	The actual update takes place at the ENDFOR for th
+P 	 0,0,1,3,15,4,0,27 	 offsetTop:28984  	CA-Ideal suppresses database writes when it can de
+P 	 0,0,1,3,15,4,0,28 	 offsetTop:29108  	You cannot nest a FOR construct for a given datavi
+P 	 0,0,1,3,15,4,0,29 	 offsetTop:29156  	If the dataview was defined as updateable, the log
+P 	 0,0,1,3,15,4,0,30 	 offsetTop:29261  	If more than one position (record) of a dataview i
+UL 	 0,0,1,3,15,4,0,31 	 offsetTop:29302  	         Use two dataviews for the same file, or  
+   LI 	 0,0,1,3,15,4,0,31,1 	 offsetTop:29302  	Use two dataviews for the same file, or 
+   LI 	 0,0,1,3,15,4,0,31,2 	 offsetTop:29322  	Save necessary information in working data. 
+P 	 0,0,1,3,15,4,0,32 	 offsetTop:29350  	Example 1
+PRE 	 0,0,1,3,15,4,0,33 	 offsetTop:29386  	         FOR EACH DELINQUENT-ACCT WHERE BALANCE &gt; 
+P 	 0,0,1,3,15,4,0,34 	 offsetTop:29446  	Example 2
+PRE 	 0,0,1,3,15,4,0,35 	 offsetTop:29481  	         &lt;<emp-search docpath="0,0,1,3,34,0,0,6,11">&gt;          FOR EACH EMPLOYEE</emp-search>
+P 	 0,0,1,3,15,4,0,36 	 offsetTop:29616  	Example 3
+PRE 	 0,0,1,3,15,4,0,37 	 offsetTop:29651  	         FOR FIRST INVENTORY-ITEM              WHE
+P 	 0,0,1,3,15,4,0,38 	 offsetTop:29727  	Example 4
+PRE 	 0,0,1,3,15,4,0,39 	 offsetTop:29762  	         FOR THE FIRST 5 INVEN              WHERE 
+P 	 0,0,1,3,15,4,0,40 	 offsetTop:29837  	Example 5
+PRE 	 0,0,1,3,15,4,0,41 	 offsetTop:29872  	         FOR EACH EMPLOYEE WHERE DEPT = 'D'       
+P 	 0,0,1,3,15,4,0,42 	 offsetTop:29962  	Example 6
+PRE 	 0,0,1,3,15,4,0,43 	 offsetTop:29997  	         FOR FIRST ACCT WHERE PAST-DUE &gt; 90 ORDERE
+P 	 0,0,1,3,15,4,0,44 	 offsetTop:30133  	Example 7
+PRE 	 0,0,1,3,15,4,0,45 	 offsetTop:30168  	         DO FIND-CUSTOMER              IF CUST-FOU
+P 	 0,0,1,3,15,4,0,46 	 offsetTop:30378  	Example 8
+PRE 	 0,0,1,3,15,4,0,47 	 offsetTop:30413  	         FOR FIRST 20 ITEMS WHERE UNIT-PRICE &gt; 10 
+P 	 0,0,1,3,15,4,0,48 	 offsetTop:30638  	Example 9
+PRE 	 0,0,1,3,15,4,0,49 	 offsetTop:30674  	         FOR FIRST CUSTOMER WHERE CUSTID = PNL-CUS
++++ H5 	 0,0,1,3,15,5,0  	  id:Statement2 	 offsetTop:30914  	FOR NEW Statement (CA-DATACOM Native Access)
+P 	 0,0,1,3,15,5,0,1 	 offsetTop:30943  	The FOR NEW statement can insert a new record into
+PRE 	 0,0,1,3,15,5,0,2 	 offsetTop:31035  	         [&lt;<label docpath="0,0,1,3,34,0,0,6,12">&gt;]             FOR [THE] NEW dat</label>
+P 	 0,0,1,3,15,5,0,3  	  id:L6636 	 offsetTop:31200  	[&lt;<label docpath="0,0,1,3,34,0,0,6,13">&gt;] An optional 1 to       15-character na</label>
+P 	 0,0,1,3,15,5,0,4  	  id:NEW 	 offsetTop:31248  	FOR [THE] NEW Specifies the action to take to inse
+P 	 0,0,1,3,15,5,0,5 	 offsetTop:31277  	FOR NEW initializes the field values in the new re
+UL 	 0,0,1,3,15,5,0,6 	 offsetTop:31318  	         NULL for fields that can have the null va
+   LI 	 0,0,1,3,15,5,0,6,1 	 offsetTop:31318  	NULL for fields that can have the null value 
+   LI 	 0,0,1,3,15,5,0,6,2 	 offsetTop:31338  	Zeros for numeric fields 
+   LI 	 0,0,1,3,15,5,0,6,3 	 offsetTop:31358  	Zero length for variable-length fields 
+   LI 	 0,0,1,3,15,5,0,6,4 	 offsetTop:31378  	Spaces for alphanumeric fields 
+   LI 	 0,0,1,3,15,5,0,6,5 	 offsetTop:31398  	Current time for time fields 
+   LI 	 0,0,1,3,15,5,0,6,6 	 offsetTop:31418  	Current date for date fields 
+   LI 	 0,0,1,3,15,5,0,6,7 	 offsetTop:31438  	Current timestamp for timestamp fields 
+P 	 0,0,1,3,15,5,0,7 	 offsetTop:31466  	If initial values were specified for the field in 
+P 	 0,0,1,3,15,5,0,8 	 offsetTop:31495  	The fields are not defined in the dataview are ini
+P 	 0,0,1,3,15,5,0,9  	  id:dataview-n 	 offsetTop:31562  	dataview-name The name of the dataview that       
+P 	 0,0,1,3,15,5,0,10  	  id:statements1 	 offsetTop:31610  	statements The statements in the scope of the     
+P 	 0,0,1,3,15,5,0,11  	  id:WHEN2 	 offsetTop:31658  	WHEN DUPLICATE The WHEN DUPLICATE       clause con
+P 	 0,0,1,3,15,5,0,12 	 offsetTop:31725  	If WHEN DUPLICATE is omitted and duplication is no
+P 	 0,0,1,3,15,5,0,13 	 offsetTop:31792  	If the WHEN DUPLICATE clause is included and dupli
+P 	 0,0,1,3,15,5,0,14 	 offsetTop:31840  	Although the file is not updated when a duplicate 
+P 	 0,0,1,3,15,5,0,15 	 offsetTop:32002  	WHEN ERROR Specifies statements to execute when a 
+P 	 0,0,1,3,15,5,0,16 	 offsetTop:32145  	ENDFOR A reserved word that terminates the FOR con
+P 	 0,0,1,3,15,5,0,17 	 offsetTop:32231  	A QUIT in the logical scope of a FOR NEW abandons 
+P 	 0,0,1,3,15,5,0,18 	 offsetTop:32279  	Insertion of a new record into the database occurs
+P 	 0,0,1,3,15,5,0,19 	 offsetTop:32308  	You cannot delete a record defined by the dataview
+P 	 0,0,1,3,15,5,0,20 	 offsetTop:32356  	If inserting the new row causes a CA-DATACOM abnor
+P 	 0,0,1,3,15,5,0,21 	 offsetTop:32423  	You can nest FOR EACH in WHEN DUPLICATE. 
+P 	 0,0,1,3,15,5,0,22 	 offsetTop:32452  	If the record contains a SQL DATE, TIME, or       
+P 	 0,0,1,3,15,5,0,23 	 offsetTop:32519  	Example:
+P 	 0,0,1,3,15,5,0,24 	 offsetTop:32548  	In the example below, the FOR NEW construct is inc
+PRE 	 0,0,1,3,15,5,0,25 	 offsetTop:32621  	         LOOP UNTIL TRANSCODE = 'Q'              T
++++ H4 	 0,0,1,3,16,0,0  	  id:Statement3 	 offsetTop:32771  	FOR Statement (SQL Access)
+P 	 0,0,1,3,16,0,0,1 	 offsetTop:32804  	The FOR statement is used for reading and updating
+P 	 0,0,1,3,16,0,0,2 	 offsetTop:32871  	To process data from the database using a FOR cons
+P 	 0,0,1,3,16,0,0,3 	 offsetTop:32919  	The FOR EACH and FOR FIRST constructs retrieve and
+P 	 0,0,1,3,16,0,0,4 	 offsetTop:33024  	You can use the FOR NEW statement to insert a new 
+P 	 0,0,1,3,16,0,0,5 	 offsetTop:33053  	A CA-Ideal data structure is automatically generat
+P 	 0,0,1,3,16,0,0,6 	 offsetTop:33196  	href="#SQLConcepts"The Creating Dataviews &gt;&gt;&gt;&gt; gui
++++ H5 	 0,0,1,3,16,1,0  	  id:EACH1 	 offsetTop:33304  	FOR EACH/FIRST Statement (SQL Access)
+P 	 0,0,1,3,16,1,0,1 	 offsetTop:33333  	The FOR EACH/FIRST statement processes a set of ro
+PRE 	 0,0,1,3,16,1,0,2 	 offsetTop:33425  	            [&lt;<label docpath="0,0,1,3,34,0,0,6,14">&gt;]               [EACH       </label>
+P 	 0,0,1,3,16,1,0,3 	 offsetTop:33800  	&nbsp;
+PRE 	 0,0,1,3,16,1,0,4 	 offsetTop:33835  	  Example 1           FOR EACH DELINQUENT_ACCT    
++++ H5 	 0,0,1,3,16,2,0  	  id:Statement4 	 offsetTop:35560  	FOR NEW Statement (SQL Access)
+P 	 0,0,1,3,16,2,0,1 	 offsetTop:35589  	The FOR NEW statement inserts new rows in an SQL o
+PRE 	 0,0,1,3,16,2,0,2 	 offsetTop:35663  	         &lt;<label docpath="0,0,1,3,34,0,0,6,15">&gt;               FOR [THE] NEW dat</label>
+P 	 0,0,1,3,16,2,0,3 	 offsetTop:35813  	Example 1
+P 	 0,0,1,3,16,2,0,4 	 offsetTop:35842  	In this example, one row is added to the INVEN_ITE
+PRE 	 0,0,1,3,16,2,0,5 	 offsetTop:35915  	         FOR THE NEW INVEN_ITEM              MOVE 
+P 	 0,0,1,3,16,2,0,6 	 offsetTop:36020  	example 2
+P 	 0,0,1,3,16,2,0,7 	 offsetTop:36049  	In the example below, the FOR NEW construct is inc
+PRE 	 0,0,1,3,16,2,0,8 	 offsetTop:36122  	         LOOP UNTIL TRANSCODE = 'Q'               
++++ H4 	 0,0,1,3,17,0,0  	  id:Statement5 	 offsetTop:36272  	FOR Statement (Sequential Files)
+P 	 0,0,1,3,17,0,0,1 	 offsetTop:36305  	The FOR statement is used for reading and updating
+P 	 0,0,1,3,17,0,0,2 	 offsetTop:36334  	The FOR construct begins with a FOR and ends with 
+P 	 0,0,1,3,17,0,0,3 	 offsetTop:36363  	To retrieve data from a file, you must first defin
+P 	 0,0,1,3,17,0,0,4 	 offsetTop:36411  	You can use the following FOR statements for seque
+UL 	 0,0,1,3,17,0,0,5 	 offsetTop:36433  	         The FOR EACH, FOR FIRST, and FOR         
+   LI 	 0,0,1,3,17,0,0,5,1 	 offsetTop:36433  	The FOR EACH, FOR FIRST, and FOR           ANY con
+       P 	 0,0,1,3,17,0,0,5,1,4 	 offsetTop:36453  	These constructs are iterative. With each iteratio
+   LI 	 0,0,1,3,17,0,0,5,2 	 offsetTop:36493  	The FOR NEXT statement accesses a single record fr
+   LI 	 0,0,1,3,17,0,0,5,3 	 offsetTop:36513  	Records are added to the file using FOR NEW. 
++++ H5 	 0,0,1,3,17,1,0  	  id:EACH2 	 offsetTop:36544  	FOR EACH/FIRST/ANY Statement (Sequential Files)
+P 	 0,0,1,3,17,1,0,1 	 offsetTop:36573  	The FOR EACH, FOR FIRST, and FOR ANY statements pr
+PRE 	 0,0,1,3,17,1,0,2 	 offsetTop:36627  	         [&lt;<label docpath="0,0,1,3,34,0,0,6,16">&gt;]               [EACH          </label>
+P 	 0,0,1,3,17,1,0,3 	 offsetTop:36897  	You cannot read sequential files online under CICS
+P 	 0,0,1,3,17,1,0,4 	 offsetTop:36926  	You cannot modify sequential files in the scope of
+P 	 0,0,1,3,17,1,0,5 	 offsetTop:36993  	The keyword QUIT in the logical scope of a FOR EAC
++++ H5 	 0,0,1,3,17,2,0  	  id:NEXT 	 offsetTop:37043  	FOR NEXT Statement (Sequential Files)
+P 	 0,0,1,3,17,2,0,1 	 offsetTop:37072  	The FOR NEXT statement specifies a series of state
+P 	 0,0,1,3,17,2,0,2 	 offsetTop:37158  	This statement is not iterative. To repeat executi
+PRE 	 0,0,1,3,17,2,0,3 	 offsetTop:37212  	         &lt;<label docpath="0,0,1,3,34,0,0,6,17">&gt;               FOR [THE] NEXT da</label>
+P 	 0,0,1,3,17,2,0,4 	 offsetTop:37393  	The FOR EACH construct is used for most sequential
+PRE 	 0,0,1,3,17,2,0,5 	 offsetTop:37466  	  Example 1           FOR NEXT EMPLOYEE           
++++ H5 	 0,0,1,3,17,3,0  	  id:Statement6 	 offsetTop:38021  	FOR NEW Statement (Sequential Files)
+P 	 0,0,1,3,17,3,0,1 	 offsetTop:38050  	The FOR NEW statement adds new records to the end 
+PRE 	 0,0,1,3,17,3,0,2 	 offsetTop:38123  	         [&lt;<label docpath="0,0,1,3,34,0,0,6,18">&gt;]          FOR [THE] NEW datavi</label>
+P 	 0,0,1,3,17,3,0,3 	 offsetTop:38243  	Example 1
+PRE 	 0,0,1,3,17,3,0,4 	 offsetTop:38278  	         FOR THE NEW INVEN_ITEM                MOV
+P 	 0,0,1,3,17,3,0,5 	 offsetTop:38339  	Example 2       The following example illustrates 
+PRE 	 0,0,1,3,17,3,0,6 	 offsetTop:38412  	     _____________________________________________
++++ H4 	 0,0,1,3,18,0,0  	  id:Statement7 	 offsetTop:38892  	FOR Statement (VSAM Files)
+P 	 0,0,1,3,18,0,0,1 	 offsetTop:38925  	The FOR - ENDFOR construct is used for reading and
+P 	 0,0,1,3,18,0,0,2 	 offsetTop:38973  	Requires the CA-Ideal VSAM support option installe
+P 	 0,0,1,3,18,0,0,3 	 offsetTop:39002  	There are two kinds of variable length records: 
+UL 	 0,0,1,3,18,0,0,4 	 offsetTop:39024  	         Variable-occurrence records include a fie
+   LI 	 0,0,1,3,18,0,0,4,1 	 offsetTop:39024  	Variable-occurrence records include a field or gro
+   LI 	 0,0,1,3,18,0,0,4,2 	 offsetTop:39063  	Variable-segment records include different fields,
+P 	 0,0,1,3,18,0,0,5 	 offsetTop:39148  	ESDS files are not required to have a fixed-length
+P 	 0,0,1,3,18,0,0,6 	 offsetTop:39177  	KSDS files require a fixed-length segment containi
+P 	 0,0,1,3,18,0,0,7 	 offsetTop:39206  	For RRDS files, variable length records are not su
+P 	 0,0,1,3,18,0,0,8 	 offsetTop:39235  	Variable-segment actual records are padded with bi
+P 	 0,0,1,3,18,0,0,9 	 offsetTop:39283  	The FOR EACH and FOR FIRST constructs retrieve and
+   EM 	 0,0,1,3,18,0,0,9,1 	 offsetTop:39284  	The FOR EACH and FOR FIRST constructs retrieve and
+P 	 0,0,1,3,18,0,0,10 	 offsetTop:39426  	To insert a new record into the file, use the FOR 
+   EM 	 0,0,1,3,18,0,0,10,1 	 offsetTop:39427  	To insert a new record into the file, use the FOR 
++++ H5 	 0,0,1,3,18,1,0  	  id:EACH3 	 offsetTop:39514  	FOR EACH/FIRST Statement (VSAM Files)
+P 	 0,0,1,3,18,1,0,1 	 offsetTop:39543  	The FOR EACH and FOR FIRST statements process a   
+PRE 	 0,0,1,3,18,1,0,2 	 offsetTop:39654  	         &lt;<label docpath="0,0,1,3,34,0,0,6,19">&gt;               [EACH            </label>
+P 	 0,0,1,3,18,1,0,3 	 offsetTop:39970  	KSDS VSAM records are updated only through the pri
++++ H5 	 0,0,1,3,18,2,0  	  id:Statement8 	 offsetTop:40058  	FOR NEW Statement (VSAM Files)
+P 	 0,0,1,3,18,2,0,1 	 offsetTop:40087  	The FOR NEW statement inserts a single record into
+PRE 	 0,0,1,3,18,2,0,2 	 offsetTop:40141  	         &lt;<label docpath="0,0,1,3,34,0,0,6,20">&gt;             FOR [THE] NEW datav</label>
+P 	 0,0,1,3,18,2,0,3 	 offsetTop:40336  	WHERE $RRN = value Specifies the relative record n
+P 	 0,0,1,3,18,2,0,4 	 offsetTop:40403  	Example 1:
+P 	 0,0,1,3,18,2,0,5 	 offsetTop:40432  	In this example, the FOR NEW construct is included
+PRE 	 0,0,1,3,18,2,0,6 	 offsetTop:40505  	         LOOP UNTIL TRANSCODE = 'Q'             TR
+P 	 0,0,1,3,18,2,0,7 	 offsetTop:40655  	Example 2: 
+P 	 0,0,1,3,18,2,0,8 	 offsetTop:40684  	In this example, the $RRN function determines the 
+PRE 	 0,0,1,3,18,2,0,9 	 offsetTop:40777  	         FOR FIRST PAYROLL ORDERED BY DESCENDING  
++++ H5 	 0,0,1,3,18,3,0  	  id:VSAM 	 offsetTop:40987  	VSAM Support: Backout and Recovery
+P 	 0,0,1,3,18,3,0,1 	 offsetTop:41016  	In non-CICS environments, the CA-Ideal PDL CHECKPO
+P 	 0,0,1,3,18,3,0,2 	 offsetTop:41083  	Under CICS, CICS command level functions are actua
+P 	 0,0,1,3,18,3,0,3 	 offsetTop:41207  	In addition, if CICS VSAM files are accessed along
+P 	 0,0,1,3,18,3,0,4 	 offsetTop:41293  	Define VSAM clusters with the following steps, whi
+OL 	 0,0,1,3,18,3,0,5 	 offsetTop:41334  	         VSAM clusters that CA-Ideal is to maintai
+   LI 	 0,0,1,3,18,3,0,5,1 	 offsetTop:41334  	VSAM clusters that CA-Ideal is to maintain and for
+   LI 	 0,0,1,3,18,3,0,5,2 	 offsetTop:41411  	Include the parameter DTB=YES on every PCT entry t
+   LI 	 0,0,1,3,18,3,0,5,3 	 offsetTop:41564  	Implement CICS recovery utilities to handle abends
+P 	 0,0,1,3,18,3,0,6 	 offsetTop:41630  	If you choose to use the CICS DTB (dynamic transac
++++ H4 	 0,0,1,3,19,0,0  	  id:Statement9 	 offsetTop:41720  	IF Statement
+PRE 	 0,0,1,3,19,0,0,1 	 offsetTop:41759  	         IF condition           [THEN         ]   
+P 	 0,0,1,3,19,0,0,2 	 offsetTop:41910  	condition A user-defined condition (see the defini
+P 	 0,0,1,3,19,0,0,3 	 offsetTop:41977  	THEN Can be added for readability. 
+P 	 0,0,1,3,19,0,0,4 	 offsetTop:42006  	ELSE Marks the start of a set of statements to exe
+P 	 0,0,1,3,19,0,0,5 	 offsetTop:42054  	ENDIF Terminates the IF construct. When IF       s
+PRE 	 0,0,1,3,19,0,0,6 	 offsetTop:42108  	  Example 1           IF QUANT_ON_HAND &gt; QUANT_ORD
++++ H4 	 0,0,1,3,20,0,0  	  id:INITIATE 	 offsetTop:42813  	INITIATE Statement
+P 	 0,0,1,3,20,0,0,1 	 offsetTop:42846  	The INITIATE statement runs a CA-Ideal program asy
+PRE 	 0,0,1,3,20,0,0,2 	 offsetTop:42881  	         INITIATE pgm-name [USING INPUT parm] 
+P 	 0,0,1,3,20,0,0,3 	 offsetTop:42911  	pgm-name The name of the CA-Ideal program to execu
+P 	 0,0,1,3,20,0,0,4 	 offsetTop:43016  	parm The name of a field that contains data or a l
+P 	 0,0,1,3,20,0,0,5 	 offsetTop:43083  	The asynchronous task uses the same selected syste
+P 	 0,0,1,3,20,0,0,6 	 offsetTop:43150  	When the asynchronous subprogram completes, a mess
+P 	 0,0,1,3,20,0,0,7 	 offsetTop:43217  	Example: 
+P 	 0,0,1,3,20,0,0,8 	 offsetTop:43246  	The following code is part of an inventory update 
+   EM 	 0,0,1,3,20,0,0,8,1 	 offsetTop:43247  	INCOMING
+PRE 	 0,0,1,3,20,0,0,9 	 offsetTop:43377  	         &lt;<process-incoming docpath="0,0,1,3,34,0,0,6,21">&gt; PROCEDURE           </process-incoming>
++++ H4 	 0,0,1,3,21,0,0  	  id:INVERT 	 offsetTop:43602  	INVERT Statement
+P 	 0,0,1,3,21,0,0,1 	 offsetTop:43635  	The INVERT statement reverses the order of charact
+PRE 	 0,0,1,3,21,0,0,2 	 offsetTop:43689  	                {alpha_field}          INVERT {alp
+P 	 0,0,1,3,21,0,0,3 	 offsetTop:43734  	Example:
+P 	 0,0,1,3,21,0,0,4 	 offsetTop:43763  	The following example shows how you can use INVERT
+   EM 	 0,0,1,3,21,0,0,4,2 	 offsetTop:43783  	W-WORK
+PRE 	 0,0,1,3,21,0,0,5 	 offsetTop:43836  	         SET W_SENTENCE = 'THIS IS A SENTENCE     
++++ H4 	 0,0,1,3,22,0,0  	  id:LIST 	 offsetTop:43956  	LIST Statement
+P 	 0,0,1,3,22,0,0,1 	 offsetTop:43989  	The LIST statement sends data to the RUNLIST outpu
+P 	 0,0,1,3,22,0,0,2 	 offsetTop:44056  	The first format LIST sends variables or literals 
+PRE 	 0,0,1,3,22,0,0,3 	 offsetTop:44149  	               [list_specification]           LIST
+P 	 0,0,1,3,22,0,0,4 	 offsetTop:44194  	list_specification Specifies the data to list. The
+PRE 	 0,0,1,3,22,0,0,5 	 offsetTop:44229  	            {numeric_field   }[     {numeric_field
+P 	 0,0,1,3,22,0,0,6 	 offsetTop:44349  	SKIP Causes the listing to skip to a new line. 
+P 	 0,0,1,3,22,0,0,7 	 offsetTop:44378  	PANEL panelname Writes an image of the named panel
+P 	 0,0,1,3,22,0,0,8 	 offsetTop:44426  	NEWPAGE Causes the listing to skip to the top of t
+P 	 0,0,1,3,22,0,0,9 	 offsetTop:44455  	ERROR (Only in an error procedure or WHEN ERROR   
+P 	 0,0,1,3,22,0,0,10 	 offsetTop:44560  	On output, items on the same line are separated fr
+P 	 0,0,1,3,22,0,0,11 	 offsetTop:44589  	If a numeric or date field is identified in a     
+P 	 0,0,1,3,22,0,0,12 	 offsetTop:44637  	For a variable length field, the actual length is 
+P 	 0,0,1,3,22,0,0,13 	 offsetTop:44666  	An item with a value of null is listed as a questi
+P 	 0,0,1,3,22,0,0,14 	 offsetTop:44714  	You can override the destination of the LIST outpu
+P 	 0,0,1,3,22,0,0,15 	 offsetTop:44781  	Exa,ple:
+PRE 	 0,0,1,3,22,0,0,16 	 offsetTop:44816  	         LIST 'THE ANSWER IS' X, Y 'ON', Z        
++++ H4 	 0,0,1,3,23,0,0  	  id:LOOP 	 offsetTop:44892  	LOOP Statement
+P 	 0,0,1,3,23,0,0,1 	 offsetTop:44925  	The LOOP statement executes one or more statements
+PRE 	 0,0,1,3,23,0,0,2 	 offsetTop:44979  	  Syntax 1           [&lt;<label docpath="0,0,1,3,34,0,0,6,22">&gt;]             LOOP </label>
+P 	 0,0,1,3,23,0,0,3 	 offsetTop:45594  	&lt;<label docpath="0,0,1,3,34,0,0,6,23">&gt; Optional 1 to 15-character label. You ca</label>
+P 	 0,0,1,3,23,0,0,4 	 offsetTop:45661  	WHILE condition Indicates that the loop executes w
+P 	 0,0,1,3,23,0,0,5 	 offsetTop:45728  	UNTIL condition Indicates that the loop executes r
+P 	 0,0,1,3,23,0,0,6 	 offsetTop:45795  	numeric_expression_1 TIMES The maximum number of t
+P 	 0,0,1,3,23,0,0,7 	 offsetTop:45881  	VARYING identifier Specifies a numeric field to be
+P 	 0,0,1,3,23,0,0,8 	 offsetTop:45929  	FROM numeric_expression_2 Specifies an initial val
+P 	 0,0,1,3,23,0,0,9 	 offsetTop:45958  	DIRECTION clause Specifies the direction of increm
+PRE 	 0,0,1,3,23,0,0,10 	 offsetTop:46031  	              [UP  ]    [DOWN] THRU numeric_expres
+P 	 0,0,1,3,23,0,0,11 	 offsetTop:46076  	The loop is terminated when using UP and the value
+P 	 0,0,1,3,23,0,0,12 	 offsetTop:46143  	ENDLOOP End of the LOOP construct. 
+P 	 0,0,1,3,23,0,0,13 	 offsetTop:46172  	The numeric expressions in this statement can't be
+P 	 0,0,1,3,23,0,0,14 	 offsetTop:46201  	The location of the tests in the loop is determine
+P 	 0,0,1,3,23,0,0,15 	 offsetTop:46287  	When a PROCESS NEXT statement is encountered in a 
+P 	 0,0,1,3,23,0,0,16 	 offsetTop:46335  	When a QUIT statement is encountered in a loop, ex
+P 	 0,0,1,3,23,0,0,17 	 offsetTop:46383  	In the following loop, the test is made before any
+PRE 	 0,0,1,3,23,0,0,18 	 offsetTop:46419  	            LOOP             UNTIL/WHILE condition
+P 	 0,0,1,3,23,0,0,19 	 offsetTop:46494  	In the following loop, the test is made after the 
+PRE 	 0,0,1,3,23,0,0,20 	 offsetTop:46548  	            LOOP               statements         
+P 	 0,0,1,3,23,0,0,21 	 offsetTop:46638  	In the next example the test is performed after th
+PRE 	 0,0,1,3,23,0,0,22 	 offsetTop:46711  	            LOOP               statements_1       
+P 	 0,0,1,3,23,0,0,23 	 offsetTop:46801  	In the following loop, the VARYING clause processe
+PRE 	 0,0,1,3,23,0,0,24 	 offsetTop:46875  	            LOOP             VARYING LOOP-INDEX FR
+P 	 0,0,1,3,23,0,0,25 	 offsetTop:46950  	You can use FROM, BY, and THRU clauses in any orde
+P 	 0,0,1,3,23,0,0,26 	 offsetTop:46979  	The following is an infinite loop. 
+PRE 	 0,0,1,3,23,0,0,27 	 offsetTop:47014  	            LOOP             VARYING LOOP-INDEX FR
+P 	 0,0,1,3,23,0,0,28 	 offsetTop:47089  	This loop repeatedly transmits a panel until you e
+PRE 	 0,0,1,3,23,0,0,29 	 offsetTop:47181  	            &lt;<main docpath="0,0,1,3,34,0,0,6,24">&gt; PROCEDURE               LOOP </main>
+P 	 0,0,1,3,23,0,0,30 	 offsetTop:47437  	This loop processes a sequential file until the fi
+PRE 	 0,0,1,3,23,0,0,31 	 offsetTop:47491  	            &lt;<position-hdr docpath="0,0,1,3,34,0,0,6,25">&gt;               LOOP   </position-hdr>
+P 	 0,0,1,3,23,0,0,32 	 offsetTop:47656  	More examples: 
+PRE 	 0,0,1,3,23,0,0,33 	 offsetTop:47691  	  Example 1           LOOP UNTIL BALANCE NOT &gt; AMO
++++ H4 	 0,0,1,3,24,0,0  	  id:MOVE 	 offsetTop:48201  	MOVE Statement
+P 	 0,0,1,3,24,0,0,1 	 offsetTop:48234  	The MOVE statement copies data from a source to a 
+PRE 	 0,0,1,3,24,0,0,2 	 offsetTop:48269  	  Syntax 1  (MOVE TO Numeric Field):              
+P 	 0,0,1,3,24,0,0,3 	 offsetTop:48360  	&nbsp;If both fields are numeric the value is moved ali
+P 	 0,0,1,3,24,0,0,4 	 offsetTop:48427  	If the target is a date field, then the source can
+P 	 0,0,1,3,24,0,0,5 	 offsetTop:48456  	When analphanumeric value is moved to a non-date n
+P 	 0,0,1,3,24,0,0,6 	 offsetTop:48523  	If the source is NULL the target field must be nul
+P 	 0,0,1,3,24,0,0,7 	 offsetTop:48552  	&nbsp;&nbsp;
+PRE 	 0,0,1,3,24,0,0,8 	 offsetTop:48587  	  Syntax 2  (MOVE TO Alpha Field):                
+P 	 0,0,1,3,24,0,0,9 	 offsetTop:48707  	Syntax 2 moves a value to an elementary alphanumer
+P 	 0,0,1,3,24,0,0,10 	 offsetTop:48736  	The source value is truncatted or padded with blan
+P 	 0,0,1,3,24,0,0,11 	 offsetTop:48784  	If the source is a non-alpha group, it is treated 
+P 	 0,0,1,3,24,0,0,12 	 offsetTop:48832  	When low values are moved to an alphanumeric panel
+P 	 0,0,1,3,24,0,0,13 	 offsetTop:48899  	When a non-date numeric source is moved to an alph
+P 	 0,0,1,3,24,0,0,14 	 offsetTop:49004  	You cannot move an arithmetic expression or numeri
+P 	 0,0,1,3,24,0,0,15 	 offsetTop:49052  	You cannot move a date type source to an alphanume
+P 	 0,0,1,3,24,0,0,16 	 offsetTop:49100  	If the source is NULL the target field must be nul
+P 	 0,0,1,3,24,0,0,17 	 offsetTop:49129  	&nbsp;
+PRE 	 0,0,1,3,24,0,0,18 	 offsetTop:49164  	  Syntax 3  (MOVE TO Group):           MOVE group1
+P 	 0,0,1,3,24,0,0,19 	 offsetTop:49239  	Syntax 3 moves data from one group to another. 
+P 	 0,0,1,3,24,0,0,20 	 offsetTop:49268  	Moving a value from each field in the source group
+P 	 0,0,1,3,24,0,0,21 	 offsetTop:49316  	BY NAME moves the value from each field in the sou
+P 	 0,0,1,3,24,0,0,22 	 offsetTop:49364  	Redefinitions in the sending group are not eligibl
+P 	 0,0,1,3,24,0,0,23 	 offsetTop:49412  	A compile-time error message is issued if the numb
+P 	 0,0,1,3,24,0,0,24 	 offsetTop:49479  	BY POSITION moves the value of the first elementar
+P 	 0,0,1,3,24,0,0,25 	 offsetTop:49546  	The group structures must be compatible as follows
+UL 	 0,0,1,3,24,0,0,26 	 offsetTop:49568  	         Structures must have the same number of e
+   LI 	 0,0,1,3,24,0,0,26,1 	 offsetTop:49568  	Structures must have the same number of elementary
+   LI 	 0,0,1,3,24,0,0,26,2 	 offsetTop:49588  	OCCURs values must be identical and at the same re
+P 	 0,0,1,3,24,0,0,27 	 offsetTop:49616  	Using $EDIT rules: 
+P 	 0,0,1,3,24,0,0,28 	 offsetTop:49645  	In a group move only, specifies to convert numeric
+P 	 0,0,1,3,24,0,0,29 	 offsetTop:49712  	Using $STRING rules (default.): 
+P 	 0,0,1,3,24,0,0,30 	 offsetTop:49741  	In a group move only, performs numeric conversion 
+P 	 0,0,1,3,24,0,0,31 	 offsetTop:49770  	Examples: 
+PRE 	 0,0,1,3,24,0,0,32 	 offsetTop:49806  	         MOVE QUANTITY_ORDERED * UNIT_PRICE TO CHA
+P 	 0,0,1,3,24,0,0,33 	 offsetTop:49836  	Syntax 1: 
+PRE 	 0,0,1,3,24,0,0,34 	 offsetTop:49871  	         MOVE CURRENT_AMOUNT TO AMOUNT_RQRD       
+P 	 0,0,1,3,24,0,0,35 	 offsetTop:49946  	Syntax 2: 
+PRE 	 0,0,1,3,24,0,0,36 	 offsetTop:49981  	         MOVE $STRING (X,Y,Z) TO ALPHA 
+P 	 0,0,1,3,24,0,0,37 	 offsetTop:50011  	Syntax 3 - Example 1: 
+PRE 	 0,0,1,3,24,0,0,38 	 offsetTop:50047  	                Level  Field   Type  Int   Chars  
+P 	 0,0,1,3,24,0,0,39 	 offsetTop:50227  	&nbsp;
+PRE 	 0,0,1,3,24,0,0,40 	 offsetTop:50262  	         MOVE B(1) TO X BY NAME 
+P 	 0,0,1,3,24,0,0,41 	 offsetTop:50292  	The values of all occurrences of C(1,n) and D(1) i
+PRE 	 0,0,1,3,24,0,0,42 	 offsetTop:50346  	         MOVE A TO X BY NAME 
+P 	 0,0,1,3,24,0,0,43 	 offsetTop:50377  	Invalid MOVE because structures 1 and 2 do not mat
+P 	 0,0,1,3,24,0,0,44 	 offsetTop:50425  	&nbsp;
+P 	 0,0,1,3,24,0,0,45 	 offsetTop:50454  	Syntax 3 - Example 2: 
+PRE 	 0,0,1,3,24,0,0,46 	 offsetTop:50489  	             Level  Field   Type  Int   Chars   Oc
+P 	 0,0,1,3,24,0,0,47 	 offsetTop:50669  	&nbsp;
+PRE 	 0,0,1,3,24,0,0,48 	 offsetTop:50704  	         MOVE B(1) TO X BY NAME 
+P 	 0,0,1,3,24,0,0,49 	 offsetTop:50734  	&nbsp;Invalid MOVE because OCCUR of 5 for C in structur
+P 	 0,0,1,3,24,0,0,50 	 offsetTop:50782  	Syntax 3 - Example 2: 
+PRE 	 0,0,1,3,24,0,0,51 	 offsetTop:50817  	             Level  Field   Type  Int   Chars   Oc
+P 	 0,0,1,3,24,0,0,52 	 offsetTop:51028  	&nbsp;
+PRE 	 0,0,1,3,24,0,0,53 	 offsetTop:51063  	         MOVE A TO BB BY NAME 
+P 	 0,0,1,3,24,0,0,54 	 offsetTop:51093  	Moves only the values of all occurrences of C beca
+P 	 0,0,1,3,24,0,0,55 	 offsetTop:51160  	&nbsp;
+PRE 	 0,0,1,3,24,0,0,56 	 offsetTop:51195  	         MOVE A TO AA BY NAME
+P 	 0,0,1,3,24,0,0,57 	 offsetTop:51225  	Moves the values of all occurrences of C and D bec
+P 	 0,0,1,3,24,0,0,58 	 offsetTop:51273  	Syntax 3 - Example 3: 
+P 	 0,0,1,3,24,0,0,59 	 offsetTop:51302  	This first example of MOVE BY POSITION illustrates
+PRE 	 0,0,1,3,24,0,0,60 	 offsetTop:51414  	             Level  Field   Type  Int   Chars   Oc
+P 	 0,0,1,3,24,0,0,61 	 offsetTop:51669  	&nbsp;
+PRE 	 0,0,1,3,24,0,0,62 	 offsetTop:51704  	         MOVE A TO M BY POSITION 
+P 	 0,0,1,3,24,0,0,63 	 offsetTop:51734  	This is a valid move. The structures are tested fo
+P 	 0,0,1,3,24,0,0,64 	 offsetTop:51782  	1. Removes any OCCURs values from group entries in
+P 	 0,0,1,3,24,0,0,65 	 offsetTop:51849  	2. Removes any fields or groups with REDEFs in bot
+P 	 0,0,1,3,24,0,0,66 	 offsetTop:51916  	3. Removes each subordinate group entry except any
+P 	 0,0,1,3,24,0,0,67 	 offsetTop:51964  	4. Finally, the levels are renumbered for the rema
+PRE 	 0,0,1,3,24,0,0,68 	 offsetTop:52018  	             Level  Field   Type  Int   Chars   Oc
+P 	 0,0,1,3,24,0,0,69 	 offsetTop:52198  	The move is now formed as follows: The values of a
++++ H4 	 0,0,1,3,25,0,0  	  id:NOTIFY 	 offsetTop:52251  	NOTIFY Statement
+P 	 0,0,1,3,25,0,0,1 	 offsetTop:52284  	The NOTIFY statement transmits data or a message t
+PRE 	 0,0,1,3,25,0,0,2 	 offsetTop:52395  	         NOTIFY list_specification [TO CONSOLE] 
+P 	 0,0,1,3,25,0,0,3 	 offsetTop:52425  	list_specification Specifies the data to transmit.
+PRE 	 0,0,1,3,25,0,0,4 	 offsetTop:52460  	            {flag                   }[    flag    
+P 	 0,0,1,3,25,0,0,5 	 offsetTop:52536  	TO CONSOLE The CONSOLE clause lets the application
+P 	 0,0,1,3,25,0,0,6 	 offsetTop:52603  	The NOTIFY message is sent from the program to the
+P 	 0,0,1,3,25,0,0,7 	 offsetTop:52670  	The NOTIFY message is cleared from the message lin
+P 	 0,0,1,3,25,0,0,8 	 offsetTop:52775  	If the TO CONSOLE clause is used, the message is s
+P 	 0,0,1,3,25,0,0,9 	 offsetTop:52823  	The maximum length of a NOTIFY message is 79 chara
+P 	 0,0,1,3,25,0,0,10 	 offsetTop:52852  	The maximum length of a NOTIFY message sent to a c
+P 	 0,0,1,3,25,0,0,11 	 offsetTop:52881  	A null data item is shown as a question mark (?) o
++++ H4 	 0,0,1,3,26,0,0  	  id:Procedure2 	 offsetTop:52933  	Procedure
+P 	 0,0,1,3,26,0,0,1 	 offsetTop:52966  	A named, functional, collection of statements. 
+PRE 	 0,0,1,3,26,0,0,2 	 offsetTop:53001  	         &lt;<procedure_name docpath="0,0,1,3,34,0,0,6,26">&gt; {PROC      }          </procedure_name>
+P 	 0,0,1,3,26,0,0,3 	 offsetTop:53091  	procedure_name 1 to 15-characterprocedure label. T
+P 	 0,0,1,3,26,0,0,4 	 offsetTop:53139  	PROC|PROCEDURE Designates the beginning of a new p
+P 	 0,0,1,3,26,0,0,5 	 offsetTop:53187  	ENDPROC|ENDPROCEDURE Designates the end of the pro
+P 	 0,0,1,3,26,0,0,6 	 offsetTop:53235  	Any statements occurring after an ENDPROCEDURE and
+P 	 0,0,1,3,26,0,0,7 	 offsetTop:53283  	A procedure named &lt;<error docpath="0,0,1,3,34,0,0,6,27">&gt; will handle execution </error>
+PRE 	 0,0,1,3,26,0,0,8 	 offsetTop:53357  	       &lt;<main docpath="0,0,1,3,34,0,0,6,28">&gt; PROCEDURE            LOOP         </main>
++++ H4 	 0,0,1,3,27,0,0  	  id:PROCESS 	 offsetTop:53732  	PROCESS NEXT Statement
+P 	 0,0,1,3,27,0,0,1 	 offsetTop:53765  	Terminates the current iteration and initiates the
+PRE 	 0,0,1,3,27,0,0,2 	 offsetTop:53857  	         PROCESS NEXT [label] 
+P 	 0,0,1,3,27,0,0,3 	 offsetTop:53887  	PROCESS NEXT without label must appear in the lexi
+P 	 0,0,1,3,27,0,0,4 	 offsetTop:53935  	label is the label of the terminated LOOP or      
+P 	 0,0,1,3,27,0,0,5 	 offsetTop:53964  	When PROCESS NEXT executes, the ENDLOOP or       E
+PRE 	 0,0,1,3,27,0,0,6 	 offsetTop:54018  	  Example 1           &lt;<emp docpath="0,0,1,3,34,0,0,6,29">&gt;              FOR EAC</emp>
++++ H4 	 0,0,1,3,28,0,0  	  id:PRODUCE 	 offsetTop:54754  	PRODUCE Statement
+P 	 0,0,1,3,28,0,0,1 	 offsetTop:54787  	The PRODUCE statement generates a report that must
+P 	 0,0,1,3,28,0,0,2 	 offsetTop:54835  	The PRODUCE statement usually is contained in a   
+PRE 	 0,0,1,3,28,0,0,3 	 offsetTop:54946  	         PRODUCE report_name[group_name] 
+P 	 0,0,1,3,28,0,0,4 	 offsetTop:54976  	report_name The one- to eight-character name of th
+P 	 0,0,1,3,28,0,0,5 	 offsetTop:55005  	group_name The three- to eight-character name of a
+P 	 0,0,1,3,28,0,0,6 	 offsetTop:55053  	Page breaks, control breaks, headings, summaries, 
+P 	 0,0,1,3,28,0,0,7 	 offsetTop:55120  	In batch, each eight-character report-name corresp
+P 	 0,0,1,3,28,0,0,8 	 offsetTop:55206  	All fields in the detail group must have values at
+P 	 0,0,1,3,28,0,0,9 	 offsetTop:55254  	A PRODUCE statement activates a report and it rema
+P 	 0,0,1,3,28,0,0,10 	 offsetTop:55321  	A maximum of 15 reports can be active simultaneous
+PRE 	 0,0,1,3,28,0,0,11 	 offsetTop:55356  	   Example             FOR EACH EMPLOYEE WHERE STA
++++ H4 	 0,0,1,3,29,0,0  	  id:QUIT 	 offsetTop:55431  	QUIT Statement
+P 	 0,0,1,3,29,0,0,1 	 offsetTop:55464  	The QUIT statement causes the flow of control to a
+PRE 	 0,0,1,3,29,0,0,2 	 offsetTop:55556  	              [label-of-FOR-or-LOOP               
+P 	 0,0,1,3,29,0,0,3 	 offsetTop:55662  	QUIT with no operands, terminates the current FOR 
+P 	 0,0,1,3,29,0,0,4 	 offsetTop:55748  	QUIT label-of-FOR-or-LOOP terminates the labeled c
+P 	 0,0,1,3,29,0,0,5 	 offsetTop:55815  	QUIT PROGRAM terminates the current program or sub
+P 	 0,0,1,3,29,0,0,6 	 offsetTop:55882  	QUIT RUN terminates the current program and all ot
+P 	 0,0,1,3,29,0,0,7 	 offsetTop:55930  	QUIT label-of-procedure terminates the labeled pro
+P 	 0,0,1,3,29,0,0,8 	 offsetTop:56016  	QUIT PROCEDURE terminates the current procedure an
+P 	 0,0,1,3,29,0,0,9 	 offsetTop:56102  	QUIT ALL terminates the current procedure and all 
+P 	 0,0,1,3,29,0,0,10 	 offsetTop:56150  	TRANSFER [TO] procedure An optional clause that pa
+P 	 0,0,1,3,29,0,0,11 	 offsetTop:56217  	A QUIT PROCEDURE is implicit at the end of each pr
+P 	 0,0,1,3,29,0,0,12 	 offsetTop:56265  	A QUIT without a label and a QUIT PROCEDURE       
+P 	 0,0,1,3,29,0,0,13 	 offsetTop:56313  	Use of the TRANSFER clause can render a program di
+P 	 0,0,1,3,29,0,0,14 	 offsetTop:56380  	You cannot transfer control to an active procedure
+PRE 	 0,0,1,3,29,0,0,15 	 offsetTop:56453  	   Example           &lt;<up_date docpath="0,0,1,3,34,0,0,6,30">&gt; PROCEDURE        </up_date>
+P 	 0,0,1,3,29,0,0,16 	 offsetTop:56708  	You can prevent TRANSFER TO for the site using the
++++ H4 	 0,0,1,3,30,0,0  	  id:REFRESH 	 offsetTop:56779  	REFRESH Statement
+P 	 0,0,1,3,30,0,0,1 	 offsetTop:56812  	The REFRESH statement resets all fields in the nam
+P 	 0,0,1,3,30,0,0,2 	 offsetTop:56879  	The Creating Panel Definitions guide &gt;&gt;&gt;&gt; describe
+PRE 	 0,0,1,3,30,0,0,3 	 offsetTop:56972  	         REFRESH panel_name 
+P 	 0,0,1,3,30,0,0,4 	 offsetTop:57002  	panel_name The one- to eight-character name of the
+P 	 0,0,1,3,30,0,0,5 	 offsetTop:57050  	Fields with an initial value set in LAYOUT are ref
+P 	 0,0,1,3,30,0,0,6 	 offsetTop:57098  	Fields without an initial value LAYOUT (for exampl
+P 	 0,0,1,3,30,0,0,7 	 offsetTop:57165  	REFRESH often restores a panel for a new set of da
+P 	 0,0,1,3,30,0,0,8 	 offsetTop:57232  	If you only need to reinitialize a few fields, use
++++ H4 	 0,0,1,3,31,0,0  	  id:RELEASE 	 offsetTop:57322  	RELEASE Statement
+P 	 0,0,1,3,31,0,0,1 	 offsetTop:57355  	Releases a panel, report, or subprogram after it i
+P 	 0,0,1,3,31,0,0,2 	 offsetTop:57441  	If a subprogram is not explicitly released, it rem
+PRE 	 0,0,1,3,31,0,0,3 	 offsetTop:57552  	                 {PANEL panel_name              } 
+P 	 0,0,1,3,31,0,0,4 	 offsetTop:57613  	panel_name The name of the panel to release. You c
+P 	 0,0,1,3,31,0,0,5 	 offsetTop:57661  	rpt_name The name of the report to release or the 
+P 	 0,0,1,3,31,0,0,6 	 offsetTop:57709  	WITH ABORT Prints the data specifications on the l
+P 	 0,0,1,3,31,0,0,7 	 offsetTop:57776  	subprogram The name of the subprogram to release. 
+P 	 0,0,1,3,31,0,0,8 	 offsetTop:57843  	When a report is released, final control footings 
+P 	 0,0,1,3,31,0,0,9 	 offsetTop:57929  	The RELEASE REPORT RUNLIST statement releases the 
+P 	 0,0,1,3,31,0,0,10 	 offsetTop:57996  	You can issue the RELEASE PROGRAM statement from e
+P 	 0,0,1,3,31,0,0,11 	 offsetTop:58082  	You cannot RELEASE a program that directly or indi
++++ H4 	 0,0,1,3,32,0,0  	  id:RESET 	 offsetTop:58134  	RESET Statement
+P 	 0,0,1,3,32,0,0,1 	 offsetTop:58167  	Initializes a panel field or an entire panel to th
+P 	 0,0,1,3,32,0,0,2 	 offsetTop:58234  	The Creating Panel Definitions guide &gt;&gt;&gt;&gt; describe
+PRE 	 0,0,1,3,32,0,0,3 	 offsetTop:58326  	               [panel_field]          RESET [panel
+P 	 0,0,1,3,32,0,0,4 	 offsetTop:58371  	panel_field The identifier of a panel field to res
+P 	 0,0,1,3,32,0,0,5 	 offsetTop:58400  	panel_name The one- to eight-character name of a p
+P 	 0,0,1,3,32,0,0,6 	 offsetTop:58429  	A single field (either protected or unprotected) i
+P 	 0,0,1,3,32,0,0,7 	 offsetTop:58477  	All unprotected fields in a panel are reset if a p
+P 	 0,0,1,3,32,0,0,8 	 offsetTop:58506  	CA-Ideal transforms any field that was initialized
++++ H4 	 0,0,1,3,33,0,0  	  id:RT-0-0-1-3-33-0-0 	 offsetTop:58578  	SELECT Statement
+P 	 0,0,1,3,33,0,0,1 	 offsetTop:58611  	Executes one or more of several courses of action 
+P 	 0,0,1,3,33,0,0,2 	 offsetTop:58659  	Format 1 selects the set of statements that follow
+PRE 	 0,0,1,3,33,0,0,3 	 offsetTop:58732  	         SELECT select_subject                    
+P 	 0,0,1,3,33,0,0,4 	 offsetTop:59122  	select_subject The identifier of a numeric or alph
+P 	 0,0,1,3,33,0,0,5 	 offsetTop:59170  	WHEN clause Specifies a possible value (or values)
+P 	 0,0,1,3,33,0,0,6 	 offsetTop:59256  	numeric_expression|alpha_expression|NULL The value
+P 	 0,0,1,3,33,0,0,7 	 offsetTop:59304  	WHEN OTHER|NONE An optional postscript that specif
+P 	 0,0,1,3,33,0,0,8 	 offsetTop:59371  	WHEN ANY An optional postscript that specifies tha
+P 	 0,0,1,3,33,0,0,9 	 offsetTop:59438  	ENDSEL|ENDSELECT Terminates the SELECT construct. 
+P 	 0,0,1,3,33,0,0,10 	 offsetTop:59505  	A select_subject that evaluates to the null value 
+PRE 	 0,0,1,3,33,0,0,11 	 offsetTop:59578  	    Syntax 1 example           SELECT TRANS_CODE  
+P 	 0,0,1,3,33,0,0,12 	 offsetTop:59834  	Format 2 selects the statements that follow the fi
+PRE 	 0,0,1,3,33,0,0,13 	 offsetTop:59888  	         SELECT [FIRST [ACTION]]             WHEN 
+P 	 0,0,1,3,33,0,0,14 	 offsetTop:60143  	[FIRST [ACTION]] Optional words for readability. 
+P 	 0,0,1,3,33,0,0,15 	 offsetTop:60172  	WHEN condition (For an explanation of valid condit
+P 	 0,0,1,3,33,0,0,16 	 offsetTop:60277
+P 	 0,0,1,3,33,0,0,17 	 offsetTop:60287
+P 	 0,0,1,3,33,0,0,18 	 offsetTop:60297
+P 	 0,0,1,3,33,0,0,19 	 offsetTop:60307
+P 	 0,0,1,3,33,0,0,20 	 offsetTop:60317
++++ H4 	 0,0,1,3,34,0,0  	  id:TRANSMIT 	 offsetTop:60331  	TRANSMIT Statement
+P 	 0,0,1,3,34,0,0,1 	 offsetTop:60364  	The TRANSMIT statement sends a previously defined 
+P 	 0,0,1,3,34,0,0,2 	 offsetTop:60450
+P 	 0,0,1,3,34,0,0,3 	 offsetTop:60460
+P 	 0,0,1,3,34,0,0,4 	 offsetTop:60470
+P 	 0,0,1,3,34,0,0,5 	 offsetTop:60480
+PRE 	 0,0,1,3,34,0,0,6  	  id:docPathLog 	 offsetTop:60494  	+++ H2 	 0,0,1,0,0,0,0  	  id:RT-0-0-1-0-0-0-0 	 o
+   D 	 0,0,1,3,34,0,0,6,1 	 offsetTop:60597  	1          IF FOUND 
+   NAME 	 0,0,1,3,34,0,0,6,2 	 offsetTop:63561  	&gt; 
+   MAIN 	 0,0,1,3,34,0,0,6,3 	 offsetTop:67409  	&gt; PROCEDURE              LOOP  
+   ERROR 	 0,0,1,3,34,0,0,6,4 	 offsetTop:67487  	&gt; PROC               IF $ERROR-CL
+   ERROR 	 0,0,1,3,34,0,0,6,5 	 offsetTop:67578  	&gt; PROCEDURE               stateme
+   ERROR 	 0,0,1,3,34,0,0,6,6 	 offsetTop:67591  	&gt;: A reserved label. Most statements that 
+   ERROR 	 0,0,1,3,34,0,0,6,7 	 offsetTop:67734  	&gt; PROCEDURE              IF $RC L
+   ERROR 	 0,0,1,3,34,0,0,6,8 	 offsetTop:67760  	&gt; PROCEDURE              DO LOG-M
+   LABEL 	 0,0,1,3,34,0,0,6,9 	 offsetTop:68475  	&gt;]               [EACH          
+   LABEL 	 0,0,1,3,34,0,0,6,10 	 offsetTop:68488  	&gt; optional 1 to 15-character       name of
+   EMP-SEARCH 	 0,0,1,3,34,0,0,6,11 	 offsetTop:69008  	&gt;          FOR EACH EMPLOYEE
+   LABEL 	 0,0,1,3,34,0,0,6,12 	 offsetTop:69229  	&gt;]             FOR [THE] NEW dat
+   LABEL 	 0,0,1,3,34,0,0,6,13 	 offsetTop:69242  	&gt;] An optional 1 to       15-character na
+   LABEL 	 0,0,1,3,34,0,0,6,14 	 offsetTop:69749  	&gt;]               [EACH       
+   LABEL 	 0,0,1,3,34,0,0,6,15 	 offsetTop:69814  	&gt;               FOR [THE] NEW dat
+   LABEL 	 0,0,1,3,34,0,0,6,16 	 offsetTop:70061  	&gt;]               [EACH          
+   LABEL 	 0,0,1,3,34,0,0,6,17 	 offsetTop:70152  	&gt;               FOR [THE] NEXT da
+   LABEL 	 0,0,1,3,34,0,0,6,18 	 offsetTop:70217  	&gt;]          FOR [THE] NEW datavi
+   LABEL 	 0,0,1,3,34,0,0,6,19 	 offsetTop:70503  	&gt;               [EACH            
+   LABEL 	 0,0,1,3,34,0,0,6,20 	 offsetTop:70555  	&gt;             FOR [THE] NEW datav
+   PROCESS-INCOMING 	 0,0,1,3,34,0,0,6,21 	 offsetTop:71010  	&gt; PROCEDURE           
+   LABEL 	 0,0,1,3,34,0,0,6,22 	 offsetTop:71361  	&gt;]             LOOP 
+   LABEL 	 0,0,1,3,34,0,0,6,23 	 offsetTop:71374  	&gt; Optional 1 to 15-character label. You ca
+   MAIN 	 0,0,1,3,34,0,0,6,24 	 offsetTop:71712  	&gt; PROCEDURE               LOOP 
+   POSITION-HDR 	 0,0,1,3,34,0,0,6,25 	 offsetTop:71738  	&gt;               LOOP   
+   PROCEDURE_NAME 	 0,0,1,3,34,0,0,6,26 	 offsetTop:72895  	&gt; {PROC      }          
+   ERROR 	 0,0,1,3,34,0,0,6,27 	 offsetTop:72960  	&gt; will handle execution 
+   MAIN 	 0,0,1,3,34,0,0,6,28 	 offsetTop:72973  	&gt; PROCEDURE            LOOP         
+   EMP 	 0,0,1,3,34,0,0,6,29 	 offsetTop:73064  	&gt;              FOR EAC
+   UP_DATE 	 0,0,1,3,34,0,0,6,30 	 offsetTop:73428  	&gt; PROCEDURE        
+P 	 0,0,1,3,34,0,0,7 	 offsetTop:74625
+P 	 0,0,1,3,34,0,0,8 	 offsetTop:74648
+P 	 0,0,1,3,34,0,0,9 	 offsetTop:74671
+P 	 0,0,1,3,34,0,0,10 	 offsetTop:74694
+P 	 0,0,1,3,34,0,0,11 	 offsetTop:74717
+P 	 0,0,1,3,34,0,0,12 	 offsetTop:74740
+P 	 0,0,1,3,34,0,0,13 	 offsetTop:74763
+P 	 0,0,1,3,34,0,0,14 	 offsetTop:74786
+P 	 0,0,1,3,34,0,0,15 	 offsetTop:74809
+P 	 0,0,1,3,34,0,0,16 	 offsetTop:74832
+P 	 0,0,1,3,34,0,0,17 	 offsetTop:74855
+P 	 0,0,1,3,34,0,0,18 	 offsetTop:74878  	&nbsp;
+P 	 0,0,1,3,34,0,0,19 	 offsetTop:74920
+P 	 0,0,1,3,34,0,0,20 	 offsetTop:74943
+P 	 0,0,1,3,34,0,0,21 	 offsetTop:74966
+P 	 0,0,1,3,34,0,0,22 	 offsetTop:74989
+P 	 0,0,1,3,34,0,0,23 	 offsetTop:75012
+P 	 0,0,1,3,34,0,0,24 	 offsetTop:75035
+P 	 0,0,1,3,34,0,0,25 	 offsetTop:75058
+P 	 0,0,1,3,34,0,0,26 	 offsetTop:75081
+P 	 0,0,1,3,34,0,0,27 	 offsetTop:75104
+P 	 0,0,1,3,34,0,0,28 	 offsetTop:75127
+P 	 0,0,1,3,34,0,0,29 	 offsetTop:75150
+P 	 0,0,1,3,34,0,0,30 	 offsetTop:75173
+DIV 	 0,0,1,3,34,0,0,31  	  id:tocContainer 	 offsetTop:75196  	                &nbsp;                                 
+   P 	 0,0,1,3,34,0,0,31,1 	 offsetTop:75209  	&nbsp;
+   DIV 	 0,0,1,3,34,0,0,31,2 	 offsetTop:75247  	                        CA-Ideal IDLB22PR.boo     
+       UL 	 0,0,1,3,34,0,0,31,2,1 	 offsetTop:75260  	             CA-Ideal IDLB22PR.boo                
+           LI 	 0,0,1,3,34,0,0,31,2,1,1 	 offsetTop:75273  	CA-Ideal IDLB22PR.boo                            2
+               UL 	 0,0,1,3,34,0,0,31,2,1,1,2 	 offsetTop:75306  	               2- Procedure Definition Language Co
+                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,1 	 offsetTop:75319  	2- Procedure Definition Language Concepts and Lang
+                       UL 	 0,0,1,3,34,0,0,31,2,1,1,2,1,2 	 offsetTop:75352  	                 PDL Language Elements            
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,1,2,1 	 offsetTop:75365  	PDL Language Elements
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,1,2,2 	 offsetTop:75399  	PDL Format Rules                                  
+                               UL 	 0,0,1,3,34,0,0,31,2,1,1,2,1,2,2,2 	 offsetTop:75432  	                   Lexical rules                 
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,1,2,2,2,1 	 offsetTop:75445  	Lexical rules
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,1,2,3 	 offsetTop:75484  	EJECT Statement                                   
+                               UL 	 0,0,1,3,34,0,0,31,2,1,1,2,1,2,3,2 	 offsetTop:75517  	                   Comment                 
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,1,2,3,2,1 	 offsetTop:75530  	Comment
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,1,2,4 	 offsetTop:75569  	Converting Between Numeric and Alphanumeric
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,1,2,5 	 offsetTop:75603  	Data Definition Conventions 
+                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2 	 offsetTop:75642  	3- SQL Concepts and Language Elements             
+                       UL 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2 	 offsetTop:75675  	                 Introduction                 SQL 
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,1 	 offsetTop:75688  	Introduction
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,2 	 offsetTop:75722  	SQL Dataviews                                     
+                               UL 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,2,2 	 offsetTop:75755  	                   CA-DATACOM/DB Access Plans     
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,2,2,1 	 offsetTop:75768  	CA-DATACOM/DB Access Plans 
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,2,2,2 	 offsetTop:75802  	DB2 Application Plans and Packages
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,2,2,3 	 offsetTop:75836  	SQL NULL Attribute
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,2,2,4 	 offsetTop:75870  	Error Processing
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,2,2,5 	 offsetTop:75904  	Active Dictionary Facility 
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,2,2,6 	 offsetTop:75938  	Mixed SQL Sites
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,3 	 offsetTop:75977  	Supported SQL Statements                          
+                               UL 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,3,2 	 offsetTop:76010  	                   CA-DATACOM/DB SQL Statements Su
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,3,2,1 	 offsetTop:76023  	CA-DATACOM/DB SQL Statements Supported in PDL:
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,3,2,2 	 offsetTop:76057  	DB2 SQL Statements Supported in PDL:
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,3,2,3 	 offsetTop:76091  	WHENEVER Statement
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,3,2,4 	 offsetTop:76125  	Extension to INTO and VALUES Clauses
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,3,2,5 	 offsetTop:76159  	DB2 SQL Not Supported
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,4 	 offsetTop:76198  	SQLCA
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5 	 offsetTop:76232  	Supported SQL Language Elements                   
+                               UL 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5,2 	 offsetTop:76265  	                   Condition                   Dat
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5,2,1 	 offsetTop:76278  	Condition
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5,2,2 	 offsetTop:76312  	Data Types
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5,2,3 	 offsetTop:76346  	Function
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5,2,4 	 offsetTop:76380  	Host Variables
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5,2,5 	 offsetTop:76414  	Indicator Variable
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5,2,6 	 offsetTop:76448  	Identifier 
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5,2,7 	 offsetTop:76482  	Literal
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5,2,8 	 offsetTop:76516  	Name Conventions
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5,2,9 	 offsetTop:76550  	Qualified Table and View Name
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5,2,10 	 offsetTop:76584  	Example
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5,2,11 	 offsetTop:76618  	Qualified Column Name
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,5,2,12 	 offsetTop:76652  	Reserved Word
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,6 	 offsetTop:76691  	SQL Formatting Rules                              
+                               UL 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,6,2 	 offsetTop:76724  	                   Lexical Rules                  
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,6,2,1 	 offsetTop:76737  	Lexical Rules
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,2,2,6,2,2 	 offsetTop:76771  	Comments 
+                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3 	 offsetTop:76810  	4- Procedure Definition Language Statements       
+                       UL 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2 	 offsetTop:76843  	                 Introduction                 ADD 
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,1 	 offsetTop:76856  	Introduction
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,2 	 offsetTop:76890  	ADD Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,3 	 offsetTop:76924  	ASSIGN DATAVIEW Statement (CA-DATACOM Native Acces
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,4 	 offsetTop:76958  	ASSIGN REPORT Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,5 	 offsetTop:76992  	BACKOUT Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,6 	 offsetTop:77026  	CALL Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,7 	 offsetTop:77060  	CHECKPOINT Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,8 	 offsetTop:77094  	Comment
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,9 	 offsetTop:77128  	DELETE Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,10 	 offsetTop:77162  	DO Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,11 	 offsetTop:77196  	EJECT Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,12 	 offsetTop:77230  	Error Procedure
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,13 	 offsetTop:77264  	EXEC SQL Statement (SQL Access)
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,14 	 offsetTop:77298  	FOR Constructs (CA-DATACOM Native Access)
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,15 	 offsetTop:77332  	Exclusive Control                                 
+                               UL 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,15,2 	 offsetTop:77365  	                   Primary Exclusive Control      
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,15,2,1 	 offsetTop:77378  	Primary Exclusive Control
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,15,2,2 	 offsetTop:77412  	Secondary Exclusive Control
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,15,2,3 	 offsetTop:77446  	Batch Processing
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,15,2,4 	 offsetTop:77480  	FOR EACH/FIRST/ANY Statement (CA-DATACOM Native Ac
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,15,2,5 	 offsetTop:77514  	FOR NEW Statement (CA-DATACOM Native Access)
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,16 	 offsetTop:77553  	FOR Statement (SQL Access)                        
+                               UL 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,16,2 	 offsetTop:77586  	                   FOR EACH/FIRST Statement (SQL A
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,16,2,1 	 offsetTop:77599  	FOR EACH/FIRST Statement (SQL Access)
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,16,2,2 	 offsetTop:77633  	FOR NEW Statement (SQL Access)
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,17 	 offsetTop:77672  	FOR Statement (Sequential Files)                  
+                               UL 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,17,2 	 offsetTop:77705  	                   FOR EACH/FIRST/ANY Statement (S
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,17,2,1 	 offsetTop:77718  	FOR EACH/FIRST/ANY Statement (Sequential Files)
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,17,2,2 	 offsetTop:77752  	FOR NEXT Statement (Sequential Files)
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,17,2,3 	 offsetTop:77786  	FOR NEW Statement (Sequential Files)
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,18 	 offsetTop:77825  	FOR Statement (VSAM Files)                        
+                               UL 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,18,2 	 offsetTop:77858  	                   FOR EACH/FIRST Statement (VSAM 
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,18,2,1 	 offsetTop:77871  	FOR EACH/FIRST Statement (VSAM Files)
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,18,2,2 	 offsetTop:77905  	FOR NEW Statement (VSAM Files)
+                                   LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,18,2,3 	 offsetTop:77939  	VSAM Support: Backout and Recovery
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,19 	 offsetTop:77978  	IF Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,20 	 offsetTop:78012  	INITIATE Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,21 	 offsetTop:78046  	INVERT Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,22 	 offsetTop:78080  	LIST Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,23 	 offsetTop:78114  	LOOP Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,24 	 offsetTop:78148  	MOVE Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,25 	 offsetTop:78182  	NOTIFY Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,26 	 offsetTop:78216  	Procedure
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,27 	 offsetTop:78250  	PROCESS NEXT Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,28 	 offsetTop:78284  	PRODUCE Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,29 	 offsetTop:78318  	QUIT Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,30 	 offsetTop:78352  	REFRESH Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,31 	 offsetTop:78386  	RELEASE Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,32 	 offsetTop:78420  	RESET Statement
+                           LI 	 0,0,1,3,34,0,0,31,2,1,1,2,3,2,33 	 offsetTop:78454  	TRANSMIT Statement
+P 	 0,0,1,3,34,0,0,32 	 offsetTop:78511
+P 	 0,0,1,3,34,0,0,33 	 offsetTop:78534
+P 	 0,0,1,3,34,0,0,34 	 offsetTop:78557
+P 	 0,0,1,3,34,0,0,35 	 offsetTop:78580
+P 	 0,0,1,3,34,0,0,36 	 offsetTop:78603
+P 	 0,0,1,3,34,0,0,37 	 offsetTop:78626
+P 	 0,0,1,3,34,0,0,38 	 offsetTop:78649
+P 	 0,0,1,3,34,0,0,39 	 offsetTop:78672
+P 	 0,0,1,3,34,0,0,40 	 offsetTop:78695
+P 	 0,0,1,3,34,0,0,41 	 offsetTop:78718
+P 	 0,0,1,3,34,0,0,42 	 offsetTop:78741
+P 	 0,0,1,3,34,0,0,43 	 offsetTop:78764
+P 	 0,0,1,3,34,0,0,44 	 offsetTop:78787  	&nbsp;
