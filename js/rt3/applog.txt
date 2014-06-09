@@ -1,0 +1,48 @@
+module in
+static dir:/home/jlanus/Dropbox/Public/reading/doc
+node thinks this is a dev environment
+Express Pages server listening on port 3000
+Express data server listening on port 3333
+[90mGET /index.html [32m200 [90m31ms - 23.65kb[0m
+[90mGET /res/rtDoc.css [36m304 [90m6ms[0m
+[90mGET /res/jquery-1.8.3.js [36m304 [90m5ms[0m
+[90mGET /res/tocBuilder.js [36m304 [90m5ms[0m
+[90mGET /res/progressDiagram.png [32m200 [90m5ms - 1.19kb[0m
+[90mGET /res/tocBuilder.css [36m304 [90m1ms[0m
+[90mGET /res/rt.js [36m304 [90m1ms[0m
+[90mGET /index.html [32m200 [90m1ms - 23.71kb[0m
+[90mGET /res/rtDoc.css [36m304 [90m1ms[0m
+[90mGET /res/jquery-1.8.3.js [36m304 [90m1ms[0m
+[90mGET /res/tocBuilder.js [36m304 [90m3ms[0m
+[90mGET /res/tocBuilder.css [36m304 [90m2ms[0m
+[90mGET /res/rt.js [36m304 [90m4ms[0m
+[90mGET /res/progressDiagram.png [36m304 [90m3ms[0m
+[90mGET /index.html [36m304 [90m1ms[0m
+[90mGET /res/rtDoc.css [36m304 [90m1ms[0m
+[90mGET /res/jquery-1.8.3.js [36m304 [90m1ms[0m
+[90mGET /res/tocBuilder.js [36m304 [90m3ms[0m
+[90mGET /res/tocBuilder.css [36m304 [90m3ms[0m
+[90mGET /res/rt.js [36m304 [90m3ms[0m
+[90mGET /res/progressDiagram.png [36m304 [90m0ms[0m
+[90mGET /index.html [36m304 [90m1ms[0m
+[90mGET /res/rtDoc.css [36m304 [90m1ms[0m
+[90mGET /res/jquery-1.8.3.js [36m304 [90m1ms[0m
+[90mGET /res/tocBuilder.js [36m304 [90m0ms[0m
+[90mGET /res/tocBuilder.css [36m304 [90m1ms[0m
+[90mGET /res/rt.js [36m304 [90m1ms[0m
+[90mGET /res/progressDiagram.png [36m304 [90m1ms[0m
+[90mGET /index.html [36m304 [90m1ms[0m
+[90mGET /res/rtDoc.css [36m304 [90m1ms[0m
+[90mGET /res/jquery-1.8.3.js [36m304 [90m1ms[0m
+[90mGET /res/tocBuilder.js [36m304 [90m1ms[0m
+[90mGET /res/tocBuilder.css [36m304 [90m1ms[0m
+[90mGET /res/rt.js [36m304 [90m1ms[0m
+[90mGET /res/progressDiagram.png [36m304 [90m1ms[0m
+[90mGET /index.html [32m200 [90m1ms - 23.72kb[0m
+[90mGET /res/rtDoc.css [32m200 [90m11ms - 9.6kb[0m
+[90mGET /res/tocBuilder.js [32m200 [90m27ms - 4.17kb[0m
+[90mGET /res/tocBuilder.css [32m200 [90m23ms - 1.04kb[0m
+[90mGET /res/jquery-1.8.3.js [32m200 [90m59ms - 261.46kb[0m
+[90mGET /res/progressDiagram.png [32m200 [90m17ms - 1.19kb[0m
+[90mGET /res/rt.js [32m200 [90m260ms - 46.27kb[0m
+[90mGET /res/favicon.ico [32m200 [90m13ms - 894b[0m
