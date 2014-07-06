@@ -116,6 +116,7 @@ Date.prototype.format = function(format) //author: meizz
 
 // makes an id out of the docPath and assigns it to the theElement iif it
 // does not have already an id (theElement is always a header)
+// TODO: should make the id out of the header text better than the docPath
 RT.setId = function(docPath, theElement) {
   var theId = null;
   // check if the element already has an id
