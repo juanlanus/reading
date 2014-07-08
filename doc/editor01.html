@@ -1,0 +1,112 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Language" content="en">
+  <title>HTML editor 01</title>
+  <link rel="shortcut icon" href="/res/favicon.ico" type="image/x-icon" />
+
+  <link rel="stylesheet" href="res/rtDoc.css">
+  <script src="res/jquery-1.8.3.js"></script>
+  <link rel="stylesheet" href="res/result-light.css">
+  <script src="res/split-pane.js"></script>
+  <link rel="stylesheet" href="http://dreamchain.com/static/split-pane/split-pane.css">
+  <link rel="stylesheet" href="http://dreamchain.com/static/split-pane/pretty-split-pane.css">
+  <script src="res/rt.js"></script>
+  
+  <style>
+    html, body { height: 100%; min-height: 100%; margin: 0; padding: 0; }
+    #left-component { right:50%; margin-right:5px; background:yellow;}
+    #my-divider { right: 50%; width: 5px; }
+    #right-component { width:50%; background:#fafaf4;}
+  </style>
+  
+  <script>
+  $(window).load(function(){
+    // set splitter
+    $('div.split-pane').splitPane();
+    
+    // render the HTML whenever it's changed
+    $('#he_htmlInput').on(
+      'change, keyup',
+      function() {
+        var htmlText = $('#he_htmlInput')[0].value;
+        var htmlDOM = $.parseHTML( htmlText );
+        $('#he_preview').empty().append( htmlDOM );
+      }
+    );
+  });
+  </script>
+
+</head>
+
+<body>
+
+<style>
+  html, body { height: 100%; min-height: 100%; margin: 0; padding: 0; }
+  #left-component { right:50%; margin-right:5px; background:yellow;}
+  #my-divider { right: 50%; width: 5px; }
+  #right-component { width:50%; background:#fafaf4;}
+</style>
+
+
+  <div class="split-pane-frame">
+    <div class="split-pane vertical-percent">
+      <div class="split-pane-component" id="left-component">
+        <div class="decoration">  
+          <div id="he_preview">&nbsp;</div>
+        </div>
+      </div>
+      <div class="split-pane-divider" id="my-divider"></div>
+      <div class="split-pane-component" id="right-component">
+        <textarea autofocus id="he_htmlInput"
+          style="width:calc(100% - 6px); height:calc(100% - 6px);"
+          >A <strong>bold</strong> word.
+        </textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="noPrint">
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    </div>
+</body>
+</html>
