@@ -1,0 +1,37 @@
+{
+	"name": "rt",
+	"title": "jQuery Reading Tools",
+	"description": "Reading tools: make reading on-screen something better.",
+	"keywords": [
+		"jquery",
+		"reading",
+		"studying",
+                "books"
+	],
+	"version": "0.0.1",
+	"author": {
+		"name": "Juan Lanus",
+		"email": "juan.lanus (at) gmail.com",
+		"url": "https://github.com/juanlanus"
+	},
+	"maintainers": [
+		{
+			"name": "Juan Lanus",
+			"email": "juan.lanus (at) gmail.com",
+			"url": "https://github.com/juanlanus"
+		}
+	],
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://zenorocha.mit-license.org/"
+		}
+	],
+	"bugs": "https://github.com/jquery-boilerplate/boilerplate/issues",
+	"homepage": "http://jqueryboilerplate.com",
+	"docs": "https://github.com/jquery-boilerplate/boilerplate#readme",
+	"download": "https://github.com/jquery-boilerplate/boilerplate/archive/master.zip",
+	"dependencies": {
+		"jquery": ">=1.8"
+	}
+}

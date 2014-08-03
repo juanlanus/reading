@@ -1,0 +1,19 @@
+{
+	"name": "rt",
+	"version": "0.0.1",
+	"homepage": "http://jqueryboilerplate.com",
+	"authors": [
+		"juan.lanus (at) gmail>"
+	],
+	"description": "Make reading on screen as comfortable as reading on paper.",
+	"main": "src/jquery.boilerplate.js",
+	"keywords": [
+		"jquery",
+		"plugin",
+		"reading",
+		"books",
+		"jquery-plugin",
+		"jquery-boilerplate"
+	],
+	"license": "MIT"
+}
