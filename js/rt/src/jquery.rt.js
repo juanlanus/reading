@@ -4,18 +4,24 @@
     var
       pluginName = "rt",
 
+      // 'that' is used to make this available to the private methods 
+      var that = this,
+
+      // TODO: for now this is equated to defaults
+      RT = {},
+
       // was: function rt(rtContainerSelector, pageNumber), now rtContain... is this
       defaults = {
         // TODO: some are defaults, other are internal variables; should refactor
         $container: $this,                  // the element DIV or BODY with scrolled content
         // wrap the content in a sliding div? or ask the user to provide a reference? 
         $content: null,                     // the element that scrolls inside $container, a DIV
+        publisherId: 333,
         documentNumber: 123457,             // identification of the document
         pageNumber: 0,                      // "page" sequence, first level in the headers
                                             // hierarchy built into docPath, before H1 sequence
         readerNumber: 7771234,              // identification of the reader
-        documentNumberEncoded: '2n9d',      // document id in base36
-        readerNumberEncoded: '4mkbm',       // reader id in base36
+        // TODO: start at (0, 0) and move right and down checking until the point lies into a desdendant of the container
         leftTopVisiblePix: {                // container's top left corner coordinates, used
             left: 222,                      // to detect visibility using method
             top: 10                         // elementFromPoint() where this is the point
@@ -28,8 +34,11 @@
         // development aids
         debug: false
 
+        // ********************************************************************************
         // Data items below this line are internal data, not "options" neither "defaults"
 
+        documentNumberEncoded: '2n9d',      // document id in base36
+        readerNumberEncoded: '4mkbm',       // reader id in base36
         // tops:
         // list of the HTML nodes and their position in the rendered page, to be
         // used for finding the "next" paragraph when the user scrolls
@@ -77,6 +86,7 @@
         
       };
 
+    // ********************************************************************************
     // The actual plugin constructor
     function Plugin ( element, options ) {
         this.element = element;
@@ -88,6 +98,7 @@
         this.init();
     }
 
+    // ********************************************************************************
     // add functionality to plugin prototype
     $.extend(Plugin.prototype, {
         init: function () {
@@ -101,6 +112,7 @@
             };
 
             // capture keyboard action
+            // TODO: replace by a one-liner, move code to a function
             // TODO: don't allow many spaces to stack in the input buffer, cancel one animation
             // as soo as another happens, and/or consume or lock new spaces when animating one
             // TODO: don't prevent default if the space goes into an input or editable element
@@ -136,6 +148,7 @@
             );
 
             // capture the resize event
+            // TODO: replace by a one-liner, move code to a function
             $(window).on(
               'resize',
               function(e) {
@@ -160,6 +173,7 @@
             );
 
             // display the control panel
+            // TODO: replace by a one-liner, move code to a function
             // TODO: use a template renderer like moustache?
             var cp = 
              '<div id="rtPanelLeft" class="rtPanelLeft" style="z-index:999;">'
@@ -211,6 +225,7 @@
             RT.$container.prepend( cp );
 
             // store the query string if any (used initially to collect user data)
+            // TODO: replace by a one-liner, move code to a function
             if( !! window.location.search ) {
               var qs = window.location.search.replace('?','').split('&'), request = {};
               $.each(qs, function(i,v) {
@@ -222,6 +237,7 @@
             };
 
             // set the help content
+            // TODO: replace by a one-liner, move code to a function
             var $hc = $('#helpContainer');
             $hc.html( $('#helpContentText').html() );
 
@@ -229,6 +245,7 @@
             RT.displayProgress();
 
             // set the highlighter
+            // TODO: replace by a one-liner, move code to a function
             rangy.init(); 
             var cssClassApplierModule = rangy.modules.CssClassApplier; 
             var highlight1Applier = rangy.createCssClassApplier("rtHigh1"); 
@@ -263,6 +280,7 @@
             );
 
             // set the TOC toggler
+            // TODO: replace by a one-liner, move code to a function
             $('#rtTOCIcon').on(
               'click',
               function() {
@@ -308,6 +326,7 @@
              );
 
             // set the help show/hide handlers
+            // TODO: replace by a one-liner, move code to a function
             // TODO: must ensure the oter panels are hidden before showing any
             $('#rtHelpIcon').on(
               'click',
@@ -354,10 +373,12 @@
              );
 
             // for the usability test, set the instructions into the menu panel
+            // TODO: replace by a one-liner, move code to a function
             $('#menuContainer').html( $('#agendaBody').html() );
             $('#menuContainer').css( 'display', 'block' );
 
             // show the menu
+            // TODO: replace by a one-liner, move code to a function
             $('#rtBurgerMenu').on(
               'click',
               function() {
@@ -386,6 +407,7 @@
             );
 
             // build the TOC
+            // TODO: replace by a one-liner, move code to a function
             TOC.clearTOC();
             TOC.buildTOC( RT.$content.get()[0] );
             // DEBUG: 
@@ -397,6 +419,7 @@
             TOC.makeCollapsible( $( '.toc' )[0] );
 
             // capture the scroll event
+            // TODO: replace by a one-liner, move code to a function
             // RT.$container.on(
             // $('body').on(
             $(window).on(
@@ -517,6 +540,8 @@
               // TODO: some elements have a wrong docPath with an empty item, log them
               if ( RT.debug || ( docPath && docPath.indexOf( ',,' ) !== -1 ) ) {
                 var tn = this.tagName;
+                // TODO: store the tags list in an array and use $.inArray(value, array) or arr.indexOf(searchElement)
+                // indexOf was added to the ECMA-262 standard in the 5th edition; as such it may not be present in all browsers 
                 if( !( tn === 'BR' || tn === 'CODE' || tn === 'COL' || tn === 'A' || tn === 'TD' || tn === 'COLGROUP' || tn === 'TH' || tn === 'TBODY') ) {
                   var indent = new Array(2 * level).join(' ');
                   if( tn.substring(0, 1) === 'H' ) {
@@ -843,6 +868,7 @@
         // get a reference to the element at the reading position and store in
         // RT.scrollData the information needed to get back to this position
         // returns a reference to the element at top
+        // replace leftTopVisiblePix by a local, remove leftTopVisiblePix
 
           // get a reference to the element at the reading position
           var topElement = document.elementFromPoint(
@@ -1171,6 +1197,8 @@
     $.fn[ pluginName ] = function ( options ) {
         this.each(function() {
             if ( !$.data( this, "plugin_" + pluginName ) ) {
+                // TODO: for now acticate the RT namespace
+                RT = this.defaults;
                 $.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
             }
         });

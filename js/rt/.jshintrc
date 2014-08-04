@@ -1,0 +1,23 @@
+{
+  "bitwise": true,      // prohibits the use of bitwise operators
+  "boss": false,        // suppress warnings about assignments where comparisons are expected
+  "browser": true,      // defines globals exposed by modern browsers
+  "curly": true,        // always put curly braces around blocks in loops and conditional
+  "eqeqeq": true,       // prohibits the use of == and != in favor of === and !==
+  "eqnull": true,       // enforces the use '===' to compare with 'null'
+  "expr": true,         // suppresses warnings about the use of expressions 
+  "immed": true,        // prohibits immediate function invocations not wrapped in parentheses
+  "indent": 2,          // enforces specific tab width
+  "jquery": true,       // defines globals exposed by jQuery
+  "laxbreak": true,     // suppresses warnings about possibly unsafe line breakings
+  "maxlen":140,         // max length of a code line
+  "newcap": true,       // capitalize names of constructor functions
+  "noarg": true,        // prohibits the use of arguments.caller and arguments.callee
+  "onevar": false,      // allows only one var statement per function
+  "quotmark": "single", // enforces the consistency of quotation marks
+  "smarttabs": true,    // suppresses warnings about mixed tabs and spaces
+  "trailing": true,     // makes it an error to leave a trailing whitespace
+  "undef": true,        // prohibits the use of explicitly undeclared variables
+  "unused": true,       // warns when there are defined and never used variables
+  "node": false         // defines globals available when running inside of Node.js
+}
