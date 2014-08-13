@@ -13,11 +13,6 @@
       // $container: $(this),                // the element DIV or BODY with scrolled content
       // wrap the content in a sliding div? or ask the user to provide a reference? 
       // $content: this.defaults.$container.children().first(), // the element that scrolls inside $container, a DIV
-      publisherId: 333,
-      documentNumber: 123457,             // identification of the document
-      pageNumber: 0,                      // "page" sequence, first level in the headers
-                                          // hierarchy built into docPath, before H1 sequence
-      readerNumber: 7771234,              // identification of the reader
       // TODO: start at (0, 0) and move right and down checking until the point lies into a desdendant of the container
       leftTopVisiblePix: {                // container's top left corner coordinates, used
           left: 222,                      // to detect visibility using method
@@ -101,7 +96,7 @@
     $.extend(Plugin.prototype, {
 
       init: function () {
-        var RT = this._defaults;
+        var RT = this.settings;
 
         // when the reader leaves this page store an end of session scroll record
         window.onbeforeunload = function(e) { 

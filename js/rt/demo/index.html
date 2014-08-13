@@ -20,30 +20,33 @@
         // activate reading control (pass a selector to the function)
         $("#textContainer").rt({
           $container: $( '#textContainer' ),
-          $content: $( '#textContent' )
+          $content: $( '#textContent' ),
+          publisherId: 333,
+          documentNumber: 123457,             // identification of the document
+          pageNumber: 0,                      // "page" sequence, first level in the headers
+                                              // hierarchy built into docPath, before H1 sequence
+          readerNumber: 7771234               // identification of the reader
         });
       });
     </script>
 
     <!-- this comes from the previous non-plugin demo:
       <div id="containerOuter" class="row collapse" style="height:100%; overflow:auto; position:relative; ">
-      <div id="containerInner" style="margin-left:70px; padding-top:99px; max-width:48em;"
-      class="body prose twelve columns" itemprop="body articleBody">
+      <div id="containerInner" style="margin-left:70px; padding-top:99px; max-width:48em;">
     -->
-
 
     <div id="textContainer">
       <div id="textContent">
         <style type="text/css">
         #textContent { font-family:'Ubuntu', sans-serif; font-size:12pt; font-style:normal; padding-left:20px; max-width:45em; }
         .bookCopy { margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:20px; text-align:justify; }
-        .bookcover { width:100%; }
+        .bookCover { width:calc(100% - 20px); }
         .bookInfoLabel { font-size:small; font-weight:600; }
         .bookInfoInfo { font-size:small; font-weight:400; }
         .bookInfoLink { font-size:small; font-weight:400; font-style:italic; color:#000000; }
         </style>
 
-        <p class="bookcover">
+        <p class="bookCover">
         <img src="images/childrenOfTheFrost_cover_.jpg" style="max-width:100%;" /> 
         </p>
 
