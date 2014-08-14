@@ -1,0 +1,2 @@
+#! /bin/bash
+gvim -S /home/jlanus/Dropbox/Public/reading/js/rt/editDemo.vim 2> /dev/null &

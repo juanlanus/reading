@@ -87,6 +87,8 @@
         this.settings.$container = $( element );
         this._defaults = defaults;
         this._name = pluginName;
+        // make the plugin data publicly accesible
+        $.fn.rt.settings = this.settings;
         // initialize tue plugin
         this.init();
     }
@@ -137,7 +139,7 @@
                 e.stopPropagation();
                 // TODO: set a smartScroll action code
                 RT.writeScrollRecord();
-                RT.displayProgress();
+                $.fn.rt.displayProgress();
               };
             }
         );
@@ -154,7 +156,7 @@
                   // indicate that the timer is off
                   RT.resizingTimer = null;
                   // reposition the content
-                  RT.scrollToPosition(RT.scrollData);
+                  this.scrollToPosition(RT.scrollData);
                   // recalculate header positions (used to identify 
                   // the topmost element in the scroll event) 
                   RT.storeHeaderScrollTops; 
@@ -217,7 +219,7 @@
           +    '<div class="help" class="help">instructions come here</div>'
           +  '</div>'
           +'</div>';
-        RT.$container.prepend( cp );
+        this.settings.$container.prepend( cp );
 
         // store the query string if any (used initially to collect user data)
         // TODO: replace by a one-liner, move code to a function
@@ -237,7 +239,7 @@
         $hc.html( $('#helpContentText').html() );
 
         // initialize the progress indicator
-        RT.displayProgress();
+        $.fn.rt.displayProgress();
 
         // set the highlighter
         // TODO: replace by a one-liner, move code to a function
@@ -415,7 +417,7 @@
 
         // capture the scroll event
         // TODO: replace by a one-liner, move code to a function
-        // RT.$container.on(
+        // this.settings.$container.on(
         // $('body').on(
         $(window).on(
             'scroll',
@@ -433,7 +435,7 @@
                   // the new top element
                   RT.elementAtTop = RT.getCurrentReadingPosition();
                   // update progress indicator
-                  RT.displayProgress();
+                  $.fn.rt.displayProgress();
                 },
                 RT.scrollTimerDelay
                 )
@@ -464,6 +466,7 @@
 
       // build the document structure map used for semantic positioning
       buildDocMap: function() {
+        var RT = this.settings;
         RT.docMap = {};
         // init structure values: item [0] is the page, items [1] to [6] correspond
         // to headers H1 through H6, then comes the element number and the element's
@@ -492,6 +495,8 @@
         // TODO: this function assumes that the headers tree is correctly structured
         // TODO: elements positioned absolute or fixed are taken from the normal flow
         // and should be handled especially
+        var RT = this.settings;
+        RT.docMap = {};
         $context.children().not('[float=left]').not('[float=right]').each(
             function(i) {
               // build the docPaths of the subtree of this
@@ -570,6 +575,8 @@
       storeHeaderScrollTops: function() {
         // calculates the value of the scrollTop of each header and stores it in
         // the headerId associative array
+        var RT = this.settings;
+        RT.docMap = {};
         for( var oneHeader in RT.headerId ) { 
           RT.headerId[oneHeader].offsetTop 
             = RT.getRelativeTop( document.getElementById( RT.headerId[oneHeader].id ));
@@ -581,7 +588,7 @@
         // calculates the top position of the element relative to the origin of the
         // document, zero if no elem is passed
         if( !!elem ) {
-          // TODO: WAS: return elem.getBoundingClientRect().top + RT.$container.scrollTop();
+          // TODO: WAS: return elem.getBoundingClientRect().top + this.settings.$container.scrollTop();
           return elem.getBoundingClientRect().top + $('body').scrollTop();
         } else {
           return 0;
@@ -591,6 +598,8 @@
       topsMapGetIdxByElement: function( element ) { 
         // given a reference to an element, return its index on the topsMap
         // heuristic: start searching from the current one
+        var RT = this.settings;
+        RT.docMap = {};
         var n = RT.topsMap.length;
         var nEnd = 0;
         for( var i = RT.topsMapIdx; true; i++ ) {
@@ -629,40 +638,40 @@
         */
 
         // now build the topsMap array
-        RT.topsMap = [];
+        this.settings.topsMap = [];
         var topsMapNeedsSort = false;
         var thisNode;
         var previousNodeTop = -100000;
 
-        $('*', RT.$content).each( 
+        $('*', this.settings.$content).each( 
             function( index, thisNode ) {
-              RT.topsMap.push({ 
+              this.settings.topsMap.push({ 
                 node: thisNode, 
-                top: RT.getRelativeTop( thisNode )
+                top: this.settings.getRelativeTop( thisNode )
               });
 
-              var topsMapN = RT.topsMap.length;
+              var topsMapN = this.settings.topsMap.length;
               // DEBUG: 
               // console.log( RT.topsMap.length + ' ' + thisNode.nodeName + ' ' + RT.topsMap[topsMapN - 1].top);
               // DEBUG: check how the same top value appears more than once
-              if( RT.debug ) { 
-                if( RT.topsMap[topsMapN - 1].top == previousNodeTop ) {
-                  console.log( 'top value repeated: ' + RT.topsMap[topsMapN - 1].node.nodeName 
+              if( this.settings.debug ) { 
+                if( this.settings.topsMap[topsMapN - 1].top == previousNodeTop ) {
+                  console.log( 'top value repeated: ' + this.settings.topsMap[topsMapN - 1].node.nodeName 
                     + ' ' +  previousNodeTop );
                 }
               };
 
               // check that tops are sorted
-              if( RT.topsMap[topsMapN - 1] < previousNodeTop ) { topsMapNeedsSort = true; }
-              previousNodeTop = RT.topsMap[topsMapN - 1];
+              if( this.settings.topsMap[topsMapN - 1] < previousNodeTop ) { topsMapNeedsSort = true; }
+              previousNodeTop = this.settings.topsMap[topsMapN - 1];
 
             }
         );
         // sort topsMap on position order if needed
         // TODO: NYI
-        if( topsMapNeedsSort ) { /* RT.topsMapSort() */ }
+        if( topsMapNeedsSort ) { /* this.settings.topsMapSort() */ }
         // prepare for the index of the top element
-        RT.topsMapIdx = 0;
+        this.settings.topsMapIdx = 0;
 
         /* TODO: delete this previous version
            for( ; true; ) {
@@ -672,28 +681,28 @@
            break; 
            }
         // TODO: ignore padding para's at the bottom of the document
-        RT.topsMap.push({ 
+        this.settings.topsMap.push({ 
         node: thisNode, 
-        top: RT.getRelativeTop( thisNode )
+        top: this.settings.getRelativeTop( thisNode )
         });
-        var topsMapN = RT.topsMap.length;
+        var topsMapN = this.settings.topsMap.length;
         // DEBUG: 
-        // console.log( RT.topsMap.length + ' ' + thisNode.nodeName + ' ' + RT.topsMap[topsMapN - 1].top);
+        // console.log( this.settings.topsMap.length + ' ' + thisNode.nodeName + ' ' + this.settings.topsMap[topsMapN - 1].top);
         // DEBUG: check how the same top value appears more than once
-        if( RT.debug ) { 
-        if( RT.topsMap[topsMapN - 1].top == previousNodeTop ) {
-        console.log( 'top value repeated: ' + RT.topsMap[topsMapN - 1].node.nodeName 
+        if( this.settings.debug ) { 
+        if( this.settings.topsMap[topsMapN - 1].top == previousNodeTop ) {
+        console.log( 'top value repeated: ' + this.settings.topsMap[topsMapN - 1].node.nodeName 
         + ' ' +  previousNodeTop );
         }
         };
         // check that tops are sorted
-        if( RT.topsMap[topsMapN - 1] < previousNodeTop ) { topsMapNeedsSort = true; }
-        previousNodeTop = RT.topsMap[topsMapN - 1];
+        if( this.settings.topsMap[topsMapN - 1] < previousNodeTop ) { topsMapNeedsSort = true; }
+        previousNodeTop = this.settings.topsMap[topsMapN - 1];
         // sort topsMap on position order if needed
         // TODO: NYI
-        if( topsMapNeedsSort ) { // RT.topsMapSort() // }
+        if( topsMapNeedsSort ) { // this.settings.topsMapSort() // }
         // prepare for the index of the top element
-        RT.topsMapIdx = 0;
+        this.settings.topsMapIdx = 0;
         };
         */
       },
@@ -701,7 +710,7 @@
       scrollToElement: function( $topElement, duration ) {
         // scroll the content so the argument lies at the top of the viewport
         // TODO: must deactivate the scroll event handler before
-        var offsetTop = RT.getRelativeTop( $topElement[0] );
+        var offsetTop = this.settings.getRelativeTop( $topElement[0] );
         // TODO: WAS: RT.$container.stop(false, false);
         // TODO: WAS: RT.$container.animate( { scrollTop: offsetTop }, duration);
         // $('body').stop( false, false );
@@ -713,7 +722,7 @@
               $topElement.animatescroll({ 
                 scrollSpeed: duration, 
                 easing: 'easeInOutQuart',
-                element: RT.$container[0]
+                element: this.settings.$container[0]
               });
               window.setTimeout(
                 function(e){ $topElement.removeClass( 'rtScrolltarget' )},
@@ -737,11 +746,11 @@
             // use docPath to get the id of the closest header using
             // the RT.headerId[ <here> ] map
             if( scrollData.dp.split(',').slice(0, 7).toString() == "0,0,0,0,0,0,0" ) {
-              headerId = RT.$content[0].id;
+              headerId = this.settings.$content[0].id;
             } else { 
-              var theHeader = RT.headerId[ scrollData.dp.split(',').slice(0, 7).toString() ];
+              var theHeader = this.settings.headerId[ scrollData.dp.split(',').slice(0, 7).toString() ];
               if( theHeader ) {
-                headerId = RT.headerId[ scrollData.dp.split(',').slice(0, 7).toString() ].id;
+                headerId = this.settings.headerId[ scrollData.dp.split(',').slice(0, 7).toString() ].id;
               } else {
                 return;
               };
@@ -755,10 +764,10 @@
             if( scrollData.dp ) {
               // get a reference to the element to be placed top of the viewport 
               // using its docPath
-              var $targetElement = RT.drillDown( scrollTarget, scrollData.dp.split(',').slice(7), 2000 );
-              RT.elementAtTop = $targetElement.get(0);
+              var $targetElement = this.settings.drillDown( scrollTarget, scrollData.dp.split(',').slice(7), 2000 );
+              this.settings.elementAtTop = $targetElement.get(0);
               // scrolll to the target element
-              RT.scrollToElement( $targetElement, RT.scrollDuration );
+              this.settings.scrollToElement( $targetElement, this.settings.scrollDuration );
             };
           };
         };
@@ -778,7 +787,7 @@
           if( $levelSet.length >= steps[i] ) {
             $initialElement = $($levelSet[ steps[i] - 1 ]);
             // DEBUG: show the elements hierarchy
-            if( RT.debug ) { $initialElement.css( 'border', '1px solid blue' ); };
+            if( this.settings.debug ) { $initialElement.css( 'border', '1px solid blue' ); };
             $levelSet = $initialElement.first().children();
           };
         };
@@ -797,7 +806,7 @@
 
 
       // return the last recorded position of the document docNumber or null
-      getLastRecordedPosition: function( $container, RT ) {
+      getLastRecordedPosition: function( $container, settings ) {
         // TODO: refactor RT.xxx data references
         if( !localStorage ) { return null; };
         // loop backwards over localStorage keys looking for a scroll record of
@@ -852,7 +861,7 @@
           theElement.id = theId;
         };
         // store the id in the headers id map indexed by the 1st 7 docPath elements
-        RT.headerId[ docPath.slice(0, 7).toString() ] = { id: theId };
+        this.settings.headerId[ docPath.slice(0, 7).toString() ] = { id: theId };
         // return the id
         return theId;
       },
@@ -865,8 +874,8 @@
 
         // get a reference to the element at the reading position
         var topElement = document.elementFromPoint(
-            RT.leftTopVisiblePix.left,
-            RT.leftTopVisiblePix.top
+            this.settings.leftTopVisiblePix.left,
+            this.settings.leftTopVisiblePix.top
             );
         // ensure that the top of the element containing the "point" is close to the scroll
         // position of the container to assert that the "point" is "proper"
@@ -874,25 +883,25 @@
         // TODO: replace the constant by half the viewport height
         var maxVerticalDistance = 333;
         var topOffset = 99999;
-        while( RT.$content[0] == topElement || RT.$container[0] == topElement ) {
+        while( this.settings.$content[0] == topElement || this.settings.$container[0] == topElement ) {
           // also had: || Math.abs( topElement.getBoundingClientRect().top > maxVerticalDistance )
           // DEBUG:
-          // console.log( 'point rejected: ' + RT.getRelativeTop( topElement )
+          // console.log( 'point rejected: ' + this.settings.getRelativeTop( topElement )
           // + '  ' + (!!topElement.id ?  topElement.id : '' ) );
           // we are over a container, move the point right and downwards
           dx += 7;
-          // TODO: calculate and cache the RT.$content measures
-          if( (RT.leftTopVisiblePix.left + dx) > RT.$content.innerWidth() || topElement == RT.$container[0] ) {
+          // TODO: calculate and cache the this.settings.$content measures
+          if( (this.settings.leftTopVisiblePix.left + dx) > this.settings.$content.innerWidth() || topElement == this.settings.$container[0] ) {
             dy += 7;
-            dx = parseInt( RT.$content.css('margin-left').replace(/px/, ' '), 10);
+            dx = parseInt( this.settings.$content.css('margin-left').replace(/px/, ' '), 10);
           };
           var topElement = document.elementFromPoint(
-              RT.leftTopVisiblePix.left + dx,
-              RT.leftTopVisiblePix.top + dy
+              this.settings.leftTopVisiblePix.left + dx,
+              this.settings.leftTopVisiblePix.top + dy
               );
           // if already at the content bottom then stop
-          if ( dx > RT.$content[0].clientHeight ) {
-            if( RT.debug ) { alert('reached bottom of document'); };
+          if ( dx > this.settings.$content[0].clientHeight ) {
+            if( this.settings.debug ) { alert('reached bottom of document'); };
             topOffset = -1;
             break;
           };
@@ -903,36 +912,36 @@
 
         // loop through the headers list looking for the last header above the current
         // reading position 
-        var currentScrolltop = RT.$container.scrollTop();
-        for( var oneHeader in RT.headerId ) { 
-          if( RT.headerId[oneHeader].offsetTop >= currentScrolltop ) { break; };
+        var currentScrolltop = this.settings.$container.scrollTop();
+        for( var oneHeader in this.settings.headerId ) { 
+          if( this.settings.headerId[oneHeader].offsetTop >= currentScrolltop ) { break; };
         };
 
         // --------------------------------------------------------------------------------
-        // RT.scrollData will contain the data needed to restore the reading position and
+        // this.settings.scrollData will contain the data needed to restore the reading position and
         // rolling out read time statistics
-        RT.scrollData.dp = topElement.getAttribute('docPath');
-        if( RT.scrollData.dp == null ) {
+        this.settings.scrollData.dp = topElement.getAttribute('docPath');
+        if( this.settings.scrollData.dp == null ) {
           // DEBUG: null happens when scrolling to the very top
-          if( RT.debug ) { console.log( 'null docPath!' ); };
+          if( this.settings.debug ) { console.log( 'null docPath!' ); };
         };
         if( !topElement.getAttribute('id') == '' ) {
-          RT.scrollData.id =  topElement.getAttribute('id');
+          this.settings.scrollData.id =  topElement.getAttribute('id');
         };
         // percent of the element not visible (scrolled up) if it's taller then the threshold
-        if (($(topElement).offset().top < 0 ) && ($(topElement).height() > RT.tallElementLimit )) {
-          RT.scrollData.p = Math.round( Math.abs( $(topElement).offset().top 
+        if (($(topElement).offset().top < 0 ) && ($(topElement).height() > this.settings.tallElementLimit )) {
+          this.settings.scrollData.p = Math.round( Math.abs( $(topElement).offset().top 
                 / topElement.offsetHeight * 100 ))
         };
         // up to 50 of the first characters of the text content, if any, for reference
-        RT.scrollData.text = $(topElement).text().substr(0, 50).replace(/\r?\n|\r/g, ' ');
+        this.settings.scrollData.text = $(topElement).text().substr(0, 50).replace(/\r?\n|\r/g, ' ');
         // DEBUG: 
-        if( RT.debug ) {
-          console.log('scrolled! RT.scrollData: ' 
-              + (( !!RT.scrollData.p ) ? ' ' + RT.scrollData.p + '%' : '' )
+        if( this.settings.debug ) {
+          console.log('scrolled! this.settings.scrollData: ' 
+              + (( !!this.settings.scrollData.p ) ? ' ' + this.settings.scrollData.p + '%' : '' )
               + '  docPath: ' + topElement.getAttribute('docPath')
               + (( !!topElement.getAttribute('id') ) ?  '  id: ' + topElement.getAttribute('id') : '' )
-              + '  ' + topElement.tagName + ' ' + ((!!RT.scrollData.text) ? RT.scrollData.text : '')); 
+              + '  ' + topElement.tagName + ' ' + ((!!this.settings.scrollData.text) ? this.settings.scrollData.text : '')); 
         } //
         // return a reference to the element at top
         return topElement;
@@ -1098,7 +1107,7 @@
       // TODO: check that the top hasn't changed, otherwise recalculate topsMap
       /* var scrollAmount = Math.max(
          RT.elementAtTop.height(),
-         RT.$container.height() / 2
+         this.settings.$container.height() / 2
          ); */
     };
 
@@ -1124,6 +1133,8 @@
 
     // calculate progress indicator
     $.fn.rt.displayProgress = function() {
+      var settings = $.fn.rt.settings;
+      var RT = settings;
       var $pd = $('#rtProgressDiagram');
       // set the progress diagram: slap rtProgressTemplate over rtProgressDiagram 
       $pd.html( $('#rtProgressTemplate').html() );
@@ -1131,7 +1142,7 @@
 
       // calculate the proportional heights
       var hPri = $pd.height();
-      var hTotal = RT.$container[0].clientHeight;
+      var hTotal = settings.$container[0].clientHeight;
       var hDone = 0;
       if( RT.elementAtTop ) { hDone = RT.elementAtTop.scrollTop; };
       var hCurrent = window.innerHeight;
