@@ -73,7 +73,7 @@
 
       resizingTimer: null,                // delay resize action until stable
       resizingTimerDelay: 777,            // delay resize action until stable
-      containerYOffset: 0,                // top position of the container, used to calculate
+      containerYOffset: 0                 // top position of the container, used to calculate
                                           // absolute Y coordinates
       
     };
@@ -870,7 +870,8 @@
         // get a reference to the element at the reading position and store in
         // RT.scrollData the information needed to get back to this position
         // returns a reference to the element at top
-        // replace leftTopVisiblePix by a local, remove leftTopVisiblePix
+        // TODO: replace leftTopVisiblePix by a local, remove leftTopVisiblePix
+        // TODO: the e argument is not used
 
         // get a reference to the element at the reading position
         var topElement = document.elementFromPoint(
@@ -1166,6 +1167,7 @@
       // and eventually fires the saving of a data batch in the server
       // TODO: eventually shoot an AJAX interaction to save the data in the server
       // get the current reading position in RT.scrollData (and in topsMapElement)
+>>>> must get a reference to the plugin object, and use it to reach getCurrentReadingPosition()
       RT.topsMapElement = RT.getCurrentReadingPosition();
       // save the scroll data in localStorage
       localStorage.setItem(
