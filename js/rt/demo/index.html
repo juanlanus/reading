@@ -5,12 +5,12 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="description" content="Reading tools demo, using a book by Jack London">
 
-    <script src="jquery-2.1.1.js"></script>
+    <script src="res/jquery-2.1.1.js"></script>
     <script src="../src/jquery.rt.js"></script>
     <script src="../src/toc.js"></script>
-    <script src="rangy-core.js"></script>
-    <script src="rangy-cssclassapplier.js"></script>
-    <link rel="stylesheet" href="rt.css">
+    <script src="res/rangy-core.js"></script>
+    <script src="res/rangy-cssclassapplier.js"></script>
+    <link rel="stylesheet" href="res/rt.css">
 
   </head>
 
@@ -38,7 +38,7 @@
     <div id="textContainer">
       <div id="textContent">
         <style type="text/css">
-        #textContent { font-family:'Ubuntu', sans-serif; font-size:12pt; font-style:normal; padding-left:20px; max-width:45em; }
+        #textContent { font-family:'Ubuntu', sans-serif; font-size:12pt; font-style:normal; padding-left:100px; max-width:45em; }
         .bookCopy { margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:20px; text-align:justify; }
         .bookCover { width:calc(100% - 20px); }
         .bookInfoLabel { font-size:small; font-weight:600; }
@@ -3297,6 +3297,22 @@
         <p class="bookCopy">Food for the mind </p>
       </div> 
     </div>
+
+
+    <!-- contains HTML for the control panel, that is applied with js -->
+    <div style="display:none;">
+        <!-- progress indicator -->
+        <div id="rtProgressTemplate" class="rtProgress">
+            <div class="rtProgressDone"
+            title="already read"> </div> 
+            <div class="rtProgressCurrent"
+            title="current page"> </div> 
+            <div class="rtProgressRemaining"
+            title="not yet read"> </div> 
+        </div>
+    </div>
+
+
 
   </body>
 </html>
