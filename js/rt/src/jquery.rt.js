@@ -95,7 +95,7 @@
 
     // ********************************************************************************
     // add functionality to plugin prototype
-    $.extend(Plugin.prototype, {
+    $.extend( Plugin.prototype, {
 
       init: function () {
         var RT = $.fn.rt.settings;
@@ -105,7 +105,7 @@
           RT.scrollData = {};
           // TODO: signal the session end with an action code, not an additional column
           RT.scrollData.endSession = '1';
-          RT.writeScrollRecord();
+          $.fn.rt.writeScrollRecord();
         };
 
         // capture keyboard action
@@ -141,7 +141,7 @@
                 event.preventDefault();
                 event.stopPropagation();
                 // TODO: set a smartScroll action code
-                RT.writeScrollRecord();
+                $.fn.rt.writeScrollRecord();
                 $.fn.rt.displayProgress();
               };
             }
@@ -159,15 +159,16 @@
               window.clearTimeout(RT.resizingTimer);
               RT.resizingTimer = window.setTimeout(
                 function(event){
+                  var RT = $.fn.rt.settings;
                   // indicate that the timer is off
                   RT.resizingTimer = null;
                   // reposition the content
-                  this.scrollToPosition(RT.scrollData);
+                  $.fn.rt.scrollToPosition( RT.scrollData );
                   // recalculate header positions (used to identify 
                   // the topmost element in the scroll event) 
                   RT.storeHeaderScrollTops; 
                   // recalculate the tops table
-                  RT.buildTopsMap();
+                  $.fn.rt.buildTopsMap();
                 },
                 RT.resizingTimerDelay
                 );
@@ -458,10 +459,10 @@
                 function(event) {
                   RT.scrollTimer = null;
                   RT.scrollData = {};
-                  // TODO: RT.writeScrollRecord();
+                  // TODO: $.fn.rt.writeScrollRecord();
                   // get a reference to the element at top and store it as
                   // the new top element
-                  RT.elementAtTop = RT.getCurrentReadingPosition();
+                  RT.elementAtTop = $.fn.rt.getCurrentReadingPosition();
                   // update progress indicator
                   $.fn.rt.displayProgress();
                 },
@@ -482,9 +483,9 @@
 
         // get the last recorded scroll position or null and scroll to it
         // TODO: the argument might not be necessary
-        RT.scrollData = this.getLastRecordedPosition( RT.documentNumber );
+        RT.scrollData = this.getLastRecordedPosition( RT );
         if( RT.scrollData ) {
-          RT.scrollToPosition( RT.scrollData );
+          $.fn.rt.scrollToPosition( RT.scrollData );
         } else {
           // scroll to ... 
         };
@@ -507,7 +508,7 @@
         this.storeHeaderScrollTops();
 
         // build the tops map with the scroll position of every text node
-        this.buildTopsMap();
+        $.fn.rt.buildTopsMap();
 
         /* local subfunction **********************************************************/
         function buildPath( RT, $context, docPath, level ) {
@@ -572,7 +573,7 @@
                 var tab = new Array( tab > 0 ? tab : 1 ).join('_');
                 var dp = ( $this.attr('docPath') + '                         ' ).substring(0, 24);
                 $('#docPathLog').append( indent + thisElement.tagName + tab + dp );
-                $('#docPathLog').append( '  offsetTop:' + thisElement.offsetTop ); // + '  getRelativeTop:' + RT.getRelativeTop(thisElement)
+                $('#docPathLog').append( '  offsetTop:' + thisElement.offsetTop ); // + '  getRelativeTop:' + $.fn.rt.getRelativeTop(thisElement)
                 if( !!$this.attr('id') ) { $('#docPathLog').append( '  id:' + $this.attr('id')); };
                 var scrollDataText = $this.text().substr(0, 50).replace(/\r?\n|\r/g, ' ');
                 if( scrollDataText ) { $('#docPathLog').append( '  \t' + scrollDataText ); };
@@ -606,36 +607,6 @@
           RT.headerId[docPath.slice(0, 7).toString()] = { id: theId };
           return theId;
         };
-
-      },
-
-      topsMapGetIdxByElement: function( element ) { 
-      // given a reference to an element, return its index on the topsMap
-      // heuristic: start searching from the current one
-        var RT = $.fn.rt.settings;
-        var n = RT.topsMap.length;
-        var nEnd = 0;
-        for( var i = RT.topsMapIdx; true; i++ ) {
-          if( i >= n ) { i = 0; };
-          if( element === RT.topsMap[i].node ) { 
-            return i; 
-          };
-          nEnd++;
-          if( nEnd > n ) { return null; } // not found 
-        };
-      },
-
-      getRelativeTop: function( elem ) {
-      // calculates the top position of the element relative to the origin of the
-      // document, 0 if no elem is passed or has no rectangle (i.e., STYLE)
-        if( !!elem ) {
-          if( !!elem.getBoundingClientRect() ) {
-            // TODO: WAS: return elem.getBoundingClientRect().top + this.settings.$container.scrollTop();
-            return elem.getBoundingClientRect().top + $('body').scrollTop();
-          }
-        } else {
-          return 0;
-        };
       },
 
       storeHeaderScrollTops: function() {
@@ -644,146 +615,11 @@
         var RT = $.fn.rt.settings;
         RT.docMap = {};
         for( var oneHeader in RT.headerId ) { 
-          RT.headerId[oneHeader].offsetTop = this.getRelativeTop( 
+          RT.headerId[oneHeader].offsetTop = $.fn.rt.getRelativeTop( 
             document.getElementById( RT.headerId[oneHeader].id )
           );
           // DEBUG: console.log( oneHeader + ' ' + RT.headerId[oneHeader].id );
         };
-      },
-
-      buildTopsMap: function() {
-      // build a list of the text nodes and their position in the rendered page,
-      // to be used for finding the "next" paragraph when the user scrolls
-      // it contains a reference to each DOM element and it's scroll position
-      // relative to the top of the document
-        var RT = $.fn.rt.settings;
-        // build the topsMap array
-        RT.topsMap = [];
-        var 
-          $allElems = $('*', RT.$content),
-          topsMapNeedsSort = false,
-          thisNode,
-          n = $allElems.length,
-          i = 0,
-          previousNodeTop = -1000000
-        ;
-        var reltop = 0;
-        for( i = 0; i < n; i++ ) {
-          thisNode = $allElems[i];
-          if( thisNode.getBoundingClientRect() ) {
-            RT.topsMap.push({
-              node: thisNode, 
-              top: this.getRelativeTop( thisNode )
-            })
-          };
-          var topsMapN = RT.topsMap.length;
-          // DEBUG: 
-          // console.log( RT.topsMap.length + ' ' + thisNode.nodeName + ' ' + RT.topsMap[topsMapN - 1].top);
-          // DEBUG: check how the same top value appears more than once
-          if( RT.debug ) { 
-            if( RT.topsMap[topsMapN - 1].top == previousNodeTop ) {
-              console.log( 'top val repeated: ' + RT.topsMap[topsMapN - 1].node.nodeName 
-              + ' ' +  previousNodeTop );
-            }
-          };
-          // check that tops are sorted
-          if( RT.topsMap[topsMapN - 1] < previousNodeTop ) { topsMapNeedsSort = true; }
-          previousNodeTop = RT.topsMap[topsMapN - 1];
-        };
-
-        // sort topsMap on position order if needed
-        // TODO: NYI
-        if( topsMapNeedsSort ) { /* RT.topsMapSort() */ }
-        // prepare for the index of the top element
-        RT.topsMapIdx = 0;
-      },
-
-      scrollToElement: function( $topElement, duration ) {
-      // scroll the content so the argument lies at the top of the viewport
-        // TODO: must deactivate the scroll event handler before
-        var offsetTop = this.settings.getRelativeTop( $topElement[0] );
-        // TODO: WAS: RT.$container.stop(false, false);
-        // TODO: WAS: RT.$container.animate( { scrollTop: offsetTop }, duration);
-        // $('body').stop( false, false );
-        // $('body,html').animate( { scrollTop: offsetTop }, duration);
-        // briefly highlight the target element before moving it to top
-        $topElement.addClass( 'rtScrolltarget' ).offsetTop;
-        window.setTimeout(
-            function(event){ 
-              $topElement.animatescroll({ 
-                scrollSpeed: duration, 
-                easing: 'easeInOutQuart',
-                element: this.settings.$container[0]
-              });
-              window.setTimeout(
-                function(event){ $topElement.removeClass( 'rtScrolltarget' )},
-                600
-                );
-            },
-            555
-            );
-        var zzz = 123;
-      },
-
-      scrollToPosition: function( scrollData ) {
-        // reposition the content according to the scrollData argument
-        // check if the data is available ...
-        if( scrollData && scrollData.dp ) {
-          // find the element that was at the top the previous time
-          var headerId =  null;
-          if( !!scrollData.id ) {
-            headerId = scrollData.id;
-          } else {
-            // use docPath to get the id of the closest header using
-            // the RT.headerId[ <here> ] map
-            if( scrollData.dp.split(',').slice(0, 7).toString() == "0,0,0,0,0,0,0" ) {
-              headerId = this.settings.$content[0].id;
-            } else { 
-              var theHeader = this.settings.headerId[ scrollData.dp.split(',').slice(0, 7).toString() ];
-              if( theHeader ) {
-                headerId = this.settings.headerId[ scrollData.dp.split(',').slice(0, 7).toString() ].id;
-              } else {
-                return;
-              };
-            }
-          };
-          var scrollTarget = document.getElementById( headerId );
-          if( scrollTarget ) {
-            // drill down to the element at top using docPath
-            // TODO: null docPath happens at the very top of the document or when the
-            // point of document.elementFromPoint() lies in a gap between elements
-            if( scrollData.dp ) {
-              // get a reference to the element to be placed top of the viewport 
-              // using its docPath
-              var $targetElement = this.settings.drillDown( scrollTarget, scrollData.dp.split(',').slice(7), 2000 );
-              this.settings.elementAtTop = $targetElement.get(0);
-              // scrolll to the target element
-              this.settings.scrollToElement( $targetElement, this.settings.scrollDuration );
-            };
-          };
-        };
-      },
-
-      drillDown: function( startElement, steps, animDuration ) {
-        // starting with startElement move forward in the childrens lists the
-        // number of steps dictated by the steps array, return the final 
-        // element of the series, or the last found if unable to finish
-        // point to the first element to skip
-        var $initialElement = $(startElement);
-        // the first time it's a siblings list
-        var $levelSet = $initialElement.nextAll();
-        // for each contained level step down the childrens list
-        for( var i = 0; i < steps.length; i++ ) {
-          // skip to the specified number of element (first is #1)
-          if( $levelSet.length >= steps[i] ) {
-            $initialElement = $($levelSet[ steps[i] - 1 ]);
-            // DEBUG: show the elements hierarchy
-            if( this.settings.debug ) { $initialElement.css( 'border', '1px solid blue' ); };
-            $levelSet = $initialElement.first().children();
-          };
-        };
-        // returns a reference to the element to be placed top of the viewport
-        return $initialElement;
       },
 
       // you can add more functions like the one below and
@@ -794,7 +630,7 @@
       },
 
       // return the last recorded position of the document docNumber or null
-      getLastRecordedPosition: function( $container, settings ) {
+      getLastRecordedPosition: function( RT ) {
         // TODO: refactor RT.xxx data references
         if( !localStorage ) { return null; };
         // loop backwards over localStorage keys looking for a scroll record of
@@ -809,7 +645,7 @@
             var part = k.split( '-' );
             if( part.length === 3 ) {
               // check that it's related to this document
-              if( part[1] === documentNumber ) {  
+              if( part[1] === RT.documentNumber ) {  
                 // compare times and save if newer than latestTime
                 if( part[2] > latestTime.time ) {
                   // yes it's later, check that it has .dp
@@ -829,88 +665,6 @@
         if( latestTime.index === -1 ) { return null; };
         // success: return the read scrolldata
         return latestTime.data;
-      },
-
-      getCurrentReadingPosition: function(event) {
-        // get a reference to the element at the reading position and store in
-        // RT.scrollData the information needed to get back to this position
-        // returns a reference to the element at top
-        // TODO: replace leftTopVisiblePix by a local, remove leftTopVisiblePix
-        // TODO: the event argument is not used
-
-        // get a reference to the element at the reading position
-        var topElement = document.elementFromPoint(
-            this.settings.leftTopVisiblePix.left,
-            this.settings.leftTopVisiblePix.top
-            );
-        // ensure that the top of the element containing the "point" is close to the scroll
-        // position of the container to assert that the "point" is "proper"
-        var dx = 0, dy = 0;
-        // TODO: replace the constant by half the viewport height
-        var maxVerticalDistance = 333;
-        var topOffset = 99999;
-        while( this.settings.$content[0] == topElement || this.settings.$container[0] == topElement ) {
-          // also had: || Math.abs( topElement.getBoundingClientRect().top > maxVerticalDistance )
-          // DEBUG:
-          // console.log( 'point rejected: ' + this.settings.getRelativeTop( topElement )
-          // + '  ' + (!!topElement.id ?  topElement.id : '' ) );
-          // we are over a container, move the point right and downwards
-          dx += 7;
-          // TODO: calculate and cache the this.settings.$content measures
-          if( (this.settings.leftTopVisiblePix.left + dx) > this.settings.$content.innerWidth() || topElement == this.settings.$container[0] ) {
-            dy += 7;
-            dx = parseInt( this.settings.$content.css('margin-left').replace(/px/, ' '), 10);
-          };
-          var topElement = document.elementFromPoint(
-              this.settings.leftTopVisiblePix.left + dx,
-              this.settings.leftTopVisiblePix.top + dy
-              );
-          // if already at the content bottom then stop
-          if ( dx > this.settings.$content[0].clientHeight ) {
-            if( this.settings.debug ) { alert('reached bottom of document'); };
-            topOffset = -1;
-            break;
-          };
-        };
-
-        // --------------------------------------------------------------------------------
-        // alternative method: use the headers offsetTop map
-
-        // loop through the headers list looking for the last header above the current
-        // reading position 
-        var currentScrolltop = this.settings.$container.scrollTop();
-        for( var oneHeader in this.settings.headerId ) { 
-          if( this.settings.headerId[oneHeader].offsetTop >= currentScrolltop ) { break; };
-        };
-
-        // --------------------------------------------------------------------------------
-        // this.settings.scrollData will contain the data needed to restore the reading position and
-        // rolling out read time statistics
-        this.settings.scrollData.dp = topElement.getAttribute('docPath');
-        if( this.settings.scrollData.dp == null ) {
-          // DEBUG: null happens when scrolling to the very top
-          if( this.settings.debug ) { console.log( 'null docPath!' ); };
-        };
-        if( !topElement.getAttribute('id') == '' ) {
-          this.settings.scrollData.id =  topElement.getAttribute('id');
-        };
-        // percent of the element not visible (scrolled up) if it's taller then the threshold
-        if (($(topElement).offset().top < 0 ) && ($(topElement).height() > this.settings.tallElementLimit )) {
-          this.settings.scrollData.p = Math.round( Math.abs( $(topElement).offset().top 
-                / topElement.offsetHeight * 100 ))
-        };
-        // up to 50 of the first characters of the text content, if any, for reference
-        this.settings.scrollData.text = $(topElement).text().substr(0, 50).replace(/\r?\n|\r/g, ' ');
-        // DEBUG: 
-        if( this.settings.debug ) {
-          console.log('scrolled! this.settings.scrollData: ' 
-              + (( !!this.settings.scrollData.p ) ? ' ' + this.settings.scrollData.p + '%' : '' )
-              + '  docPath: ' + topElement.getAttribute('docPath')
-              + (( !!topElement.getAttribute('id') ) ?  '  id: ' + topElement.getAttribute('id') : '' )
-              + '  ' + topElement.tagName + ' ' + ((!!this.settings.scrollData.text) ? this.settings.scrollData.text : '')); 
-        } //
-        // return a reference to the element at top
-        return topElement;
       }
 
     });
@@ -935,6 +689,138 @@
       return this;
     };
 
+    $.fn.rt.buildTopsMap = function() {
+    // build a list of the text nodes and their position in the rendered page,
+    // to be used for finding the "next" paragraph when the user scrolls
+    // it contains a reference to each DOM element and it's scroll position
+    // relative to the top of the document
+      var RT = $.fn.rt.settings;
+      // build the topsMap array
+      RT.topsMap = [];
+      var 
+        $allElems = $('*', RT.$content),
+        topsMapNeedsSort = false,
+        thisNode,
+        n = $allElems.length,
+        i = 0,
+        previousNodeTop = -1000000
+      ;
+      var reltop = 0;
+      for( i = 0; i < n; i++ ) {
+        thisNode = $allElems[i];
+        if( thisNode.getBoundingClientRect() ) {
+          RT.topsMap.push({
+            node: thisNode, 
+            top: $.fn.rt.getRelativeTop( thisNode )
+          })
+        };
+        var topsMapN = RT.topsMap.length;
+        // DEBUG: 
+        // console.log( RT.topsMap.length + ' ' + thisNode.nodeName + ' ' + RT.topsMap[topsMapN - 1].top);
+        // DEBUG: check how the same top value appears more than once
+        if( RT.debug ) { 
+          if( RT.topsMap[topsMapN - 1].top == previousNodeTop ) {
+            console.log( 'top val repeated: ' + RT.topsMap[topsMapN - 1].node.nodeName 
+            + ' ' +  previousNodeTop );
+          }
+        };
+        // check that tops are sorted
+        if( RT.topsMap[topsMapN - 1] < previousNodeTop ) { topsMapNeedsSort = true; }
+        previousNodeTop = RT.topsMap[topsMapN - 1];
+      };
+
+      // sort topsMap on position order if needed
+      // TODO: NYI
+      if( topsMapNeedsSort ) { /* RT.topsMapSort() */ }
+      // prepare for the index of the top element
+      RT.topsMapIdx = 0;
+    };
+
+
+    $.fn.rt.scrollToPosition = function( scrollData ) {
+      // reposition the content according to the scrollData argument
+      var RT = $.fn.rt.settings;
+      // check if the docpath data is available ...
+      if( scrollData && scrollData.dp ) {
+        // find the element that was at the top the previous time
+        var headerId =  null;
+        if( !!scrollData.id ) {
+          // the target itself has an id
+          headerId = scrollData.id;
+        } else {
+          // use docPath to get the id of the closest header using
+          // the RT.headerId[ <here> ] map
+          // separate docpath first 7 items (headers)
+          var dpHeaders = scrollData.dp.split(',').slice(0, 7).toString();
+          if( dpHeaders == "0,0,0,0,0,0,0" ) {
+            // top of the document
+            headerId = this.settings.$content[0].id;
+          } else { 
+            var theHeader = this.settings.headerId[ dpHeaders ];
+            if( theHeader ) {
+              headerId = this.settings.headerId[ scrollData.dp.split(',').slice(0, 7).toString() ].id;
+            } else {
+              return;
+            };
+          }
+        };
+        var scrollTarget = document.getElementById( headerId );
+        if( scrollTarget ) {
+          // drill down to the element at top using docPath
+          // TODO: null docPath happens at the very top of the document or when the
+          // point of document.elementFromPoint() lies in a gap between elements
+          if( scrollData.dp ) {
+            // get a reference to the element to be placed top of the viewport 
+            // using its docPath
+            var $targetElement = drillDown( scrollTarget, scrollData.dp.split(',').slice(7), 2000 );
+            this.settings.elementAtTop = $targetElement.get(0);
+            // scrolll to the target element
+            $.fn.rt.scrollToElement( $targetElement, this.settings.scrollDuration );
+          };
+        };
+      };
+
+      function drillDown( startElement, steps, animDuration ) {
+        // starting with startElement move forward in the childrens lists the
+        // number of steps dictated by the steps array, return the final 
+        // element of the series, or the last found if unable to finish
+        // point to the first element to skip
+        var $initialElement = $(startElement);
+        // the first time it's a siblings list
+        var $levelSet = $initialElement.nextAll();
+        // for each contained level step down the childrens list
+        for( var i = 0; i < steps.length; i++ ) {
+          // skip to the specified number of element (first is #1)
+          if( $levelSet.length >= steps[i] ) {
+            $initialElement = $($levelSet[ steps[i] - 1 ]);
+            // DEBUG: show the elements hierarchy
+            if( this.settings.debug ) { $initialElement.css( 'border', '1px solid blue' ); };
+            $levelSet = $initialElement.first().children();
+          };
+        };
+        // returns a reference to the element to be placed top of the viewport
+        return $initialElement;
+      };
+
+    };
+
+
+    $.fn.rt.topsMapGetIdxByElement = function( element ) { 
+    // given a reference to an element, return its index on the topsMap
+    // heuristic: start searching from the current one
+      var RT = $.fn.rt.settings;
+      var n = RT.topsMap.length;
+      var nEnd = 0;
+      for( var i = RT.topsMapIdx; true; i++ ) {
+        if( i >= n ) { i = 0; };
+        if( element === RT.topsMap[i].node ) { 
+          return i; 
+        };
+        nEnd++;
+        if( nEnd > n ) { return null; } // not found 
+      };
+    };
+
     $.fn.rt.isBlockElement = function( theElement ) {
       // returns false for elements where smartScroll is not expected
       // to stop
@@ -950,6 +836,19 @@
       else if( d === 'flex') { return true; }
       else if( d === 'grid') { return true; }
       else { return false; }
+    };
+
+    $.fn.rt.getRelativeTop = function( elem ) {
+    // calculates the top position of the element relative to the origin of the
+    // document, 0 if no elem is passed or has no rectangle (i.e., STYLE)
+      if( !!elem ) {
+        if( !!elem.getBoundingClientRect() ) {
+          // TODO: WAS: return elem.getBoundingClientRect().top + $.fn.rt.settings.$container.scrollTop();
+          return elem.getBoundingClientRect().top + $('body').scrollTop();
+        }
+      } else {
+        return 0;
+      };
     };
 
     $.fn.rt.smartScrollGetPrevTopElement = function( nodePrevIdx ) {
@@ -971,7 +870,7 @@
           continue; 
         };
         // ignore non-block elements like spans
-        if(  ! RT.isBlockElement( nextNode )) {
+        if(  ! $.fn.rt.isBlockElement( nextNode )) {
           continue;
         };
         // check if the element has reasonable height
@@ -983,7 +882,7 @@
       var deltaY = RT.topsMap[nodePrevIdx].top - RT.topsMap[nodeNextIdx].top;
       var propDelay = deltaY / RT.smartScrollHeight;
       console.log( 'scroll back delay: ' + RT.scrollDuration * propDelay );
-      RT.scrollToElement( $( nextNode ), RT.scrollDuration * propDelay / 2 );
+      $.fn.rt.scrollToElement( $( nextNode ), RT.scrollDuration * propDelay / 2 );
       return nodeNextIdx; 
     };
 
@@ -1009,7 +908,7 @@
           continue; 
         };
         // ignore non-block elements like spans
-        if(  ! RT.isBlockElement( nextNode )) {
+        if(  ! $.fn.rt.isBlockElement( nextNode )) {
           continue;
         };
         // if the next element is a heading then put it at top even if it's shallow
@@ -1036,7 +935,7 @@
       var deltaY = RT.topsMap[nodeNextIdx].top - RT.topsMap[nodePrevIdx].top;
       var propDelay = deltaY / RT.smartScrollHeight;
       console.log( 'scroll forward delay: ' + RT.scrollDuration * propDelay );
-      RT.scrollToElement( $( nextNode ), RT.scrollDuration * propDelay );
+      $.fn.rt.scrollToElement( $( nextNode ), RT.scrollDuration * propDelay );
       return nodeNextIdx; 
     };
 
@@ -1053,12 +952,12 @@
       // TODO: would be better to seek for one close to the current scroll position
       // each element has  { node: aRefToTheNode, top: relativeTop }
       // topsMap: [],
-      var RT = this.settings;                                           // $$$$ was: $.fn.rt.settings;
+      var RT = $.fn.rt.settings;                                           // $$$$ was: $.fn.rt.settings;
       if( !RT.elementAtTop ) { RT.elementAtTop = RT.topsMap[0].node; };
       // get the current top node index
-      var nodePrevIdx = RT.topsMapGetIdxByElement( RT.elementAtTop );
+      var nodePrevIdx = $.fn.rt.topsMapGetIdxByElement( RT.elementAtTop );
       // identify the next top node
-      var nodeNextIdx = RT.smartScrollGetNextTopElement( nodePrevIdx );
+      var nodeNextIdx = $.fn.rt.smartScrollGetNextTopElement( nodePrevIdx );
       // now the scrolled element is the one at the top
       RT.elementAtTop = RT.topsMap[nodeNextIdx].node;
       // DEBUG:
@@ -1073,15 +972,42 @@
       // TODO: check that the top hasn't changed, otherwise recalculate topsMap
       /* var scrollAmount = Math.max(
          RT.elementAtTop.height(),
-         this.settings.$container.height() / 2
+         $.fn.rt.settings.$container.height() / 2
          ); */
+    };
+
+    $.fn.rt.scrollToElement = function( $topElement, duration ) {
+    // scroll the content so the argument lies at the top of the viewport
+      // TODO: must deactivate the scroll event handler before
+      var offsetTop = $.fn.rt.getRelativeTop( $topElement[0] );
+      // TODO: WAS: RT.$container.stop(false, false);
+      // TODO: WAS: RT.$container.animate( { scrollTop: offsetTop }, duration);
+      // $('body').stop( false, false );
+      // $('body,html').animate( { scrollTop: offsetTop }, duration);
+      // briefly highlight the target element before moving it to top
+      $topElement.addClass( 'rtScrolltarget' ).offsetTop;
+      window.setTimeout(
+        function(event){ 
+          $topElement.animatescroll({ 
+            scrollSpeed: duration, 
+            easing: 'easeInOutQuart',
+            element: $.fn.rt.settings.$container[0]
+          });
+          window.setTimeout(
+            function(event){ $topElement.removeClass( 'rtScrolltarget' )},
+            600
+            );
+        },
+        555
+        );
+      var zzz = 123;
     };
 
     $.fn.rt.smartScrollToPrevElement = function() {
       // scroll backwards, to the first element with a height
       // get the current top node index
       var RT = $.fn.rt.settings;
-      var nodePrevIdx = RT.topsMapGetIdxByElement( RT.elementAtTop );
+      var nodePrevIdx = $.fn.rt.topsMapGetIdxByElement( RT.elementAtTop );
       // identify the next top node
       var nodeNextIdx = RT.smartScrollGetPrevTopElement( nodePrevIdx );
       // now the scrolled element is the one at the top
@@ -1134,7 +1060,7 @@
       // get the current reading position in RT.scrollData (and in topsMapElement)
       // >>>> must get a reference to the plugin object, and use it to reference getCurrentReadingPosition()
       var RT = $.fn.rt.settings;
-      RT.topsMapElement = RT.getCurrentReadingPosition();
+      RT.topsMapElement = $.fn.rt.getCurrentReadingPosition();
       // save the scroll data in localStorage
       localStorage.setItem(
           'RT-' + RT.documentNumberEncoded + '-' + RT.scrollTime.getTime(),
@@ -1176,6 +1102,88 @@
       }
       });
       */
+    };
+
+    $.fn.rt.getCurrentReadingPosition = function(event) {
+      // get a reference to the element at the reading position and store in
+      // RT.scrollData the information needed to get back to this position
+      // returns a reference to the element at top
+      // TODO: replace leftTopVisiblePix by a local, remove leftTopVisiblePix
+      // TODO: the event argument is not used
+
+      // get a reference to the element at the reading position
+      var topElement = document.elementFromPoint(
+          $.fn.rt.settings.leftTopVisiblePix.left,
+          $.fn.rt.settings.leftTopVisiblePix.top
+          );
+      // ensure that the top of the element containing the "point" is close to the scroll
+      // position of the container to assert that the "point" is "proper"
+      var dx = 0, dy = 0;
+      // TODO: replace the constant by half the viewport height
+      var maxVerticalDistance = 333;
+      var topOffset = 99999;
+      while( $.fn.rt.settings.$content[0] == topElement || $.fn.rt.settings.$container[0] == topElement ) {
+        // also had: || Math.abs( topElement.getBoundingClientRect().top > maxVerticalDistance )
+        // DEBUG:
+        // console.log( 'point rejected: ' + $.fn.rt.getRelativeTop( topElement )
+        // + '  ' + (!!topElement.id ?  topElement.id : '' ) );
+        // we are over a container, move the point right and downwards
+        dx += 7;
+        // TODO: calculate and cache the $.fn.rt.settings.$content measures
+        if( ($.fn.rt.settings.leftTopVisiblePix.left + dx) > $.fn.rt.settings.$content.innerWidth() || topElement == $.fn.rt.settings.$container[0] ) {
+          dy += 7;
+          dx = parseInt( $.fn.rt.settings.$content.css('margin-left').replace(/px/, ' '), 10);
+        };
+        var topElement = document.elementFromPoint(
+            $.fn.rt.settings.leftTopVisiblePix.left + dx,
+            $.fn.rt.settings.leftTopVisiblePix.top + dy
+            );
+        // if already at the content bottom then stop
+        if ( dx > $.fn.rt.settings.$content[0].clientHeight ) {
+          if( $.fn.rt.settings.debug ) { alert('reached bottom of document'); };
+          topOffset = -1;
+          break;
+        };
+      };
+
+      // --------------------------------------------------------------------------------
+      // alternative method: use the headers offsetTop map
+
+      // loop through the headers list looking for the last header above the current
+      // reading position 
+      var currentScrolltop = $.fn.rt.settings.$container.scrollTop();
+      for( var oneHeader in $.fn.rt.settings.headerId ) { 
+        if( $.fn.rt.settings.headerId[oneHeader].offsetTop >= currentScrolltop ) { break; };
+      };
+
+      // --------------------------------------------------------------------------------
+      // $.fn.rt.settings.scrollData will contain the data needed to restore the reading position and
+      // rolling out read time statistics
+      $.fn.rt.settings.scrollData.dp = topElement.getAttribute('docPath');
+      if( $.fn.rt.settings.scrollData.dp == null ) {
+        // DEBUG: null happens when scrolling to the very top
+        if( $.fn.rt.settings.debug ) { console.log( 'null docPath!' ); };
+      };
+      if( !topElement.getAttribute('id') == '' ) {
+        $.fn.rt.settings.scrollData.id =  topElement.getAttribute('id');
+      };
+      // percent of the element not visible (scrolled up) if it's taller then the threshold
+      if (($(topElement).offset().top < 0 ) && ($(topElement).height() > $.fn.rt.settings.tallElementLimit )) {
+        $.fn.rt.settings.scrollData.p = Math.round( Math.abs( $(topElement).offset().top 
+              / topElement.offsetHeight * 100 ))
+      };
+      // up to 50 of the first characters of the text content, if any, for reference
+      $.fn.rt.settings.scrollData.text = $(topElement).text().substr(0, 50).replace(/\r?\n|\r/g, ' ');
+      // DEBUG: 
+      if( $.fn.rt.settings.debug ) {
+        console.log('scrolled! $.fn.rt.settings.scrollData: ' 
+            + (( !!$.fn.rt.settings.scrollData.p ) ? ' ' + $.fn.rt.settings.scrollData.p + '%' : '' )
+            + '  docPath: ' + topElement.getAttribute('docPath')
+            + (( !!topElement.getAttribute('id') ) ?  '  id: ' + topElement.getAttribute('id') : '' )
+            + '  ' + topElement.tagName + ' ' + ((!!$.fn.rt.settings.scrollData.text) ? $.fn.rt.settings.scrollData.text : '')); 
+      } //
+      // return a reference to the element at top
+      return topElement;
     };
 
 })( jQuery, window, document );
