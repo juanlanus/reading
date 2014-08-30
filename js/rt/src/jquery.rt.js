@@ -752,17 +752,12 @@
           // the RT.headerId[ <here> ] map
           // separate docpath first 7 items (headers)
           var dpHeaders = scrollData.dp.split(',').slice(0, 7).toString();
-          if( dpHeaders == "0,0,0,0,0,0,0" ) {
-            // top of the document
-            headerId = this.settings.$content[0].id;
-          } else { 
-            var theHeader = this.settings.headerId[ dpHeaders ];
-            if( theHeader ) {
-              headerId = this.settings.headerId[ scrollData.dp.split(',').slice(0, 7).toString() ].id;
-            } else {
-              return;
-            };
-          }
+          var theHeader = this.settings.headerId[ dpHeaders ];
+          if( theHeader ) {
+            headerId = this.settings.headerId[ scrollData.dp.split(',').slice(0, 7).toString() ].id;
+          } else {
+            return;
+          };
         };
         var scrollTarget = document.getElementById( headerId );
         if( scrollTarget ) {
