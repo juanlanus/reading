@@ -241,7 +241,7 @@ var TOC = (function() {
           // the # target is in event.target.attributes.href.value, it can be 
           // used to find the link target's id
           location.hash = event.target.attributes.href.value;
-          $.fn.rt.settings.$content[0].focus();
+          $.fn.rt.RT.content.focus();
         } else {
           // is a click somewhere else to close the TOC overlay
         };
