@@ -123,7 +123,7 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
     href="http://jsfiddle.net/davidThomas/N98ee/1/">http://jsfiddle.net/davidThomas/N98ee/1/</a>
     and <a
     href="http://stackoverflow.com/questions/4229422/jquery-slideright-effect">http://stackoverflow.com/questions/4229422/jquery-slideright-effect</a>
-    and <a href="http://jsfiddle.net/Sj2Ru/">http://jsfiddle.net/Sj2Ru/</a> )
+    and <a href="http://jsfiddle.net/Sj2Ru/">http://jsfiddle.net/Sj2Ru/</a> ) 
     <pre>$(document).ready(
     function(){
         $('#slider').click(
@@ -255,8 +255,8 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h3>
     within several event handlers. </li>
   <li>When reloading repeatedly the document, it gets positioned each time a
     little closer to the top. </li>
-  <li class="checkedItem">Set the beforeunload event to store an end-of-session
-    record. 
+  <li class="checkedItem">✔ Set the beforeunload event to store an
+    end-of-session record. 
     <pre>RT-1360724404031: {<strong>"endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,9","p100":0}
 RT-1360724408289: {"<strong>endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,8,1","p100":70}</pre>
   </li>
@@ -268,9 +268,9 @@ RT-1360724408289: {"<strong>endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,
   <li><img alt="this one!" src="res/caramba_yellow.gif" width="7" height="14">
     When saving the scroll (actions) data in local storage, check for volume
     and time, and eventually upload to the server</li>
-  <li><img alt="this one!" src="res/caramba_yellow.gif" width="7" height="14">
-    Store the user id and the document id in the RT namespace as constants
-    (<code>doc</code> and <code>u</code>)</li>
+  <li>✔ <img alt="this one!" src="res/caramba_yellow.gif" width="7"
+    height="14"> Store the user id and the document id in the RT namespace as
+    constants (<code>doc</code> and <code>u</code>)</li>
   <li><img alt="this one!" src="res/caramba_yellow.gif" width="7" height="14">
     Get the user id and the doc id from the server</li>
   <li class="doneItem">Don't store the element's scroll percent if the element
@@ -290,8 +290,8 @@ RT-1360724408289: {"<strong>endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,
   <li class="checkedItem">When repositioning after a resize, don't go to the
     header but instead go directly to the top element (the scroll to the header
     can be skipped whatsoever). </li>
-  <li style="" class="checkedItem">There must be only one animation no matter
-    how many levels the docPath has. </li>
+  <li style="" class="checkedItem">✔ There must be only one animation no
+    matter how many levels the docPath has. </li>
   <li>Change the easing of the scroll animation from the default
     <code>swing</code> to this one: 
     <pre>    easeOutCubic: function (x, t, b, c, d) {
@@ -357,6 +357,58 @@ RT-1360724408289: {"<strong>endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,
     gracefully. </li>
   <li>TOC: at page load add enough blank space at the end of the content so
     that the last headers can be scrolled to the top of the viewport. </li>
+  <li>In localStorage some entries have long numbers in the key (like getTime()
+    outputs) and other have much shorter numbers. </li>
+  <li>In the recording of the data, shorten the time by expressing it in tenths
+    of a second (divide by 100, trim 2 digits). </li>
+  <li>Add a first element to the headers map, pointing to the top of the
+    content container, with docpath = "0.0.0.0.0.0.0". If the element has ho
+    id, provide one. </li>
+  <li>Allow the $content element to be specified, for example by id, as an
+    option, for the case when $container has more than a single child. </li>
+  <li>Refactor the setting of the event handlers in their own functions, in
+    order to be able to debug better. </li>
+  <li>The following characters have a special meaning in CSS: !, ", #, $, %,
+    &amp;, ', (, ), *, +, ,, -, ., /, :, ;, &lt;, =, &gt;, ?, @, [, \, ], ^, `,
+    {, |, }, and ~. (from <a
+    href="https://mathiasbynens.be/notes/css-escapes">CSS character escape
+    sequences</a>). </li>
+  <li>Make the menu elements optional through options, true by default. </li>
+  <li>Small scrolls within the same paragraph can generate hundreds of
+    identical scroll records, differing only in the time: when the times are
+    too close discard records. In FF a page scroll gnerates multiple scrollData
+    values. </li>
+  <li>✔ The end of session event records null docPath data (or it was not
+    available due to other bug) 
+    <p><code>onbeforeunload</code> does not have a reference to RT: use a
+    jQuery event handler to pass it a reference, or use the public $.fn.rt.RT
+    reference</p>
+    <p>After have given acces to RT, it still doesn't work because
+    RT.data.scrollData is null </p>
+    <p>The writeScrollRecord call at <code>onbeforeunload</code> does not
+    perform, maybe because of an error in the previous line</p>
+  </li>
+  <li>The recorded scrollData entries in localStorage (made by the end session
+    handler) have no scrollPosition</li>
+  <li>TypeError: RT.data.headerId is null in scrollToPosition @ 317 when
+    loading the page 
+    <p>The name <code>RT.data.headerId</code> was used for 2 different
+    purposes, a local var and the id's map. The local now id
+    <code>headerId</code>. </p>
+  </li>
+  <li>The <code>RT.getRelativeTop(</code> function returns negative scroll
+    values </li>
+  <li>Function RT.scrolltoElement( target ) does not scroll (maybe because of
+    the wrong negative scroll tops) 
+    <p>In the resize event, <code>scrollToPosition: function( scrollData
+    )</code> is called with <code>scrollData = undefined</code> </p>
+    <p><code>scrollToElement</code> has no RT reference. </p>
+  </li>
+  <li>The keayboard action handler does not react. Function
+    <code>smartScrollGetNextTopElement()</code> fails possibly because of the
+    large negative scroll tops in <code>RT.data.topsMap[]</code>. </li>
+  <li>The resize handler calls  <code>RT.scrollToPosition( RT.scrollData
+    );</code> with null scrollData. </li>
 </ol>
 
 <p></p>
