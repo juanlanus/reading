@@ -204,6 +204,11 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
     for the logging</li>
   <li>Provide a means to scroll back in mobile, as shift+spacebar in desktop
     does, something like a quick double tap</li>
+  <li>Shift + space returns an error: jquery.rt.js (line 566, col 10)
+    <pre>TypeError: RT.data.smartScrollGetPrevTopElement is not a function
+var nodeNextIdx = RT.data.smartScrollGetPrevTopElement( nodePrevIdx );</pre>
+    <p>Was <code>this.smartScrollGetPrevTopElement()</code> </p>
+  </li>
 </ul>
 
 <h3 id="L642">server</h3>
@@ -407,7 +412,7 @@ RT-1360724408289: {"<strong>endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,
   <li>The keayboard action handler does not react. Function
     <code>smartScrollGetNextTopElement()</code> fails possibly because of the
     large negative scroll tops in <code>RT.data.topsMap[]</code>. </li>
-  <li>The resize handler calls  <code>RT.scrollToPosition( RT.scrollData
+  <li>The resize handler calls <code>RT.scrollToPosition( RT.scrollData
     );</code> with null scrollData. </li>
 </ol>
 

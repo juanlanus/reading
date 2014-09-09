@@ -397,7 +397,7 @@
       var RT = $.fn.rt.RT;
       if( !!elem ) {
         if( !!elem.getBoundingClientRect() ) {
-          return elem.getBoundingClientRect().top + RT.$element.scrollTop();
+          return elem.getBoundingClientRect().top - RT.$element[0].getBoundingClientRect().top;
           // $$$$ this is a hack: return elem.getBoundingClientRect().top + $('body').scrollTop();
         }
       } else {
@@ -406,7 +406,7 @@
     },
 
     smartScrollGetPrevTopElement: function( nodePrevIdx ) {
-      // search backwards for the first element with a height
+    // search backwards for the first element with height (less than a forward scroll)
       var RT = $.fn.rt.RT;
       if( !nodePrevIdx ) { return null; };
       // save starting element index
@@ -435,7 +435,6 @@
       // ready: scroll and exit loop
       var deltaY = RT.data.topsMap[nodePrevIdx].top - RT.data.topsMap[nodeNextIdx].top;
       var propDelay = deltaY / RT.settings.smartScrollHeight;
-      console.log( 'scroll back delay: ' + RT.settings.scrollDuration * propDelay );
       RT.scrollToElement( $( nextNode ), RT.settings.scrollDuration * propDelay / 2 );
       return nodeNextIdx; 
     },
@@ -563,17 +562,16 @@
       var RT = $.fn.rt.RT;
       var nodePrevIdx = RT.topsMapGetIdxByElement( RT.data.elementAtTop );
       // identify the next top node
-      var nodeNextIdx = RT.data.smartScrollGetPrevTopElement( nodePrevIdx );
+      var nodeNextIdx = this.smartScrollGetPrevTopElement( nodePrevIdx );
       // now the scrolled element is the one at the top
       RT.data.elementAtTop = RT.data.topsMap[nodeNextIdx].node;
       // DEBUG:
       if( RT.settings.debug ) {
-        console.log(
-            'smartScrolled back to:' 
-            + ' ' +  nodeNextIdx 
-            + ' ' +  RT.data.topsMap[nodeNextIdx].top 
-            + ' ' +  RT.data.topsMap[nodeNextIdx].node.nodeName
-            );
+        console.log( 'smartScrolled back to:' 
+        + ' ' +  nodeNextIdx 
+        + ' ' +  RT.data.topsMap[nodeNextIdx].top 
+        + ' ' +  RT.data.topsMap[nodeNextIdx].node.nodeName
+        );
       };
     },
 
