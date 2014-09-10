@@ -83,6 +83,79 @@ h4, h5 subsections
 
 <h2 id="Notes">Collected notes &amp; links</h2>
 <ul>
+  <li><h3>scroll</h3>
+    <ul>
+      <li><a href="http://api.jquery.com/scrolltop/">jQuery .scrolltop(optional
+        value)</a> 
+        <p>Get or set the number of pixels that are hidden from view above the
+        scrollable area. If the scroll bar is at the very top, or if the
+        element is not scrollable, this number will be 0.</p>
+      </li>
+      <li><a href="http://lions-mark.com/jquery/scrollTo/">jQuery
+        scrollTo()</a> a small plugin that scroll with an animation
+        <pre>$.fn.scrollTo = function( target, options, callback ){
+  if(typeof options == 'function' &amp;&amp; arguments.length == 2){ callback = options; options = target; }
+  var settings = $.extend({
+    scrollTarget  : target,
+    offsetTop     : 50,
+    duration      : 500,
+    easing        : 'swing'
+  }, options);
+  return this.each(function(){
+    var <strong>scrollPane = $(this)</strong>;
+    var scrollTarget = (typeof settings.scrollTarget == "number") ? settings.scrollTarget : $(settings.scrollTarget);
+    var scrollY = (typeof scrollTarget == "number") ? scrollTarget : scrollTarget.offset().top + <strong>scrollPane</strong>.scrollTop() - parseInt(settings.offsetTop);
+    scrollPane.animate({scrollTop : scrollY }, parseInt(settings.duration), settings.easing, function(){
+      if (typeof callback == 'function') { callback.call(this); }
+    });
+  });
+}</pre>
+      </li>
+      <li><a>jQuery .scroll()</a> href="http://api.jquery.com/scroll/" 
+        <p>Bind an event handler to the "scroll" JavaScript event, or trigger
+        that event on an element. </p>
+      </li>
+      <li>Category: Callbacks Object
+        <p>The <a
+        href="http://api.jquery.com/category/callbacks-object/">jQuery.Callbacks()</a>
+        function, introduced in version 1.7, returns a multi-purpose object
+        that provides a powerful way to manage callback lists. It supports
+        adding, removing, firing, and disabling callbacks.</p>
+      </li>
+      <li><a
+        href="http://demos.flesler.com/jquery/scrollTo/">jQuery.ScrollTo()</a>
+        - check the code </li>
+      <li><a
+        href="http://www.thepetedesign.com/demos/onepage_scroll_demo.html">One
+        Page Scroll v1.3.1 demo</a> </li>
+      <li><a href="http://scrolldepth.parsnip.io/">Scroll Depth</a> A Google
+        Analytics plugin for measuring page scrolling
+        <p>A small Google Analytics plugin that allows you to measure how far
+        down the page your users are scrolling. It monitors the 25%, 50%, 75%,
+        and 100% scroll points, sending a Google Analytics Event at each one.
+        Everything is sent to Google Analytics via Events. </p>
+      </li>
+      <li><a href="http://screentime.parsnip.io/">Screentime</a> Measure how
+        much time things spend on-screen </li>
+      <li><a href="http://jsfiddle.net/tcloninger/e5qaD/">Fadein on scroll</a>
+        (jsfiddle) 
+        <p>Detects when elements enter the viewport</p>
+      </li>
+      <li><a
+        href="http://stackoverflow.com/questions/6677035/jquery-scroll-to-element">jQuery
+        scroll To Element</a> </li>
+      <li><a
+        href="http://www.abeautifulsite.net/smoothly-scroll-to-an-element-without-a-jquery-plugin-2/">Smoothly
+        scroll to an element without a jQuery plugin</a> 
+        <p>Shows how to scroll to page anchors with animation </p>
+      </li>
+      <li><a href="http://wicky.nillia.ms/headroom.js/">Headroom.js</a> The
+        header slides out of view when scrolling down and slides back in when
+        scrolling up. </li>
+      <li><a href="http://www.bytemuse.com/scrollIt.js/">ScrollIt.js</a> A
+        small full-page scroller. </li>
+    </ul>
+  </li>
   <li><h3 id="L597">MongoDB</h3>
     <ul>
       <li><a

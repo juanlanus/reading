@@ -288,7 +288,7 @@
           }
         };
         // check that tops are sorted
-        if( RT.data.topsMap[topsMapN - 1] < previousNodeTop ) { topsMapNeedsSort = true; }
+        if( RT.data.topsMap[topsMapN - 1].top < previousNodeTop ) { topsMapNeedsSort = true; }
         previousNodeTop = RT.data.topsMap[topsMapN - 1];
       };
 
@@ -398,7 +398,7 @@
       if( !!elem ) {
         if( !!elem.getBoundingClientRect() ) {
           return elem.getBoundingClientRect().top - RT.$element[0].getBoundingClientRect().top;
-          // $$$$ this is a hack: return elem.getBoundingClientRect().top + $('body').scrollTop();
+          // $$$$ this was a hack: return elem.getBoundingClientRect().top + $('body').scrollTop();
         }
       } else {
         return 0;
