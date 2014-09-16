@@ -328,7 +328,7 @@
             // get a reference to the element to be placed top of the viewport 
             // using its docPath
             var $targetElement = drillDown( scrollTarget, scrollData.dp.split(',').slice(7), 2000 );
-            RT.settings.elementAtTop = $targetElement[0];
+            RT.data.elementAtTop = $targetElement[0];
             // scrolll to the target element
             RT.scrollToElement( $targetElement, RT.settings.scrollDuration );
           };
@@ -488,7 +488,7 @@
       var propDelay = deltaY / RT.settings.smartScrollHeight * RT.settings.scrollDuration;
       if ( RT.settings.debug ) { 
         console.log( 'scroll forward delay:' + ~~( propDelay ) + ' to:' +
-        RT.data.topsMap[nodeNextIdx].top + ' delta:' + deltaY + ' top3:' + nodeNextIdx ); 
+        RT.data.topsMap[nodeNextIdx].top + ' delta:' + deltaY + ' topNode' + nodeNextIdx ); 
       }
       RT.scrollToElement( $( nextNode ), propDelay );
       return nodeNextIdx; 
@@ -535,19 +535,29 @@
     // TODO: must deactivate the scroll event handler before
       var RT = $.fn.rt.RT;
       var offsetTop = RT.getRelativeTop( $topElement[0] );
-      console.log('scrollToElement: ' + offsetTop );
+      // console.log('scrollToElement: ' + offsetTop );
       // briefly highlight the target element before moving it to top
       $topElement.addClass( 'rtScrolltarget' );
-      // scrollTo = function( target: a pix# or a a DOM element, options scrollTarget: target, offsetTop: 50, duration: 500, easing: 'swing', callback )
-      // NO ANIMATION: RT.$content.scrollTo( $topElement[0] );
+      // disable scroll events during programmatic scrolling
+      RT.data.disableScrollEvents = true;
+      var scrollTargetPix = RT.getRelativeTop( $topElement[0] );
       // WAS: RT.$content.scrollTo(
       $( 'html, body' ).scrollTo(
-        $topElement[0],
-        { duration: duration, easing: 'swing' },
-        window.setTimeout(
-          function( event ){ $topElement.removeClass( 'rtScrolltarget' )},
-          500
-        )
+        scrollTargetPix,                                                                 // WAS: $topElement[0],
+        {
+                                                                                         // FAILED TEST: scrollTarget:$topElement[0],
+          duration: duration, easing: 'swing' },
+        function() {
+          // end-of-animation: re-enable scroll events and remove scroll target highlight
+          var RT = $.fn.rt.RT;
+          RT.data.disableScrollEvents = false;
+          window.setTimeout(
+            function( event ){ 
+              $topElement.removeClass( 'rtScrolltarget' );
+            },
+            500
+          )
+        }
       )
     },
 
@@ -705,11 +715,11 @@
 
 
       logScrollData = function() {
-        console.log('scrolled! RT.data.scrollData: ' 
-        + (( !! RT.data.scrollData.p ) ? ' ' + RT.data.scrollData.p + '%' : '' )
-        + '  docPath: ' + topElement.getAttribute('docPath')
-        + (( !!topElement.getAttribute('id') ) ?  '  id: ' + topElement.getAttribute('id') : '' )
-        + '  ' + topElement.tagName + ' ' + ((!! RT.data.scrollData.text) ? RT.data.scrollData.text : '')); 
+        console.log('ss space to:' +  RT.getRelativeTop( topElement ) + ' '
+        + (( !! RT.data.scrollData.p ) ? RT.data.scrollData.p + '%' : '' )
+        + ' docPath:' + topElement.getAttribute('docPath')
+        + (( !!topElement.getAttribute('id') ) ?  ' id:' + topElement.getAttribute('id') : '' )
+        + ' ' + topElement.tagName + ' ' + ((!! RT.data.scrollData.text) ? RT.data.scrollData.text : '')); 
       }
 
       // --------------------------------------------------------------------------------
@@ -729,7 +739,7 @@
       };
       // up to 50 of the first characters of the text content, if any, for reference
       RT.data.scrollData.text = $(topElement).text().substr(0, 50).replace(/\r?\n|\r/g, ' ');
-      // if( RT.settings.debug ) { logScrollData(); }
+      if( RT.settings.debug ) { logScrollData(); }
       return topElement;
     }
 
@@ -829,6 +839,8 @@
           RT,
           function(event) {
             var RT = event.data;
+            // scroll events are disabled during programmatic scroll
+            if( RT.data.disableScrollEvents ) { return; }
             // save the exact scroll time in a global
             RT.data.scrollTime = event.timeStamp;
             // On scroll wait a short while and save the position
