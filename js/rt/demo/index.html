@@ -10,14 +10,18 @@
     <script src="../src/toc.js"></script>
     <script src="res/rangy-core.js"></script>
     <script src="res/rangy-cssclassapplier.js"></script>
-    <script src="res/animatescroll.js"></script>
+    <script src="res/jquery.scrollTo.js"></script>
     <link rel="stylesheet" href="res/rt.css">
   </head>
 
   <body>
     <script>
       $(function() {
-        // activate reading control (pass a selector to the function)
+        // POC scroll text
+        // console.log( 'About to scroll to 40000' );
+        // $( 'html, body' ).scrollTo( 40000 );
+
+        // activate reading control
         $("#textContainer").rt({
           $container: $( '#textContainer' ),
           $content: $( '#textContent' ),
@@ -36,29 +40,30 @@
       <div id="containerInner" style="margin-left:70px; padding-top:99px; max-width:48em;">
     -->
 
-    <div id="textContainer" style="overflow:auto; position:relative; height:100%;">
-      <div id="textContent">
-        <style type="text/css">
-        #textContent { font-family:'Ubuntu', sans-serif; font-size:12pt; font-style:normal; padding-left:100px; max-width:45em; }
-        .bookCopy { margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:20px; text-align:justify; }
-        .bookCover { width:calc(100% - 20px); }
-        .bookInfoLabel { font-size:small; font-weight:600; }
-        .bookInfoInfo { font-size:small; font-weight:400; }
-        .bookInfoLink { font-size:small; font-weight:400; font-style:italic; color:#000000; }
-        </style>
+    <style type="text/css">
+    #textContent { font-family:'Ubuntu', sans-serif; font-size:12pt; font-style:normal; padding-left:100px; max-width:45em; }
+    .bookCopy { margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:20px; text-align:justify; }
+    .bookCover { width:calc(100% - 20px); }
+    .bookInfoLabel { font-size:small; font-weight:600; }
+    .bookInfoInfo { font-size:small; font-weight:400; }
+    .bookInfoLink { font-size:small; font-weight:400; font-style:italic; color:#000000; }
+    </style>
+
+    <div id="textContainer" style="position:relative; overflow:auto; height:100%;">
+      <div id="textContent" style="position:relative; margin-left:10px;">
 
         <p class="bookCover">
-        <img src="images/childrenOfTheFrost_cover_.jpg" style="max-width:100%;" /> 
+          <img src="images/childrenOfTheFrost_cover_.jpg" style="max-width:100%;" /> 
         </p>
 
         <p class="bookCopy">
-        <img src="images/logo-feedbooks-tiny.jpeg" /> 
+          <img src="images/logo-feedbooks-tiny.jpeg" /> 
         </p>
 
         <h1>Children of the Frost</h1>
 
         <p>
-        <span class="bookInfoLabel">Jack London</span> 
+          <span class="bookInfoLabel">Jack London</span> 
         </p>
 
         <p class="bookCopy">
@@ -69,7 +74,7 @@
         </p>
 
         <p class="bookCopy">
-        <span class="bookInfoLabel">About London:</span> <br />
+          <span class="bookInfoLabel">About London:</span> <br />
         </p>
 
         <p class="bookCopy">Jack London (January 12, 1876 – November 22, 1916), was an American author who wrote The Call of the Wild and other books. A pioneer in the then-burgeoning world of commercial magazine fiction, he was one of the first Americans to make a huge financial success from writing. Source: Wikipedia 

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #container { position:relative; height:350px; }
+        #demo-nav { position:absolute; top:5px; margin:5px; }
+        #content { position:relative; display:block; top:40px; background:#fff; height:300px; overflow:auto; }
+        #content li, #content li h3 { color:#777; }
+        #content li.active, #content li.active h3 { color:#000; }
+    </style>
+    <script src="jquery-2.1.1.js"></script>
+    <script src="jquery.scrollTo.js"></script>
+</head>
+<body>
+
+<div id="container">
+    <section id="demo-nav">
+        <nav>
+            <span>Scroll To: </span>
+            <button class="next">Next Chapter</button>
+            <button class="last">Last Chapter</button>
+            <button class="first">First Chapter</button>
+        </nav>
+    </section>
+    <section id="content" class="jq-clearfix">
+        <ul>
+            <li><h3>Chapter 1</h3> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut lorem ipsum. Aenean ut mauris dolor, quis interdum neque. Maecenas consectetur lorem et mi viverra viverra. Etiam vel lorem sagittis quam consequat convallis. Ut pellentesque neque eu sem vulputate nec vestibulum nisi lobortis. </p></li>
+            <li><h3>Chapter 2</h3> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut lorem ipsum. Aenean ut mauris dolor, quis interdum neque. Maecenas consectetur lorem et mi viverra viverra. Etiam vel lorem sagittis quam consequat convallis. Ut pellentesque neque eu sem vulputate nec vestibulum nisi lobortis. </p></li>
+            <li><h3>Chapter 3</h3> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut lorem ipsum. Aenean ut mauris dolor, quis interdum neque. Maecenas consectetur lorem et mi viverra viverra. Etiam vel lorem sagittis quam consequat convallis. Ut pellentesque neque eu sem vulputate nec vestibulum nisi lobortis. </p></li>
+            <li><h3>Chapter 4</h3> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut lorem ipsum. Aenean ut mauris dolor, quis interdum neque. Maecenas consectetur lorem et mi viverra viverra. Etiam vel lorem sagittis quam consequat convallis. Ut pellentesque neque eu sem vulputate nec vestibulum nisi lobortis. </p></li>
+            <li><h3>Chapter 5</h3> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut lorem ipsum. Aenean ut mauris dolor, quis interdum neque. Maecenas consectetur lorem et mi viverra viverra. Etiam vel lorem sagittis quam consequat convallis. Ut pellentesque neque eu sem vulputate nec vestibulum nisi lobortis. </p></li>
+            <li><h3>Chapter 6</h3> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut lorem ipsum. Aenean ut mauris dolor, quis interdum neque. Maecenas consectetur lorem et mi viverra viverra. Etiam vel lorem sagittis quam consequat convallis. Ut pellentesque neque eu sem vulputate nec vestibulum nisi lobortis. </p></li>
+            <li><h3>Chapter 7</h3> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut lorem ipsum. Aenean ut mauris dolor, quis interdum neque. Maecenas consectetur lorem et mi viverra viverra. Etiam vel lorem sagittis quam consequat convallis. Ut pellentesque neque eu sem vulputate nec vestibulum nisi lobortis. </p></li>
+            <li><h3>Chapter 8</h3> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut lorem ipsum. Aenean ut mauris dolor, quis interdum neque. Maecenas consectetur lorem et mi viverra viverra. Etiam vel lorem sagittis quam consequat convallis. Ut pellentesque neque eu sem vulputate nec vestibulum nisi lobortis. </p></li>
+            <li><h3>Chapter 9</h3> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut lorem ipsum. Aenean ut mauris dolor, quis interdum neque. Maecenas consectetur lorem et mi viverra viverra. Etiam vel lorem sagittis quam consequat convallis. Ut pellentesque neque eu sem vulputate nec vestibulum nisi lobortis. </p></li>
+            <li><h3>Chapter 10</h3> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut lorem ipsum. Aenean ut mauris dolor, quis interdum neque. Maecenas consectetur lorem et mi viverra viverra. Etiam vel lorem sagittis quam consequat convallis. Ut pellentesque neque eu sem vulputate nec vestibulum nisi lobortis. </p></li>
+        </ul>
+        <div class="jq-clearfix"></div>
+    </section>
+</div>
+
+<script>
+// [start] Demo Code //
+
+    $('#content').scrollTo( 1555 );
+
+    var $chapters = $('#content').find('ul').children('li');
+    
+    // Cache Scroll Positions for Each Chapter
+    var $chScrollPositions = new Array();
+    $chapters.each(function(i) {
+        $chScrollPositions[i] = Math.round($(this).offset().top - $('#content').offset().top) - 10;
+    });
+    $chapters.eq(0).addClass('active'); // Set First Chapter Active on Start
+    
+    $('#demo-nav > nav > button').click(function(){
+        var last = $chapters.parent().find('li.active').removeClass('active').index();
+        var next;
+        
+        switch($(this).index()){
+            case 1:    // Action - Next Chapter
+                next = (last + 1 == $chapters.length) ? 0 : last + 1; // Loop around to first chapter
+            break;
+            case 2:    // Action - Last Chapter
+                next = $chapters.length - 1;
+            break;
+            case 3:    // Action - First Chapter
+                next = 0;
+            break;
+        }
+        $chapters.eq(next).addClass('active'); // Set Next Chapter Active
+        // $('#content').scrollTo($chScrollPositions[next]);    // scroll to pix#
+        $('#content').scrollTo( $chapters[next] );              // scroll to element
+    });
+// [end] Demo Code //
+</script>
+
+</body>
+</html>

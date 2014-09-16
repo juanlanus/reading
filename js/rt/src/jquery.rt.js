@@ -328,7 +328,7 @@
             // get a reference to the element to be placed top of the viewport 
             // using its docPath
             var $targetElement = drillDown( scrollTarget, scrollData.dp.split(',').slice(7), 2000 );
-            this.settings.elementAtTop = $targetElement.get(0);
+            RT.settings.elementAtTop = $targetElement[0];
             // scrolll to the target element
             RT.scrollToElement( $targetElement, RT.settings.scrollDuration );
           };
@@ -399,6 +399,7 @@
         if( !!elem.getBoundingClientRect() ) {
           return elem.getBoundingClientRect().top - RT.$element[0].getBoundingClientRect().top;
           // $$$$ this was a hack: return elem.getBoundingClientRect().top + $('body').scrollTop();
+          // $$$$ getBoundingClientRect().top omits the margins sizes
         }
       } else {
         return 0;
@@ -482,13 +483,14 @@
           break;
         };
       };
-      // outline the element to be set at the top
-      // TODO: add a class rtScrollTarget, set it to be removed then the animation ends
       // do the scroll and exit
       var deltaY = RT.data.topsMap[nodeNextIdx].top - RT.data.topsMap[nodePrevIdx].top;
-      var propDelay = deltaY / RT.settings.smartScrollHeight;
-      console.log( 'scroll forward delay: ' + RT.settings.scrollDuration * propDelay );
-      if ( RT.settings.debug ) { RT.scrollToElement( $( nextNode ), RT.settings.scrollDuration * propDelay ); }
+      var propDelay = deltaY / RT.settings.smartScrollHeight * RT.settings.scrollDuration;
+      if ( RT.settings.debug ) { 
+        console.log( 'scroll forward delay:' + ~~( propDelay ) + ' to:' +
+        RT.data.topsMap[nodeNextIdx].top + ' delta:' + deltaY + ' top3:' + nodeNextIdx ); 
+      }
+      RT.scrollToElement( $( nextNode ), propDelay );
       return nodeNextIdx; 
     },
 
@@ -508,7 +510,7 @@
       if( !RT.data.elementAtTop ) { RT.data.elementAtTop = RT.data.topsMap[0].node; };
       // get the current top node index
       var nodePrevIdx = RT.topsMapGetIdxByElement( RT.data.elementAtTop );
-      // identify the next top node
+      // identify the next top node and scroll to it
       var nodeNextIdx = RT.smartScrollGetNextTopElement( nodePrevIdx );
       // now the scrolled element is the one at the top
       RT.data.elementAtTop = RT.data.topsMap[nodeNextIdx].node;
@@ -533,27 +535,20 @@
     // TODO: must deactivate the scroll event handler before
       var RT = $.fn.rt.RT;
       var offsetTop = RT.getRelativeTop( $topElement[0] );
-      // TODO: WAS: RT.$element.stop(false, false);
-      // TODO: WAS: RT.$element.animate( { scrollTop: offsetTop }, duration);
-      // $('body').stop( false, false );
-      // $('body,html').animate( { scrollTop: offsetTop }, duration);
+      console.log('scrollToElement: ' + offsetTop );
       // briefly highlight the target element before moving it to top
-      $topElement.addClass( 'rtScrolltarget' ).offsetTop;
-      window.setTimeout(
-        function( event ){ 
-          $topElement.animatescroll({ 
-            scrollSpeed: duration, 
-            easing: 'easeInOutQuart',
-            scrollTop: offsetTop,
-            element: RT.$element
-          });
-          window.setTimeout(
-            function( event ){ $topElement.removeClass( 'rtScrolltarget' )}, 600
-          );
-        },
-        555
-        );
-      var zzz = 123;
+      $topElement.addClass( 'rtScrolltarget' );
+      // scrollTo = function( target: a pix# or a a DOM element, options scrollTarget: target, offsetTop: 50, duration: 500, easing: 'swing', callback )
+      // NO ANIMATION: RT.$content.scrollTo( $topElement[0] );
+      // WAS: RT.$content.scrollTo(
+      $( 'html, body' ).scrollTo(
+        $topElement[0],
+        { duration: duration, easing: 'swing' },
+        window.setTimeout(
+          function( event ){ $topElement.removeClass( 'rtScrolltarget' )},
+          500
+        )
+      )
     },
 
     smartScrollToPrevElement: function() {
@@ -587,7 +582,7 @@
       var hPri = $pd.height();
       var hTotal = RT.element.clientHeight;
       var hDone = 0;
-      if( RT.data.elementAtTop ) { hDone = RT.data.elementAtTop.scrollTop; };
+      if( RT.data.elementAtTop ) { hDone = RT.getRelativeTop( RT.data.elementAtTop ) };
       var hCurrent = window.innerHeight;
       var hPending;
       // done part: proportional to current scroll position
@@ -734,9 +729,7 @@
       };
       // up to 50 of the first characters of the text content, if any, for reference
       RT.data.scrollData.text = $(topElement).text().substr(0, 50).replace(/\r?\n|\r/g, ' ');
-      // DEBUG: 
-      if( RT.settings.debug ) { logScrollData(); }
-      // return a reference to the element at top
+      // if( RT.settings.debug ) { logScrollData(); }
       return topElement;
     }
 
