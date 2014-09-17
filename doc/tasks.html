@@ -102,8 +102,9 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
 
 <h3>control panel</h3>
 <ol>
-  <li class="doneItem">TOC: After a click in the TOC return focus to the
-    content to enable start scrolling. </li>
+  <li>TOC: After a click in the TOC (or anywhere else out of the content)
+    return focus to the content to enable start scrolling. Or, capture the
+    keyboard events from the control panel too. </li>
   <li>In adition to recognizing the space bar for scrolling, add a button in
     the control panel bar, for touch devices or to be activated with the
     notebook's non-mouse buttons. </li>
@@ -128,28 +129,31 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
     href="http://stackoverflow.com/questions/4229422/jquery-slideright-effect">http://stackoverflow.com/questions/4229422/jquery-slideright-effect</a>
     and <a href="http://jsfiddle.net/Sj2Ru/">http://jsfiddle.net/Sj2Ru/</a> ) 
     <pre>$(document).ready(
-    function(){
-        $('#slider').click(
+  function(){
+    $('#slider').click(
+      function(){
+        $(this)
+          .animate(
+            {
+              'margin-left':'1000px'
+              // to move it towards the right and, probably, off-screen.
+            },1000,
             function(){
-                $(this)
-                    .animate(
-                        {
-                            'margin-left':'1000px'
-                            // to move it towards the right and, probably, off-screen.
-                        },1000,
-                        function(){
-                            $(this).slideUp('fast');
-                            // once it's finished moving to the right, just 
-                            // removes the the element from the display, you could use
-                            // `remove()` instead, or whatever.
-                        }
-                        );
-
-            });
+              $(this).slideUp('fast');
+              // once it's finished moving to the right, just 
+              // removes the the element from the display, you could use
+              // `remove()` instead, or whatever.
+            }
+          )
+        });
     });</pre>
   </li>
   <li>In the example "Children of the frost", the last chapter "THE LAW OF
     LIFE" shows twice in the TOC (it's the last one). </li>
+  <li>TOC: at page load add enough blank space at the end of the content so
+    that the last headers can be scrolled to the top of the viewport. </li>
+  <li>TOC: when the TOC is shown, there are two vertical scrollbars visible.
+  </li>
 </ol>
 
 <h3 id="L558">refactor</h3>
@@ -164,15 +168,22 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
   </li>
   <li>Goal: make modules and <code>require()</code> them</li>
   <li>Goal: isolate parameterizable options in an options object</li>
+  <li class="doneItem">Make an jQuery plugin out of the rt code </li>
 </ul>
 
 <h3 id="L577">soft scrolling</h3>
 <ul>
-  <li class="doneItem">Capture keyboard events 
-    <p>Add a handler for the spacebar and test it</p>
-    <p>Ensure that the default action is cancelled: FF works fine, Chrome
-    scrolls when the debugger is not open</p>
-  </li>
+  <li>Smart-scrolling with the spacebar doesn't store the last reading
+    position. </li>
+  <li>There are too many functions: try to understand code and refactor to
+    simplify. </li>
+  <li>Refactor <code>smartScrollGetPrevTopElement()</code> and
+    <code>smartScrollGetNextTopElement()</code> into a single function with an
+    axtra arg to signal backwards scroll </li>
+  <li class="doneItem">Capture keyboard events <br>
+    Add a handler for the spacebar and test it<br>
+    Ensure that the default action is cancelled: FF works fine, Chrome scrolls
+    when the debugger is not open</li>
   <li class="doneItem">Filter keyboard events for: 
     <ul>
       <li>spacebar: scroll forward</li>
@@ -182,6 +193,8 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
   <li class="doneItem">Write an animated scroll function</li>
   <li>Don't scroll whole elements that are too high: must scroll high elements
     partially</li>
+  <li>The scroll amount (<code>smartScrollHeight</code>) must not be taller
+    then the viewport height </li>
   <li class="doneItem">Enable content element to receive kb inout and give it
     the focus</li>
   <li>Sort the topsMap array when needed </li>
@@ -197,9 +210,6 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
     stop(false, false) method call before animate()</li>
   <li class="doneItem">@508 refactor the loop to include the bounds check as
     the first case check (it is wrong now)</li>
-  <li>Repeatedly pressing space sometimes repeats the top element, which looks
-    as if it failed (it might be because of the console.log statement taking
-    some time to complete)</li>
   <li class="doneItem">Find out if shift was pressed with
     <code>if(ev.shiftKey)</code> in jQuery events and scroll backwards if
   so</li>
@@ -214,6 +224,15 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
 var nodeNextIdx = RT.data.smartScrollGetPrevTopElement( nodePrevIdx );</pre>
     <p>Was <code>this.smartScrollGetPrevTopElement()</code> </p>
   </li>
+  <li>Repeatedly pressing space sometimes repeats the top element, which looks
+    as if it failed (it might be because of the console.log statement taking
+    some time to complete)</li>
+  <li>Many spaces in a row make the content go back: check if the animations
+    are not being performed in their original order </li>
+  <li>Allow a means to interrupt many queued scroll animations, or to merge
+    them in a single one </li>
+  <li>Try to detect empty elements (not containing text or images or whatever)
+    and add class <code>ssIgnore</code> to them </li>
 </ul>
 
 <h3 id="L642">server</h3>
@@ -232,7 +251,7 @@ var nodeNextIdx = RT.data.smartScrollGetPrevTopElement( nodePrevIdx );</pre>
 
 <h3 id="L661">development setup</h3>
 <ul>
-  <li class="checkedItem">Set under git control 
+  <li class="checkedItem doneItem">Set under git control 
     <p>Done in ~/Dropbox/Public/reading, with cloud replication. No github.
     Steps: </p>
     <ol>
@@ -246,8 +265,8 @@ var nodeNextIdx = RT.data.smartScrollGetPrevTopElement( nodePrevIdx );</pre>
     <p>Started: copied verbatim in
     <code>~/Dropbox/Public/reading/start</code></p>
   </li>
-  <li>Make the rt3 server serve the start page and the doc pages (fix
-  routes)</li>
+  <li class="doneItem">Make the rt3 server serve the start page and the doc
+    pages (fix routes)</li>
 </ul>
 
 <h3 id="L692">repositioning / server</h3>
@@ -265,7 +284,7 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h3>
     within several event handlers. </li>
   <li>When reloading repeatedly the document, it gets positioned each time a
     little closer to the top. </li>
-  <li class="checkedItem">✔ Set the beforeunload event to store an
+  <li class="checkedItem doneItem">✔ Set the beforeunload event to store an
     end-of-session record. 
     <pre>RT-1360724404031: {<strong>"endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,9","p100":0}
 RT-1360724408289: {"<strong>endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,8,1","p100":70}</pre>
@@ -274,13 +293,13 @@ RT-1360724408289: {"<strong>endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,
     Aggregate the scrolls stored in localStorage and calculate local reading
     time statistics. </li>
   <li><img alt="this one!" src="res/caramba_yellow.gif" width="7" height="14">
-    Upload read time statistics to server. Ľ</li>
+    Upload read time statistics to server. </li>
   <li><img alt="this one!" src="res/caramba_yellow.gif" width="7" height="14">
     When saving the scroll (actions) data in local storage, check for volume
     and time, and eventually upload to the server</li>
-  <li>✔ <img alt="this one!" src="res/caramba_yellow.gif" width="7"
-    height="14"> Store the user id and the document id in the RT namespace as
-    constants (<code>doc</code> and <code>u</code>)</li>
+  <li class="doneItem">✔ <img alt="this one!" src="res/caramba_yellow.gif"
+    width="7" height="14"> Store the user id and the document id in the RT
+    namespace as constants (<code>doc</code> and <code>u</code>)</li>
   <li><img alt="this one!" src="res/caramba_yellow.gif" width="7" height="14">
     Get the user id and the doc id from the server</li>
   <li class="doneItem">Don't store the element's scroll percent if the element
@@ -290,13 +309,13 @@ RT-1360724408289: {"<strong>endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,
   <li>Check <a
     href="http://stackoverflow.com/questions/3479734/javascript-jquery-test-if-window-has-focus">the
     <code>hasFocus()</code> method</a> and record the page focus changes. </li>
-  <li>During a resize block scroll events generated by the resize until after
-    the last resize animation has ended. 
-    <p>It's done but wrong: need to be a callback after the animation. </p>
-    <p>Check if this is needed after having reduced the animations to only one.
+  <li class="doneItem">✔ <img alt="this one!" src="res/caramba_yellow.gif"
+    width="7" height="14">During a resize block scroll events generated by the
+    resize until after the last resize animation has ended. <br>
+    It's done but wrong: need to be a callback after the animation. <br>
+    Check if this is needed after having reduced the animations to only one.
     YES, the repositioning throws scroll events that should not be honored by
-    the scroll event handler. </p>
-  </li>
+    the scroll event handler. </li>
   <li class="checkedItem">When repositioning after a resize, don't go to the
     header but instead go directly to the top element (the scroll to the header
     can be skipped whatsoever). </li>
@@ -321,22 +340,20 @@ RT-1360724408289: {"<strong>endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,
   <li>FF throws this error, don't know why, after a while: <em>Error:
     Permission denied to access property 'toString'.</em> The error shows when
     the page is left alone for a rather long while, and repeats. </li>
-  <li class="checkedItem">In the scrollData cookie record the % of the top
-    element that's above the top of the viewport, for repositioning tall
+  <li class="checkedItem doneItem">In the scrollData cookie record the % of the
+    top element that's above the top of the viewport, for repositioning tall
     elements. </li>
-  <li>When adding an id to a header, must check it for uniqueness. 
-    <p>There is a problem if the id already exists, because the added one can't
-    be changed to make it unique, and the other one can't be deleted without
-    risk of breaking the page. </p>
-  </li>
-  <li class="checkedItem">In the scrollData cookie save percent scrolled for
-    tall items. 
-    <p>The proportion is the negative part of the element's position compared
-    to its height. </p>
-    <p>An element is <em>tall</em>?if its height is greater then the
-    viewport's. </p>
-    <p>Saving for all partially scrolled elements. </p>
-  </li>
+  <li>When adding an id to a header, must check it for uniqueness. <br>
+    There is a problem if the id already exists, because the added one can't be
+    changed to make it unique, and the other one can't be deleted without risk
+    of breaking the page. </li>
+  <li class="checkedItem doneItem">In the scrollData cookie save percent
+    scrolled for tall items. <br>
+    The proportion is the negative part of the element's position compared to
+    its height. <br>
+    An element is <em>tall</em>?if its height is greater then the viewport's.
+    <br>
+    Saving for all partially scrolled elements. </li>
   <li>When restoring a document, check if the top element is tall and if it
     should be scrolled up by the percent informed by the scrollData object (if
     available). </li>
@@ -365,8 +382,6 @@ RT-1360724408289: {"<strong>endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,
     <code>getElementById()</code> might not find its target, because the
     document has been modified since it was last read. It should fail
     gracefully. </li>
-  <li>TOC: at page load add enough blank space at the end of the content so
-    that the last headers can be scrolled to the top of the viewport. </li>
   <li>In localStorage some entries have long numbers in the key (like getTime()
     outputs) and other have much shorter numbers. </li>
   <li>In the recording of the data, shorten the time by expressing it in tenths
@@ -417,6 +432,7 @@ RT-1360724408289: {"<strong>endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,
     <code>smartScrollGetNextTopElement()</code> fails </li>
   <li>The resize handler calls <code>RT.scrollToPosition( RT.scrollData
     );</code> with null scrollData. </li>
+  <li>The position is not restored on resize. </li>
 </ol>
 
 <p></p>

@@ -16,7 +16,7 @@
       },
       smartScrollHeight: 333,
       ssIgnoreClass: 'ssIgnore',          // marker class for non-top elements
-      scrollDuration: 777,                // duration of the scroll to position animation
+      scrollDuration: 555,                // duration of the scroll to position animation
       tallElementLimit: 300,              // elements taller with height greater then this are
                                           // considered "tall" and the percent scroll is stored
       // development aids
@@ -406,71 +406,28 @@
       };
     },
 
-    smartScrollGetPrevTopElement: function( nodePrevIdx ) {
-    // search backwards for the first element with height (less than a forward scroll)
+    smartScrollGetNextTopElement: function( nodePrevIdx, back ) {
+    // find the next top element, forward or backwards if the 2nd arg is true
+      var forward = ! back;
       var RT = $.fn.rt.RT;
-      if( !nodePrevIdx ) { return null; };
-      // save starting element index
       var nodeNextIdx = nodePrevIdx;
+      var nodePrevTop = RT.data.topsMap[nodePrevIdx].top;
+      var scrollHeight = RT.settings.smartScrollHeight * ( forward ? 1 : 0.3 );
       while( true ) { 
-        // bounds check: don't search more than .length items
-        if( ! nodeNextIdx > 0 ) { 
-          break;
-        };
-        // back up the pointer
-        nodeNextIdx--; 
-        var nextNode = RT.data.topsMap[nodeNextIdx].node;  // next top node candidate
-        // ignore elements with a marker class like "ssIgnore".
-        if( $(nextNode).hasClass( RT.settings.ssIgnoreClass )) { 
-          continue; 
-        };
+        if( forward ) {
+          nodeNextIdx++ 
+          if( ! ( nodeNextIdx < RT.data.topsMap.length )) { break; };
+        } else {
+          if( nodeNextIdx <= 0 ) { break; };
+          nodeNextIdx--;
+        }
+        var nextNode = RT.data.topsMap[nodeNextIdx].node;
+        // ignore elements with a marker class like "ssIgnore"
+        if( $(nextNode).hasClass( RT.settings.ssIgnoreClass )) { continue; };
         // ignore non-block elements like spans
-        if(  ! RT.isBlockElement( nextNode )) {
-          continue;
-        };
-        // check if the element has reasonable height
-        if( (RT.data.topsMap[nodePrevIdx].top - RT.data.topsMap[nodeNextIdx].top) > 50 ) {
-          break;
-        };
-      };
-      // ready: scroll and exit loop
-      var deltaY = RT.data.topsMap[nodePrevIdx].top - RT.data.topsMap[nodeNextIdx].top;
-      var propDelay = deltaY / RT.settings.smartScrollHeight;
-      RT.scrollToElement( $( nextNode ), RT.settings.scrollDuration * propDelay / 2 );
-      return nodeNextIdx; 
-    },
-
-    smartScrollGetNextTopElement: function( nodePrevIdx ) {
-    // TODO: calculate where to scroll, skipping repeated tops and too shallow
-    // elements, try to scroll by complete elements using RT.settings.smartScrollHeight
-    // as an approximate limit for a scroll shot
-      var RT = $.fn.rt.RT;
-      if( !nodePrevIdx && nodePrevIdx !== 0 ) {
-        return null;
-      };
-      // save starting point
-      var nodeNextIdx = nodePrevIdx;
-      while( true ) { 
-        nodeNextIdx++; 
-        // bounds check: don't search more than .length items
-        if( ! ( nodeNextIdx < RT.data.topsMap.length )) { 
-          break;
-        };
-        var nextNode = RT.data.topsMap[nodeNextIdx].node;  // next top node candidate
-        // ignore elements with a marker class like "ssIgnore".
-        if( $(nextNode).hasClass( RT.settings.ssIgnoreClass )) { 
-          continue; 
-        };
-        // ignore non-block elements like spans
-        if(  ! RT.isBlockElement( nextNode )) {
-          continue;
-        };
-        // if the next element is a heading then put it at top even if it's shallow
-        var nn = nextNode.nodeName.toLowerCase();
-        if( nn === 'h1' || nn === 'h2' || nn === 'h3' || nn === 'h4' || nn === 'h5' ) {
-          // it's a header: this is the next top element
-          break;
-        };
+        if(  ! RT.isBlockElement( nextNode )) { continue; };
+        // if the next element is a heading then put it at top anyway
+        if(( /^[hH][1-6]$/ ).test( nextNode.nodeName )) { break; }
         // TODO: devise a strategy for finding complete container elements like 
         // small ULs and the like, for example if the container's height is small
         // then don't consider its children
@@ -479,15 +436,13 @@
         // avoid scrolling partial lines - check element.getClientRects() and 
         // element.getBoundingClientRect() in MDN
         // check if enough scroll
-        if( (RT.data.topsMap[nodeNextIdx].top - RT.data.topsMap[nodePrevIdx].top) > RT.settings.smartScrollHeight ) {
-          break;
-        };
+        if( Math.abs( RT.data.topsMap[nodeNextIdx].top - nodePrevTop ) > scrollHeight ) { break; };
       };
       // do the scroll and exit
-      var deltaY = RT.data.topsMap[nodeNextIdx].top - RT.data.topsMap[nodePrevIdx].top;
+      var deltaY = Math.abs( RT.data.topsMap[nodeNextIdx].top - nodePrevTop );
       var propDelay = deltaY / RT.settings.smartScrollHeight * RT.settings.scrollDuration;
       if ( RT.settings.debug ) { 
-        console.log( 'scroll forward delay:' + ~~( propDelay ) + ' to:' +
+        console.log( 'scroll ' + ( forward ? 'forward' : 'backwards' ) + ' delay:' + ~~( propDelay ) + ' to:' +
         RT.data.topsMap[nodeNextIdx].top + ' delta:' + deltaY + ' topNode' + nodeNextIdx ); 
       }
       RT.scrollToElement( $( nextNode ), propDelay );
@@ -566,8 +521,8 @@
       // get the current top node index
       var RT = $.fn.rt.RT;
       var nodePrevIdx = RT.topsMapGetIdxByElement( RT.data.elementAtTop );
-      // identify the next top node
-      var nodeNextIdx = this.smartScrollGetPrevTopElement( nodePrevIdx );
+      // scroll backwards a bit
+      var nodeNextIdx = this.smartScrollGetNextTopElement( nodePrevIdx, true );
       // now the scrolled element is the one at the top
       RT.data.elementAtTop = RT.data.topsMap[nodeNextIdx].node;
       // DEBUG:
@@ -602,7 +557,7 @@
       // current page part: proportional to viewport height
       hCurrent = Math.round( 100 * (hCurrent / hTotal) ); 
       if( hCurrent < 1 ) { hCurrent = 1; };
-      $( '#rtProgressDiagram.rtProgressCurrent' ).css( 'height', hCurrent + '%' );
+      $( '#rtProgressDiagram .rtProgressCurrent' ).css( 'height', hCurrent + '%' );
       // remaining part: proportional to total height less the two other heights
       hPending =  100 - hDone - hCurrent;
       $( '#rtProgressDiagram .rtProgressRemaining' ).css( 'height', hPending + '%' )
@@ -815,13 +770,13 @@
                 var RT = $.fn.rt.RT;
                 // indicate that the timer is off
                 RT.data.resizingTimer = null;
-                // reposition the content
-                RT.scrollToPosition( RT.scrollData );
-                // recalculate header positions (used to identify 
-                // the topmost element in the scroll event) 
+                // recalculate header positions (used to identify topmost element in scroll event) 
                 RT.storeHeaderScrollTops; 
                 // recalculate the tops table
                 RT.buildTopsMap();
+                // reposition the content
+                RT.data.disableScrollEvents = true;
+                RT.scrollToPosition( RT.scrollData );
               },
               RT.data.resizingTimerDelay
               );
