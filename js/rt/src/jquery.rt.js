@@ -359,8 +359,9 @@
     }, 
 
     topsMapGetIdxByElement: function( element ) { 
-    // given a reference to an element, return its index on the topsMap
+    // given a reference to an element, return its index in the topsMap
       // heuristic: start searching from the current one
+      // $$$$ don't search, use a map?
       var RT = $.fn.rt.RT;
       var n = RT.data.topsMap.length;
       var nEnd = 0;
@@ -375,8 +376,7 @@
     },
 
     isBlockElement: function( theElement ) {
-      // returns false for elements where smartScroll is not expected
-      // to stop
+      // returns false for elements where smartScroll is not expected to stop
       if( theElement.tagName === 'HR' ) { return false; }
       var d = $(theElement).css('display');
       if( d === 'block') { return true; }
@@ -406,83 +406,57 @@
       };
     },
 
-    smartScrollGetNextTopElement: function( nodePrevIdx, back ) {
+    smartScroll: function( back ) {
     // find the next top element, forward or backwards if the 2nd arg is true
       var forward = ! back;
       var RT = $.fn.rt.RT;
-      var nodeNextIdx = nodePrevIdx;
-      var nodePrevTop = RT.data.topsMap[nodePrevIdx].top;
+      var currentNodeIdx = RT.topsMapGetIdxByElement( RT.data.elementAtTop );
+      var nextNodeIdx = currentNodeIdx;
+      var nodePrevTop = RT.data.topsMap[currentNodeIdx].top;
       var scrollHeight = RT.settings.smartScrollHeight * ( forward ? 1 : 0.3 );
-      while( true ) { 
+      while( true ) {
         if( forward ) {
-          nodeNextIdx++ 
-          if( ! ( nodeNextIdx < RT.data.topsMap.length )) { break; };
+          nextNodeIdx++ 
+          if( ! ( nextNodeIdx < RT.data.topsMap.length )) { break; };
         } else {
-          if( nodeNextIdx <= 0 ) { break; };
-          nodeNextIdx--;
+          if( nextNodeIdx <= 0 ) { break; };
+          nextNodeIdx--;
         }
-        var nextNode = RT.data.topsMap[nodeNextIdx].node;
+        var nextNode = RT.data.topsMap[nextNodeIdx].node;
         // ignore elements with a marker class like "ssIgnore"
         if( $(nextNode).hasClass( RT.settings.ssIgnoreClass )) { continue; };
         // ignore non-block elements like spans
-        if(  ! RT.isBlockElement( nextNode )) { continue; };
+        if( ! RT.isBlockElement( nextNode )) { continue; };
         // if the next element is a heading then put it at top anyway
         if(( /^[hH][1-6]$/ ).test( nextNode.nodeName )) { break; }
         // TODO: devise a strategy for finding complete container elements like 
         // small ULs and the like, for example if the container's height is small
         // then don't consider its children
-        // TODO: must check if too big a scroll too and calculate a good one
         // TODO: if the element is tall and contains text split it in lines to
         // avoid scrolling partial lines - check element.getClientRects() and 
         // element.getBoundingClientRect() in MDN
-        // check if enough scroll
-        if( Math.abs( RT.data.topsMap[nodeNextIdx].top - nodePrevTop ) > scrollHeight ) { break; };
+        // check if enough scroll already
+        if( Math.abs( RT.data.topsMap[nextNodeIdx].top - nodePrevTop ) > scrollHeight ) { break; };
       };
       // do the scroll and exit
-      var deltaY = Math.abs( RT.data.topsMap[nodeNextIdx].top - nodePrevTop );
+      var deltaY = Math.abs( RT.data.topsMap[nextNodeIdx].top - nodePrevTop );
       var propDelay = deltaY / RT.settings.smartScrollHeight * RT.settings.scrollDuration;
       if ( RT.settings.debug ) { 
-        console.log( 'scroll ' + ( forward ? 'forward' : 'backwards' ) + ' delay:' + ~~( propDelay ) + ' to:' +
-        RT.data.topsMap[nodeNextIdx].top + ' delta:' + deltaY + ' topNode' + nodeNextIdx ); 
+        var topElement = RT.data.topsMap[nextNodeIdx].node;
+        console.log( 'ss ' + ( forward ? 'forward  ' : 'backwards' ) +
+        ' delay:' + ~~( propDelay ) +
+        ' to:' + RT.data.topsMap[nextNodeIdx].top +
+        (( !! RT.data.scrollData.p ) ? RT.data.scrollData.p + '%' : '' ) + 
+        ' :' + deltaY +
+        ' topNode' + nextNodeIdx +
+        ' docPath:' + topElement.getAttribute('docPath') +
+        ' ' + topElement.tagName +
+        (( !!topElement.getAttribute('id') ) ?  ' id:' + topElement.getAttribute('id') : '' ) +
+        ((!! RT.data.scrollData.text) ? ( ' ' + RT.data.scrollData.text ) : ''));
       }
+      RT.data.elementAtTop = nextNode;
       RT.scrollToElement( $( nextNode ), propDelay );
-      return nodeNextIdx; 
-    },
-
-    smartScrollToNextElement: function() {
-    // scroll forward a paragraph or whatever the element at the top of the viewport, using an animation
-    // uses the RT.data.topsMap array, a list of all the elements and their top relative 
-    // to the whole document (not their container)
-      // TODO: must account for elements taller than the viewport and scroll them partially
-      // TODO: must also account for elements that are too shallow or have a repeated top
-      // TODO: it shouldn't trust the topsMap except for the elements ordering, because
-      // changes in elements visibility can change tops unknowingly
-      // TODO: if no element at top set to the top of the document
-      // TODO: would be better to seek for one close to the current scroll position
-      // each element has  { node: aRefToTheNode, top: relativeTop }
-      // topsMap: [],
-      var RT = $.fn.rt.RT;
-      if( !RT.data.elementAtTop ) { RT.data.elementAtTop = RT.data.topsMap[0].node; };
-      // get the current top node index
-      var nodePrevIdx = RT.topsMapGetIdxByElement( RT.data.elementAtTop );
-      // identify the next top node and scroll to it
-      var nodeNextIdx = RT.smartScrollGetNextTopElement( nodePrevIdx );
-      // now the scrolled element is the one at the top
-      RT.data.elementAtTop = RT.data.topsMap[nodeNextIdx].node;
-      // DEBUG:
-      if( RT.settings.debug ) {
-        console.log(
-            'smartScrolled to:' 
-            + ' ' +  nodeNextIdx 
-            + ' ' +  RT.data.topsMap[nodeNextIdx].top 
-            + ' ' +  RT.data.topsMap[nodeNextIdx].node.nodeName
-            );
-      };
-      // TODO: check that the top hasn't changed, otherwise recalculate topsMap
-      /* var scrollAmount = Math.max(
-         RT.data.elementAtTop.height(),
-         RT.$element.height() / 2
-         ); */
+      return nextNodeIdx; 
     },
 
     scrollToElement: function( $topElement, duration ) {
@@ -516,25 +490,6 @@
       )
     },
 
-    smartScrollToPrevElement: function() {
-    // scroll backwards, to the first element with a height
-      // get the current top node index
-      var RT = $.fn.rt.RT;
-      var nodePrevIdx = RT.topsMapGetIdxByElement( RT.data.elementAtTop );
-      // scroll backwards a bit
-      var nodeNextIdx = this.smartScrollGetNextTopElement( nodePrevIdx, true );
-      // now the scrolled element is the one at the top
-      RT.data.elementAtTop = RT.data.topsMap[nodeNextIdx].node;
-      // DEBUG:
-      if( RT.settings.debug ) {
-        console.log( 'smartScrolled back to:' 
-        + ' ' +  nodeNextIdx 
-        + ' ' +  RT.data.topsMap[nodeNextIdx].top 
-        + ' ' +  RT.data.topsMap[nodeNextIdx].node.nodeName
-        );
-      };
-    },
-
     // calculate progress indicator
     displayProgress: function() {
       var RT = $.fn.rt.RT;
@@ -564,39 +519,34 @@
         .text( hPending < 10 ? '' : hPending + '%' );
     },
 
-    writeScrollRecord: function() {
+    writeScrollRecord: function( actionType ) {
     // writes a scroll record in localStorage with the content of the scrollData object
-    // TODO: eventually shoot an AJAX interaction to save the data in the server
-    // TODO: must delete scrolls that are very colse in time
-      // eventually fire the saving of a data batch in the server
-      // get the current reading position in RT.data.scrollData (and in topsMapElement)
       var RT = $.fn.rt.RT;
-      RT.data.topsMapElement = RT.getCurrentReadingPosition();
+      RT.data.scrollData.a = actionType;
       // save the scroll data in localStorage
       localStorage.setItem(
-        'RT-' + RT.data.documentNumberEncoded + '-' + RT.data.scrollTime.getTime(),
+        'RT-' + RT.data.documentNumberEncoded + '-' + RT.data.scrollData.t.getTime() / 100,
         JSON.stringify(RT.data.scrollData)
-        );
+      );
       // aggregate scroll records in the reading time stats
-      // TODO: contiguous scrolls with less than 1 second are merged
       // RT.compileReadTimeStats();
 
       // prepare the data to be sent to the server in a weird format
       // 1- date and time
-      var serverRecord = RT.data.scrollTime.getTime().toString(36);
+      var serverRecord = RT.data.scrollData.t.getTime().toString(36);
       // 2 - document
       serverRecord += '-' + RT.data.documentNumberEncoded;
       // 3 - reader id
       serverRecord += '-' + RT.data.readerNumberEncoded;
       // 4 - docPath and optional percent scrolled
-      serverRecord += '-' + RT.data.scrollData.dp + ( !!RT.data.scrollData.p ? '.' + RT.data.scrollData.p : '' );
+      serverRecord += '-' + RT.data.scrollData.dp + ( !! RT.data.scrollData.p ? '.' + RT.data.scrollData.p : '' );
       // 5 - action code 1 = scroll
-      // TODO: must convert the action numeric code to base36
-      // default, ommitted: serverRecord += '-1';
+      serverRecord += '-' + RT.data.scrollData.a;
       // 6 - additional data: text in case of a scroll with debug activated
-      if( RT.settings.debug ) { !!RT.data.scrollData.text ? '-1-' + 'RT.data.scrollData.text' : ''; };
-
+      if( RT.settings.debug ) { !! RT.data.scrollData.text ? '-' + RT.data.scrollData.text : ''; }
       // TODO: upload the record to the server
+      console.log( 'record:' + serverRecord );
+
       /*
         var jqXHR = $.ajax({
         type: 'PUT',
@@ -669,14 +619,6 @@
       };
 
 
-      logScrollData = function() {
-        console.log('ss space to:' +  RT.getRelativeTop( topElement ) + ' '
-        + (( !! RT.data.scrollData.p ) ? RT.data.scrollData.p + '%' : '' )
-        + ' docPath:' + topElement.getAttribute('docPath')
-        + (( !!topElement.getAttribute('id') ) ?  ' id:' + topElement.getAttribute('id') : '' )
-        + ' ' + topElement.tagName + ' ' + ((!! RT.data.scrollData.text) ? RT.data.scrollData.text : '')); 
-      }
-
       // --------------------------------------------------------------------------------
       // RT.data.scrollData will contain the data needed to restore the reading position and
       // rolling out read time statistics
@@ -694,7 +636,6 @@
       };
       // up to 50 of the first characters of the text content, if any, for reference
       RT.data.scrollData.text = $(topElement).text().substr(0, 50).replace(/\r?\n|\r/g, ' ');
-      if( RT.settings.debug ) { logScrollData(); }
       return topElement;
     }
 
@@ -708,16 +649,15 @@
         RT = $.fn.rt.RT;
         if( ! RT.data.scrollData ) { RT.data.scrollData = {}; }
         RT.data.scrollData.endSession = '1';
-        RT.writeScrollRecord();
+        RT.writeScrollRecord( 25 ); // end of session
       };
     };
 
 
     setHandler_keyboard = function( RT ) {
     // capture keyboard action
-      // TODO: replace by a one-liner, move code to a function
       // TODO: don't allow many spaces to stack in the input buffer, cancel one animation
-      // as soo as another happens, and/or consume or lock new spaces when animating one
+      // as soon as another happens, and/or consume or lock new spaces when animating one
       // TODO: don't prevent default if the space goes into an input or editable element
       // TODO: scrolling the current element's height does not ensure being at the top of 
       // TODO: must scroll back when shift+space shows
@@ -725,10 +665,7 @@
       RT.$element.attr('tabindex', '0');
       RT.$element.focus();
       // set the event handler
-      RT.$element.on(
-        'keydown',
-        null,
-        RT,
+      RT.$element.on( 'keydown', null, RT,
         function(event) {
           var key = event.which;
           var RT = event.data;
@@ -736,18 +673,17 @@
           if( key == 32 && ! ( event.altKey || event.metaKey || event.ctrlKey ) ) {
             RT.data.scrollTimer = null;
             RT.data.scrollData = {};
-            RT.data.scrollTime = new Date( event.timeStamp );
+            RT.data.scrollData.t = new Date( event.timeStamp );
             if( event.shiftKey ) { 
-              // scroll back
-              RT.smartScrollToPrevElement();
+              RT.smartScroll( true );  // scroll back
             } else {
-              // scroll forward a chunk
-              RT.smartScrollToNextElement();
+              RT.smartScroll(); // scroll forward a chunk
             };
             event.preventDefault();
             event.stopPropagation();
             // TODO: set a smartScroll action code
-            RT.writeScrollRecord();
+            RT.data.scrollData.dp = 
+            RT.writeScrollRecord( 1 ); // smart scroll
             RT.displayProgress();
           };
         }
@@ -757,10 +693,7 @@
 
     setHandler_resize = function( RT ) {
     // capture the resize event
-      $(window).on(
-          'resize',
-          null,
-          RT,
+      $(window).on( 'resize', null, RT,
           function(event) {
             // On resize wait a short while and restore the reading position
             var RT = event.data;
@@ -768,6 +701,7 @@
             RT.data.resizingTimer = window.setTimeout(
               function(event){
                 var RT = $.fn.rt.RT;
+                RT.data.scrollData.t = new Date( event.timeStamp );
                 // indicate that the timer is off
                 RT.data.resizingTimer = null;
                 // recalculate header positions (used to identify topmost element in scroll event) 
@@ -789,32 +723,26 @@
     setHandler_scroll = function( RT ) {
     // capture the scroll event
       // RT.$element.on(
-      $(window).on(
-          'scroll',
-          RT,
-          function(event) {
-            var RT = event.data;
-            // scroll events are disabled during programmatic scroll
-            if( RT.data.disableScrollEvents ) { return; }
-            // save the exact scroll time in a global
-            RT.data.scrollTime = event.timeStamp;
-            // On scroll wait a short while and save the position
-            window.clearTimeout(RT.scrollTimer);
-            RT.data.scrollTimer = window.setTimeout(
-              function(event) {
-                RT.data.scrollTimer = null;
-                RT.data.scrollData = {};
-                // TODO: RT.writeScrollRecord();
-                // get a reference to the element at top and store it as
-                // the new top element
-                RT.data.elementAtTop = RT.getCurrentReadingPosition();
-                // update progress indicator
-                RT.displayProgress();
-              },
-              RT.settings.scrollTimerDelay
-              )
-              event.stopPropagation();
-          }
+      $(window).on( 'scroll', null, RT,
+        function(event) {
+          var RT = event.data;
+          // scroll events are disabled during programmatic scroll
+          if( RT.data.disableScrollEvents ) { return; }
+          // save the exact scroll time in a global
+          RT.data.scrollData.t = event.timeStamp;
+          // On scroll wait a short while and save the position
+          window.clearTimeout(RT.scrollTimer);
+          RT.data.scrollTimer = window.setTimeout(
+            function(event) {
+              RT.data.scrollTimer = null;
+              RT.data.scrollData = {};
+              RT.writeScrollRecord( 2 ); // scroll
+              RT.displayProgress();
+            },
+            RT.settings.scrollTimerDelay
+            )
+            event.stopPropagation();
+        }
       );
     };
 
@@ -896,10 +824,7 @@
       // set the help show/hide handlers
       // TODO: replace by a one-liner, move code to a function
       // TODO: must ensure the oter panels are hidden before showing any
-      $('#rtHelpIcon').on(
-          'click',
-          null,
-          RT,
+      $('#rtHelpIcon').on( 'click', null, RT,
           function( event ) {
             var RT = event.data;
             var theHelp = $('#helpPanel');
@@ -925,10 +850,7 @@
           }
       );
       // hide on click again
-      $('#helpPanel').on(
-          'click',
-          null,
-          RT,
+      $('#helpPanel').on( 'click', null, RT,
           function( event ) {
             var RT = event.data;
             var theHelp = $('#helpPanel');
@@ -953,10 +875,7 @@
       rangy.init(); 
       var cssClassApplierModule = rangy.modules.CssClassApplier; 
       var highlight1Applier = rangy.createCssClassApplier("rtHigh1"); 
-      $('#rtHighlightIcon').on(
-        'click',
-        null,
-        RT,
+      $('#rtHighlightIcon').on( 'click', null, RT,
         function( event ) {
           var RT = event.data;
           highlight1Applier.toggleSelection();
@@ -991,10 +910,7 @@
     
     setTOC = function( RT ) {
     // set the TOC toggler
-      $('#rtTOCIcon').on(
-          'click',
-          null,
-          RT,
+      $('#rtTOCIcon').on( 'click', null, RT,
           function( event ) {
             var RT = event.data;
             var theTOC = $('#TOCPanel');
@@ -1020,10 +936,7 @@
           }
       );
       // hide on click again
-      $('#TOCPanel').on(
-        'click',
-        null,
-        RT,
+      $('#TOCPanel').on( 'click', null, RT,
         function( event ) {
           var RT = event.data;
           var theTOC = $('#TOCPanel');
@@ -1063,10 +976,7 @@
       $('#menuContainer').css( 'display', 'block' );
 
       // show the menu
-      $('#rtBurgerMenu').on(
-        'click',
-        null,
-        RT,
+      $('#rtBurgerMenu').on( 'click', null, RT,
         function( event ) {
           var RT = event.data;
           var theMenu = $('#menuPanel');
@@ -1170,6 +1080,5 @@
       // chain jQuery functions
       return this;
     };
-
 
 })( jQuery, window, document );

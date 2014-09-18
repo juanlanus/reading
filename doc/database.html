@@ -194,31 +194,46 @@ following: </p>
 <p>History of the actions performed by each reader and the current reading
 positions in the document. Actually, this is like a click-stream, recording the
 user's actions of any type, like scrolls, focus changes or page closings. </p>
+
+<p>The object is named <code>scrollData</code> in the program and it mainly
+points to an element in the document via its <code>scrollPath</code>. The
+properties are assigned short names, so save space in the database.  </p>
 <ul>
-  <li>_id &larr; what is this _id? (it's stored in the server, not sent by the
-    client)</li>
+  <li>_id: document + user + time</li>
+  <li>a: action code, according to the list below</li>
+  <li>dp: the element's <code>docPath</code> as a string</li>
+  <li>eid: the element id, if it has one, else nothing </li>
+  <li>p: the percent scrolled of the element at top, in case it's a tall
+  one</li>
+  <li>t: the time of the event (redundant with the _id?)</li>
+  <li>text: for debugging, the first 50 characters of the text of the
+  element</li>
+</ul>
+
+<p>Action codes: </p>
+<ul>
+  <li>1 smart scroll (keyboard space event)</li>
+  <li>2 scroll (scroll event)</li>
+  <li>3 click on intra-page link (#something) </li>
+  <li>4 click on link to other page of the same document</li>
+  <li>5 click on external link </li>
+  <li>7 open TOC</li>
+  <li>8 click on TOC element</li>
+  <li>25 close window (end-of-session, onbeforeunload event) </li>
+</ul>
+
+<p> </p>
+<ul>
+  <li>_id</li>
   <li>document</li>
   <li>user</li>
   <li>date and time of action</li>
   <li>position docpath</li>
   <li>position percent</li>
-  <li>action code 
-    <p>(scrolled up, scrolled down, lost focus, closed page, clicked link,
-    ...)</p>
-  </li>
+  <li>action code (scrolled up, scrolled down, lost focus, closed page, clicked
+    link, ...)</li>
   <li>action-specific data, like IP number or geospatial coordinates in session
-    start, or mouse coordinates of a mouse click</li>
-</ul>
-
-<p>Action codes: </p>
-<ul>
-  <li>1 scroll (scroll event) (default, can be ommitted) </li>
-  <li>2 click on intra-page link (#something) </li>
-  <li>3 click on link to other page of the same document</li>
-  <li>4 click on external link </li>
-  <li>5 open TOC</li>
-  <li>6 click on TOC element</li>
-  <li>7 close window (onbeforeunload event) </li>
+    start, or mouse coordinates of a mouse click, or URL in a link click</li>
 </ul>
 
 <p></p>

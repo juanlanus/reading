@@ -85,16 +85,14 @@
 <h2 style="clear:BOTH;" id="L542">bugs</h2>
 <ol>
   <li>When resizing repeatedly (like, maximizing and restoring to a narrow
-    window) the position is lost after a number of times. 
-    <p>This might well be because the rezise event triggers a scroll event and
-    a new resize happens at a certain point of the scroll if the resizing is
-    repeated rather quickly. </p>
-  </li>
+    window) the position is lost after a number of times. <br>
+    This might well be because the rezise event triggers a scroll event and a
+    new resize happens at a certain point of the scroll if the resizing is
+    repeated rather quickly. </li>
   <li>SmartScroll does nothing (scrolls again to the same current top) every
-    now and then, when the spacebar is pressed repeatedly fast. 
-    <p>It seems related to updating the top position after the animation, might
-    be solved if it was updated as soon as the event happens. </p>
-  </li>
+    now and then, when the spacebar is pressed repeatedly fast. <br>
+    It seems related to updating the top position after the animation, might be
+    solved if it was updated as soon as the event happens. </li>
 </ol>
 
 <h2 style="clear:none;" id="L553">pending tasks <img alt="this one!"
@@ -105,11 +103,15 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
   <li>TOC: After a click in the TOC (or anywhere else out of the content)
     return focus to the content to enable start scrolling. Or, capture the
     keyboard events from the control panel too. </li>
+  <li>TOC: Don't let the browser update the hash part of the location after a
+    click on a TOC link. </li>
   <li>In adition to recognizing the space bar for scrolling, add a button in
     the control panel bar, for touch devices or to be activated with the
     notebook's non-mouse buttons. </li>
   <li class="doneItem">Allow the user to expand and collapse TOC groups </li>
-  <li class="doneItem">Implement TOC scrolling 7</li>
+  <li class="doneItem">Implement TOC scrolling </li>
+  <li>TOC: when the TOC is shown, there are two vertical scrollbars visible.
+  </li>
   <li>TOC: Persist TOC status: scrollTop and expanded/collapsed state in an
     ad-hoc record (roaming) which also contains information about whico TOC
     functional features the user is leveraging </li>
@@ -132,28 +134,24 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
   function(){
     $('#slider').click(
       function(){
-        $(this)
-          .animate(
-            {
-              'margin-left':'1000px'
-              // to move it towards the right and, probably, off-screen.
-            },1000,
-            function(){
-              $(this).slideUp('fast');
-              // once it's finished moving to the right, just 
-              // removes the the element from the display, you could use
-              // `remove()` instead, or whatever.
-            }
-          )
-        });
+        $(this).animate(
+          {
+            'margin-left':'1000px'
+            // to move it towards the right and, probably, off-screen.
+          },1000,
+          function() {
+            $(this).slideUp('fast');
+            // once it's finished moving to the right, just removes the element
+            // from the display, you could use remove() instead, or whatever.
+          }
+        )
+      });
     });</pre>
   </li>
-  <li>In the example "Children of the frost", the last chapter "THE LAW OF
+  <li>In the demo page "Children of the frost", the last chapter "THE LAW OF
     LIFE" shows twice in the TOC (it's the last one). </li>
   <li>TOC: at page load add enough blank space at the end of the content so
     that the last headers can be scrolled to the top of the viewport. </li>
-  <li>TOC: when the TOC is shown, there are two vertical scrollbars visible.
-  </li>
 </ol>
 
 <h3 id="L558">refactor</h3>
@@ -173,13 +171,24 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
 
 <h3 id="L577">soft scrolling</h3>
 <ul>
-  <li>Smart-scrolling with the spacebar doesn't store the last reading
-    position. </li>
+  <li><img alt="this one!" src="res/caramba_yellow.gif" width="7" height="14">
+    Smart-scrolling with the spacebar doesn't store the last reading position.
+    <br>
+    Reloading the page always scrolls it to an old position. <br>
+    The recording is made before the scroll happens. It should be in the scroll
+    end function, or be told which is the scroll target element. <br>
+    Also, the <code>RT.data.scrollTime</code> is not set, points to Jan 1,
+    1970. </li>
   <li>There are too many functions: try to understand code and refactor to
-    simplify. </li>
-  <li>Refactor <code>smartScrollGetPrevTopElement()</code> and
+    simplify. 
+    <ul>
+      <li>Done with the smartScroll functions: now there is one instead of 4.
+      </li>
+    </ul>
+  </li>
+  <li class="doneItem">Refactor <code>smartScrollGetPrevTopElement()</code> and
     <code>smartScrollGetNextTopElement()</code> into a single function with an
-    axtra arg to signal backwards scroll </li>
+    extra arg to signal backwards scroll </li>
   <li class="doneItem">Capture keyboard events <br>
     Add a handler for the spacebar and test it<br>
     Ensure that the default action is cancelled: FF works fine, Chrome scrolls
@@ -226,7 +235,17 @@ var nodeNextIdx = RT.data.smartScrollGetPrevTopElement( nodePrevIdx );</pre>
   </li>
   <li>Repeatedly pressing space sometimes repeats the top element, which looks
     as if it failed (it might be because of the console.log statement taking
-    some time to complete)</li>
+    some time to complete)
+    <pre>ss forward   delay:578 to:39931.5 &Delta;:347 topNode463 docPath:0,1,3,0,0,0,0,69 P
+ss forward   delay:638 to:40314.5 &Delta;:383 topNode468 docPath:0,1,3,0,0,0,0,74 P
+ss forward   delay:1085 to:<strong>39584.5</strong> &Delta;:651 topNode461 docPath:0,1,3,0,0,0,0,67 P
+ss forward   delay:578 to:39931.5 &Delta;:347 topNode463 docPath:0,1,3,0,0,0,0,69 P
+ss forward   delay:638 to:40314.5 &Delta;:383 topNode468 docPath:0,1,3,0,0,0,0,74 P
+ss forward   delay:610 to:40680.5 &Delta;:366 topNode470 docPath:0,1,3,0,0,0,0,76 P
+ss forward   delay:598 to:41039.5 &Delta;:359 topNode473 docPath:0,1,3,0,0,0,0,79 P
+ss forward   delay:638 to:<strong>40314.5</strong> &Delta;:383 topNode468 docPath:0,1,3,0,0,0,0,74 P
+ss forward   delay:610 to:40680.5 &Delta;:366 topNode470 docPath:0,1,3,0,0,0,0,76 P</pre>
+  </li>
   <li>Many spaces in a row make the content go back: check if the animations
     are not being performed in their original order </li>
   <li>Allow a means to interrupt many queued scroll animations, or to merge
