@@ -19,6 +19,9 @@
       scrollDuration: 555,                // duration of the scroll to position animation
       tallElementLimit: 300,              // elements taller with height greater then this are
                                           // considered "tall" and the percent scroll is stored
+
+      scrollTimerDelay: 999,              // time lapse before a scroll event is recorded
+
       // development aids
       debug: false
     },
@@ -53,6 +56,9 @@
       var RT = $.fn.rt.RT;
 
       RT.data = initData();
+
+      // reference to the current top element
+      RT.data.elementAtTop = this.$content.children()[0];
 
       this.buildDocMap();
       setHandler_onbeforeunload();
@@ -214,14 +220,13 @@
       RT.data.headerId[ RT.content.id ].offsetTop = RT.getRelativeTop( RT.content );
     },
 
-    // return the last recorded position of the document docNumber or null
     getLastRecordedPosition: function( RT ) {
+    // sets scrollData from the last recorded action
       if( !localStorage ) { return null; };
       // loop backwards over localStorage keys looking for a scroll record of
       // this document (has an "RT-nnnn-xxxx" key where nnnn is the document
       // id encoded and xxxx is the time)
-      RT.data.latestTime = {};
-      RT.data.latestTime = { time: -1, index: -1};
+      RT.data.scrollData = { t: -1 };
       //  loop over localstorage keys looking for this doc's latest scroll record
       // TODO: replace this local version by an online one
       for( var i = localStorage.length - 1; i >= 0; i-- ) {
@@ -229,27 +234,30 @@
         if( k.substring( 0, 3 ) === 'RT-' ) {
           var part = k.split( '-' );
           if( part.length === 3 ) {
-            // check that it's related to this document
             if( part[1] === RT.data.documentNumberEncoded ) {  
-              // compare times and save if newer than latestTime
-              if( part[2] > RT.data.latestTime.time ) {
-                // yes it's more recent, check that it has .dp
-                var lastRecordedData = JSON.parse(localStorage.getItem( k )); 
+              if( part[2] > RT.data.scrollData.t ) { // check if newer
+                var lastRecordedData = JSON.parse(localStorage.getItem( k ));
                 if( lastRecordedData.dp ) {
                   // yes it's newer and has .dp: save in latest
-                  RT.data.latestTime.time = part[2];
-                  RT.data.latestTime.index = i;
-                  RT.data.latestTime.data = lastRecordedData;
+                  RT.data.scrollData.t = part[2];
+                  RT.data.scrollData.dp = lastRecordedData.dp;
                 };
               };
             };
           };
         };
       };
-      // was there a scroll record for this doc?
-      if( RT.data.latestTime.index === -1 ) { return null; };
-      // success: return the read scrolldata
-      return RT.data.latestTime.data;
+      if( RT.data.scrollData.t === -1 ) { 
+        // no record found: start from the beginning
+        RT.data.scrollData = {
+          t: (new Date().getTime()),
+          dp: '0,0,0,0,0,0,0,0',
+          a: 0 // action: session start
+        }
+      };
+      RT.writeScrollRecord( 0 ); // session start
+      // return the scrolldata
+      return RT.data.scrollData;
     },
 
     buildTopsMap: function() {
@@ -407,7 +415,7 @@
     },
 
     smartScroll: function( back ) {
-    // find the next top element, forward or backwards if the 2nd arg is true
+    // go to the next top element (backwards if the 2nd arg is true)
       var forward = ! back;
       var RT = $.fn.rt.RT;
       var currentNodeIdx = RT.topsMapGetIdxByElement( RT.data.elementAtTop );
@@ -523,17 +531,20 @@
     // writes a scroll record in localStorage with the content of the scrollData object
       var RT = $.fn.rt.RT;
       RT.data.scrollData.a = actionType;
+      RT.data.scrollData.dp = RT.data.elementAtTop.getAttribute( 'docPath' ); 
       // save the scroll data in localStorage
-      localStorage.setItem(
-        'RT-' + RT.data.documentNumberEncoded + '-' + RT.data.scrollData.t.getTime() / 100,
-        JSON.stringify(RT.data.scrollData)
-      );
+      if( localStorage ) { 
+        localStorage.setItem(
+          'RT-' + RT.data.documentNumberEncoded + '-' + RT.data.scrollData.t,
+          JSON.stringify(RT.data.scrollData)
+        );
+      }
       // aggregate scroll records in the reading time stats
       // RT.compileReadTimeStats();
 
-      // prepare the data to be sent to the server in a weird format
+      // prepare the data to be sent to the server in a compact format
       // 1- date and time
-      var serverRecord = RT.data.scrollData.t.getTime().toString(36);
+      var serverRecord = RT.data.scrollData.t.toString(36);
       // 2 - document
       serverRecord += '-' + RT.data.documentNumberEncoded;
       // 3 - reader id
@@ -550,17 +561,17 @@
       /*
         var jqXHR = $.ajax({
         type: 'PUT',
-        url: 'http://localhost:3333/storeActions',
+        url: 'http://localhost:3333/storeActions',  // $$$$ get this from the server
         contentType: 'text/plain',
         data: serverRecord,
         success: function() {
-      // TODO: can delete the uploaded data from localStorage
-      console.log('uploaded: ' + serverRecord);
-      },
-      error: function() {
-      // TODO: can save the data in localstorage until uploaded
-      // console.log('failed: ' + serverRecord);
-      }
+          // TODO: can delete the uploaded data from localStorage
+          console.log('uploaded: ' + serverRecord);
+        },
+        error: function() {
+          // TODO: can save the data in localstorage until uploaded
+          // console.log('failed: ' + serverRecord);
+        }
       });
       */
     },
@@ -648,7 +659,6 @@
       // TODO: signal the session end with an action code, not an additional column
         RT = $.fn.rt.RT;
         if( ! RT.data.scrollData ) { RT.data.scrollData = {}; }
-        RT.data.scrollData.endSession = '1';
         RT.writeScrollRecord( 25 ); // end of session
       };
     };
@@ -673,7 +683,7 @@
           if( key == 32 && ! ( event.altKey || event.metaKey || event.ctrlKey ) ) {
             RT.data.scrollTimer = null;
             RT.data.scrollData = {};
-            RT.data.scrollData.t = new Date( event.timeStamp );
+            RT.data.scrollData.t = (new Date()).getTime();
             if( event.shiftKey ) { 
               RT.smartScroll( true );  // scroll back
             } else {
@@ -701,7 +711,8 @@
             RT.data.resizingTimer = window.setTimeout(
               function(event){
                 var RT = $.fn.rt.RT;
-                RT.data.scrollData.t = new Date( event.timeStamp );
+                RT.data.scrollData.t = (new Date()).getTime();
+                RT.writeScrollRecord( 6 ); // resize viewport
                 // indicate that the timer is off
                 RT.data.resizingTimer = null;
                 // recalculate header positions (used to identify topmost element in scroll event) 
@@ -710,7 +721,7 @@
                 RT.buildTopsMap();
                 // reposition the content
                 RT.data.disableScrollEvents = true;
-                RT.scrollToPosition( RT.scrollData );
+                RT.scrollToPosition( RT.data.scrollData );
               },
               RT.data.resizingTimerDelay
               );
@@ -728,20 +739,19 @@
           var RT = event.data;
           // scroll events are disabled during programmatic scroll
           if( RT.data.disableScrollEvents ) { return; }
-          // save the exact scroll time in a global
-          RT.data.scrollData.t = event.timeStamp;
-          // On scroll wait a short while and save the position
+          // On scroll wait a short while and save the position, this
+          // timer is cancelled if a new scroll event happens quickly
           window.clearTimeout(RT.scrollTimer);
           RT.data.scrollTimer = window.setTimeout(
             function(event) {
+              RT.data.scrollData.t = (new Date()).getTime();
               RT.data.scrollTimer = null;
-              RT.data.scrollData = {};
               RT.writeScrollRecord( 2 ); // scroll
               RT.displayProgress();
             },
             RT.settings.scrollTimerDelay
-            )
-            event.stopPropagation();
+          )
+          event.stopPropagation();
         }
       );
     };
@@ -1023,8 +1033,9 @@
         topsMapElement: null,
 
         // used for recording the user action events
-        scrollTime: new Date(),             // time the last scroll was started
-        // elementAtTop: null,              // reference to the current top element
+        scrollData: {},
+        // reference to the current top element
+        // DEFINED BELOW: elementAtTop: this.$content[0],
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Defining_getters_and_setters
         _eat: null,                         // reference to a node
         get elementAtTop() {
@@ -1041,10 +1052,7 @@
         },
         set elementAtTop(newEat) { this._eat = newEat; },
         scrollData: null,                   // object with current reading position data
-        scrollTimer: null,                  // delay scroll reaction until stable
-        scrollTimerDelay: 999,              // delay scroll reaction until stable
-        scrollPosition: 0,                  // the user reading position, a number of px below
-                                            // viewport top
+        scrollTimer: null,                  // time between scroll action and recording (cancellable)
 
         // Contains each header's docpath indexed by the header id, and the offsetTop
         // Used when repositioning, to find the header id given the docPath of the

@@ -235,16 +235,16 @@ var nodeNextIdx = RT.data.smartScrollGetPrevTopElement( nodePrevIdx );</pre>
   </li>
   <li>Repeatedly pressing space sometimes repeats the top element, which looks
     as if it failed (it might be because of the console.log statement taking
-    some time to complete)
-    <pre>ss forward   delay:578 to:39931.5 &Delta;:347 topNode463 docPath:0,1,3,0,0,0,0,69 P
-ss forward   delay:638 to:40314.5 &Delta;:383 topNode468 docPath:0,1,3,0,0,0,0,74 P
-ss forward   delay:1085 to:<strong>39584.5</strong> &Delta;:651 topNode461 docPath:0,1,3,0,0,0,0,67 P
-ss forward   delay:578 to:39931.5 &Delta;:347 topNode463 docPath:0,1,3,0,0,0,0,69 P
-ss forward   delay:638 to:40314.5 &Delta;:383 topNode468 docPath:0,1,3,0,0,0,0,74 P
-ss forward   delay:610 to:40680.5 &Delta;:366 topNode470 docPath:0,1,3,0,0,0,0,76 P
-ss forward   delay:598 to:41039.5 &Delta;:359 topNode473 docPath:0,1,3,0,0,0,0,79 P
-ss forward   delay:638 to:<strong>40314.5</strong> &Delta;:383 topNode468 docPath:0,1,3,0,0,0,0,74 P
-ss forward   delay:610 to:40680.5 &Delta;:366 topNode470 docPath:0,1,3,0,0,0,0,76 P</pre>
+    some time to complete) 
+    <pre>ss forward   delay:578 to:39931.5 Δ:347 topNode463 docPath:0,1,3,0,0,0,0,69 P
+ss forward   delay:638 to:40314.5 Δ:383 topNode468 docPath:0,1,3,0,0,0,0,74 P
+ss forward   delay:1085 to:<strong>39584.5</strong> Δ:651 topNode461 docPath:0,1,3,0,0,0,0,67 P
+ss forward   delay:578 to:39931.5 Δ:347 topNode463 docPath:0,1,3,0,0,0,0,69 P
+ss forward   delay:638 to:40314.5 Δ:383 topNode468 docPath:0,1,3,0,0,0,0,74 P
+ss forward   delay:610 to:40680.5 Δ:366 topNode470 docPath:0,1,3,0,0,0,0,76 P
+ss forward   delay:598 to:41039.5 Δ:359 topNode473 docPath:0,1,3,0,0,0,0,79 P
+ss forward   delay:638 to:<strong>40314.5</strong> Δ:383 topNode468 docPath:0,1,3,0,0,0,0,74 P
+ss forward   delay:610 to:40680.5 Δ:366 topNode470 docPath:0,1,3,0,0,0,0,76 P</pre>
   </li>
   <li>Many spaces in a row make the content go back: check if the animations
     are not being performed in their original order </li>
@@ -297,10 +297,23 @@ ss forward   delay:610 to:40680.5 &Delta;:366 topNode470 docPath:0,1,3,0,0,0,0,7
 <h3 id="L701">repositioning / client <img alt="this one!"
 src="res/caramba_yellow.gif" width="7" height="14"> </h3>
 <ol>
-  <li class="checkedItem">Store the scroll events in localStorage. </li>
-  <li class="checkedItem">Refactor code to encapsulate the writing of the
-    scroll records (<code>RT.writeScrollRecord</code>) so it can be used from
-    within several event handlers. </li>
+  <li class="checkedItem doneItem">Store the scroll events in localStorage.
+  </li>
+  <li class="checkedItem doneItem">Refactor code to encapsulate the writing of
+    the scroll records (<code>RT.writeScrollRecord</code>) so it can be used
+    from within several event handlers. </li>
+  <li class="doneItem">Scroll records (action=2) have no docPath </li>
+  <li>Normal scrolls don't update the current position </li>
+  <li>The resize handler calls <code>RT.scrollToPosition( RT.scrollData
+    );</code> with null scrollData. </li>
+  <li class="doneItem">The position is not restored on resize. </li>
+  <li>The resize event is not recorded </li>
+  <li>All normal scroll events are recorded, no matter the timeout
+    <code>scrollTimerDelay</code> was in RT data, not settings <br>
+    Actually, it waits, and then stores a raft of records </li>
+  <li>The <code>event.timestamp</code> values are like 106620497 instead of
+    141113798398 ? <br>
+    Replaced all by <code>( new Date()).getTime()</code> </li>
   <li>When reloading repeatedly the document, it gets positioned each time a
     little closer to the top. </li>
   <li class="checkedItem doneItem">✔ Set the beforeunload event to store an
@@ -449,9 +462,6 @@ RT-1360724408289: {"<strong>endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,
   </li>
   <li>The keayboard action handler does not react. Function
     <code>smartScrollGetNextTopElement()</code> fails </li>
-  <li>The resize handler calls <code>RT.scrollToPosition( RT.scrollData
-    );</code> with null scrollData. </li>
-  <li>The position is not restored on resize. </li>
 </ol>
 
 <p></p>
