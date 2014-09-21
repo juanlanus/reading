@@ -28,12 +28,12 @@ function serverData( HPPTPort, db ) {
 
   // all environments
   appData.use(express.logger('dev'));
-  // replaced by rawBody(): appData.use(express.bodyParser());
-  appData.use(rawBody);
+
+  appData.use(rawBody);  // WAS: appData.use(express.bodyParser());
   appData.use(express.methodOverride());
   appData.use(cors()); // automatically supports pre-flighting
   appData.use(appData.router);
-  // development only
+
   if ('development' == appData.get('env')) {
     appData.use(express.errorHandler());
   }
@@ -45,13 +45,9 @@ function serverData( HPPTPort, db ) {
 
   appData.put('/storeActions', routes.storeActions);
 
-  appData.get('/', function(req, res, next) {
-    console.log( 'got the f* CORS thing!' );
-  });
+  appData.get('/', function(req, res, next) { console.log( 'got the f* CORS thing!' ); });
 
-  appData.post('/', cors(), function(req, res, next) {
-    console.log( 'posted the f* CORS thing!' );
-  });
+  appData.post('/', cors(), function(req, res, next) { console.log( 'posted the f* CORS thing!' ); });
 
   http.createServer(appData).listen(appData.get('port'), function(){
     console.log('Express data server listening on port ' + appData.get('port'));

@@ -197,7 +197,7 @@ user's actions of any type, like scrolls, focus changes or page closings. </p>
 
 <p>The object is named <code>scrollData</code> in the program and it mainly
 points to an element in the document via its <code>scrollPath</code>. The
-properties are assigned short names, so save space in the database.  </p>
+properties are assigned short names, so save space in the database. </p>
 <ul>
   <li>_id: document + user + time</li>
   <li>a: action code, according to the list below</li>
@@ -212,7 +212,8 @@ properties are assigned short names, so save space in the database.  </p>
 
 <p>Action codes: </p>
 <ul>
-  <li>0 session start</li>
+  <li>0 session start - include geolocation, viewport measures, browser or
+    device data, referer, TZ[?]</li>
   <li>1 smart scroll (keyboard space event)</li>
   <li>2 scroll (scroll event)</li>
   <li>3 click on intra-page link (#something) </li>
@@ -222,6 +223,10 @@ properties are assigned short names, so save space in the database.  </p>
   <li>7 open TOC</li>
   <li>8 click on TOC element</li>
   <li>25 close window (end-of-session, onbeforeunload event) </li>
+</ul>
+<ul>
+  <li>lost focus</li>
+  <li>regain focus</li>
 </ul>
 
 <p> </p>

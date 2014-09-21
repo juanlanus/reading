@@ -290,8 +290,9 @@ ss forward   delay:610 to:40680.5 Δ:366 topNode470 docPath:0,1,3,0,0,0,0,76 P</
 
 <h3 id="L692">repositioning / server</h3>
 <ul>
-  <li>Define a schema for the reading position data</li>
-  <li>Implement the reading position storage in the server via AJAX</li>
+  <li class="doneItem">Define a schema for the reading position data</li>
+  <li>The server must respond to the AJAX HTTP request, even if it's
+    asynchrnous </li>
 </ul>
 
 <h3 id="L701">repositioning / client <img alt="this one!"
@@ -303,11 +304,25 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h3>
     the scroll records (<code>RT.writeScrollRecord</code>) so it can be used
     from within several event handlers. </li>
   <li class="doneItem">Scroll records (action=2) have no docPath </li>
-  <li>Normal scrolls don't update the current position </li>
-  <li>The resize handler calls <code>RT.scrollToPosition( RT.scrollData
-    );</code> with null scrollData. </li>
+  <li class="doneItem">SmartScroll recording: no docPath! (undefined) </li>
+  <li class="doneItem">Encode the time in the output record (scrollData.t) </li>
+  <li class="doneItem">Normal scroll doesn't update the current position: the
+    dp shows as undefined.<br>
+    Must use <code>getCurrentReadingPosition()</code> to get it </li>
+  <li class="doneItem">The resize handler calls <code>RT.scrollToPosition(
+    RT.scrollData );</code> with null scrollData. </li>
   <li class="doneItem">The position is not restored on resize. </li>
-  <li>The resize event is not recorded </li>
+  <li class="doneItem">The resize event is not recorded </li>
+  <li>With the start session event (0) include geolocation, viewport measures,
+    browser or device data, referer, TZ <br>
+    <a href="http://www.hostip.info/use.html">hostip</a>: free IP and
+    geolocation service <br>
+    <a href="https://www.maxmind.com/en/home">MaxMind</a>: commercial, has a
+    free option <br>
+    <a href="http://ipinfodb.com/ip_location_api.php">ipinfodb</a>: another
+    free one</li>
+  <li>When recording a resize event, store the new viewport dimensions and if
+    it's maximized or not</li>
   <li>All normal scroll events are recorded, no matter the timeout
     <code>scrollTimerDelay</code> was in RT data, not settings <br>
     Actually, it waits, and then stores a raft of records </li>

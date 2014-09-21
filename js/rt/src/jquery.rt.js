@@ -226,7 +226,7 @@
       // loop backwards over localStorage keys looking for a scroll record of
       // this document (has an "RT-nnnn-xxxx" key where nnnn is the document
       // id encoded and xxxx is the time)
-      RT.data.scrollData = { t: -1 };
+      RT.data.scrollData = { t: -1, dp: RT.data.elementAtTop.getAttribute('docpath') }; // session start
       //  loop over localstorage keys looking for this doc's latest scroll record
       // TODO: replace this local version by an online one
       for( var i = localStorage.length - 1; i >= 0; i-- ) {
@@ -248,12 +248,8 @@
         };
       };
       if( RT.data.scrollData.t === -1 ) { 
-        // no record found: start from the beginning
-        RT.data.scrollData = {
-          t: (new Date().getTime()),
-          dp: '0,0,0,0,0,0,0,0',
-          a: 0 // action: session start
-        }
+        // no record found: start from RT.data.elementAtTop
+        RT.data.scrollData = { t: (new Date().getTime()), }
       };
       RT.writeScrollRecord( 0 ); // session start
       // return the scrolldata
@@ -531,7 +527,7 @@
     // writes a scroll record in localStorage with the content of the scrollData object
       var RT = $.fn.rt.RT;
       RT.data.scrollData.a = actionType;
-      RT.data.scrollData.dp = RT.data.elementAtTop.getAttribute( 'docPath' ); 
+      // $$$$ NO: USE THE scrollData information: RT.data.scrollData.dp = RT.data.elementAtTop.getAttribute( 'docPath' ); 
       // save the scroll data in localStorage
       if( localStorage ) { 
         localStorage.setItem(
@@ -543,7 +539,7 @@
       // RT.compileReadTimeStats();
 
       // prepare the data to be sent to the server in a compact format
-      // 1- date and time
+      // 1- timestamp
       var serverRecord = RT.data.scrollData.t.toString(36);
       // 2 - document
       serverRecord += '-' + RT.data.documentNumberEncoded;
@@ -555,26 +551,58 @@
       serverRecord += '-' + RT.data.scrollData.a;
       // 6 - additional data: text in case of a scroll with debug activated
       if( RT.settings.debug ) { !! RT.data.scrollData.text ? '-' + RT.data.scrollData.text : ''; }
-      // TODO: upload the record to the server
-      console.log( 'record:' + serverRecord );
+      // additional data, depending on the action type
+      addAdditionalData( serverRecord, actionType );
+      console.log( 'k:' + 'RT-' + RT.data.documentNumberEncoded + '-' + RT.data.scrollData.t + ' rec:' + serverRecord );
 
-      /*
+      // send the data and forget it
         var jqXHR = $.ajax({
         type: 'PUT',
-        url: 'http://localhost:3333/storeActions',  // $$$$ get this from the server
+        url: 'http://localhost:3333/storeActions',              // $$$$ get this URL from the server, in settings
         contentType: 'text/plain',
-        data: serverRecord,
-        success: function() {
+        data: serverRecord
+/*      success: function() {
           // TODO: can delete the uploaded data from localStorage
           console.log('uploaded: ' + serverRecord);
         },
         error: function() {
           // TODO: can save the data in localstorage until uploaded
           // console.log('failed: ' + serverRecord);
-        }
+        } */
       });
-      */
     },
+
+    addAdditionalData: function( serverRecord, actionType ) {
+    // adds action-specific data to the record to be sent to the server
+    if( actionType === 0 ) {  // 0: session start
+      // geolocation and IP
+      // This should be an async request sending the information to the server later
+      // when it is available, as a replacement to the session start record
+      //    http://api.hostip.info/get_html.php?ip=xxx&position=true
+      //    returns: 
+      //    {"country_name":"ARGENTINA","country_code":"AR","city":"Buenos Aires",
+      //    "ip":"190.31.97.162","lat":"-34.5833","lng":"-58.3667"} 
+        var locationData;
+        var jqXHR = $.ajax({
+          type: 'GET',
+          url: 'http://api.hostip.info/get_json.php?position=true',
+          datatype: 'text',
+          success: function( locData, textStatus, jqXHR ) {
+            // the location info is available
+            console.log( locData );
+          },
+          error: function() {
+            // store the record without location info
+            // console.log('failed: ' + serverRecord);
+          }
+        });
+
+      // viewport measures
+      // browser or device data
+      // referer
+      // TZ
+    }
+    };
 
     getCurrentReadingPosition: function( event ) {
       // get a reference to the element at the reading position and store in
@@ -621,14 +649,11 @@
 
       // --------------------------------------------------------------------------------
       // alternative method: use the headers offsetTop map
-
-      // loop through the headers list looking for the last header above the current
-      // reading position 
+      // loop through the headers list looking for the last header above the current reading position 
       var currentScrolltop = RT.$element.scrollTop();
       for( var oneHeader in RT.data.headerId ) { 
         if( RT.data.headerId[oneHeader].offsetTop >= currentScrolltop ) { break; };
       };
-
 
       // --------------------------------------------------------------------------------
       // RT.data.scrollData will contain the data needed to restore the reading position and
@@ -638,9 +663,7 @@
         // DEBUG: null happens when scrolling to the very top
         if( RT.settings.debug ) { console.log( 'null docPath!' ); };
       };
-      if( !topElement.getAttribute('id') == '' ) {
-        RT.data.scrollData.id =  topElement.getAttribute('id');
-      };
+      if( !topElement.getAttribute('id') == '' ) { RT.data.scrollData.id = topElement.getAttribute('id'); };
       // percent of the element not visible (scrolled up) if it's taller then the threshold
       if (( $(topElement).offset().top < 0 ) && ( $(topElement).height() > RT.data.tallElementLimit )) {
         RT.data.scrollData.p = Math.round( Math.abs( $(topElement).offset().top / topElement.offsetHeight * 100 ))
@@ -651,6 +674,7 @@
     }
 
   })
+
   // *************************** end of member functions ****************************
 
     setHandler_onbeforeunload = function( RT ) {
@@ -658,7 +682,6 @@
       window.onbeforeunload = function(event) { 
       // TODO: signal the session end with an action code, not an additional column
         RT = $.fn.rt.RT;
-        if( ! RT.data.scrollData ) { RT.data.scrollData = {}; }
         RT.writeScrollRecord( 25 ); // end of session
       };
     };
@@ -682,7 +705,6 @@
           // spacebar or shift+spacebar: smart scroll
           if( key == 32 && ! ( event.altKey || event.metaKey || event.ctrlKey ) ) {
             RT.data.scrollTimer = null;
-            RT.data.scrollData = {};
             RT.data.scrollData.t = (new Date()).getTime();
             if( event.shiftKey ) { 
               RT.smartScroll( true );  // scroll back
@@ -745,6 +767,8 @@
           RT.data.scrollTimer = window.setTimeout(
             function(event) {
               RT.data.scrollData.t = (new Date()).getTime();
+              var topElement = RT.getCurrentReadingPosition();
+              RT.data.scrollData.dp = topElement.getAttribute( 'docpath' );
               RT.data.scrollTimer = null;
               RT.writeScrollRecord( 2 ); // scroll
               RT.displayProgress();
