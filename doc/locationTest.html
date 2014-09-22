@@ -1,0 +1,80 @@
+<!DOCTYPE html >
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta http-equiv="Content-Language" content="en">
+    <title>rt: location test</title>
+    <link rel="stylesheet" href="res/rtDoc.css" type="text/css">
+    <script type="text/javascript" src="res/jquery.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        doTest();
+      });
+    </script>
+
+    <script>
+      // read location information
+      function doTest() {
+        var locationData;
+        var jqXHR = $.ajax({
+          type: 'GET',
+          url: 'http://api.hostip.info/get_json.php',
+          data: 'ip=190.31.97.162',    // &position=true',
+          cache: false,
+          datatype: 'text',
+          error: function() {
+            // store the record without location info
+            // console.log('failed: ' + serverRecord);
+          }
+        })
+        .done( function( locData, textStatus, jqXHR ) {
+          // the location info is available
+          console.dir( locData );
+          var z = 'status: ' + textStatus + ' ';
+          for (i in locData) { z += ( i + ': ' + locData[i] + ', ' ); } 
+          $( '#locationData' ).val( z );
+        });
+      };
+
+/*    $(document).ajaxError(function(event, jqXHR, ajaxSettings, thrownError) {
+        alert( "Triggered ajaxError handler." );
+      });    */
+      
+    </script>
+  </head>
+
+  <body> 
+    <div id="rtBody">
+      <h2>location test page</h2>
+      <p>
+          <input id="locationData"
+          type="text" style="width:100%; border:1px solid silver; padding:4px;"
+          />
+      </p>
+      <p class="framed" style="font-size:133%; font-weight:bold; display:inline-block;
+      background:rgb(240,240,240); border:3px solid rgb(192,192,192);" 
+      onclick="doTest();">
+        run location test
+      </p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+    </div>
+  </body>
+</html>
+
