@@ -552,7 +552,7 @@
       // 6 - additional data: text in case of a scroll with debug activated
       if( RT.settings.debug ) { !! RT.data.scrollData.text ? '-' + RT.data.scrollData.text : ''; }
       // additional data, depending on the action type
-      addAdditionalData( serverRecord, actionType );
+      // addAdditionalData( serverRecord, actionType );
       console.log( 'k:' + 'RT-' + RT.data.documentNumberEncoded + '-' + RT.data.scrollData.t + ' rec:' + serverRecord );
 
       // send the data and forget it
@@ -572,8 +572,10 @@
       });
     },
 
+    /* this information is obtained by the server itself, when a session starts
     addAdditionalData: function( serverRecord, actionType ) {
     // adds action-specific data to the record to be sent to the server
+    // only send information produced by the client
     if( actionType === 0 ) {  // 0: session start
       // geolocation and IP
       // This should be an async request sending the information to the server later
@@ -601,8 +603,7 @@
       // browser or device data
       // referer
       // TZ
-    }
-    };
+    }, */
 
     getCurrentReadingPosition: function( event ) {
       // get a reference to the element at the reading position and store in

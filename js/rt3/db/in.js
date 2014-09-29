@@ -24,6 +24,7 @@ console.log('module in');
 exports.unCompressActionRecord = function( sRecord ) {
 // reformat an action record from transmission format to JS object
   console.log( 'input rec:' + sRecord );
+  if( db ) { console.log( 'db not falsy' ); } else { console.log( 'db falsy in unCompressActionRecord' ); }
 
   var part = sRecord.split('-');
   var actionData = {};

@@ -38,10 +38,6 @@ function serverData( HPPTPort, db ) {
     appData.use(express.errorHandler());
   }
 
-  appData.get('/storeActions', function(req, res, next){
-    console.log( 'This is CORS-enabled for all origins!' );
-    res.json({msg: 'This is CORS-enabled for all origins!'});
-  });
 
   appData.put('/storeActions', routes.storeActions);
 
