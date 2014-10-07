@@ -22,8 +22,13 @@ function serverPages( HPPTPort, db ) {
   // appPages.use(express.cookieParser('your secret here'));
   // appPages.use(express.session());
   // appPages.use(appPages.router);
-  appPages.use( express.static(path.join('/home/jlanus/Dropbox/Public/reading', '/')) );
-  console.log( "static dir:" + '/home/jlanus/Dropbox/Public/reading' );
+  if( process.platform === 'win32' ) {
+      appPages.use( express.static(path.join('C:\\w\\reading', '\\')) );
+      console.log( "static dir:" + 'C:\\w\\reading' );
+  } else {
+      appPages.use( express.static(path.join('/home/jlanus/Dropbox/Public/reading', '/')) );
+      console.log( "static dir:" + '/home/jlanus/Dropbox/Public/reading' );
+  }
   console.log( "dirname:" + __dirname); // dirname:/home/jlanus/Dropbox/Public/reading[/js/rt3]
   //appPages.use(express.directory('../../doc'));
 
