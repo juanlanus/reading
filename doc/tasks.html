@@ -52,7 +52,6 @@
 
 <div id="tocContainer" class="toc tocContainer">
 <ul>
-  <li><a href="#L542">bugs</a></li>
   <li><a href="#L553">pending tasks <img alt="this one!"
     src="res/caramba_yellow.gif" width="7" height="14"> </a> 
     <ul>
@@ -82,20 +81,7 @@
 
 <p></p>
 
-<h2 style="clear:BOTH;" id="L542">bugs</h2>
-<ol>
-  <li>When resizing repeatedly (like, maximizing and restoring to a narrow
-    window) the position is lost after a number of times. <br>
-    This might well be because the rezise event triggers a scroll event and a
-    new resize happens at a certain point of the scroll if the resizing is
-    repeated rather quickly. </li>
-  <li>SmartScroll does nothing (scrolls again to the same current top) every
-    now and then, when the spacebar is pressed repeatedly fast. <br>
-    It seems related to updating the top position after the animation, might be
-    solved if it was updated as soon as the event happens. </li>
-</ol>
-
-<h2 style="clear:none;" id="L553">pending tasks <img alt="this one!"
+<h2 style="clear:both;" id="L553">pending tasks <img alt="this one!"
 src="res/caramba_yellow.gif" width="7" height="14"> </h2>
 
 <h3>control panel</h3>
@@ -104,7 +90,8 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
     return focus to the content to enable start scrolling. Or, capture the
     keyboard events from the control panel too. </li>
   <li>TOC: Don't let the browser update the hash part of the location after a
-    click on a TOC link. </li>
+    click on a TOC link. Clear the hash in the location, preventing the event
+    triggered. </li>
   <li>In adition to recognizing the space bar for scrolling, add a button in
     the control panel bar, for touch devices or to be activated with the
     notebook's non-mouse buttons. </li>
@@ -113,19 +100,22 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
   <li>TOC: when the TOC is shown, there are two vertical scrollbars visible.
   </li>
   <li>TOC: Persist TOC status: scrollTop and expanded/collapsed state in an
-    ad-hoc record (roaming) which also contains information about whico TOC
+    ad-hoc record (roaming) also containing information about which TOC
     functional features the user is leveraging </li>
-  <li>TOC: Identify and highlight the TOC item of the current position </li>
+  <li>TOC: Continually identify and highlight the TOC item of the current
+    position, expand if needed</li>
   <li>Synchronize TOC and content scroll</li>
   <li class="doneItem">TOC: Add a function to make the TOC collapsible, into
     the TOC file </li>
   <li class="doneItem">TOC: Get "expand" and "collapse" icons </li>
+  <li>TOC: Get better "expand" and "collapse" icons, store as data URLs in the
+    script file. </li>
   <li>TOC: Make the collapsible TOC react to the usual keyboard codes</li>
-  <li>TOC: add a quick search box</li>
+  <li>TOC: add a quick search box for the TOC content </li>
   <li class="doneItem">TOC: eliminate the focus marker (
     <code>outline:none;</code> ) in css </li>
-  <li>TOC: to slide laterally animate left margin, not width to avoid
-    continuous reflow during the animation (see <a
+  <li class="doneItem">TOC: to slide laterally animate left margin, not width
+    to avoid continuous reflow during the animation (see <a
     href="http://jsfiddle.net/davidThomas/N98ee/1/">http://jsfiddle.net/davidThomas/N98ee/1/</a>
     and <a
     href="http://stackoverflow.com/questions/4229422/jquery-slideright-effect">http://stackoverflow.com/questions/4229422/jquery-slideright-effect</a>
@@ -148,8 +138,8 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
       });
     });</pre>
   </li>
-  <li>In the demo page "Children of the frost", the last chapter "THE LAW OF
-    LIFE" shows twice in the TOC (it's the last one). </li>
+  <li>TOC: In the demo page "Children of the frost", the last chapter "THE LAW
+    OF LIFE" shows twice in the TOC (it's the last one). </li>
   <li>TOC: at page load add enough blank space at the end of the content so
     that the last headers can be scrolled to the top of the viewport. </li>
 </ol>
@@ -159,14 +149,10 @@ src="res/caramba_yellow.gif" width="7" height="14"> </h2>
   <li>Goal: extract the function that writes scroll actions to the server in a
     function by itself, to call it both from startScroll and regular scroll,
     and also to be able to block scroll events provoked by other events like
-    resize 
-    <ul>
-      <li>eee</li>
-    </ul>
-  </li>
+    resize </li>
   <li>Goal: make modules and <code>require()</code> them</li>
   <li>Goal: isolate parameterizable options in an options object</li>
-  <li class="doneItem">Make an jQuery plugin out of the rt code </li>
+  <li class="doneItem">Make a jQuery plugin out of the rt code </li>
 </ul>
 
 <h3 id="L577">soft scrolling</h3>
@@ -252,11 +238,20 @@ ss forward   delay:610 to:40680.5 Δ:366 topNode470 docPath:0,1,3,0,0,0,0,76 P</
     them in a single one </li>
   <li>Try to detect empty elements (not containing text or images or whatever)
     and add class <code>ssIgnore</code> to them </li>
+  <li>When resizing repeatedly (like, maximizing and restoring to a narrow
+    window) the position is lost after a number of times. <br>
+    This might well be because the rezise event triggers a scroll event and a
+    new resize happens at a certain point of the scroll if the resizing is
+    repeated rather quickly. </li>
+  <li>SmartScroll does nothing (scrolls again to the same current top) every
+    now and then, when the spacebar is pressed repeatedly fast. <br>
+    It seems related to updating the top position after the animation, might be
+    solved if it was updated as soon as the event happens. </li>
 </ul>
 
 <h3 id="L642">server</h3>
 <ol>
-  <li class="checkedItem">Define architecture: platform, database, ... 
+  <li class="checkedItem doneItem">Define architecture: platform, database, ... 
     <ul>
       <li>A RESTful backend with most of the controller logic located in the
         client, </li>
@@ -291,8 +286,8 @@ ss forward   delay:610 to:40680.5 Δ:366 topNode470 docPath:0,1,3,0,0,0,0,76 P</
 <h3 id="L692">repositioning / server</h3>
 <ul>
   <li class="doneItem">Define a schema for the reading position data</li>
-  <li>The server must respond to the AJAX HTTP request, even if it's
-    asynchrnous </li>
+  <li class="doneItem">The server must respond to the AJAX HTTP request, even
+    if it's asynchrnous </li>
 </ul>
 
 <h3 id="L701">repositioning / client <img alt="this one!"

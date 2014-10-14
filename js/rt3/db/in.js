@@ -1,7 +1,3 @@
-// REFACTOR: build a number of small modules each one
-// handling a single operation, name them after the handled operation
-
-
 console.log('module in');
 
 /* how the record is prepared by the client:
@@ -24,7 +20,7 @@ console.log('module in');
 exports.unCompressActionRecord = function( sRecord ) {
 // reformat an action record from transmission format to JS object
   console.log( 'input rec:' + sRecord );
-  if( db ) { console.log( 'db not falsy' ); } else { console.log( 'db falsy in unCompressActionRecord' ); }
+  if( GLOBAL.db ) { console.log( 'db not falsy' ); } else { console.log( 'db falsy in unCompressActionRecord' ); }
 
   var part = sRecord.split('-');
   var actionData = {};

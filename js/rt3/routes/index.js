@@ -2,16 +2,20 @@ var dbInput = require('../db/in.js');        // database input code
 
 /* PUT a recorded user action */ 
 exports.storeActions = function( req, res ){
-  if( db === undefined ) { throw( 'db not defined trying to store actions' ); }
+  if( GLOBAL.db === undefined ) {
+    throw( 'db not defined trying to store actions' ); 
+  } else {
+    console.log( 'db defined in storeAdctions' );
+  }
   // res.render( 'index', { title: 'Express cookies' } );
-  debugger;
+
   console.log( 'storing an action: ' + req.rawBody );
   var actionData = dbInput.unCompressActionRecord( req.rawBody );
   console.log( actionData );
   res.send( '200\n\n' );
 
   // $$$$ write actionData into mongo
-  db.actions.insert( actionData, function ( err, result ) {
+  GLOBAL.db.actions.insert( actionData, function ( err, result ) {
     "use strict"; 
     if ( err ) return callback( err, null ); 
     console.log( 'Inserted new action' );
