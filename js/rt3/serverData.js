@@ -2,6 +2,7 @@ function serverData( ) {
 // DATA SERVER *****************************************************************
 // The web server operating on this port handles the data that is stored into
 // or retireved from tha database
+  console.log( '\nStarting data server:' );
 
   var http = require('http');
   var path = require('path');
@@ -9,6 +10,11 @@ function serverData( ) {
   var appData = express();
   var routes = require('./routes');
   var cors = require('cors');
+  var methodOverride = require('method-override');
+  var logger = require('morgan');
+  var path = require('path');
+  var assert = require('assert');
+  var errorHandler = require('errorhandler');
 
   
   // the server:
@@ -29,15 +35,15 @@ function serverData( ) {
   }
 
   // all environments
-  appData.use(express.logger('dev'));
+  appData.use(logger('dev'));
 
   appData.use(rawBody);  // WAS: appData.use(express.bodyParser());
-  appData.use(express.methodOverride());
+  appData.use(methodOverride());
   appData.use(cors()); // automatically supports pre-flighting
-  appData.use(appData.router);
+  // appData.use(appData.router);
 
   if ('development' == appData.get('env')) {
-    appData.use(express.errorHandler());
+    appData.use(errorHandler());
   }
 
   appData.put('/storeActions', routes.storeActions);
