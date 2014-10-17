@@ -8,13 +8,14 @@ function serverData( ) {
   var path = require('path');
   var express = require('express');
   var appData = express();
-  var routes = require('./routes');
   var cors = require('cors');
   var methodOverride = require('method-override');
   var logger = require('morgan');
   var path = require('path');
   var assert = require('assert');
   var errorHandler = require('errorhandler');
+  var routes = require('./routes');
+  var StoreActions = require('./db/in');
 
   
   // the server:
