@@ -20,7 +20,6 @@ console.log('module in');
 exports.unCompressActionRecord = function( sRecord ) {
 // reformat an action record from transmission format to JS object
   console.log( 'input rec:' + sRecord );
-  if( GLOBAL.db ) { console.log( 'db not falsy' ); } else { console.log( 'db falsy in unCompressActionRecord' ); }
 
   var part = sRecord.split('-');
   var actionData = {};
@@ -30,15 +29,14 @@ exports.unCompressActionRecord = function( sRecord ) {
   actionData.rdr = parseInt( part[2], 36);                   // 3 - reader id
   // 4 - docPath and optional percent scrolled
   var n = part[3].indexOf('.'); // percent part separator
-  if( n < 0 ) {
-    // no percent data
+  if( n < 0 ) { // no percent data
     actionData.dp = part[3];
   } else {
     actionData.dp = part[3].substring( 0, n );               // 4 - docPath
     actionData.p = parseInt( part[3].substring( n + 1 ));    // 4 - optional percent scrolled
   };
-    actionData.a = parseInt( part[4], 36);                   // 5 - action code
-  if( part.length >= 6 ) {
+  actionData.a = parseInt( part[4], 36);                     // 5 - action code
+  if( ( part.length >= 6 ) && GLOBAL.settings.debug ) {
     actionData.txt = part[5];                                // 6 - optional target text, for debug
   };
   console.log( JSON.stringify( actionData ) );

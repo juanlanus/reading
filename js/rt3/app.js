@@ -9,6 +9,7 @@ GLOBAL.settings = {};
 GLOBAL.settings.connURL = 'mongodb://localhost:27017/rtdb/?w=0'; 
 GLOBAL.settings.serverPagesPort = process.env.PORT || 3000;
 GLOBAL.settings.serverDataPort = 3333;
+GLOBAL.settings.debug = true;
 console.log( 'process.platform: ' + process.platform );
 if( process.platform === 'win32' ) {
   GLOBAL.settings.staticDir = path.join('C:\\w\\reading', '\\');
@@ -31,10 +32,13 @@ var methodOverride = require('method-override');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 
+console.log( 'GLOBAL === global: ' + ( GLOBAL === global ) );
 
 // CONNECT TO DATABASE AND TEST ***********************************************
-GLOBAL.db = MongoClient.connect(
+
+MongoClient.connect(
   GLOBAL.settings.connURL,
+  {},                               // options
   function( err, db ) {
     if( err ) {
       console.log( 'Error attempting to connect to the database' );
@@ -42,6 +46,9 @@ GLOBAL.db = MongoClient.connect(
       if( err.lineNumber ) { console.log( 'in app.js line ' + err.lineNumber ); };
       throw( 'connection to database failed: ' + err.message );
     };
+
+    // no err: publish connection
+    GLOBAL.db = db;
 
     // connection test: logs an ever-increasing number
     var collection = db.collection('test_insert');
@@ -52,15 +59,18 @@ GLOBAL.db = MongoClient.connect(
             console.log( format( 'count = %s', count ) );
         });
     });
+    
+    GLOBAL.db.actions = db.collection('actions'); 
+
+    // START DATA SERVER **********************************************************
+    var ServerData = require( './serverData.js' );
+    assert( ServerData );
+    ServerData.serverData();
+
+    // START PAGES SERVER *********************************************************
+    var ServerPages = require( './serverPages' );
+    ServerPages.serverPages( GLOBAL.settings.serverPagesPort, GLOBAL.db );
+
   }
+
 )
-
-// START DATA SERVER **********************************************************
-var ServerData = require( './serverData.js' );
-assert( ServerData );
-ServerData.serverData();
-
-// START PAGES SERVER *********************************************************
-var ServerPages = require( './serverPages' );
-ServerPages.serverPages( GLOBAL.settings.serverPagesPort, GLOBAL.db );
-

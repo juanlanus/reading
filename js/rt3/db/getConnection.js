@@ -1,20 +1,19 @@
 var MongoClient = require('mongodb').MongoClient;
 
-// var db = null;
-
 var getConnection = function getConnection( connURL, callback ) {
-  if ( db ) {
+  if ( GLOBAL.db ) {
     // connection already opened: no error, run callback
-    callback( null, db );
+    callback( null, GLOBAL.db );
   } else {
     // open new connection
-    db = MongoClient.connect(
-      connURL,
+    console.log( 'About to attempt connection with: ' + GLOBAL.settings.connURL );
+    GLOBAL.db = MongoClient.connect(
+      GLOBAL.settings.connURL,
       function( err, db ){
         if( err ) { 
           console.log( 'Error creating new connection ' + err ); 
         } else {
-          console.log( 'created new connection to ' + connURL );
+          console.log( 'created new connection to ' + GLOBAL.settings.connURL );
         }
         // run callback
         callback( err, db );
@@ -33,7 +32,7 @@ module.exports = getConnection;
 var getConnection = require('yourpath/connection.js')
 
 function yourfunction() {
-  getConnection( function( err,db ) {
+  getConnection( function( err,GLOBAL.db ) {
     // your callback code
   }
   .
@@ -44,7 +43,7 @@ function yourfunction() {
 other, with export:
 http://stackoverflow.com/questions/15039045/access-app-js-variables-in-routes-but-without-global-express
 --in apps.js:
-exports.db = db;
+exports.GLOBAL.db = db;
 
 --routes/index.js
 var db = require("app").db;

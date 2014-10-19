@@ -7,7 +7,6 @@ exports.storeActions = function( req, res ){
   } else {
     console.log( 'db defined in storeAdctions' );
   }
-  // res.render( 'index', { title: 'Express cookies' } );
 
   console.log( 'storing an action: ' + req.rawBody );
   var actionData = dbInput.unCompressActionRecord( req.rawBody );
@@ -19,13 +18,12 @@ exports.storeActions = function( req, res ){
     "use strict"; 
     if ( err ) return callback( err, null ); 
     console.log( 'Inserted new action' );
-    callback( err, permalink );
   });
 
-  appData.get( '/storeActions', function( req, res, next ){
+  /* appData.get( '/storeActions', function( req, res, next ){
     console.log( 'This is CORS-enabled for all origins!' );
     res.json( {msg: 'This is CORS-enabled for all origins!'} );
-  });
+  }); */
 
 };
 

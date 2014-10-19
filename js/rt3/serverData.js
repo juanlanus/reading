@@ -20,7 +20,7 @@ function serverData( ) {
   
   // the server:
   var appData = express();
-  appData.set('port', 3333);
+  appData.set( 'port', GLOBAL.settings.serverDataPort );
 
   // parse plain text request body
   function rawBody(req, res, next) {
