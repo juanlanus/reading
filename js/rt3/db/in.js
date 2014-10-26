@@ -39,6 +39,16 @@ exports.unCompressActionRecord = function( sRecord ) {
   if( ( part.length >= 6 ) && GLOBAL.settings.debug ) {
     actionData.txt = part[5];                                // 6 - optional target text, for debug
   };
-  console.log( JSON.stringify( actionData ) );
+  console.log( this.getActionName( actionData.a ) + ' ' + JSON.stringify( actionData ) );
   return actionData;
+};
+
+exports.getActionName = function( actionId ) {
+  if( ! GLOBAL.actionIdMap ) {
+    // build a map from ids to names
+    actionIdMap = [];
+    for( a in GLOBAL.settings.actionIds ) { actionIdMap[GLOBAL.settings.actionIds[a]] = a; }
+  }
+  return actionIdMap[actionId];
+
 };

@@ -16,6 +16,21 @@ if( process.platform === 'win32' ) {
 } else { // 'linux'
   GLOBAL.settings.staticDir = '/home/jlanus/Dropbox/Public/reading';
 }
+
+GLOBAL.settings.actionIds = { // encoding of recorded user actions types
+  sessionStart: 0,
+  smartScroll: 1,
+  scroll: 2,
+  resize: 6,
+  followLink: 5,
+  openTOC: 7,
+  selectTOCLink: 8,
+  focusLost: 20,
+  focusRegained: 21,
+  sessionEnd: 25
+};
+
+
 /** database connection */
 GLOBAL.db = null;
 
@@ -31,8 +46,6 @@ assert( express );
 var methodOverride = require('method-override');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-
-console.log( 'GLOBAL === global: ' + ( GLOBAL === global ) );
 
 // CONNECT TO DATABASE AND TEST ***********************************************
 

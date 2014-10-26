@@ -43,16 +43,17 @@ function serverData( ) {
   appData.use(cors()); // automatically supports pre-flighting
   // appData.use(appData.router);
 
-  if ('development' == appData.get('env')) {
-    appData.use(errorHandler());
-  }
+  if ('development' == appData.get('env')) { appData.use(errorHandler()); }
 
   appData.put('/storeActions', routes.storeActions);
   appData.get('/', function(req, res, next) { console.log( 'got the f* CORS thing!' ); });
   appData.post('/', cors(), function(req, res, next) { console.log( 'posted the f* CORS thing!' ); });
+
+
   http.createServer(appData).listen(appData.get('port'), function(){
     console.log('Express data server listening on port ' + appData.get('port'));
   });
+
 };
 
 module.exports.serverData = serverData;

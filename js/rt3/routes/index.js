@@ -10,7 +10,6 @@ exports.storeActions = function( req, res ){
 
   console.log( 'storing an action: ' + req.rawBody );
   var actionData = dbInput.unCompressActionRecord( req.rawBody );
-  console.log( actionData );
   res.send( '200\n\n' );
 
   // $$$$ write actionData into mongo

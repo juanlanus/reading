@@ -22,6 +22,19 @@
 
       scrollTimerDelay: 999,              // time lapse before a scroll event is recorded
 
+      actionIds: {                       // recorded user actions type encoding
+        sessionStart: 0,
+        smartScroll: 1,
+        scroll: 2,
+        resize: 6,
+        followLink: 5,
+        openTOC: 7,
+        selectTOCLink: 8,
+        focusLost: 20,
+        focusRegained: 21,
+        sessionEnd: 25
+      },
+
       // development aids
       debug: false
     },
@@ -67,7 +80,6 @@
       buildControlPanel( RT );
       storeQueryString( RT );
       setHelp( RT );
-      RT.displayProgress();
       setHighlighter( RT );
       setTOC( RT );
       showMenu( RT );
@@ -80,6 +92,7 @@
       } else {
         // scroll to ... 
       };
+      RT.displayProgress();
     },
 
     buildDocMap: function() {
@@ -251,7 +264,7 @@
         // no record found: start from RT.data.elementAtTop
         RT.data.scrollData = { t: (new Date().getTime()), }
       };
-      RT.writeScrollRecord( 0 ); // session start
+      RT.writeScrollRecord( RT.settings.actionIds.sessionStart );
       // return the scrolldata
       return RT.data.scrollData;
     },
@@ -683,7 +696,7 @@
       window.onbeforeunload = function(event) { 
       // TODO: signal the session end with an action code, not an additional column
         RT = $.fn.rt.RT;
-        RT.writeScrollRecord( 25 ); // end of session
+        RT.writeScrollRecord( RT.settings.actionIds.sessionEnd );
       };
     };
 
@@ -716,7 +729,7 @@
             event.stopPropagation();
             // TODO: set a smartScroll action code
             RT.data.scrollData.dp = 
-            RT.writeScrollRecord( 1 ); // smart scroll
+            RT.writeScrollRecord( RT.settings.actionIds.smartScroll );
             RT.displayProgress();
           };
         }
@@ -735,7 +748,7 @@
               function(event){
                 var RT = $.fn.rt.RT;
                 RT.data.scrollData.t = (new Date()).getTime();
-                RT.writeScrollRecord( 6 ); // resize viewport
+                RT.writeScrollRecord( RT.settings.actionIds.resize );
                 // indicate that the timer is off
                 RT.data.resizingTimer = null;
                 // recalculate header positions (used to identify topmost element in scroll event) 
@@ -771,7 +784,7 @@
               var topElement = RT.getCurrentReadingPosition();
               RT.data.scrollData.dp = topElement.getAttribute( 'docpath' );
               RT.data.scrollTimer = null;
-              RT.writeScrollRecord( 2 ); // scroll
+              RT.writeScrollRecord( RT.settings.actionIds.scroll );
               RT.displayProgress();
             },
             RT.settings.scrollTimerDelay
