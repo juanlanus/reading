@@ -4,14 +4,14 @@ var TOC = (function() {
 
   // config parameters
   // TODO: get better icons, replace with data URIs
-  openIconFilePath = "res/expand.png";
-  closeIconFilePath = "res/collapse.png";
+  openIconFilePath = 'res/expand.png';
+  closeIconFilePath = 'res/collapse.png';
 
   // reference to the TOC in the DOM
   var tocHTML = null;
 
   // TOC node prototype
-  function tocNode( level, header, parent ) {
+  function TocNode( level, header, parent ) {
     this.level = level;     // header level 1...6 
     this.header = header;   // reference to the DOM object
     this.parent = parent;   // reference to the containing header
@@ -24,7 +24,7 @@ var TOC = (function() {
   // array. 
   // Each node has a pointer to its parent node, except for the level-0
   // node which is parentless and has null.  
-  var toc = new tocNode( 0, null, null );
+  var toc = new TocNode( 0, null, null );
 
   // current level: the level of the current header (0 ... 6 ), containing
   // an array of headers with level + 1 (level 0 root contains the H1's)
@@ -43,29 +43,29 @@ var TOC = (function() {
 
   // empty the TOC, reset current level
   function clearTOC() {
-    this.toc = new tocNode( 0, null, null );    // a parent-less node
+    this.toc = new TocNode( 0, null, null );    // a parent-less node
     currentLevel = 0;                           // this is the H1 level
     currentNode = this.toc;                     // position at root node
     currentNodeParent = null;                   // root node has no parent
-  };
+  }
 
   // DEBUG: recursively displays the toc in the console
-  var logTOC = function() { 
+  var logTOC = function() {
 
     // display current node and its descendants
     function logTOCNode( thisNode ) {
       if( !!thisNode.header ) {
-        console.log( thisNode.level + (new Array(2 * thisNode.level).join(' ')) 
-        + thisNode.header.textContent ); 
+        console.log( thisNode.level + (new Array(2 * thisNode.level).join(' '))
+        + thisNode.header.textContent );
       } else {
-        console.log( thisNode.level + (new Array(2 * thisNode.level).join(' ')) 
-        + ' - - no header' ); 
-      };
+        console.log( thisNode.level + (new Array(2 * thisNode.level).join(' '))
+        + ' - - no header' );
+      }
       for(var i = 0; i < thisNode.children.length; i++) {
         // recursively display children nodes
         logTOCNode( thisNode.children[i] );
-      };
-    };
+      }
+    }
 
     logTOCNode( this.toc );
   };
@@ -93,15 +93,15 @@ var TOC = (function() {
           // level decrease: close UL and update count
           lineHTML = '</li></ul>';
           openedULs--;
-        } else { 
+        } else {
           // same level: close previous LI
           lineHTML = '</li>';
         }
-      };
+      }
       levelCtrol = thisNode.level;
 
       // render the node
-      if( !!thisNode.header ) { 
+      if( !!thisNode.header ) {
         // node with header
         lineHTML += '<li class="rt_toc_' + thisNode.level + '">';
         lineHTML += '<a href="#' + ( !!thisNode.header.id ? thisNode.header.id : 'NO_ID' ) + '">';
@@ -110,21 +110,21 @@ var TOC = (function() {
       } else {
         // filler node
         lineHTML += '<li class="rt_toc_' + thisNode.level + '">' + '(empty node)';
-      };
+      }
       // console.log( lineHTML );
       tocHTML += lineHTML;
       for( var i = 0; i < thisNode.children.length; i++ ) {
         // recursively render descendant nodes
         renderNode( thisNode.children[i] );
-      };
-    };
+      }
+    }
 
     levelCtrol = -1;            // initialize
     renderNode( this.toc );     // start rendering from the root
     // close opened UL lists
     for( ; openedULs--; ) {
       lineHTML += '</ul>';
-    };
+    }
     tocHTML += lineHTML;
     // console.log( lineHTML );
     return tocHTML;
@@ -140,7 +140,7 @@ var TOC = (function() {
     }
 
     // build the new node object
-    var newNode = new tocNode( headerLevel, h );
+    var newNode = new TocNode( headerLevel, h );
     // go to the tree branch where this header belongs and add it
     if( headerLevel === currentLevel ) {
       // same level: push the new node among the current children
@@ -151,27 +151,27 @@ var TOC = (function() {
         // create a new branch for this header
         while( currentLevel < headerLevel ) {
           // create a filler node without node ref for now
-          var fillerNode =  new tocNode( currentLevel + 1, null, currentNode );
+          var fillerNode =  new TocNode( currentLevel + 1, null, currentNode );
           currentNode.children.push( fillerNode );
           currentLevel++;
           currentNode = fillerNode;
           // sanity check
-          if( !currentNode.level === currentLevel ) { console.log( 'level drift' ) };
-        } 
+          if( currentNode.level !== currentLevel ) { console.log( 'level drift' ); }
+        }
         fillerNode.header = h;
       } else {
         // headerLevel < currentLevel: back up to the header's level
         // navigate the tree backwards and insert the new node
         while( currentLevel > headerLevel ) {
           // sanity check
-          if( !currentNode.parent ) { alert('ran out of higher levels navigating upwards'); };
+          if( !currentNode.parent ) { alert('ran out of higher levels navigating upwards'); }
           currentNode = currentNode.parent;
           currentLevel = currentNode.level;
-        };
+        }
         newNode.parent = currentNode.parent;
         currentNode.children.push( newNode );
-      };
-    };
+      }
+    }
   };
 
   // builds a TOC for the DOM branch passed as argument
@@ -182,13 +182,13 @@ var TOC = (function() {
       dom,                            // root 
       NodeFilter.SHOW_ELEMENT,        // only element type nodes
       // Object containing the function to use for the acceptNode method of the NodeFilter
-      { 
-        acceptNode: function(node) { 
+      {
+        acceptNode: function(node) {
           // only accept headers
-          if ( checkHeading.test( node.tagName ) ) { 
-            return NodeFilter.FILTER_ACCEPT; 
-          } else { 
-            return NodeFilter.FILTER_REJECT; 
+          if ( checkHeading.test( node.tagName ) ) {
+            return NodeFilter.FILTER_ACCEPT;
+          } else {
+            return NodeFilter.FILTER_REJECT;
           }
         }
       },
@@ -200,8 +200,8 @@ var TOC = (function() {
       thisNode = headersIterator.nextNode();
       if( thisNode == null ) { break; } // no more nodes
       addItem( thisNode );
-    };
-  };
+    }
+  }
 
   // makes the group nodes collapsible adding a click handler
   function makeCollapsible( tocRoot ) {
@@ -212,7 +212,7 @@ var TOC = (function() {
     function expandCollapseTOC( event ) {
       // check that the click happened on one of the open/close icons
       // get a reference to the container div where the click happened
-      var c = $(event.target.parentElement)
+      var c = $(event.target.parentElement);
       if( c.hasClass('rtOpenCloseIcon') ) {
         // get a ref to the associated UL to be mutated
         var theUL = c.parent().children('ul');
@@ -232,8 +232,8 @@ var TOC = (function() {
             c.addClass('rtExpanded');
           } else {
             // this is an error: ignore silently
-          };
-        };
+          }
+        }
         event.stopPropagation();
       } else {
         if( event.target.nodeName === 'A' ) {
@@ -244,9 +244,9 @@ var TOC = (function() {
           $.fn.rt.RT.content.focus();
         } else {
           // is a click somewhere else to close the TOC overlay
-        };
-      };
-    };
+        }
+      }
+    }
 
 
     // bind the event to the TOC root

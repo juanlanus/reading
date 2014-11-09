@@ -34,11 +34,11 @@ exports.unCompressActionRecord = function( sRecord ) {
   } else {
     actionData.dp = part[3].substring( 0, n );               // 4 - docPath
     actionData.p = parseInt( part[3].substring( n + 1 ));    // 4 - optional percent scrolled
-  };
+  }
   actionData.a = parseInt( part[4], 36);                     // 5 - action code
   if( ( part.length >= 6 ) && GLOBAL.settings.debug ) {
     actionData.txt = part[5];                                // 6 - optional target text, for debug
-  };
+  }
   console.log( this.getActionName( actionData.a ) + ' ' + JSON.stringify( actionData ) );
   return actionData;
 };
@@ -47,7 +47,7 @@ exports.getActionName = function( actionId ) {
   if( ! GLOBAL.actionIdMap ) {
     // build a map from ids to names
     actionIdMap = [];
-    for( a in GLOBAL.settings.actionIds ) { actionIdMap[GLOBAL.settings.actionIds[a]] = a; }
+    for( var a in GLOBAL.settings.actionIds ) { actionIdMap[GLOBAL.settings.actionIds[a]] = a; }
   }
   return actionIdMap[actionId];
 

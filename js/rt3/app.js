@@ -6,7 +6,7 @@
 /** Configuration */
 GLOBAL.settings = {};
 // http://docs.mongodb.org/manual/reference/connection-string
-GLOBAL.settings.connURL = 'mongodb://localhost:27017/rtdb/?w=0'; 
+GLOBAL.settings.dbConnectionURL = 'mongodb://localhost:27017/rtdb/?w=0'; 
 GLOBAL.settings.serverPagesPort = process.env.PORT || 3000;
 GLOBAL.settings.serverDataPort = 3333;
 GLOBAL.settings.debug = true;
@@ -50,15 +50,15 @@ var bodyParser = require('body-parser');
 // CONNECT TO DATABASE AND TEST ***********************************************
 
 MongoClient.connect(
-  GLOBAL.settings.connURL,
+  GLOBAL.settings.dbConnectionURL,
   {},                               // options
   function( err, db ) {
     if( err ) {
       console.log( 'Error attempting to connect to the database' );
       console.log( 'error: ' + err.message );
-      if( err.lineNumber ) { console.log( 'in app.js line ' + err.lineNumber ); };
+      if( err.lineNumber ) { console.log( 'in app.js line ' + err.lineNumber ); }
       throw( 'connection to database failed: ' + err.message );
-    };
+    }
 
     // no err: publish connection
     GLOBAL.db = db;
@@ -86,4 +86,4 @@ MongoClient.connect(
 
   }
 
-)
+);

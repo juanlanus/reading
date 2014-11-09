@@ -3,7 +3,7 @@
   // ********************************************************************************
   // Plugin variables
   var
-    pluginName = "rt",
+    pluginName = 'rt',
 
     // 'that' is used to make this available to the private methods (this module uses RT)
     that = this,
@@ -91,7 +91,7 @@
         RT.scrollToPosition( RT.data.scrollData );
       } else {
         // scroll to ... 
-      };
+      }
       RT.displayProgress();
     },
 
@@ -114,107 +114,107 @@
       // build the tops map with the scroll position of every text node
       RT.buildTopsMap();
 
-        /* local subfunction **********************************************************/
-        function buildPath( RT, $context, docPath, level ) {
-        // recursively visit the elements of the DOM tree levels and record their docPath data
-          // RT: a reference to the data
-          // $context: process the children of this element
-          // docPath: starting docPath, buid on it
-          // level: non-H (subtree) tags deph level, 0 = first one, in docPath[7]
-          // TODO: get a list of the block tagnames
-          // TODO: this function assumes that the headers tree is correctly structured HTML4
-          // TODO: elements positioned absolute or fixed are taken from the normal flow
-          // and should be handled especially
-          // $$$$ this line was suspicious: RT.data.docMap = {};
-          var 
-            $mappedElements = $context.children().not('[float=left]').not('[float=right]'),
-            n = $mappedElements.length,
-            i = 0,
-            checkHeading = /^[hH][1-6]$/    // the element is h1...h6
-          ;
-          // loop over the elements collection that comprise the content of this context
-          for( i = 0; i < n; i++ ) {
-            // build the docPaths of the subtree of this
-            thisElement = $mappedElements[i];
-            $thisElement = $( thisElement );
-            // if the current element is a header, increment the docpath counter at this header
-            // level and reset the rigth-hand non-header part of docPath
-            if( checkHeading.test( thisElement.tagName ) ) { // it's a header h1...6
-              // update header count
-              var headerLevel = parseInt( thisElement.tagName.substring(1, 2), 10 );
-              // count the newfound header
-              docPath[headerLevel]++;
-              // clear the subtree header counters
-              for( var j = headerLevel + 1; j < 8; j++ ) { docPath[j] = 0; }
-              // truncate the docpath array to only the headers count
-              docPath.length = 7;
-              // ensure that the header element has an id
-              setId( RT, docPath, thisElement );
-              // reset the non-header tags level
-              level = 0;
-            } else {  // not a header
-              // it's an "non-header" element, count 1 more in its level
-              // TODO: should filter for DIV P IMG TABLE TR UL OL LI DL DT
-              // DD QUOTE ... (more block elements), or for elements with height
-              if( ! docPath[level + 7] ) {
-                docPath[level + 7] = 1;     // new level, grow array
-              } else {
-                docPath[level + 7]++;       // level already started
-              }
+      /* local subfunction **********************************************************/
+      function buildPath( RT, $context, docPath, level ) {
+      // recursively visit the elements of the DOM tree levels and record their docPath data
+        // RT: a reference to the data
+        // $context: process the children of this element
+        // docPath: starting docPath, buid on it
+        // level: non-H (subtree) tags deph level, 0 = first one, in docPath[7]
+        // TODO: get a list of the block tagnames
+        // TODO: this function assumes that the headers tree is correctly structured HTML4
+        // TODO: elements positioned absolute or fixed are taken from the normal flow
+        // and should be handled especially
+        // $$$$ this line was suspicious: RT.data.docMap = {};
+        var
+          $mappedElements = $context.children().not('[float=left]').not('[float=right]'),
+          n = $mappedElements.length,
+          i = 0,
+          checkHeading = /^[hH][1-6]$/    // the element is h1...h6
+        ;
+        // loop over the elements collection that comprise the content of this context
+        for( i = 0; i < n; i++ ) {
+          // build the docPaths of the subtree of this
+          thisElement = $mappedElements[i];
+          $thisElement = $( thisElement );
+          // if the current element is a header, increment the docpath counter at this header
+          // level and reset the rigth-hand non-header part of docPath
+          if( checkHeading.test( thisElement.tagName ) ) { // it's a header h1...6
+            // update header count
+            var headerLevel = parseInt( thisElement.tagName.substring(1, 2), 10 );
+            // count the newfound header
+            docPath[headerLevel]++;
+            // clear the subtree header counters
+            for( var j = headerLevel + 1; j < 8; j++ ) { docPath[j] = 0; }
+            // truncate the docpath array to only the headers count
+            docPath.length = 7;
+            // ensure that the header element has an id
+            setId( RT, docPath, thisElement );
+            // reset the non-header tags level
+            level = 0;
+          } else {  // not a header
+            // it's an "non-header" element, count 1 more in its level
+            // TODO: should filter for DIV P IMG TABLE TR UL OL LI DL DT
+            // DD QUOTE ... (more block elements), or for elements with height
+            if( ! docPath[level + 7] ) {
+              docPath[level + 7] = 1;     // new level, grow array
+            } else {
+              docPath[level + 7]++;       // level already started
             }
-            // store the element's docPath attribute
-            $thisElement.attr( 'docPath', docPath.toString() );
-            // DEBUG: log the docPaths in a PRE element $('#docPathLog')
-            // TODO: some elements have a wrong docPath with an empty item, log them always
-            if ( RT.settings.debug || ( docPath && docPath.indexOf( ',,' ) !== -1 ) ) {
-              buildPathLog();
-            };
-            // build the path for this element's children (pass a copy of current path)
-            buildPath ( RT, $thisElement, docPath.slice(0), level + 1 );
+          }
+          // store the element's docPath attribute
+          $thisElement.attr( 'docPath', docPath.toString() );
+          // DEBUG: log the docPaths in a PRE element $('#docPathLog')
+          // TODO: some elements have a wrong docPath with an empty item, log them always
+          if ( RT.settings.debug || ( docPath && docPath.indexOf( ',,' ) !== -1 ) ) {
+            buildPathLog();
+          }
+          // build the path for this element's children (pass a copy of current path)
+          buildPath ( RT, $thisElement, docPath.slice(0), level + 1 );
 
-          } // next elements-to-map
+        } // next elements-to-map
 
-          function buildPathLog() {
-            var tn = thisElement.tagName;
-            var z = '';
-            if( !( tn === 'BR' || tn === 'CODE' || tn === 'COL' || tn === 'A' || tn === 'TD' || tn === 'COLGROUP' || tn === 'TH' || tn === 'TBODY') ) {
-              var indent = new Array(2 * level).join(' ');
-              if( tn.substring(0, 1) === 'H' ) { indent = '++' + indent.substring(2); };
-              var tab = 16 - indent.length - tn.length;
-              var tab = new Array( tab > 0 ? tab : 1 ).join('_');
-              var dp = ( $thisElement.attr('docPath') + '                         ' ).substring(0, 24);
-              z += indent + thisElement.tagName + tab + dp;
-              z += '  offsetTop:' + thisElement.offsetTop; // + '  getRelativeTop:' + RT.getRelativeTop(thisElement)
-              if( !! $thisElement.attr('id') ) { z += '  id:' + $thisElement.attr('id'); }
-              var scrollDataText = $thisElement.text().substr(0, 50).replace(/\r?\n|\r/g, ' ');
-              if( scrollDataText ) { z += '  \t' + scrollDataText; }
-              z += '\n';
-              // console.log( z );
-              $('#docPathLog').append( z );
-            }
-          };
-        } // end of local sub function buildPath()
+        function buildPathLog() {
+          var tn = thisElement.tagName;
+          var z = '';
+          if( !( tn === 'BR' || tn === 'CODE' || tn === 'COL' || tn === 'A' || tn === 'TD' || tn === 'COLGROUP' || tn === 'TH' || tn === 'TBODY') ) {
+            var indent = new Array(2 * level).join(' ');
+            if( tn.substring(0, 1) === 'H' ) { indent = '++' + indent.substring(2); }
+            var tab = 16 - indent.length - tn.length;
+            tab = new Array( tab > 0 ? tab : 1 ).join('_');
+            var dp = ( $thisElement.attr('docPath') + '                         ' ).substring(0, 24);
+            z += indent + thisElement.tagName + tab + dp;
+            z += '  offsetTop:' + thisElement.offsetTop; // + '  getRelativeTop:' + RT.getRelativeTop(thisElement)
+            if( !! $thisElement.attr('id') ) { z += '  id:' + $thisElement.attr('id'); }
+            var scrollDataText = $thisElement.text().substr(0, 50).replace(/\r?\n|\r/g, ' ');
+            if( scrollDataText ) { z += '  \t' + scrollDataText; }
+            z += '\n';
+            // console.log( z );
+            $('#docPathLog').append( z );
+          }
+        }
+      } // end of local sub function buildPath()
 
-        /* local subfunction **********************************************************/
-        function setId( RT, docPath, theElement ) {
-        // makes an id out of the docPath and assigns it to the theElement iif it
-        // does not have already an id (theElement is always a header)
-          var theId = null;
-          // check if the element already has an id
-          if( !! theElement.id ) {
-            theId = theElement.id;
-          } else {
-            // no id: provide one made after its docPath by prepending "RT-" and 
-            // replacing the toString commas by "-", use the first 7 items
-            // TODO: should make the id out of the header text better than the docPath (a slug)
-            // TODO: must check for uniqueness
-            theId = 'RT-' + docPath.slice(0, 7).toString().replace(/,/g, '-');
-            theElement.id = theId;
-          };
-          // store the id in the headersId map indexed by the 1st 7 docPath elements
-          RT.data.headerId[docPath.slice(0, 7).toString()] = { id: theId };
-          return theId;
-        };
+      /* local subfunction **********************************************************/
+      function setId( RT, docPath, theElement ) {
+      // makes an id out of the docPath and assigns it to the theElement iif it
+      // does not have already an id (theElement is always a header)
+        var theId = null;
+        // check if the element already has an id
+        if( !! theElement.id ) {
+          theId = theElement.id;
+        } else {
+          // no id: provide one made after its docPath by prepending "RT-" and 
+          // replacing the toString commas by "-", use the first 7 items
+          // TODO: should make the id out of the header text better than the docPath (a slug)
+          // TODO: must check for uniqueness
+          theId = 'RT-' + docPath.slice(0, 7).toString().replace(/,/g, '-');
+          theElement.id = theId;
+        }
+        // store the id in the headersId map indexed by the 1st 7 docPath elements
+        RT.data.headerId[docPath.slice(0, 7).toString()] = { id: theId };
+        return theId;
+      }
     },
 
     storeHeaderScrollTops: function() {
@@ -222,11 +222,11 @@
     // TODO: must add the top item with docPath 0,0,0,0,0,0,0
       var RT = $.fn.rt.RT;
       RT.data.docMap = {};
-      for( var oneHeader in RT.data.headerId ) { 
-        RT.data.headerId[oneHeader].offsetTop = RT.getRelativeTop( 
+      for( var oneHeader in RT.data.headerId ) {
+        RT.data.headerId[oneHeader].offsetTop = RT.getRelativeTop(
           document.getElementById( RT.data.headerId[oneHeader].id )
         );
-      };
+      }
       // add a top-of-the-text reference, before the first header
       // TODO: implies that the content element has an id
       RT.data.headerId[ RT.content.id ] = {};
@@ -235,7 +235,7 @@
 
     getLastRecordedPosition: function( RT ) {
     // sets scrollData from the last recorded action
-      if( !localStorage ) { return null; };
+      if( !localStorage ) { return null; }
       // loop backwards over localStorage keys looking for a scroll record of
       // this document (has an "RT-nnnn-xxxx" key where nnnn is the document
       // id encoded and xxxx is the time)
@@ -247,23 +247,23 @@
         if( k.substring( 0, 3 ) === 'RT-' ) {
           var part = k.split( '-' );
           if( part.length === 3 ) {
-            if( part[1] === RT.data.documentNumberEncoded ) {  
+            if( part[1] === RT.data.documentNumberEncoded ) {
               if( part[2] > RT.data.scrollData.t ) { // check if newer
                 var lastRecordedData = JSON.parse(localStorage.getItem( k ));
                 if( lastRecordedData.dp ) {
                   // yes it's newer and has .dp: save in latest
                   RT.data.scrollData.t = part[2];
                   RT.data.scrollData.dp = lastRecordedData.dp;
-                };
-              };
-            };
-          };
-        };
-      };
-      if( RT.data.scrollData.t === -1 ) { 
+                }
+              }
+            }
+          }
+        }
+      }
+      if( RT.data.scrollData.t === -1 ) {
         // no record found: start from RT.data.elementAtTop
-        RT.data.scrollData = { t: (new Date().getTime()), }
-      };
+        RT.data.scrollData = { t: (new Date().getTime()), };
+      }
       RT.writeScrollRecord( RT.settings.actionIds.sessionStart );
       // return the scrolldata
       return RT.data.scrollData;
@@ -277,7 +277,7 @@
       var RT = $.fn.rt.RT;
       // build the topsMap array
       RT.data.topsMap = [];
-      var 
+      var
         $allElems = $('*', RT.$content),
         topsMapNeedsSort = false,
         thisNode,
@@ -290,31 +290,31 @@
         thisNode = $allElems[i];
         if( thisNode.getBoundingClientRect() ) {
           RT.data.topsMap.push({
-            node: thisNode, 
+            node: thisNode,
             top: RT.getRelativeTop( thisNode )
-          })
-        };
+          });
+        }
         var topsMapN = RT.data.topsMap.length;
         // DEBUG: 
         // console.log( RT.data.topsMap.length + ' ' + thisNode.nodeName + ' ' + RT.data.topsMap[topsMapN - 1].top);
         // DEBUG: check how the same top value appears more than once
-        if( RT.data.debug ) { 
-          if( RT.data.topsMap[topsMapN - 1].top == previousNodeTop ) {
-            console.log( 'top val repeated: ' + RT.data.topsMap[topsMapN - 1].node.nodeName 
+        if( RT.data.debug ) {
+          if( RT.data.topsMap[topsMapN - 1].top === previousNodeTop ) {
+            console.log( 'top val repeated: ' + RT.data.topsMap[topsMapN - 1].node.nodeName
             + ' ' +  previousNodeTop );
           }
-        };
+        }
         // check that tops are sorted
         if( RT.data.topsMap[topsMapN - 1].top < previousNodeTop ) { topsMapNeedsSort = true; }
         previousNodeTop = RT.data.topsMap[topsMapN - 1];
-      };
+      }
 
       // sort topsMap on position order if needed
       // TODO: NYI
       if( topsMapNeedsSort ) { /* RT.data.topsMapSort() */ }
       // prepare for the index of the top element
       RT.data.topsMapIdx = 0;
-    }, 
+    },
 
     scrollToPosition: function( scrollData ) {
       // reposition the content according to the scrollData argument
@@ -334,8 +334,8 @@
             headerId = RT.data.headerId[ headerDP ].id;
           } else {
             return null;
-          };
-        };
+          }
+        }
         var scrollTarget = document.getElementById( headerId );
         if( scrollTarget ) {
           // drill down to the element at top using docPath
@@ -348,9 +348,9 @@
             RT.data.elementAtTop = $targetElement[0];
             // scrolll to the target element
             RT.scrollToElement( $targetElement, RT.settings.scrollDuration );
-          };
-        };
-      };
+          }
+        }
+      }
 
       function drillDown( startElement, steps, animDuration ) {
         // starting with startElement move forward in the childrens lists the
@@ -366,16 +366,16 @@
           if( $levelSet.length >= steps[i] ) {
             $initialElement = $($levelSet[ steps[i] - 1 ]);
             // DEBUG: show the elements hierarchy
-            if( RT.settings.debug ) { $initialElement.css( 'border', '1px solid blue' ); };
+            if( RT.settings.debug ) { $initialElement.css( 'border', '1px solid blue' ); }
             $levelSet = $initialElement.first().children();
-          };
-        };
+          }
+        }
         // returns a reference to the element to be placed top of the viewport
         return $initialElement;
-      };
-    }, 
+      }
+    },
 
-    topsMapGetIdxByElement: function( element ) { 
+    topsMapGetIdxByElement: function( element ) {
     // given a reference to an element, return its index in the topsMap
       // heuristic: start searching from the current one
       // $$$$ don't search, use a map?
@@ -383,13 +383,13 @@
       var n = RT.data.topsMap.length;
       var nEnd = 0;
       for( var i = RT.data.topsMapIdx; true; i++ ) {
-        if( i >= n ) { i = 0; };
-        if( element === RT.data.topsMap[i].node ) { 
-          return i; 
-        };
+        if( i >= n ) { i = 0; }
+        if( element === RT.data.topsMap[i].node ) {
+          return i;
+        }
         nEnd++;
         if( nEnd > n ) { return null; } // not found 
-      };
+      }
     },
 
     isBlockElement: function( theElement ) {
@@ -420,7 +420,7 @@
         }
       } else {
         return 0;
-      };
+      }
     },
 
     smartScroll: function( back ) {
@@ -433,17 +433,17 @@
       var scrollHeight = RT.settings.smartScrollHeight * ( forward ? 1 : 0.3 );
       while( true ) {
         if( forward ) {
-          nextNodeIdx++ 
-          if( ! ( nextNodeIdx < RT.data.topsMap.length )) { break; };
+          nextNodeIdx++;
+          if( ! ( nextNodeIdx < RT.data.topsMap.length )) { break; }
         } else {
-          if( nextNodeIdx <= 0 ) { break; };
+          if( nextNodeIdx <= 0 ) { break; }
           nextNodeIdx--;
         }
         var nextNode = RT.data.topsMap[nextNodeIdx].node;
         // ignore elements with a marker class like "ssIgnore"
-        if( $(nextNode).hasClass( RT.settings.ssIgnoreClass )) { continue; };
+        if( $(nextNode).hasClass( RT.settings.ssIgnoreClass )) { continue; }
         // ignore non-block elements like spans
-        if( ! RT.isBlockElement( nextNode )) { continue; };
+        if( ! RT.isBlockElement( nextNode )) { continue; }
         // if the next element is a heading then put it at top anyway
         if(( /^[hH][1-6]$/ ).test( nextNode.nodeName )) { break; }
         // TODO: devise a strategy for finding complete container elements like 
@@ -453,17 +453,17 @@
         // avoid scrolling partial lines - check element.getClientRects() and 
         // element.getBoundingClientRect() in MDN
         // check if enough scroll already
-        if( Math.abs( RT.data.topsMap[nextNodeIdx].top - nodePrevTop ) > scrollHeight ) { break; };
-      };
+        if( Math.abs( RT.data.topsMap[nextNodeIdx].top - nodePrevTop ) > scrollHeight ) { break; }
+      }
       // do the scroll and exit
       var deltaY = Math.abs( RT.data.topsMap[nextNodeIdx].top - nodePrevTop );
       var propDelay = deltaY / RT.settings.smartScrollHeight * RT.settings.scrollDuration;
-      if ( RT.settings.debug ) { 
+      if ( RT.settings.debug ) {
         var topElement = RT.data.topsMap[nextNodeIdx].node;
         console.log( 'ss ' + ( forward ? 'forward  ' : 'backwards' ) +
-        ' delay:' + ~~( propDelay ) +
+        ' delay:' + ( ~~ propDelay ) +
         ' to:' + RT.data.topsMap[nextNodeIdx].top +
-        (( !! RT.data.scrollData.p ) ? RT.data.scrollData.p + '%' : '' ) + 
+        (( !! RT.data.scrollData.p ) ? RT.data.scrollData.p + '%' : '' ) +
         ' :' + deltaY +
         ' topNode' + nextNodeIdx +
         ' docPath:' + topElement.getAttribute('docPath') +
@@ -473,7 +473,7 @@
       }
       RT.data.elementAtTop = nextNode;
       RT.scrollToElement( $( nextNode ), propDelay );
-      return nextNodeIdx; 
+      return nextNodeIdx;
     },
 
     scrollToElement: function( $topElement, duration ) {
@@ -489,22 +489,23 @@
       var scrollTargetPix = RT.getRelativeTop( $topElement[0] );
       // WAS: RT.$content.scrollTo(
       $( 'html, body' ).scrollTo(
-        scrollTargetPix,                                                                 // WAS: $topElement[0],
-        {
-                                                                                         // FAILED TEST: scrollTarget:$topElement[0],
-          duration: duration, easing: 'swing' },
+        scrollTargetPix, // WAS: $topElement[0],
+        { // FAILED TEST: scrollTarget:$topElement[0],
+          duration: duration,
+          easing: 'swing' 
+        },
         function() {
           // end-of-animation: re-enable scroll events and remove scroll target highlight
           var RT = $.fn.rt.RT;
           RT.data.disableScrollEvents = false;
           window.setTimeout(
-            function( event ){ 
+            function( event ){
               $topElement.removeClass( 'rtScrolltarget' );
             },
             500
-          )
+          );
         }
-      )
+      );
     },
 
     // calculate progress indicator
@@ -519,7 +520,7 @@
       var hPri = $pd.height();
       var hTotal = RT.element.clientHeight;
       var hDone = 0;
-      if( RT.data.elementAtTop ) { hDone = RT.getRelativeTop( RT.data.elementAtTop ) };
+      if( RT.data.elementAtTop ) { hDone = RT.getRelativeTop( RT.data.elementAtTop ); }
       var hCurrent = window.innerHeight;
       var hPending;
       // done part: proportional to current scroll position
@@ -527,8 +528,8 @@
       $( '#rtProgressDiagram .rtProgressDone' ).css( 'height',  hDone + '%' )
         .text( hDone < 10 ? '' : hDone + '%' );
       // current page part: proportional to viewport height
-      hCurrent = Math.round( 100 * (hCurrent / hTotal) ); 
-      if( hCurrent < 1 ) { hCurrent = 1; };
+      hCurrent = Math.round( 100 * (hCurrent / hTotal) );
+      if( hCurrent < 1 ) { hCurrent = 1; }
       $( '#rtProgressDiagram .rtProgressCurrent' ).css( 'height', hCurrent + '%' );
       // remaining part: proportional to total height less the two other heights
       hPending =  100 - hDone - hCurrent;
@@ -542,7 +543,7 @@
       RT.data.scrollData.a = actionType;
       // $$$$ NO: USE THE scrollData information: RT.data.scrollData.dp = RT.data.elementAtTop.getAttribute( 'docPath' ); 
       // save the scroll data in localStorage
-      if( localStorage ) { 
+      if( localStorage ) {
         localStorage.setItem(
           'RT-' + RT.data.documentNumberEncoded + '-' + RT.data.scrollData.t,
           JSON.stringify(RT.data.scrollData)
@@ -569,7 +570,7 @@
       console.log( 'k:' + 'RT-' + RT.data.documentNumberEncoded + '-' + RT.data.scrollData.t + ' rec:' + serverRecord );
 
       // send the data and forget it
-        var jqXHR = $.ajax({
+      var jqXHR = $.ajax({
         type: 'PUT',
         url: 'http://localhost:3333/storeActions',              // $$$$ get this URL from the server, in settings
         contentType: 'text/plain',
@@ -637,7 +638,7 @@
       // TODO: replace the constant by half the viewport height
       var maxVerticalDistance = 333;
       var topOffset = 99999;
-      while( RT.content == topElement || RT.element == topElement ) {
+      while( RT.content === topElement || RT.element === topElement ) {
         // also had: || Math.abs( topElement.getBoundingClientRect().top > maxVerticalDistance )
         // DEBUG:
         // console.log( 'point rejected: ' + RT.getRelativeTop( topElement )
@@ -645,29 +646,29 @@
         // we are over a container, move the point right and downwards
         dx += 7;
         // TODO: calculate and cache the RT.$content measures
-        if( (RT.settings.leftTopVisiblePix.left + dx) > RT.$content.innerWidth() || topElement == RT.element ) {
+        if( (RT.settings.leftTopVisiblePix.left + dx) > RT.$content.innerWidth() || topElement === RT.element ) {
           dy += 7;
           dx = parseInt( RT.$content.css('margin-left').replace(/px/, ' '), 10);
-        };
-        var topElement = document.elementFromPoint(
-            RT.settings.leftTopVisiblePix.left + dx,
-            RT.settings.leftTopVisiblePix.top + dy
-            );
+        }
+        topElement = document.elementFromPoint(
+          RT.settings.leftTopVisiblePix.left + dx,
+          RT.settings.leftTopVisiblePix.top + dy
+          );
         // if already at the content bottom then stop
         if ( dx > RT.content.clientHeight ) {
-          if( RT.data.debug ) { alert('reached bottom of document'); };
+          if( RT.data.debug ) { alert('reached bottom of document'); }
           topOffset = -1;
           break;
-        };
-      };
+        }
+      }
 
       // --------------------------------------------------------------------------------
       // alternative method: use the headers offsetTop map
       // loop through the headers list looking for the last header above the current reading position 
       var currentScrolltop = RT.$element.scrollTop();
-      for( var oneHeader in RT.data.headerId ) { 
-        if( RT.data.headerId[oneHeader].offsetTop >= currentScrolltop ) { break; };
-      };
+      for( var oneHeader in RT.data.headerId ) {
+        if( RT.data.headerId[oneHeader].offsetTop >= currentScrolltop ) { break; }
+      }
 
       // --------------------------------------------------------------------------------
       // RT.data.scrollData will contain the data needed to restore the reading position and
@@ -675,456 +676,456 @@
       RT.data.scrollData.dp = topElement.getAttribute('docPath');
       if( RT.data.scrollData.dp == null ) {
         // DEBUG: null happens when scrolling to the very top
-        if( RT.settings.debug ) { console.log( 'null docPath!' ); };
-      };
-      if( !topElement.getAttribute('id') == '' ) { RT.data.scrollData.id = topElement.getAttribute('id'); };
+        if( RT.settings.debug ) { console.log( 'null docPath!' ); }
+      }
+      if( topElement.getAttribute('id') !== '' ) { RT.data.scrollData.id = topElement.getAttribute('id'); }
       // percent of the element not visible (scrolled up) if it's taller then the threshold
       if (( $(topElement).offset().top < 0 ) && ( $(topElement).height() > RT.data.tallElementLimit )) {
-        RT.data.scrollData.p = Math.round( Math.abs( $(topElement).offset().top / topElement.offsetHeight * 100 ))
-      };
+        RT.data.scrollData.p = Math.round( Math.abs( $(topElement).offset().top / topElement.offsetHeight * 100 ));
+      }
       // up to 50 of the first characters of the text content, if any, for reference
       RT.data.scrollData.text = $(topElement).text().substr(0, 50).replace(/\r?\n|\r/g, ' ');
       return topElement;
     }
 
-  })
+  });
 
   // *************************** end of member functions ****************************
 
-    setHandler_onbeforeunload = function( RT ) {
-    // when the reader leaves this page store an end of session scroll record
-      window.onbeforeunload = function(event) { 
-      // TODO: signal the session end with an action code, not an additional column
-        RT = $.fn.rt.RT;
-        RT.writeScrollRecord( RT.settings.actionIds.sessionEnd );
-      };
+  setHandler_onbeforeunload = function( RT ) {
+  // when the reader leaves this page store an end of session scroll record
+    window.onbeforeunload = function(event) {
+    // TODO: signal the session end with an action code, not an additional column
+      RT = $.fn.rt.RT;
+      RT.writeScrollRecord( RT.settings.actionIds.sessionEnd );
     };
+  };
 
 
-    setHandler_keyboard = function( RT ) {
-    // capture keyboard action
-      // TODO: don't allow many spaces to stack in the input buffer, cancel one animation
-      // as soon as another happens, and/or consume or lock new spaces when animating one
-      // TODO: don't prevent default if the space goes into an input or editable element
-      // TODO: scrolling the current element's height does not ensure being at the top of 
-      // TODO: must scroll back when shift+space shows
-      // enable the content element to receive keyboard input
-      RT.$element.attr('tabindex', '0');
-      RT.$element.focus();
-      // set the event handler
-      RT.$element.on( 'keydown', null, RT,
-        function(event) {
-          var key = event.which;
-          var RT = event.data;
-          // spacebar or shift+spacebar: smart scroll
-          if( key == 32 && ! ( event.altKey || event.metaKey || event.ctrlKey ) ) {
-            RT.data.scrollTimer = null;
-            RT.data.scrollData.t = (new Date()).getTime();
-            if( event.shiftKey ) { 
-              RT.smartScroll( true );  // scroll back
-            } else {
-              RT.smartScroll(); // scroll forward a chunk
-            };
-            event.preventDefault();
-            event.stopPropagation();
-            // TODO: set a smartScroll action code
-            RT.data.scrollData.dp = 
-            RT.writeScrollRecord( RT.settings.actionIds.smartScroll );
-            RT.displayProgress();
-          };
-        }
-      );
-    };
-
-
-    setHandler_resize = function( RT ) {
-    // capture the resize event
-      $(window).on( 'resize', null, RT,
-          function(event) {
-            // On resize wait a short while and restore the reading position
-            var RT = event.data;
-            window.clearTimeout(RT.data.resizingTimer);
-            RT.data.resizingTimer = window.setTimeout(
-              function(event){
-                var RT = $.fn.rt.RT;
-                RT.data.scrollData.t = (new Date()).getTime();
-                RT.writeScrollRecord( RT.settings.actionIds.resize );
-                // indicate that the timer is off
-                RT.data.resizingTimer = null;
-                // recalculate header positions (used to identify topmost element in scroll event) 
-                RT.storeHeaderScrollTops; 
-                // recalculate the tops table
-                RT.buildTopsMap();
-                // reposition the content
-                RT.data.disableScrollEvents = true;
-                RT.scrollToPosition( RT.data.scrollData );
-              },
-              RT.data.resizingTimerDelay
-              );
-            event.stopPropagation();
-          }
-      );
-    };
-
-
-    setHandler_scroll = function( RT ) {
-    // capture the scroll event
-      // RT.$element.on(
-      $(window).on( 'scroll', null, RT,
-        function(event) {
-          var RT = event.data;
-          // scroll events are disabled during programmatic scroll
-          if( RT.data.disableScrollEvents ) { return; }
-          // On scroll wait a short while and save the position, this
-          // timer is cancelled if a new scroll event happens quickly
-          window.clearTimeout(RT.scrollTimer);
-          RT.data.scrollTimer = window.setTimeout(
-            function(event) {
-              RT.data.scrollData.t = (new Date()).getTime();
-              var topElement = RT.getCurrentReadingPosition();
-              RT.data.scrollData.dp = topElement.getAttribute( 'docpath' );
-              RT.data.scrollTimer = null;
-              RT.writeScrollRecord( RT.settings.actionIds.scroll );
-              RT.displayProgress();
-            },
-            RT.settings.scrollTimerDelay
-          )
-          event.stopPropagation();
-        }
-      );
-    };
-
-
-    buildControlPanel = function( RT ) {
-      // display the control panel
-      // TODO: use a template renderer like moustache?
-      var cp = 
-        '<div id="rtPanelLeft" class="rtPanelLeft" style="z-index:999;">\n'
-        +  '<div id="rtProgressDiagram">\n'
-        +    '<img src="res/progressDiagram.png" title="progress diagram (non functional yet), shows the reading place\n'
-        +    ' and the number of pages alredy read and still pending">\n'
-        +  '</div>\n'
-
-        +  '<div id="rtBurgerMenu">\n'
-        +    '<img src="./res/iconmenu.png" alt="menu" title="show menu" />\n'
-        +  '</div>\n'
-
-        +  '<div id="rtTOCIcon">\n'
-        +    '<img src="./res/icontoc.png" alt="TOC button" title="show table of content" />\n'
-        +  '</div>\n'
-
-        +  '<div id="rtHighlightIcon">\n'
-        +    '<img src="./res/iconhighlight.png" alt="highlight button" title="highlight the selected text" />\n'
-        +  '</div>\n'
-
-        +  '<div id="rtHelpIcon">\n'
-        +    '<img src="./res/iconhelp2.png" alt="help (pls read)" title="instructions" />\n'
-        +  '</div>\n'
-
-        +  '<div id="rtEndTest">\n'
-        +    '<button onclick="location.href=\'survey.html\'">End</button>\n'
-        +  '</div>\n'
-
-        +'</div>\n'
-
-        +'<div id="TOCPanel" style="z-index:998;">\n'
-        +  '<div id="TOCContainer"\n'
-        +    '<div class="toc">TOC comes here</div>\n'
-        +  '</div>\n'
-        +'</div>\n'
-
-        +'<div id="menuPanel" style="z-index:998;">\n'
-        +  '<div id="menuContainer"\n'
-        +    '<div class="menu" font-weight:100; class="menu">(replaced by usability test instructions)<br>click again to dimiss</div>\n'
-        //   '<div class="menu" background:yellow; font-size:200%; font-weight:100; padding:140px;" class="menu">menu comes here, <br>click again to dimiss</div>\n'
-        +  '</div>\n'
-        +'</div>\n'
-
-        +'<div id="helpPanel" style="z-index:998;">\n'
-        +  '<div id="helpContainer"\n'
-        +    '<div class="help" class="help">instructions come here</div>\n'
-        +  '</div>\n'
-        +'</div>\n';
-        RT.$element.prepend( cp );
-      };
-
-
-    storeQueryString = function( RT ) {
-    // store the query string if any (used initially to collect user data)
-      // TODO: replace by a one-liner, move code to a function
-      if( !! window.location.search ) {
-        var qs = window.location.search.replace( '?', '' ).split( '&' ), request = {};
-        $.each( qs, function( i, v ) {
-          var pair = v.split( '=' );
-          return request[pair[0]] = pair[1];
-        });
-        console.log(request);
-        localStorage.setItem( 'instructions' + localStorage.length, JSON.stringify( request ) );
-      };
-    };
-
-
-    setHelp = function( RT ) {
-      // set the help content
-      var $hc = $( '#helpContainer' );
-      $hc.html( $( '#helpContentText' ).html() );
-
-      // set the help show/hide handlers
-      // TODO: replace by a one-liner, move code to a function
-      // TODO: must ensure the oter panels are hidden before showing any
-      $('#rtHelpIcon').on( 'click', null, RT,
-          function( event ) {
-            var RT = event.data;
-            var theHelp = $('#helpPanel');
-            var w = theHelp.width();
-            if( theHelp.css( 'display' ) === 'none' ) {
-              // show the Help
-              theHelp.show().animate( { left: - w + 1 }, 3); // a jQuery bug
-              theHelp.show().animate(
-                { left: 0 },
-                777
-                );
-            } else {
-              // hide the Help
-              theHelp.show().animate( 
-                { left: -w },
-                'fast',
-                function() { 
-                  theHelp.hide(); 
-                  RT.$content.focus();
-                }
-                );
-            }
-          }
-      );
-      // hide on click again
-      $('#helpPanel').on( 'click', null, RT,
-          function( event ) {
-            var RT = event.data;
-            var theHelp = $('#helpPanel');
-            var w = theHelp.width();
-            theHelp.show().animate( 
-              { left: -w },
-              'fast',
-              function() { 
-                theHelp.hide(); 
-                RT.$content.focus();
-              }
-              );
-            event.stopPropagation();
-            return false;
-          }
-        );
-    };
-
-
-    setHighlighter = function( RT ) {
-    // set the highlighter
-      rangy.init(); 
-      var cssClassApplierModule = rangy.modules.CssClassApplier; 
-      var highlight1Applier = rangy.createCssClassApplier("rtHigh1"); 
-      $('#rtHighlightIcon').on( 'click', null, RT,
-        function( event ) {
-          var RT = event.data;
-          highlight1Applier.toggleSelection();
-          if( document.selection ) {
-            document.selection.empty();
+  setHandler_keyboard = function( RT ) {
+  // capture keyboard action
+    // TODO: don't allow many spaces to stack in the input buffer, cancel one animation
+    // as soon as another happens, and/or consume or lock new spaces when animating one
+    // TODO: don't prevent default if the space goes into an input or editable element
+    // TODO: scrolling the current element's height does not ensure being at the top of 
+    // TODO: must scroll back when shift+space shows
+    // enable the content element to receive keyboard input
+    RT.$element.attr('tabindex', '0');
+    RT.$element.focus();
+    // set the event handler
+    RT.$element.on( 'keydown', null, RT,
+      function(event) {
+        var key = event.which;
+        var RT = event.data;
+        // spacebar or shift+spacebar: smart scroll
+        if( key === 32 && ! ( event.altKey || event.metaKey || event.ctrlKey ) ) {
+          RT.data.scrollTimer = null;
+          RT.data.scrollData.t = (new Date()).getTime();
+          if( event.shiftKey ) {
+            RT.smartScroll( true );  // scroll back
           } else {
-            if( window.getSelection() ) {
-              window.getSelection().removeAllRanges();
-            }
+            RT.smartScroll(); // scroll forward a chunk
           }
-          // DEBUG: print scroll trace when the highlight button is clicked
-          // scroll:  DIV#textContent:0 DIV#textContainer:0 BODY.undefined:0 HTML.undefined:10716 undefined.undefined:10716
-          var $ele = RT.$content;
-          var z = 'scroll: ';
-          var eleId = '';
-          while ( $ele.length > 0 ) { 
-            if( typeof ( $ele.attr('id') ) === "undefined" ) {
-              eleId = '.' + $ele.attr('class');
-            } else {
-              eleId = '#' + $ele.attr('id');
-            };
-            z = z + ' ' + $ele.prop('tagName') + eleId + ':' + $ele.scrollTop();
-            $ele = $ele.parent(); 
-          };
-          console.log(z);
-          //
-          return false;
-        }
-      );
-    };
-
-    
-    setTOC = function( RT ) {
-    // set the TOC toggler
-      $('#rtTOCIcon').on( 'click', null, RT,
-          function( event ) {
-            var RT = event.data;
-            var theTOC = $('#TOCPanel');
-            var w = theTOC.width();
-            if( theTOC.css( 'display' ) === 'none' ) {
-              // show the TOC
-              theTOC.show().animate( { left: - w + 1 }, 3); // a jQuery bug
-              theTOC.show().animate(
-                { left: 0 },
-                777
-                );
-            } else {
-              // hide the TOC
-              theTOC.show().animate( 
-                { left: -w },
-                'fast',
-                function() { 
-                  theTOC.hide(); 
-                  RT.$content.focus();
-                }
-              );
-            }
-          }
-      );
-      // hide on click again
-      $('#TOCPanel').on( 'click', null, RT,
-        function( event ) {
-          var RT = event.data;
-          var theTOC = $('#TOCPanel');
-          var w = theTOC.width();
-          theTOC.show().animate(
-            { left: -w },
-            'fast',
-            function() { 
-              theTOC.hide(); 
-              RT.$content.focus();
-            }
-          );
+          event.preventDefault();
           event.stopPropagation();
-          return false;
+          // TODO: set a smartScroll action code
+          RT.data.scrollData.dp =
+          RT.writeScrollRecord( RT.settings.actionIds.smartScroll );
+          RT.displayProgress();
         }
-      );
-
-      // build the TOC
-      // TODO: the TOC object gets stored in the global context
-      TOC.clearTOC();
-      TOC.buildTOC( RT.$content.get()[0] );
-      // DEBUG: 
-      if( RT.debug ) { TOC.logTOC(); };
-      // render the TOC in the TOC sliding panel
-      // TODO: this .toc class name is not right
-      $('.toc').html( TOC.render() );
-      // accordionize the TOC tree
-      TOC.makeCollapsible( $( '.toc' )[0] );
-    };
+      }
+    );
+  };
 
 
-    showMenu = function( RT ) {
-    // build and show the menu
-      // for the usability test, set the instructions into the menu panel
-      // TODO: check the "agenda..." name
-      $('#menuContainer').html( $('#agendaBody').html() );
-      $('#menuContainer').css( 'display', 'block' );
+  setHandler_resize = function( RT ) {
+  // capture the resize event
+    $(window).on( 'resize', null, RT,
+        function(event) {
+          // On resize wait a short while and restore the reading position
+          var RT = event.data;
+          window.clearTimeout(RT.data.resizingTimer);
+          RT.data.resizingTimer = window.setTimeout(
+            function(event){
+              var RT = $.fn.rt.RT;
+              RT.data.scrollData.t = (new Date()).getTime();
+              RT.writeScrollRecord( RT.settings.actionIds.resize );
+              // indicate that the timer is off
+              RT.data.resizingTimer = null;
+              // recalculate header positions (used to identify topmost element in scroll event) 
+              RT.storeHeaderScrollTops;
+              // recalculate the tops table
+              RT.buildTopsMap();
+              // reposition the content
+              RT.data.disableScrollEvents = true;
+              RT.scrollToPosition( RT.data.scrollData );
+            },
+            RT.data.resizingTimerDelay
+            );
+          event.stopPropagation();
+        }
+    );
+  };
 
-      // show the menu
-      $('#rtBurgerMenu').on( 'click', null, RT,
+
+  setHandler_scroll = function( RT ) {
+  // capture the scroll event
+    // RT.$element.on(
+    $(window).on( 'scroll', null, RT,
+      function(event) {
+        var RT = event.data;
+        // scroll events are disabled during programmatic scroll
+        if( RT.data.disableScrollEvents ) { return; }
+        // On scroll wait a short while and save the position, this
+        // timer is cancelled if a new scroll event happens quickly
+        window.clearTimeout(RT.scrollTimer);
+        RT.data.scrollTimer = window.setTimeout(
+          function(event) {
+            RT.data.scrollData.t = (new Date()).getTime();
+            var topElement = RT.getCurrentReadingPosition();
+            RT.data.scrollData.dp = topElement.getAttribute( 'docpath' );
+            RT.data.scrollTimer = null;
+            RT.writeScrollRecord( RT.settings.actionIds.scroll );
+            RT.displayProgress();
+          },
+          RT.settings.scrollTimerDelay
+        );
+        event.stopPropagation();
+      }
+    );
+  };
+
+
+  buildControlPanel = function( RT ) {
+    // display the control panel
+    // TODO: use a template renderer like moustache?
+    var cp =
+      '<div id="rtPanelLeft" class="rtPanelLeft" style="z-index:999;">\n'
+      +  '<div id="rtProgressDiagram">\n'
+      +    '<img src="res/progressDiagram.png" title="progress diagram (non functional yet), shows the reading place\n'
+      +    ' and the number of pages alredy read and still pending">\n'
+      +  '</div>\n'
+
+      +  '<div id="rtBurgerMenu">\n'
+      +    '<img src="./res/iconmenu.png" alt="menu" title="show menu" />\n'
+      +  '</div>\n'
+
+      +  '<div id="rtTOCIcon">\n'
+      +    '<img src="./res/icontoc.png" alt="TOC button" title="show table of content" />\n'
+      +  '</div>\n'
+
+      +  '<div id="rtHighlightIcon">\n'
+      +    '<img src="./res/iconhighlight.png" alt="highlight button" title="highlight the selected text" />\n'
+      +  '</div>\n'
+
+      +  '<div id="rtHelpIcon">\n'
+      +    '<img src="./res/iconhelp2.png" alt="help (pls read)" title="instructions" />\n'
+      +  '</div>\n'
+
+      +  '<div id="rtEndTest">\n'
+      +    '<button onclick="location.href=\'survey.html\'">End</button>\n'
+      +  '</div>\n'
+
+      +'</div>\n'
+
+      +'<div id="TOCPanel" style="z-index:998;">\n'
+      +  '<div id="TOCContainer"\n'
+      +    '<div class="toc">TOC comes here</div>\n'
+      +  '</div>\n'
+      +'</div>\n'
+
+      +'<div id="menuPanel" style="z-index:998;">\n'
+      +  '<div id="menuContainer"\n'
+      +    '<div class="menu" font-weight:100; class="menu">(replaced by usability test instructions)<br>click again to dimiss</div>\n'
+      //   '<div class="menu" background:yellow; font-size:200%; font-weight:100; padding:140px;" class="menu">menu comes here, <br>click again to dimiss</div>\n'
+      +  '</div>\n'
+      +'</div>\n'
+
+      +'<div id="helpPanel" style="z-index:998;">\n'
+      +  '<div id="helpContainer"\n'
+      +    '<div class="help" class="help">instructions come here</div>\n'
+      +  '</div>\n'
+      +'</div>\n';
+    RT.$element.prepend( cp );
+  };
+
+
+  storeQueryString = function( RT ) {
+  // store the query string if any (used initially to collect user data)
+    // TODO: replace by a one-liner, move code to a function
+    if( !! window.location.search ) {
+      var qs = window.location.search.replace( '?', '' ).split( '&' ), request = {};
+      $.each( qs, function( i, v ) {
+        var pair = v.split( '=' );
+        return request[pair[0]] = pair[1];
+      });
+      console.log(request);
+      localStorage.setItem( 'instructions' + localStorage.length, JSON.stringify( request ) );
+    }
+  };
+
+
+  setHelp = function( RT ) {
+    // set the help content
+    var $hc = $( '#helpContainer' );
+    $hc.html( $( '#helpContentText' ).html() );
+
+    // set the help show/hide handlers
+    // TODO: replace by a one-liner, move code to a function
+    // TODO: must ensure the oter panels are hidden before showing any
+    $('#rtHelpIcon').on( 'click', null, RT,
         function( event ) {
           var RT = event.data;
-          var theMenu = $('#menuPanel');
-          var w = theMenu.width();
-          if( theMenu.css( 'display' ) === 'none' ) {
-            // show the Menu
-            theMenu.show().animate( { left: - w + 1 }, 3); // a jQuery bug
-            theMenu.show().animate(
+          var theHelp = $('#helpPanel');
+          var w = theHelp.width();
+          if( theHelp.css( 'display' ) === 'none' ) {
+            // show the Help
+            theHelp.show().animate( { left: - w + 1 }, 3); // a jQuery bug
+            theHelp.show().animate(
               { left: 0 },
               777
               );
           } else {
-            // hide the Menu
-            theMenu.show().animate( 
+            // hide the Help
+            theHelp.show().animate(
               { left: -w },
               'fast',
-              function() { 
-                theMenu.hide(); 
+              function() {
+                theHelp.hide();
+                RT.$content.focus();
+              }
+              );
+          }
+        }
+    );
+    // hide on click again
+    $('#helpPanel').on( 'click', null, RT,
+        function( event ) {
+          var RT = event.data;
+          var theHelp = $('#helpPanel');
+          var w = theHelp.width();
+          theHelp.show().animate(
+            { left: -w },
+            'fast',
+            function() {
+              theHelp.hide();
+              RT.$content.focus();
+            }
+            );
+          event.stopPropagation();
+          return false;
+        }
+      );
+  };
+
+
+  setHighlighter = function( RT ) {
+  // set the highlighter
+    rangy.init();
+    var cssClassApplierModule = rangy.modules.CssClassApplier;
+    var highlight1Applier = rangy.createCssClassApplier('rtHigh1');
+    $('#rtHighlightIcon').on( 'click', null, RT,
+      function( event ) {
+        var RT = event.data;
+        highlight1Applier.toggleSelection();
+        if( document.selection ) {
+          document.selection.empty();
+        } else {
+          if( window.getSelection() ) {
+            window.getSelection().removeAllRanges();
+          }
+        }
+        // DEBUG: print scroll trace when the highlight button is clicked
+        // scroll:  DIV#textContent:0 DIV#textContainer:0 BODY.undefined:0 HTML.undefined:10716 undefined.undefined:10716
+        var $ele = RT.$content;
+        var z = 'scroll: ';
+        var eleId = '';
+        while ( $ele.length > 0 ) {
+          if( typeof ( $ele.attr('id') ) === 'undefined' ) {
+            eleId = '.' + $ele.attr('class');
+          } else {
+            eleId = '#' + $ele.attr('id');
+          }
+          z = z + ' ' + $ele.prop('tagName') + eleId + ':' + $ele.scrollTop();
+          $ele = $ele.parent();
+        }
+        console.log(z);
+        //
+        return false;
+      }
+    );
+  };
+
+  
+  setTOC = function( RT ) {
+  // set the TOC toggler
+    $('#rtTOCIcon').on( 'click', null, RT,
+        function( event ) {
+          var RT = event.data;
+          var theTOC = $('#TOCPanel');
+          var w = theTOC.width();
+          if( theTOC.css( 'display' ) === 'none' ) {
+            // show the TOC
+            theTOC.show().animate( { left: - w + 1 }, 3); // a jQuery bug
+            theTOC.show().animate(
+              { left: 0 },
+              777
+              );
+          } else {
+            // hide the TOC
+            theTOC.show().animate(
+              { left: -w },
+              'fast',
+              function() {
+                theTOC.hide();
                 RT.$content.focus();
               }
             );
           }
         }
-      );
-    };
+    );
+    // hide on click again
+    $('#TOCPanel').on( 'click', null, RT,
+      function( event ) {
+        var RT = event.data;
+        var theTOC = $('#TOCPanel');
+        var w = theTOC.width();
+        theTOC.show().animate(
+          { left: -w },
+          'fast',
+          function() {
+            theTOC.hide();
+            RT.$content.focus();
+          }
+        );
+        event.stopPropagation();
+        return false;
+      }
+    );
+
+    // build the TOC
+    // TODO: the TOC object gets stored in the global context
+    TOC.clearTOC();
+    TOC.buildTOC( RT.$content.get()[0] );
+    // DEBUG: 
+    if( RT.debug ) { TOC.logTOC(); }
+    // render the TOC in the TOC sliding panel
+    // TODO: this .toc class name is not right
+    $('.toc').html( TOC.render() );
+    // accordionize the TOC tree
+    TOC.makeCollapsible( $( '.toc' )[0] );
+  };
 
 
-    // Data items comprising the internal state of the plugin
-    function initData() {
-      var data = {
-        // DEBUG: this values will come from the server
-        documentNumberEncoded: '2n9d',      // document id in base36
-        readerNumberEncoded: '4mkbm',       // reader id in base36
+  showMenu = function( RT ) {
+  // build and show the menu
+    // for the usability test, set the instructions into the menu panel
+    // TODO: check the "agenda..." name
+    $('#menuContainer').html( $('#agendaBody').html() );
+    $('#menuContainer').css( 'display', 'block' );
 
-        // tops:
-        // list of the HTML nodes and their position in the rendered page, to be
-        // used for finding the "next" paragraph when the user scrolls
-        // it contains a reference to each DOM element and it's scroll position
-        // relative to the top of the document
-        // each element has  { node: aRefToTheNode, top: relativeTop }
-        topsMap: [],
-        // element currently at the top of the viewport
-        topsMapIdx: 0,
-        topsMapElement: null,
-
-        // used for recording the user action events
-        scrollData: {},
-        // reference to the current top element
-        // DEFINED BELOW: elementAtTop: this.$content[0],
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Defining_getters_and_setters
-        _eat: null,                         // reference to a node
-        get elementAtTop() {
-          if( typeof( this._eat ) === 'object' ) {
-            return this._eat;
-          } else {
-            // search for an element near the current scroll position
-            var iMap = 0;
-            while( this.topsMap[iMap].top >= window.scrollY ) {
-              this._eat = this.topsMap[iMap].node;
-            };
-            return this._eat;
-          };
-        },
-        set elementAtTop(newEat) { this._eat = newEat; },
-        scrollData: null,                   // object with current reading position data
-        scrollTimer: null,                  // time between scroll action and recording (cancellable)
-
-        // Contains each header's docpath indexed by the header id, and the offsetTop
-        // Used when repositioning, to find the header id given the docPath of the
-        // target element (its first 7 items), contains docPath and .offsetTop 
-        headerId: {},                       // map from headers part of docpath to header id
-
-        resizingTimer: null,                // delay resize action until stable
-        resizingTimerDelay: 777,            // delay resize action until stable
-        containerYOffset: 0                 // top position of the container, used to calculate
-                                            // absolute Y coordinates
-      };
-      return data;
-    };
-
-
-    /* define public functions thus: 
-       DOLLAR.fn.rt.format = function( txt ) {
-       return "<strong>" + txt + "</strong>";
-       };
-      // call the public function
-      markup = $.fn.rt.format( markup );
-    */
-
-
-    // wrapper around the constructor preventing multiple instantiations
-    $.fn[ pluginName ] = function ( options ) {
-      this.each(function() {
-        if ( !$.data( this, "plugin_" + pluginName ) ) {
-          $.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
+    // show the menu
+    $('#rtBurgerMenu').on( 'click', null, RT,
+      function( event ) {
+        var RT = event.data;
+        var theMenu = $('#menuPanel');
+        var w = theMenu.width();
+        if( theMenu.css( 'display' ) === 'none' ) {
+          // show the Menu
+          theMenu.show().animate( { left: - w + 1 }, 3); // a jQuery bug
+          theMenu.show().animate(
+            { left: 0 },
+            777
+            );
+        } else {
+          // hide the Menu
+          theMenu.show().animate(
+            { left: -w },
+            'fast',
+            function() {
+              theMenu.hide();
+              RT.$content.focus();
+            }
+          );
         }
-      });
+      }
+    );
+  };
 
-      // chain jQuery functions
-      return this;
+
+  // Data items comprising the internal state of the plugin
+  function initData() {
+    var data = {
+      // DEBUG: this values will come from the server
+      documentNumberEncoded: '2n9d',      // document id in base36
+      readerNumberEncoded: '4mkbm',       // reader id in base36
+
+      // tops:
+      // list of the HTML nodes and their position in the rendered page, to be
+      // used for finding the "next" paragraph when the user scrolls
+      // it contains a reference to each DOM element and it's scroll position
+      // relative to the top of the document
+      // each element has  { node: aRefToTheNode, top: relativeTop }
+      topsMap: [],
+      // element currently at the top of the viewport
+      topsMapIdx: 0,
+      topsMapElement: null,
+
+      // used for recording the user action events
+      scrollData: {},
+      // reference to the current top element
+      // DEFINED BELOW: elementAtTop: this.$content[0],
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Defining_getters_and_setters
+      _eat: null,                         // reference to a node
+      get elementAtTop() {
+        if( typeof( this._eat ) === 'object' ) {
+          return this._eat;
+        } else {
+          // search for an element near the current scroll position
+          var iMap = 0;
+          while( this.topsMap[iMap].top >= window.scrollY ) {
+            this._eat = this.topsMap[iMap].node;
+          }
+          return this._eat;
+        }
+      },
+      set elementAtTop(newEat) { this._eat = newEat; },
+      scrollData: null,                   // object with current reading position data
+      scrollTimer: null,                  // time between scroll action and recording (cancellable)
+
+      // Contains each header's docpath indexed by the header id, and the offsetTop
+      // Used when repositioning, to find the header id given the docPath of the
+      // target element (its first 7 items), contains docPath and .offsetTop 
+      headerId: {},                       // map from headers part of docpath to header id
+
+      resizingTimer: null,                // delay resize action until stable
+      resizingTimerDelay: 777,            // delay resize action until stable
+      containerYOffset: 0                 // top position of the container, used to calculate
+                                          // absolute Y coordinates
     };
+    return data;
+  }
+
+
+  /* define public functions thus: 
+     DOLLAR.fn.rt.format = function( txt ) {
+     return "<strong>" + txt + "</strong>";
+     };
+    // call the public function
+    markup = $.fn.rt.format( markup );
+  */
+
+
+  // wrapper around the constructor preventing multiple instantiations
+  $.fn[ pluginName ] = function ( options ) {
+    this.each(function() {
+      if ( !$.data( this, 'plugin_' + pluginName ) ) {
+        $.data( this, 'plugin_' + pluginName, new Plugin( this, options ) );
+      }
+    });
+
+    // chain jQuery functions
+    return this;
+  };
 
 })( jQuery, window, document );
