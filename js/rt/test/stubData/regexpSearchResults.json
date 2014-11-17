@@ -1,0 +1,32 @@
+{
+    "clients": [
+        {
+            "name": "Wilcox Co.",
+            "spn": "113581",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/113581/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/113581"
+                }
+            ]
+        },
+        {
+            "name": "US$ Moneylenders",
+            "spn": "113582",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/113582/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/113582"
+                }
+            ]
+        }
+    ]
+}

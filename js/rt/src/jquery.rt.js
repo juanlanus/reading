@@ -6,7 +6,7 @@
     pluginName = 'rt',
 
     // 'that' is used to make this available to the private methods (this module uses RT)
-    that = this,
+    // that = this,
 
     defaults = {
       // TODO: start at (0, 0) and move right and down checking until the point lies into a desdendant of the container
@@ -37,10 +37,8 @@
 
       // development aids
       debug: false
-    },
+    }
 
-    // Built by init() by applying the options over the defaults
-    settings = {}
   ;
 
   // ********************************************************************************
@@ -135,8 +133,8 @@
         // loop over the elements collection that comprise the content of this context
         for( i = 0; i < n; i++ ) {
           // build the docPaths of the subtree of this
-          thisElement = $mappedElements[i];
-          $thisElement = $( thisElement );
+          var thisElement = $mappedElements[i];
+          var $thisElement = $( thisElement );
           // if the current element is a header, increment the docpath counter at this header
           // level and reset the rigth-hand non-header part of docPath
           if( checkHeading.test( thisElement.tagName ) ) { // it's a header h1...6
@@ -177,7 +175,7 @@
         function buildPathLog() {
           var tn = thisElement.tagName;
           var z = '';
-          if( !( tn === 'BR' || tn === 'CODE' || tn === 'COL' || tn === 'A' || tn === 'TD' || tn === 'COLGROUP' || tn === 'TH' || tn === 'TBODY') ) {
+          if( !( tn === 'BR' || tn === 'CODE' || tn === 'COL' || tn === 'A' || tn === 'TD' || tn === 'TH' || tn === 'TBODY') ) {
             var indent = new Array(2 * level).join(' ');
             if( tn.substring(0, 1) === 'H' ) { indent = '++' + indent.substring(2); }
             var tab = 16 - indent.length - tn.length;
@@ -285,7 +283,6 @@
         i = 0,
         previousNodeTop = -1000000
       ;
-      var reltop = 0;
       for( i = 0; i < n; i++ ) {
         thisNode = $allElems[i];
         if( thisNode.getBoundingClientRect() ) {
@@ -300,6 +297,7 @@
         // DEBUG: check how the same top value appears more than once
         if( RT.data.debug ) {
           if( RT.data.topsMap[topsMapN - 1].top === previousNodeTop ) {
+            /*jshint undef:true, devel:true */
             console.log( 'top val repeated: ' + RT.data.topsMap[topsMapN - 1].node.nodeName
             + ' ' +  previousNodeTop );
           }
@@ -352,7 +350,7 @@
         }
       }
 
-      function drillDown( startElement, steps, animDuration ) {
+      function drillDown( startElement, steps ) {
         // starting with startElement move forward in the childrens lists the
         // number of steps dictated by the steps array, return the final 
         // element of the series, or the last found if unable to finish
@@ -431,15 +429,16 @@
       var nextNodeIdx = currentNodeIdx;
       var nodePrevTop = RT.data.topsMap[currentNodeIdx].top;
       var scrollHeight = RT.settings.smartScrollHeight * ( forward ? 1 : 0.3 );
+      var nextNode;
       while( true ) {
         if( forward ) {
           nextNodeIdx++;
-          if( ! ( nextNodeIdx < RT.data.topsMap.length )) { break; }
+          if( nextNodeIdx >= RT.data.topsMap.length ) { break; }
         } else {
           if( nextNodeIdx <= 0 ) { break; }
           nextNodeIdx--;
         }
-        var nextNode = RT.data.topsMap[nextNodeIdx].node;
+        nextNode = RT.data.topsMap[nextNodeIdx].node;
         // ignore elements with a marker class like "ssIgnore"
         if( $(nextNode).hasClass( RT.settings.ssIgnoreClass )) { continue; }
         // ignore non-block elements like spans
@@ -461,7 +460,7 @@
       if ( RT.settings.debug ) {
         var topElement = RT.data.topsMap[nextNodeIdx].node;
         console.log( 'ss ' + ( forward ? 'forward  ' : 'backwards' ) +
-        ' delay:' + ( ~~ propDelay ) +
+        ' delay:' + propDelay.toFixed() +
         ' to:' + RT.data.topsMap[nextNodeIdx].top +
         (( !! RT.data.scrollData.p ) ? RT.data.scrollData.p + '%' : '' ) +
         ' :' + deltaY +
@@ -471,7 +470,7 @@
         (( !!topElement.getAttribute('id') ) ?  ' id:' + topElement.getAttribute('id') : '' ) +
         ((!! RT.data.scrollData.text) ? ( ' ' + RT.data.scrollData.text ) : ''));
       }
-      RT.data.elementAtTop = nextNode;
+      RT.data.elementAtTop = nextNode;  // nextNode IS OUT OF SCOPE !!!!!!!!!!!!!
       RT.scrollToElement( $( nextNode ), propDelay );
       return nextNodeIdx;
     },
@@ -492,14 +491,14 @@
         scrollTargetPix, // WAS: $topElement[0],
         { // FAILED TEST: scrollTarget:$topElement[0],
           duration: duration,
-          easing: 'swing' 
+          easing: 'swing'
         },
         function() {
           // end-of-animation: re-enable scroll events and remove scroll target highlight
           var RT = $.fn.rt.RT;
           RT.data.disableScrollEvents = false;
           window.setTimeout(
-            function( event ){
+            function(){
               $topElement.removeClass( 'rtScrolltarget' );
             },
             500
@@ -517,7 +516,6 @@
       $pd.addClass( 'rtProgress' );
 
       // calculate the proportional heights
-      var hPri = $pd.height();
       var hTotal = RT.element.clientHeight;
       var hDone = 0;
       if( RT.data.elementAtTop ) { hDone = RT.getRelativeTop( RT.data.elementAtTop ); }
@@ -570,7 +568,7 @@
       console.log( 'k:' + 'RT-' + RT.data.documentNumberEncoded + '-' + RT.data.scrollData.t + ' rec:' + serverRecord );
 
       // send the data and forget it
-      var jqXHR = $.ajax({
+      $.ajax({
         type: 'PUT',
         url: 'http://localhost:3333/storeActions',              // $$$$ get this URL from the server, in settings
         contentType: 'text/plain',
@@ -619,7 +617,7 @@
       // TZ
     }, */
 
-    getCurrentReadingPosition: function( event ) {
+    getCurrentReadingPosition: function() {
       // get a reference to the element at the reading position and store in
       // RT.data.scrollData the information needed to get back to this position
       // returns a reference to the element at top
@@ -692,9 +690,9 @@
 
   // *************************** end of member functions ****************************
 
-  setHandler_onbeforeunload = function( RT ) {
+  var setHandler_onbeforeunload = function( RT ) {
   // when the reader leaves this page store an end of session scroll record
-    window.onbeforeunload = function(event) {
+    window.onbeforeunload = function() {
     // TODO: signal the session end with an action code, not an additional column
       RT = $.fn.rt.RT;
       RT.writeScrollRecord( RT.settings.actionIds.sessionEnd );
@@ -702,7 +700,7 @@
   };
 
 
-  setHandler_keyboard = function( RT ) {
+  var setHandler_keyboard = function( RT ) {
   // capture keyboard action
     // TODO: don't allow many spaces to stack in the input buffer, cancel one animation
     // as soon as another happens, and/or consume or lock new spaces when animating one
@@ -738,7 +736,7 @@
   };
 
 
-  setHandler_resize = function( RT ) {
+  var setHandler_resize = function( RT ) {
   // capture the resize event
     $(window).on( 'resize', null, RT,
         function(event) {
@@ -746,7 +744,7 @@
           var RT = event.data;
           window.clearTimeout(RT.data.resizingTimer);
           RT.data.resizingTimer = window.setTimeout(
-            function(event){
+            function(){
               var RT = $.fn.rt.RT;
               RT.data.scrollData.t = (new Date()).getTime();
               RT.writeScrollRecord( RT.settings.actionIds.resize );
@@ -768,7 +766,7 @@
   };
 
 
-  setHandler_scroll = function( RT ) {
+  var setHandler_scroll = function( RT ) {
   // capture the scroll event
     // RT.$element.on(
     $(window).on( 'scroll', null, RT,
@@ -780,7 +778,7 @@
         // timer is cancelled if a new scroll event happens quickly
         window.clearTimeout(RT.scrollTimer);
         RT.data.scrollTimer = window.setTimeout(
-          function(event) {
+          function() {
             RT.data.scrollData.t = (new Date()).getTime();
             var topElement = RT.getCurrentReadingPosition();
             RT.data.scrollData.dp = topElement.getAttribute( 'docpath' );
@@ -796,7 +794,7 @@
   };
 
 
-  buildControlPanel = function( RT ) {
+  var buildControlPanel = function( RT ) {
     // display the control panel
     // TODO: use a template renderer like moustache?
     var cp =
@@ -837,7 +835,6 @@
       +'<div id="menuPanel" style="z-index:998;">\n'
       +  '<div id="menuContainer"\n'
       +    '<div class="menu" font-weight:100; class="menu">(replaced by usability test instructions)<br>click again to dimiss</div>\n'
-      //   '<div class="menu" background:yellow; font-size:200%; font-weight:100; padding:140px;" class="menu">menu comes here, <br>click again to dimiss</div>\n'
       +  '</div>\n'
       +'</div>\n'
 
@@ -850,14 +847,14 @@
   };
 
 
-  storeQueryString = function( RT ) {
+  var storeQueryString = function( /* RT */ ) {
   // store the query string if any (used initially to collect user data)
     // TODO: replace by a one-liner, move code to a function
     if( !! window.location.search ) {
       var qs = window.location.search.replace( '?', '' ).split( '&' ), request = {};
       $.each( qs, function( i, v ) {
         var pair = v.split( '=' );
-        return request[pair[0]] = pair[1];
+        request[pair[0]] = pair[1];
       });
       console.log(request);
       localStorage.setItem( 'instructions' + localStorage.length, JSON.stringify( request ) );
@@ -865,7 +862,7 @@
   };
 
 
-  setHelp = function( RT ) {
+  var setHelp = function( RT ) {
     // set the help content
     var $hc = $( '#helpContainer' );
     $hc.html( $( '#helpContentText' ).html() );
@@ -919,7 +916,7 @@
   };
 
 
-  setHighlighter = function( RT ) {
+  var setHighlighter = function( RT ) {
   // set the highlighter
     rangy.init();
     var cssClassApplierModule = rangy.modules.CssClassApplier;
@@ -957,7 +954,7 @@
   };
 
   
-  setTOC = function( RT ) {
+  var setTOC = function( RT ) {
   // set the TOC toggler
     $('#rtTOCIcon').on( 'click', null, RT,
         function( event ) {
@@ -1005,19 +1002,19 @@
 
     // build the TOC
     // TODO: the TOC object gets stored in the global context
-    TOC.clearTOC();
-    TOC.buildTOC( RT.$content.get()[0] );
+    this.TOC.clearTOC();
+    this.TOC.buildTOC( RT.$content.get()[0] );
     // DEBUG: 
-    if( RT.debug ) { TOC.logTOC(); }
+    if( RT.debug ) { this.TOC.logTOC(); }
     // render the TOC in the TOC sliding panel
     // TODO: this .toc class name is not right
-    $('.toc').html( TOC.render() );
+    $('.toc').html( this.TOC.render() );
     // accordionize the TOC tree
-    TOC.makeCollapsible( $( '.toc' )[0] );
+    this.TOC.makeCollapsible( $( '.toc' )[0] );
   };
 
 
-  showMenu = function( RT ) {
+  var showMenu = function( RT ) {
   // build and show the menu
     // for the usability test, set the instructions into the menu panel
     // TODO: check the "agenda..." name
@@ -1072,7 +1069,7 @@
       topsMapElement: null,
 
       // used for recording the user action events
-      scrollData: {},
+      scrollData: {},                     // object with current reading position data
       // reference to the current top element
       // DEFINED BELOW: elementAtTop: this.$content[0],
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Defining_getters_and_setters
@@ -1090,7 +1087,6 @@
         }
       },
       set elementAtTop(newEat) { this._eat = newEat; },
-      scrollData: null,                   // object with current reading position data
       scrollTimer: null,                  // time between scroll action and recording (cancellable)
 
       // Contains each header's docpath indexed by the header id, and the offsetTop

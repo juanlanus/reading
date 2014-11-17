@@ -1,0 +1,88 @@
+{
+    "clients": [
+        {
+            "name": "Bank Of Thailand",
+            "spn": "113581",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/113581/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/113581"
+                }
+            ]
+        },
+        {
+            "name": "Bank of Norway",
+            "spn": "112563",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/112563/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/112563"
+                }
+            ]
+        },
+        {
+            "name": "Blackrock Capital",
+            "spn": "1823829",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/1823829/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/1823829"
+                }
+            ]
+        },
+        {
+            "name": "Blackrock IMUK Ltd.",
+            "spn": "1034865",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/1034865/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/1034865"
+                }
+            ]
+        },
+        {
+            "name": "MetLife, Inc.",
+            "spn": "1823830",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/1823830/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/1823830"
+                }
+            ]
+        },
+        {
+            "name": "Skandinaviska Enskilda Banken Of The Honorable And Greatest Kingdom Of Skandinaviska Country",
+            "spn": "932051",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/932051/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/932051"
+                }
+            ]
+        }
+    ]
+}

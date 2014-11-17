@@ -1,0 +1,60 @@
+{
+    "clients": [
+        {
+            "name": "Bank Of Thailand",
+            "spn": "113113",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/113113/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/113113"
+                }
+            ]
+        },
+        {
+            "name": "Bank of Umbanda",
+            "spn": "113564",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/113564/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/113564"
+                }
+            ]
+        },
+        {
+            "name": "BAN First Co.",
+            "spn": "1823113",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/1823113/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/1823113"
+                }
+            ]
+        },
+        {
+            "name": "Umbanda 113th National Bank",
+            "spn": "1134866",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/1134866/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/1134866"
+                }
+            ]
+        }
+    ]
+}

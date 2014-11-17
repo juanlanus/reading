@@ -1,0 +1,74 @@
+{
+    "clients": [
+        {
+            "name": "Bank Of Thailand",
+            "spn": "113581",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/113581/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/113581"
+                }
+            ]
+        },
+        {
+            "name": "Bank of Umbanda",
+            "spn": "112564",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/112564/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/112564"
+                }
+            ]
+        },
+        {
+            "name": "BAN First Co.",
+            "spn": "1823883",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/1823883/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/1823883"
+                }
+            ]
+        },
+        {
+            "name": "Umbanda First National Bank",
+            "spn": "1034866",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/1034866/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/1034866"
+                }
+            ]
+        },
+        {
+            "name": "Skandinaviska Enskilda Banken Of The Honorable And Greatest Kingdom Of Skandinaviska Country",
+            "spn": "932051",
+            "links": [
+                {
+                    "rel": "coverage",
+                    "href": "http://localhost:8080/client-profile/api/clients/932051/coverage/roles"
+                },
+                {
+                    "rel": "hierarchy",
+                    "href": "http://localhost:8080/client-profile/api/clients/hierarchies/932051"
+                }
+            ]
+        }
+    ]
+}

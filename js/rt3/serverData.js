@@ -7,11 +7,9 @@ function serverData( ) {
   var http = require('http');
   var path = require('path');
   var express = require('express');
-  var appData = express();
   var cors = require('cors');
   var methodOverride = require('method-override');
   var logger = require('morgan');
-  var path = require('path');
   var assert = require('assert');
   var errorHandler = require('errorhandler');
   var routes = require('./routes');
@@ -54,6 +52,6 @@ function serverData( ) {
     console.log('Express data server listening on port ' + appData.get('port'));
   });
 
-};
+}
 
 module.exports.serverData = serverData;

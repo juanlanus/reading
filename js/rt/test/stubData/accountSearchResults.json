@@ -1,0 +1,34 @@
+{
+  "accounts": [
+    {
+      "number": "55555",
+      "name": "Metropolitan Life Inc.",
+      "clientSpn": "1823830",
+      "links": [
+        {
+          "rel": "coverage",
+          "href": "http://localhost:8080/client-profile/api/clients/1823830/coverage/roles"
+        },
+        {
+          "rel": "hierarchy",
+          "href": "http://localhost:8080/client-profile/api/clients/hierarchies/1823830"
+        }
+      ]
+    },
+    {
+      "number": "43555",
+      "name": "Metropolitan Developments",
+      "clientSpn": "1824330",
+      "links": [
+        {
+          "rel": "coverage",
+          "href": "http://localhost:8080/client-profile/api/clients/1824330/coverage/roles"
+        },
+        {
+          "rel": "hierarchy",
+          "href": "http://localhost:8080/client-profile/api/clients/hierarchies/1824330"
+        }
+      ]
+    }
+  ]
+}
