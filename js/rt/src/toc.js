@@ -1,19 +1,22 @@
-var TOC = (function() {
+var TOC = (function( options ) {
 
   /* TOC data items *************************************************************/
 
   // config parameters
-  var config = {};
-  config.openIconFilePath = 'res/expand.png';
-  config.closeIconFilePath = 'res/collapse.png';
+  var config = {
+    openIconFilePath: 'res/expand.png',
+    closeIconFilePath: 'res/collapse.png',
+    debug: false
+  };
+  $.extend( config, options );
 
   // reference to the TOC in the DOM
   var tocHTML = null;
 
-  // TOC node prototype
+  // TOC node constructor
   function TocNode( level, header, parent ) {
     this.level = level;     // header level 1...6
-    this.header = header;   // reference to the DOM object
+    this.header = header;   // reference to the DOM element
     this.parent = parent;   // reference to the containing header
     this.children = [];     // this node's descendants
   }
@@ -47,7 +50,7 @@ var TOC = (function() {
   }
 
 
-  // recursively display the TOC in the console
+  // Recursively display the TOC in the console
   var logTOC = function() {
     // display current node and its descendants
     function logTOCNode( thisNode ) {
@@ -103,6 +106,7 @@ var TOC = (function() {
         lineHTML += '<li class="rt_toc_' + thisNode.level + '">' + '(empty node)';
       }
       tocHTML += lineHTML;
+      lineHTML = '';
       for( var ich = 0; ich < thisNode.children.length; ich++ ) {
         // recursively render this node`s descendants
         renderNode( thisNode.children[ich] );
@@ -192,12 +196,13 @@ var TOC = (function() {
     while( true ) {
       thisNode = headersIterator.nextNode();
       if( thisNode == null ) { break; } // no more nodes
+      if( this.config.debug ) { console.log( 'buildTOC: ' + $(thisNode).text() ); }
       addItem( thisNode );
     }
   }
 
 
-  // makes the group nodes collapsible adding a click handler
+  // makes the group nodes collapsible by adding click handlers
   function makeCollapsible( tocRoot ) {
     // the argument is a reference to the root of a rendered TOC in the page, a DOM node
 
@@ -205,7 +210,7 @@ var TOC = (function() {
     function expandCollapseTOC( event ) {
       // check that the click happened on one of the open/close icons
       // get a reference to the container div where the click happened
-      var c = $(event.target.parentElement);
+      var c = $( event.target.parentElement );
       if( c.hasClass('rtOpenCloseIcon') ) {
         // get a ref to the associated UL to be mutated
         var theUL = c.parent().children('ul');
@@ -213,7 +218,7 @@ var TOC = (function() {
         if( c.hasClass('rtExpanded') ) {
           // it's expanded: have to close (collapse)
           theUL.slideUp( 'fast' );
-          $('img', c).attr( 'src', config.openIconFilePath );
+          $( 'img', c ).attr( 'src', config.openIconFilePath );
           c.removeClass('rtExpanded').addClass('rtCollapsed');
         } else {
           if( c.hasClass('rtCollapsed') ) {
@@ -269,4 +274,9 @@ var TOC = (function() {
     closeIconFilePath: config.closeIconFilePath,
     tocHTML: tocHTML
   };
-})();
+})( 
+  // options:
+  {
+    debug: true 
+  }
+);
