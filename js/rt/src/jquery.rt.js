@@ -72,7 +72,7 @@
       RT.data.elementAtTop = this.$content.children()[0];
 
       this.buildDocMap();
-      setHandler_onbeforeunload();
+      setHandler_onbeforeunload( RT );
       setHandler_keyboard( RT );
       setHandler_resize( RT );
       buildControlPanel( RT );
@@ -479,7 +479,7 @@
     // scroll the content so the argument lies at the top of the viewport
     // TODO: must deactivate the scroll event handler before
       var RT = $.fn.rt.RT;
-      var offsetTop = RT.getRelativeTop( $topElement[0] );
+      // var offsetTop = RT.getRelativeTop( $topElement[0] );
       // console.log('scrollToElement: ' + offsetTop );
       // briefly highlight the target element before moving it to top
       $topElement.addClass( 'rtScrolltarget' );
@@ -621,8 +621,6 @@
       // get a reference to the element at the reading position and store in
       // RT.data.scrollData the information needed to get back to this position
       // returns a reference to the element at top
-      // TODO: replace leftTopVisiblePix by a local, remove leftTopVisiblePix
-      // TODO: the event argument is not used
       var RT = $.fn.rt.RT;
 
       // get a reference to the element at the reading position
@@ -633,8 +631,6 @@
       // ensure that the top of the element containing the "point" is close to the scroll
       // position of the container to assert that the "point" is "proper"
       var dx = 0, dy = 0;
-      // TODO: replace the constant by half the viewport height
-      var maxVerticalDistance = 333;
       var topOffset = 99999;
       while( RT.content === topElement || RT.element === topElement ) {
         // also had: || Math.abs( topElement.getBoundingClientRect().top > maxVerticalDistance )
@@ -694,7 +690,6 @@
   // when the reader leaves this page store an end of session scroll record
     window.onbeforeunload = function() {
     // TODO: signal the session end with an action code, not an additional column
-      RT = $.fn.rt.RT;
       RT.writeScrollRecord( RT.settings.actionIds.sessionEnd );
     };
   };
@@ -918,8 +913,9 @@
 
   var setHighlighter = function( RT ) {
   // set the highlighter
+  /* global rangy */
     rangy.init();
-    var cssClassApplierModule = rangy.modules.CssClassApplier;
+    // JLHint complains: var cssClassApplierModule = rangy.modules.CssClassApplier;
     var highlight1Applier = rangy.createCssClassApplier('rtHigh1');
     $('#rtHighlightIcon').on( 'click', null, RT,
       function( event ) {

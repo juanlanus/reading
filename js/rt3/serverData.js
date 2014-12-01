@@ -14,6 +14,7 @@ function serverData( ) {
   var errorHandler = require('errorhandler');
   var routes = require('./routes');
   var StoreActions = require('./db/in');
+  var actionTypes = require('../common/actionsEncoding');
 
   
   // the server:

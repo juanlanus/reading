@@ -22,7 +22,7 @@ var TOC = (function( options ) {
   }
 
   // the TOC tree
-  // Contains levels 0 through 6 headers.
+  // Contains level 0 through 6 headers.
   // Level 0 is the root and it's children are the level-1 headers (h1's).
   // Thus, a level N node contains level N+1 headers in its children array.
   // Each node has a pointer to its parent node, except for the level-0 node which has null.
@@ -274,9 +274,9 @@ var TOC = (function( options ) {
     closeIconFilePath: config.closeIconFilePath,
     tocHTML: tocHTML
   };
-})( 
+})(
   // options:
   {
-    debug: true 
+    debug: true
   }
 );
