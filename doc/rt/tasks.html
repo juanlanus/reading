@@ -1,0 +1,523 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Language" content="en">
+  <title>rt:dev tasks &amp; bugs</title>
+  <link rel="stylesheet" href="res/rtDoc.css" type="text/css">
+  <script type="text/javascript" src="res/jquery-1.8.3.js">
+ </script>
+  <script type="text/javascript" src="res/tocBuilder.js">
+ </script>
+  <link href="res/tocBuilder.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#tocContainer').tocBuilder({
+        type: 'headings',
+        backLinkText: 'TOC',
+        startLevel: 2,
+        endLevel: 6
+      });
+    });
+  </script>
+  <script type="text/javascript" src="res/rt.js">
+ </script>
+  <style>
+  .doneItem { color:rgb(128,128,128); } 
+  pre, code, tt { font-size:80%; } </style>
+</head>
+
+<body>
+
+<div class="imgR miniMenu">
+<ul style="list-style-type:none;">
+  <li><a href="index.html">index</a> </li>
+  <li><a href="tasks.html">tasks &amp; bugs</a></li>
+  <li><a href="comparison.html">comparison</a></li>
+  <li><a href="rtech.html">technical defs</a></li>
+  <li><a href="database.html">database</a></li>
+  <li><a href="notes.html">notes &amp; links</a></li>
+  <li><a href="aboutScrolling.html">about scrolling</a></li>
+  <li><a href="project.html">project</a></li>
+</ul>
+</div>
+
+<div id="rtHeader">
+
+<div class="fixedHeader">
+<h1 style="display:inline; ">rt: development tasks &amp; bugs</h1>
+</div>
+</div>
+
+<div class="imgL framed">
+
+<div id="tocContainer" class="toc tocContainer">
+<ul>
+  <li><a href="#L553">pending tasks <img alt="this one!"
+    src="res/caramba_yellow.gif" width="7" height="14"> </a> 
+    <ul>
+      <li><a href="#L558">refactor</a></li>
+      <li><a href="#L577">soft scrolling</a></li>
+      <li><a href="#L642">server</a></li>
+      <li><a href="#L661">development setup</a></li>
+      <li><a href="#L692">repositioning / server</a></li>
+      <li><a href="#L701">repositioning / client <img alt="this one!"
+        src="res/caramba_yellow.gif" width="7" height="14"> </a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+</div>
+
+<div id="rtBody">
+
+<div id="tocContainer" class="tocContainer" style="display:none;">
+
+<div class="toc">
+<ul>
+  <li><a href="">---</a></li>
+</ul>
+</div>
+</div>
+
+<p></p>
+
+<h2 style="clear:both;" id="L553">pending tasks <img alt="this one!"
+src="res/caramba_yellow.gif" width="7" height="14"> </h2>
+
+<h3>control panel</h3>
+<ol>
+  <li>TOC: After a click in the TOC (or anywhere else out of the content)
+    return focus to the content to enable start scrolling. Or, capture the
+    keyboard events from the control panel too. </li>
+  <li>TOC: Don't let the browser update the hash part of the location after a
+    click on a TOC link. Clear the hash in the location, preventing the event
+    triggered. </li>
+  <li>In adition to recognizing the space bar for scrolling, add a button in
+    the control panel bar, for touch devices or to be activated with the
+    notebook's non-mouse buttons. </li>
+  <li class="doneItem">Allow the user to expand and collapse TOC groups </li>
+  <li class="doneItem">Implement TOC scrolling </li>
+  <li>TOC: when the TOC is shown, there are two vertical scrollbars visible.
+  </li>
+  <li>TOC: Persist TOC status: scrollTop and expanded/collapsed state in an
+    ad-hoc record (roaming) also containing information about which TOC
+    functional features the user is leveraging </li>
+  <li>TOC: Continually identify and highlight the TOC item of the current
+    position, expand if needed</li>
+  <li>Synchronize TOC and content scroll</li>
+  <li class="doneItem">TOC: Add a function to make the TOC collapsible, into
+    the TOC file </li>
+  <li class="doneItem">TOC: Get "expand" and "collapse" icons </li>
+  <li>TOC: Get better "expand" and "collapse" icons, store as data URLs in the
+    script file. </li>
+  <li>TOC: Make the collapsible TOC react to the usual keyboard codes</li>
+  <li>TOC: add a quick search box for the TOC content </li>
+  <li class="doneItem">TOC: eliminate the focus marker (
+    <code>outline:none;</code> ) in css </li>
+  <li class="doneItem">TOC: to slide laterally animate left margin, not width
+    to avoid continuous reflow during the animation (see <a
+    href="http://jsfiddle.net/davidThomas/N98ee/1/">http://jsfiddle.net/davidThomas/N98ee/1/</a>
+    and <a
+    href="http://stackoverflow.com/questions/4229422/jquery-slideright-effect">http://stackoverflow.com/questions/4229422/jquery-slideright-effect</a>
+    and <a href="http://jsfiddle.net/Sj2Ru/">http://jsfiddle.net/Sj2Ru/</a> ) 
+    <pre>$(document).ready(
+  function(){
+    $('#slider').click(
+      function(){
+        $(this).animate(
+          {
+            'margin-left':'1000px'
+            // to move it towards the right and, probably, off-screen.
+          },1000,
+          function() {
+            $(this).slideUp('fast');
+            // once it's finished moving to the right, just removes the element
+            // from the display, you could use remove() instead, or whatever.
+          }
+        )
+      });
+    });</pre>
+  </li>
+  <li class="doneItem"><img alt="this one!" src="res/caramba_yellow.gif"
+    width="7" height="14"> TOC: In the demo page "Children of the frost", the
+    last chapter "THE LAW OF LIFE" shows twice in the TOC (it's the last one).
+  </li>
+  <li>TOC: at page load add enough blank space at the end of the content so
+    that the last headers can be scrolled to the top of the viewport. </li>
+</ol>
+
+<h3 id="L558">refactor</h3>
+<ul>
+  <li>Goal: extract the function that writes scroll actions to the server in a
+    function by itself, to call it both from startScroll and regular scroll,
+    and also to be able to block scroll events provoked by other events like
+    resize </li>
+  <li>Goal: make modules and <code>require()</code> them</li>
+  <li>Goal: isolate parameterizable options in an options object</li>
+  <li class="doneItem">Make a jQuery plugin out of the rt code </li>
+</ul>
+
+<h3 id="L577">soft scrolling</h3>
+<ul>
+  <li><img alt="this one!" src="res/caramba_yellow.gif" width="7" height="14">
+    Smart-scrolling with the spacebar doesn't store the last reading position.
+    <br>
+    Reloading the page always scrolls it to an old position. <br>
+    The recording is made before the scroll happens. It should be in the scroll
+    end function, or be told which is the scroll target element. <br>
+    Also, the <code>RT.data.scrollTime</code> is not set, points to Jan 1,
+    1970. </li>
+  <li>There are too many functions: try to understand code and refactor to
+    simplify. 
+    <ul>
+      <li>Done with the smartScroll functions: now there is one instead of 4.
+      </li>
+    </ul>
+  </li>
+  <li class="doneItem">Refactor <code>smartScrollGetPrevTopElement()</code> and
+    <code>smartScrollGetNextTopElement()</code> into a single function with an
+    extra arg to signal backwards scroll </li>
+  <li class="doneItem">Capture keyboard events <br>
+    Add a handler for the spacebar and test it<br>
+    Ensure that the default action is cancelled: FF works fine, Chrome scrolls
+    when the debugger is not open</li>
+  <li class="doneItem">Filter keyboard events for: 
+    <ul>
+      <li>spacebar: scroll forward</li>
+      <li>shift + spaceber: scroll backwards</li>
+    </ul>
+  </li>
+  <li class="doneItem">Write an animated scroll function</li>
+  <li>Don't scroll whole elements that are too high: must scroll high elements
+    partially</li>
+  <li>The scroll amount (<code>smartScrollHeight</code>) must not be taller
+    then the viewport height </li>
+  <li class="doneItem">Enable content element to receive kb inout and give it
+    the focus</li>
+  <li>Sort the topsMap array when needed </li>
+  <li class="doneItem">Annoying flicker when the spacebar is pressed, before
+    the scroll </li>
+  <li class="doneItem">Always stop at headers even shallow ones </li>
+  <li class="doneItem">It seems to scroll zero px sometimes @ before h4
+    id="NOTIFY" docpath "0,0,1,3,25,0,0" NOTIFY Statement: when two spaces
+    happen quickly the second one sees the same position as the previous
+  one</li>
+  <li class="doneItem">When a space happens cancel previous animation: make it
+    complete quickly or better, merge with the new one: @ 352 add the
+    stop(false, false) method call before animate()</li>
+  <li class="doneItem">@508 refactor the loop to include the bounds check as
+    the first case check (it is wrong now)</li>
+  <li class="doneItem">Find out if shift was pressed with
+    <code>if(ev.shiftKey)</code> in jQuery events and scroll backwards if
+  so</li>
+  <li class="doneItem">Do not process the keyboard spacebar event is ev.altKey
+    or ev.metaKey or ev.ctrlKey</li>
+  <li class="doneItem">The ev object contains a timestamp that should be used
+    for the logging</li>
+  <li>Provide a means to scroll back in mobile, as shift+spacebar in desktop
+    does, something like a quick double tap</li>
+  <li>Shift + space returns an error: jquery.rt.js (line 566, col 10) 
+    <pre>TypeError: RT.data.smartScrollGetPrevTopElement is not a function
+var nodeNextIdx = RT.data.smartScrollGetPrevTopElement( nodePrevIdx );</pre>
+    <p>Was <code>this.smartScrollGetPrevTopElement()</code> </p>
+  </li>
+  <li>Repeatedly pressing space sometimes repeats the top element, which looks
+    as if it failed (it might be because of the console.log statement taking
+    some time to complete) 
+    <pre>ss forward   delay:578 to:39931.5 Δ:347 topNode463 docPath:0,1,3,0,0,0,0,69 P
+ss forward   delay:638 to:40314.5 Δ:383 topNode468 docPath:0,1,3,0,0,0,0,74 P
+ss forward   delay:1085 to:<strong>39584.5</strong> Δ:651 topNode461 docPath:0,1,3,0,0,0,0,67 P
+ss forward   delay:578 to:39931.5 Δ:347 topNode463 docPath:0,1,3,0,0,0,0,69 P
+ss forward   delay:638 to:40314.5 Δ:383 topNode468 docPath:0,1,3,0,0,0,0,74 P
+ss forward   delay:610 to:40680.5 Δ:366 topNode470 docPath:0,1,3,0,0,0,0,76 P
+ss forward   delay:598 to:41039.5 Δ:359 topNode473 docPath:0,1,3,0,0,0,0,79 P
+ss forward   delay:638 to:<strong>40314.5</strong> Δ:383 topNode468 docPath:0,1,3,0,0,0,0,74 P
+ss forward   delay:610 to:40680.5 Δ:366 topNode470 docPath:0,1,3,0,0,0,0,76 P</pre>
+  </li>
+  <li>Many spaces in a row make the content go back: check if the animations
+    are not being performed in their original order </li>
+  <li>Allow a means to interrupt many queued scroll animations, or to merge
+    them in a single one </li>
+  <li>Try to detect empty elements (not containing text or images or whatever)
+    and add class <code>ssIgnore</code> to them </li>
+  <li>When resizing repeatedly (like, maximizing and restoring to a narrow
+    window) the position is lost after a number of times. <br>
+    This might well be because the rezise event triggers a scroll event and a
+    new resize happens at a certain point of the scroll if the resizing is
+    repeated rather quickly. </li>
+  <li>SmartScroll does nothing (scrolls again to the same current top) every
+    now and then, when the spacebar is pressed repeatedly fast. <br>
+    It seems related to updating the top position after the animation, might be
+    solved if it was updated as soon as the event happens. </li>
+</ul>
+
+<h3 id="L642">server</h3>
+<ol>
+  <li class="checkedItem doneItem">Define architecture: platform, database, ... 
+    <ul>
+      <li>A RESTful backend with most of the controller logic located in the
+        client, </li>
+      <li>a Node.js motor, and</li>
+      <li>a MongoDB database. </li>
+    </ul>
+  </li>
+  <li>Run a test of an AJAX request in the client impacting a static resource
+    in the server: define local URLs and port number</li>
+</ol>
+
+<h3 id="L661">development setup</h3>
+<ul>
+  <li class="checkedItem doneItem">Set under git control 
+    <p>Done in ~/Dropbox/Public/reading, with cloud replication. No github.
+    Steps: </p>
+    <ol>
+      <li>cd ~/Dropbox/Public/reading</li>
+      <li>git init</li>
+      <li>git add *</li>
+      <li>git commit -m "initial reading commit"</li>
+    </ol>
+  </li>
+  <li>Integrate the startup page 
+    <p>Started: copied verbatim in
+    <code>~/Dropbox/Public/reading/start</code></p>
+  </li>
+  <li class="doneItem">Make the rt3 server serve the start page and the doc
+    pages (fix routes)</li>
+</ul>
+
+<h3 id="L692">repositioning / server</h3>
+<ul>
+  <li class="doneItem">Define a schema for the reading position data</li>
+  <li class="doneItem">The server must respond to the AJAX HTTP request, even
+    if it's asynchrnous </li>
+</ul>
+
+<h3 id="L701">repositioning / client <img alt="this one!"
+src="res/caramba_yellow.gif" width="7" height="14"> </h3>
+<ol>
+  <li class="checkedItem doneItem">Store the scroll events in localStorage.
+  </li>
+  <li class="checkedItem doneItem">Refactor code to encapsulate the writing of
+    the scroll records (<code>RT.writeScrollRecord</code>) so it can be used
+    from within several event handlers. </li>
+  <li class="doneItem">Scroll records (action=2) have no docPath </li>
+  <li class="doneItem">SmartScroll recording: no docPath! (undefined) </li>
+  <li class="doneItem">Encode the time in the output record (scrollData.t) </li>
+  <li class="doneItem">Normal scroll doesn't update the current position: the
+    dp shows as undefined.<br>
+    Must use <code>getCurrentReadingPosition()</code> to get it </li>
+  <li class="doneItem">The resize handler calls <code>RT.scrollToPosition(
+    RT.scrollData );</code> with null scrollData. </li>
+  <li class="doneItem">The position is not restored on resize. </li>
+  <li class="doneItem">The resize event is not recorded </li>
+  <li>With the start session event (0) include geolocation, viewport measures,
+    browser or device data, referer, TZ <br>
+    <a href="http://www.hostip.info/use.html">hostip</a>: free IP and
+    geolocation service <br>
+    <a href="https://www.maxmind.com/en/home">MaxMind</a>: commercial, has a
+    free option <br>
+    <a href="http://ipinfodb.com/ip_location_api.php">ipinfodb</a>: another
+    free one</li>
+  <li>When recording a resize event, store the new viewport dimensions and if
+    it's maximized or not</li>
+  <li>All normal scroll events are recorded, no matter the timeout
+    <code>scrollTimerDelay</code> was in RT data, not settings <br>
+    Actually, it waits, and then stores a raft of records </li>
+  <li>The <code>event.timestamp</code> values are like 106620497 instead of
+    141113798398 ? <br>
+    Replaced all by <code>( new Date()).getTime()</code> </li>
+  <li>When reloading repeatedly the document, it gets positioned each time a
+    little closer to the top. </li>
+  <li class="checkedItem doneItem">✔ Set the beforeunload event to store an
+    end-of-session record. 
+    <pre>RT-1360724404031: {<strong>"endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,9","p100":0}
+RT-1360724408289: {"<strong>endSession":"1"</strong>,"docPath":"0,0,1,1,1,0,0,3,8,1","p100":70}</pre>
+  </li>
+  <li><img alt="this one!" src="res/caramba_yellow.gif" width="7" height="14">
+    Aggregate the scrolls stored in localStorage and calculate local reading
+    time statistics. </li>
+  <li><img alt="this one!" src="res/caramba_yellow.gif" width="7" height="14">
+    Upload read time statistics to server. </li>
+  <li><img alt="this one!" src="res/caramba_yellow.gif" width="7" height="14">
+    When saving the scroll (actions) data in local storage, check for volume
+    and time, and eventually upload to the server</li>
+  <li class="doneItem">✔ <img alt="this one!" src="res/caramba_yellow.gif"
+    width="7" height="14"> Store the user id and the document id in the RT
+    namespace as constants (<code>doc</code> and <code>u</code>)</li>
+  <li><img alt="this one!" src="res/caramba_yellow.gif" width="7" height="14">
+    Get the user id and the doc id from the server</li>
+  <li class="doneItem">Don't store the element's scroll percent if the element
+    is not many lines tall (in function RT.getCurrentReadingPosition)
+    implemented with a 300px threshold</li>
+  <li>Check that localStorage is not left loaded with useless data. </li>
+  <li>Check <a
+    href="http://stackoverflow.com/questions/3479734/javascript-jquery-test-if-window-has-focus">the
+    <code>hasFocus()</code> method</a> and record the page focus changes. </li>
+  <li class="doneItem">✔ <img alt="this one!" src="res/caramba_yellow.gif"
+    width="7" height="14">During a resize block scroll events generated by the
+    resize until after the last resize animation has ended. <br>
+    It's done but wrong: need to be a callback after the animation. <br>
+    Check if this is needed after having reduced the animations to only one.
+    YES, the repositioning throws scroll events that should not be honored by
+    the scroll event handler. </li>
+  <li class="checkedItem">When repositioning after a resize, don't go to the
+    header but instead go directly to the top element (the scroll to the header
+    can be skipped whatsoever). </li>
+  <li style="" class="checkedItem">✔ There must be only one animation no
+    matter how many levels the docPath has. </li>
+  <li>Change the easing of the scroll animation from the default
+    <code>swing</code> to this one: 
+    <pre>    easeOutCubic: function (x, t, b, c, d) {
+        return c*((t=t/d-1)*t*t + 1) + b;
+    },</pre>
+    <p>from <a
+    href="http://stackoverflow.com/questions/5207301/looking-for-jquery-easing-functions-without-using-a-plugin">Looking
+    for jQuery easing functions without using a plugin</a>. </p>
+    <p>If you want to define a custom easing, you have to do it globally by
+    adding a property to <code>$.easing</code>: </p>
+    <pre>$.easing.whatever = (x, t, b, c, d) -&gt;
+    #...</pre>
+    <p>from <a
+    href="http://stackoverflow.com/questions/14036582/passing-function-instead-of-string-for-jquery-easing-using-coffeescript">here</a>.
+    </p>
+  </li>
+  <li>FF throws this error, don't know why, after a while: <em>Error:
+    Permission denied to access property 'toString'.</em> The error shows when
+    the page is left alone for a rather long while, and repeats. </li>
+  <li class="checkedItem doneItem">In the scrollData cookie record the % of the
+    top element that's above the top of the viewport, for repositioning tall
+    elements. </li>
+  <li>When adding an id to a header, must check it for uniqueness. <br>
+    There is a problem if the id already exists, because the added one can't be
+    changed to make it unique, and the other one can't be deleted without risk
+    of breaking the page. </li>
+  <li class="checkedItem doneItem">In the scrollData cookie save percent
+    scrolled for tall items. <br>
+    The proportion is the negative part of the element's position compared to
+    its height. <br>
+    An element is <em>tall</em>?if its height is greater then the viewport's.
+    <br>
+    Saving for all partially scrolled elements. </li>
+  <li>When restoring a document, check if the top element is tall and if it
+    should be scrolled up by the percent informed by the scrollData object (if
+    available). </li>
+  <li><img alt="this one!" src="res/caramba_yellow.gif" width="7" height="14">
+    If an element is taller then the viewport, or too narrow, or with a weird
+    shape, the algorithm used for checking if it's at the top might fail. 
+    <ol>
+      <li class="checkedItem">Try patrolling horizontally by rows every 7px.
+      </li>
+      <li class="checkedItem">Another method is adding the offsetTop
+        information into the TOC and using it as a start level index to search
+        for the current scrolltop. </li>
+      <li class="checkedItem">Trigger the recalculation of the offsetTop's in
+        the resize event ( <code>RT.storeHeaderScrollTops</code> ). </li>
+      <li class="checkedItem">The listing of the offsetTops includes an
+        <em>undefined</em>?item at its end, what is this? It's OK, is the value
+        returned by the (void) function call. </li>
+      <li>Guess the top element by comparing the current scrollTop with the
+        headers offsetTop values stored in the the headerId list. (continue
+        editing RT.getCurrentReadingPosition @ line 139). </li>
+      <li class="checkedItem">Stress-test the calculation function in order to
+        get an idea of its cost in time. </li>
+    </ol>
+  </li>
+  <li>In function <code>RT.scrollToPosition</code> the
+    <code>getElementById()</code> might not find its target, because the
+    document has been modified since it was last read. It should fail
+    gracefully. </li>
+  <li>In localStorage some entries have long numbers in the key (like getTime()
+    outputs) and other have much shorter numbers. </li>
+  <li>In the recording of the data, shorten the time by expressing it in tenths
+    of a second (divide by 100, trim 2 digits). </li>
+  <li>Add a first element to the headers map, pointing to the top of the
+    content container, with docpath = "0.0.0.0.0.0.0". If the element has ho
+    id, provide one. </li>
+  <li>Allow the $content element to be specified, for example by id, as an
+    option, for the case when $container has more than a single child. </li>
+  <li>Refactor the setting of the event handlers in their own functions, in
+    order to be able to debug better. </li>
+  <li>The following characters have a special meaning in CSS: !, ", #, $, %,
+    &amp;, ', (, ), *, +, ,, -, ., /, :, ;, &lt;, =, &gt;, ?, @, [, \, ], ^, `,
+    {, |, }, and ~. (from <a
+    href="https://mathiasbynens.be/notes/css-escapes">CSS character escape
+    sequences</a>). </li>
+  <li>Make the menu elements optional through options, true by default. </li>
+  <li>Small scrolls within the same paragraph can generate hundreds of
+    identical scroll records, differing only in the time: when the times are
+    too close discard records. In FF a page scroll gnerates multiple scrollData
+    values. </li>
+  <li>✔ The end of session event records null docPath data (or it was not
+    available due to other bug) 
+    <p><code>onbeforeunload</code> does not have a reference to RT: use a
+    jQuery event handler to pass it a reference, or use the public $.fn.rt.RT
+    reference</p>
+    <p>After have given acces to RT, it still doesn't work because
+    RT.data.scrollData is null </p>
+    <p>The writeScrollRecord call at <code>onbeforeunload</code> does not
+    perform, maybe because of an error in the previous line</p>
+  </li>
+  <li>The recorded scrollData entries in localStorage (made by the end session
+    handler) have no scrollPosition</li>
+  <li>TypeError: RT.data.headerId is null in scrollToPosition @ 317 when
+    loading the page 
+    <p>The name <code>RT.data.headerId</code> was used for 2 different
+    purposes, a local var and the id's map. The local now id
+    <code>headerId</code>. </p>
+  </li>
+  <li>The <code>RT.getRelativeTop()</code> function returns negative scroll
+    values </li>
+  <li>Function RT.scrolltoElement( target ) does not scroll 
+    <p>In the resize event, <code>scrollToPosition: function( scrollData
+    )</code> is called with <code>scrollData = undefined</code> </p>
+    <p><code>scrollToElement</code> has no RT reference. </p>
+  </li>
+  <li>The keayboard action handler does not react. Function
+    <code>smartScrollGetNextTopElement()</code> fails </li>
+</ol>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p>?</p>
+</div>
+</body>
+</html>

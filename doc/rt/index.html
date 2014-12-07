@@ -1,0 +1,749 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Language" content="en">
+  <title>rt: reading tools</title>
+  <link rel="stylesheet" href="res/rtDoc.css" type="text/css">
+  <script type="text/javascript" src="res/jquery-1.8.3.js">
+ </script>
+  <script type="text/javascript" src="res/tocBuilder.js">
+ </script>
+  <link href="res/tocBuilder.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/res/favicon.ico" type="image/x-icon">
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#tocContainer').tocBuilder({
+        type: 'headings',
+        backLinkText: 'TOC ↑',
+        startLevel: 2,
+        endLevel: 6
+      });
+    });
+  </script>
+  <script type="text/javascript" src="res/rt.js">
+ </script>
+</head>
+
+<body>
+
+<div class="imgR miniMenu">
+
+<div>
+<ul>
+  <li><a href="index.html">index</a> </li>
+  <li><a href="tasks.html">tasks &amp; bugs</a> </li>
+  <li><a href="comparison.html">comparison</a></li>
+  <li><a href="rtech.html">technical defs</a></li>
+  <li><a href="database.html">database</a></li>
+  <li><a href="notes.html">notes &amp; links</a></li>
+  <li><a href="aboutScrolling.html">about scrolling</a></li>
+  <li><a href="project.html">project</a></li>
+</ul>
+</div>
+</div>
+
+<div id="rtHeader">
+
+<div class="fixedHeader">
+<h1 style="display:inline; ">rt: reading tools</h1>
+</div>
+</div>
+
+<div id="rtBody">
+
+<div id="tocContainer" class="tocContainer">
+
+<div class="toc">
+<a id="tocContainertargetTOC" name="tocContainertargetTOC"
+class="tocBackTarget"></a> 
+
+<div class="tocLevel2">
+<a title="Purpose" href="#toc_2_1" class="tocLink">Purpose</a></div>
+
+<div class="tocLevel3">
+<a title="For the reader" href="#forTheReader" class="tocLink">For the
+reader</a></div>
+
+<div class="tocLevel3">
+<a title="For the publisher" href="#forThePublisher" class="tocLink">For the
+publisher</a></div>
+
+<div class="tocLevel2">
+<a title="Features - functional" href="#features" class="tocLink">Features -
+functional</a></div>
+
+<div class="tocLevel3">
+<a title="Reading" href="#reading" class="tocLink">Reading</a></div>
+
+<div class="tocLevel4">
+<a title="Bookmarks" href="#bookmarks" class="tocLink">Bookmarks</a></div>
+
+<div class="tocLevel4">
+<a title="Smart scroll" href="#smartScroll" class="tocLink">Smart
+scroll</a></div>
+
+<div class="tocLevel4">
+<a title="Roaming" href="#roaming" class="tocLink">Roaming</a></div>
+
+<div class="tocLevel4">
+<a title="Resize without losing position" href="#resize" class="tocLink">Resize
+without losing position</a></div>
+
+<div class="tocLevel4">
+<a title="TOC (Table of Content)" href="#TOC" class="tocLink">TOC (Table of
+Content)</a></div>
+
+<div class="tocLevel4">
+<a title="Data in the TOC" href="#TOCData" class="tocLink">Data in the
+TOC</a></div>
+
+<div class="tocLevel4">
+<a title="Progress" href="#progress" class="tocLink">Progress</a></div>
+
+<div class="tocLevel4">
+<a title="Timing" href="#timing" class="tocLink">Timing</a></div>
+
+<div class="tocLevel4">
+<a title="Bookmarking" href="#bookmarking" class="tocLink">Bookmarking</a></div>
+
+<div class="tocLevel4">
+<a title="Searching" href="#search" class="tocLink">Searching</a></div>
+
+<div class="tocLevel4">
+<a title="The Shelf" href="#shelf" class="tocLink">The Shelf</a></div>
+
+<div class="tocLevel4">
+<a title="Quotes" href="#quotes" class="tocLink">Quotes</a></div>
+
+<div class="tocLevel4">
+<a title="Links" href="#links" class="tocLink">Links</a></div>
+
+<div class="tocLevel4">
+<a title="No repeated pages" href="#norepeat" class="tocLink">No repeated
+pages</a></div>
+
+<div class="tocLevel4">
+<a title="Figures and examples" href="#figures" class="tocLink">Figures and
+examples</a></div>
+
+<div class="tocLevel4">
+<a title="Handle sidenotes" href="#sidenotes" class="tocLink">Handle
+sidenotes</a></div>
+
+<div class="tocLevel3">
+<a title="Social" href="#social" class="tocLink">Social</a></div>
+
+<div class="tocLevel4">
+<a title="Public comments" href="#publicComment" class="tocLink">Public
+comments</a></div>
+
+<div class="tocLevel3">
+<a title="Setting documents" href="#settingText" class="tocLink">Setting
+documents</a></div>
+
+<div class="tocLevel4">
+<a title="Make TOC" href="#makeTOC" class="tocLink">Make TOC</a></div>
+
+<div class="tocLevel4">
+<a title="Choose display styles" href="#displayStyle" class="tocLink">Choose
+display styles</a></div>
+
+<div class="tocLevel4">
+<a title="Multiple files, a single document" href="#multiFile"
+class="tocLink">Multiple files, a single document</a></div>
+
+<div class="tocLevel4">
+<a title="Live chapters" href="#liveChapters" class="tocLink">Live
+chapters</a></div>
+
+<div class="tocLevel4">
+<a title="Alow text edition" href="#edit" class="tocLink">Alow text
+edition</a></div>
+
+<div class="tocLevel4">
+<a title="Variables replacement" href="#vars" class="tocLink">Variables
+replacement</a></div>
+
+<div class="tocLevel4">
+<a title="Managing" href="#managing" class="tocLink">Managing</a></div>
+
+<div class="tocLevel4">
+<a title="Dictionary" href="#dictionary" class="tocLink">Dictionary</a></div>
+
+<div class="tocLevel4">
+<a title="Not reading" href="#notReading" class="tocLink">Not reading</a></div>
+
+<div class="tocLevel3">
+<a title="Implementation" href="#implementation"
+class="tocLink">Implementation</a></div>
+</div>
+</div>
+
+<h2 id="CA-Ideal procedure language">Purpose</h2>
+
+<p>The readers read what the publishers have published. This software helps the
+readers to read better and the publishers to publish better. </p>
+
+<h3 id="forTheReader">For the reader</h3>
+
+<p>Reading on a screen will never be like reading on paper, but it doesn't have
+to be worse. Not at all! </p>
+
+<p>The computer's capabilities can impact the reading experience positively
+with useful features not available on printed matter. Like for example a good
+text search instead of an alphabetized index. </p>
+
+<p>The general purpose is to leverage the computer capabilities in order to
+enhance the on-screen reading experience of extensive documents like books,
+papers and also articles. </p>
+
+<p>Particular attention is paid to features that could reduce the eye strain.
+</p>
+
+<p>All that, in a context of better ergonomics and usability. </p>
+
+<h3 id="forThePublisher">For the publisher</h3>
+
+<p>The system builds very detailed statistics on reader usage of the copy,
+namely time spent on each chapter, section, subsection. </p>
+
+<p>As a publisher, you will know which parts were read, where the readers gave
+up, how much time did they spend on your copy, which are the passages they
+highlighted the most. </p>
+
+<p>Of course, it tracks only the users who opted in. These users enjoy
+additional features, like for example a roaming profile that stores their state
+accross devices. The "state" of a reader is comprised of </p>
+<ul style="margin-left:4em;">
+  <li>current reading points (bookmarks), </li>
+  <li>text selections, </li>
+  <li>notes and cites, </li>
+  <li>history of read articles, </li>
+  <li>and the reading statistics. </li>
+</ul>
+
+<p>A table of contents allows the inclusion of personalized links to additional
+documents so that a published article's TOC can be used as the (personalized)
+index to a magazine issue, clustering a set of related articles. </p>
+
+<p>"Personalized" means that the articles offered are those tagged with the
+subjetcs the readers spend most of their time on. </p>
+
+<p>Readers can also purchase server space to store their data independently of
+the publisher, as a cloud service. <br>
+They will be able to leverage said service with HTML documents published by
+others. </p>
+
+<h2 id="features">Features - functional</h2>
+
+<h3 id="reading">Reading</h3>
+
+<h4 id="bookmarks">Bookmarks</h4>
+
+<p>When the reader gets back to a document that she started reading before, it
+is reopened scrolled to her last reading point. This happens automatically,
+without the reader needing to do any action. </p>
+
+<p>When there is a connection with the server this happens accross devices, the
+virtual bookmarks are stored somewhere in the Internet. </p>
+
+<h4 id="smartScroll">Smart scroll</h4>
+
+<p>In a paper book there are no partially visible lines. Each page starts and
+ends with a fully visible text line. Additionally, some editing effort is made
+to avoid splitting paragraphs so that words or short lines are left dangling at
+the top or the bottom of a page. </p>
+
+<p>The <em>smart scroll</em> feature provides scroll with the tidyness of a
+printed page, setting the start of a paragraph at the top of the viewport, or
+at least a full text line when a big paragraph doesn't fit. </p>
+
+<p>This feature's most important benefit is that the scrolling is done by
+sliding the text upwards so the reader can keep an eye on it. The jumps of the
+regular scroll force the reader to chase a new reading position and to refocus
+in a piece of text, contributing to eye strain. </p>
+
+<h4 id="roaming">Roaming</h4>
+
+<p>The data like the last reading location or the text selection or the quotes,
+are stored in a server in the internet. Thus, one can stop reading a long
+document at home before going to bed, continue reading it in the bus the next
+morning on a portable device, and still read more in the desktop computer at
+work.</p>
+
+<p>Each time the document will open in the right place, and all the annotations
+and highlightings will be available in all the connected devices. </p>
+
+<h4 id="resize">Resize without losing position</h4>
+
+<p>The reader doesn't lose the reading position upon a window horizontal resize
+operation. </p>
+
+<h4 id="TOC">TOC (Table of Content)</h4>
+
+<p>The document has a very handy TOC. The reader can make it slide over the
+current page with a single click or tap without losing the reading position.
+</p>
+
+<p>The TOC works like a menu. It's structure is made up of the document's
+headings levels, and can be expanded and contracted. The last state is saved
+accross devices and sessions, of course. </p>
+
+<p>As the reader progresses in her reading the TOC always reflects the current
+position. </p>
+
+<p>Clicking a title in the TOC takes the reader immediately to that section.
+The TOC remembers the wanderings so it allows the reader to track back to where
+she was reading. </p>
+
+<h4 id="TOCData">Data in the TOC</h4>
+
+<p>In addition to the titles of the parts of the document, the TOC contains
+some additional data, like for example some statistics gathered so far. </p>
+
+<p>It can display graphically the time spent on each section together with the
+section title and the aggregate totals. </p>
+
+<p>If you have taken notes, or selected cites, the TOC shows marks close to the
+related sections, and allows the reader to check and edit them at will, always
+without losing the current reading position.</p>
+
+<h4 id="progress">Progress</h4>
+
+<div class="imgR">
+<img alt="progress indicator" src="res/progressDiagram.png" width="30"
+height="100"></div>
+
+<p>The system displays a small progress indicator representing the amount of
+reading already done and still left, like a book's pages before and after the
+reader's place. </p>
+
+<p>An example diagram is shown. The numbers represent the percent already read
+and pending. The thin white bar between them is proportional to the currently
+displayed page. </p>
+
+<h4 id="timing">Timing</h4>
+
+<p>The system takes note of the time the reader spends on each part of the
+document. It also makes a simple extrapolation for the time needed to complete
+the remaining sections, based on the reading speed so far. </p>
+
+<p>It can inform the reader her reading speed, in words per minute. This is the
+kind of (rather useless) feature that geeks appreciate. In this system's user
+interface design such features don't get in the way of the really useful stuff.
+</p>
+
+<h4 id="bookmarking">Bookmarking</h4>
+
+<p>The reader can set bookmarks to allow her to move quickly from the reading
+place to any other place in the document, and back. </p>
+
+<p>The bookmarks are shown in the TOC, under the section heading where they
+belong. But the reader doesn't need to recall the exact location of each and
+every item, only by typing in a partial title the content is filtered and only
+the relevant references are shown. </p>
+
+<h4 id="search">Searching</h4>
+
+<p>Allows the reader to search, not the current web page with all its chrome,
+but only the copy, more semantically. </p>
+
+<p>Allows the author to provide an index, possibly with some tuning by the
+editor, to make the search more semantic than lexical. </p>
+
+<p>If the page is part of a set (a multi-page document, like a book broken in a
+chapter per HTML page), the search can span all the pages comprising the set,
+and only those pages, instead of the standard choice "either this page or the
+whole web". </p>
+
+<p>If the reader has other documents in her shelf (read documents history) she
+can also search them. </p>
+
+<h4 id="">The Shelf</h4>
+
+<p>Along time, the system builds a memory of the documents or books accessed,
+allowing the user to get back to them, and provides a means to edit and comment
+the bookmarks (not the browser's bookmarks). </p>
+
+<p>The user needs to do nothing for this to happen, it's silent and automatic.
+Later on any unwanted entries can be removed. </p>
+
+<p>This is sort of a personal library that allows the reader to rearrange the
+entries, and to classify them within categories. </p>
+
+<h4 id="quotes">Quotes</h4>
+
+<p>Lets the user store a piece of text as a selected quote, keeping it
+connected to the original document by storing a bookmark pointing to the
+document at the right reading position from where the quote was taken.</p>
+
+<p>Quotes can be made public through the social networks, allowing the readers
+to detect others with similar intellectual interests and gather (like for
+example on Google Groups) to discuss related stuff. </p>
+
+<h4 id="links">Links</h4>
+
+<p>Additionally to taking notes and tagging the text, it is possible to select
+a piece of text and make a link out of it, to a target either inside or outside
+the current document. </p>
+
+<h4 id="norepeat">No repeated pages</h4>
+
+<p>Links that open in new browser pages tend to open the same page again each
+time they are clicked. This system system will, instead, takes the reader to
+the previously opened single instance of the page. </p>
+
+<h4 id="figures">Figures and examples</h4>
+
+<p>It is common to be reading a text that references an example, a data table,
+or a figure that is scrolled out of sight (in other page, if it was printed
+matter). </p>
+
+<p>One can't be looking at the text and the referenced figure, both at once,
+and needs to scroll back and forth. </p>
+
+<p>This UI provides a means to pull the part of the page that contains the
+figure or example and set it side by side with the associated text, making it
+possible to display noth at once in a wide screen. </p>
+
+<p>This is like tearing off a book or magazine page containing the figure to be
+able to see it while reading the explanation. </p>
+
+<h4 id="sidenotes">Handle sidenotes</h4>
+
+<p>Clicking a sidenote opens it in an overlay where it can be read with greater
+comfort, clicking on the overlay closes it.</p>
+
+<p>It works the same for footnotes: the text is shown over the current page and
+dissapears when you are done reading it. No need to change the reading
+position. </p>
+
+<h3 id="social">Social</h3>
+
+<h4 id="publicComment">Public comments</h4>
+
+<p>A reader that wants to comment his reading with others can publish a
+<em>public comment</em> that will be routed to other readers reading the same
+document who are willing to receive such requests. </p>
+
+<p>This allows a communication channel that can be opened to other readers
+expressing their will to share thoughts, forming discussion groups around a
+book or article of otherwise unrelated readers. </p>
+
+<p>Ultimately, a critic or an expert could fully highlight and comment a
+document and make her work available to the public. </p>
+
+<h3 id="settingText">Rather technical</h3>
+
+<p>Upon document load do things to the content in order to enhance the reading
+experience, like analyzing its structure and building a TOC, and recalling and
+applying previous sessions highlights. </p>
+
+<h4 id="makeTOC">Make TOC</h4>
+
+<p>Build a TOC (Table of Contents) based on the document's headers structure.
+</p>
+
+<p>In the TOC, mark the already seen parts and the time used in each one. Also
+the reader's bookmarks and hightlights, as icons that reveal their content when
+selected and act as links to the relevant parts. </p>
+
+<p>Allow using the TOC to jump to other parts of the text, and to get back to
+the current place. </p>
+
+<p>Provide an option to generate numbers for the chapters, sections and
+sub-sections, both in the TOC and in the document body, for the reader to use
+as references. </p>
+
+<h4 id="displayStyle">Choose display styles</h4>
+
+<p>Allow the reader to control the style of the copy, like: </p>
+<ul>
+  <li>font size, typography, and color</li>
+  <li>background color</li>
+  <li>size (width) of the container</li>
+</ul>
+The layout of the text body container must be <em>fluid</em> to allow width
+changes, with a maminum width expressed as a measure proportional to the font
+size. 
+
+<p>Remember the reader's choices accross sections. Only automatically apply the
+chosen styles to a single document, or a whole web site, according to the
+reader's instructions. </p>
+
+<p>Apply style changes on a per-device fashion, it might not be appropriate to
+apply styles chosen for a big monitor in a smartphone. </p>
+
+<p>Allow the user to quickly preview the appearance of the new configuration
+prior to committing it. </p>
+
+<h4 id="multiFile">Multiple files, a single document</h4>
+
+<p>To avoid too long HTML pages, the book can be set in several separate files
+each one containing, for example a single chapter. </p>
+
+<p>Anyway, the book is perceived as a single unit. The TOC includes all the
+headers of all the parts. The bookmarks work no matter in which file the target
+is. Search includes everything. </p>
+
+<h4 id="liveChapters">Live chapters</h4>
+
+<p>In many subjects things change fast. A book written today gets outdated next
+year, or next month. A news article can change overnight. </p>
+
+<p>This feature implement books as a rather stable stem that references
+chapters that are more volatile. </p>
+
+<p>The stem advertises the changes and fetches the updated information. </p>
+
+<p>This way, authors can protect their work from obsolescense. </p>
+
+<h4 id="edit">Alow text edition</h4>
+
+<p>The document is editable. This allows for copy to be changed and added.
+Predefined styles can be applied to selected elements of the page. New elements
+can be easily inserted. </p>
+
+<p>The document always stays <em>structured</em>, that is, its structure can be
+expressed as a multilevel hierarchical TOC. </p>
+
+<p>This way it can be inserted into higher level structures, like a chapter
+into a book's index, or an article in a magazine's TOC, or both into the
+reader's shelf. </p>
+
+<h4 id="vars">Variables replacement</h4>
+
+<p>In texts like manuals, there are text particles like the product version
+number that change from one edition to the other, and that would require the
+author to scan the text in detail in order to update it, should the tool lack
+an auto updating feature.</p>
+
+<p>This tool allows to define named variables, insert references within the
+text, and the publishing process will update the values when the variable value
+changes.</p>
+
+<p>The variables are set in tags like &lt;varText
+name="version"&gt;2.4.4&lt;/varText&gt;. </p>
+
+<p>The tool affectively updates the content inside the tag, changing it, but
+the tags are kept in place. </p>
+
+<h4 id="managing">Managing</h4>
+
+<p>The statistics about the amount of time spent in each part of the text can
+be consumed by the user, but also are interesting to the owner of the content.
+</p>
+
+<p>For example if the content is study material, like a course, it is a measure
+of the time spent by the student in front of it. </p>
+
+<p>It can be useful, for example, for detecting parts of the course that take
+too much time to read because they are not quit clearly explained.</p>
+
+<p>In a paper or article if the readers tend to give up at a certain point, the
+statistics might pinpoint it guiding the author to make a revision. </p>
+
+<h4 id="dictionary">Dictionary</h4>
+
+<p>The reader can select a word or a phrase and search it in a dictionary of
+her choice with a simple interaction, get back exactly to where you were
+reading when you are done.</p>
+
+<p>The system keeps a record of all the words you have searched for and the
+definition you choose, if any. Together with the word and its definition, the
+system records also the context where the word appeared, like for example the
+document and the paragraph. </p>
+
+<p>This way, if you search again later on for a word you'll get to that
+definition quite directly. </p>
+
+<h4 id="notReading">Not reading</h4>
+
+<p>The documents the reader is interested in might not show when it's the best
+moment to read them. The system helps them to take note of what they want to
+read but can't do right now.</p>
+
+<p>It will make a list of <em>wannareads</em> including a link to the page and
+additional information like when did she took note, using which device, and
+where were they then.</p>
+
+<p>Il will also allow the reader to add a comment just in case they also wanted
+to take note of the reason why that publication called their attention at that
+moment like "<em>Joe must see this</em>". </p>
+
+<h3 id="implementation">Implementation</h3>
+
+<p>The system has three parts: </p>
+<ul>
+  <li>reader, </li>
+  <li>publisher, and</li>
+  <li>server.</li>
+</ul>
+
+<h4 id="partReader">The reader's part</h4>
+
+<p>The <em>reader</em> part runs in the browser. It's javascript code that
+either is served by the publisher together with the page, or is installed by
+the reader as a browser extension. </p>
+
+<p>This part does all the user interface magic, like handling the TOC,
+supporting the highlighting, and so on. </p>
+
+<p>It also gathers the reading statistics and other to-be-persisted data, and
+sends all it to the server. </p>
+
+<h4 id="partPublisher">The publisher's part</h4>
+
+<p>The publisher part is about preparing the articles and <em>publishing</em>
+them in this system's way. It has its own <em>backoffice</em> user interface.
+</p>
+
+<p>The publisher leverages the system capabilities by creating an extended TOC
+that includes other article's abstracts and links, to inform the reader about
+other material from the same source. </p>
+
+<p>The edition capabilities of the system allow authors and reviewers to work
+on the copy online, writing and polishing it, even if it's already published.
+</p>
+
+<p>But the central part of the backoffice UI is the <em>reading
+statistics</em>. </p>
+
+<p>The publisher can see live statistics of the reader's activity like the
+number of different readers, the time they spend on the articles, and said time
+disclosed in chapters, sections, or whatever way the article structure is
+organized. This includes how much time takes the reading, on average, and an
+idea of how far the readers go on each article. It is useful for both the
+reader and the author. </p>
+
+<h4 id="partServer">The server part</h4>
+
+<p>The server stores the reading statistics, quotes and selections, and the
+persisted state (like the current reading place). </p>
+
+<p>The server has a cost that is paid either by the publisher (to get the
+readers statistics), or by the reader as a low cost optional subscription when
+client side part is a browser add-on. </p>
+
+<p>The system also can be used by a reader without the server part, resigning
+the roaming state and persistence features. </p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+</div>
+</body>
+</html>

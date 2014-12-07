@@ -1,0 +1,870 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Language" content="en">
+  <title>rt: technical stuff</title>
+  <link rel="stylesheet" href="res/rtDoc.css" type="text/css">
+  <script type="text/javascript" src="res/jquery-1.8.3.js">
+ </script>
+  <script type="text/javascript" src="res/tocBuilder.js">
+ </script>
+  <link href="res/tocBuilder.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#tocContainer').tocBuilder({
+        type: 'headings',
+        backLinkText: 'TOC',
+        startLevel: 2,
+        endLevel: 6
+      });
+    });
+  </script>
+  <script type="text/javascript" src="res/rt.js">
+ </script>
+</head>
+
+<body>
+
+<div class="imgR miniMenu">
+
+<div>
+<ul style="list-style-type:none;">
+  <li><a href="index.html">index</a> </li>
+  <li><a href="tasks.html">tasks &amp; bugs</a> </li>
+  <li><a href="comparison.html">comparison</a></li>
+  <li><a href="rtech.html">technical defs</a></li>
+  <li><a href="notes.html">notes &amp; links</a></li>
+  <li><a href="aboutScrolling.html">about scrolling</a></li>
+  <li><a href="project.html">project</a></li>
+</ul>
+</div>
+</div>
+
+<div id="rtHeader">
+
+<div class="fixedHeader">
+<h1 style="display:inline; ">rt: technical</h1>
+</div>
+</div>
+
+<div id="rtBody" style="clear:none;">
+
+<div id="tocContainer" class="tocContainer" style="clear:none;">
+<!-- Header levels
+h1 global title
+h2 source book from CA library: IDLB22PR.boo
+h3 book chapter
+h3 book section
+h4, h5 subsections
+-->
+
+<p>?</p>
+
+<div class="toc">
+<ul>
+  <li><a href="#CA-Ideal procedure language">Implementation details</a> 
+    <ul>
+      <li><a href="#Roaming">Roaming - the server side</a></li>
+      <li><a href="#L9458">Tidy scroll</a></li>
+      <li><a href="#L181">Reading position recording</a> 
+        <ul>
+          <li><a href="#L193">Disconnected operation (see localStorage
+            notes)</a></li>
+          <li><a href="#Scroll">Scroll data</a></li>
+          <li><a href="#L230">Compiling reading time statistics</a></li>
+          <li><a href="#L971">Identity of the document</a></li>
+          <li><a href="#L983">Identity of the reader</a></li>
+        </ul>
+      </li>
+      <li><a href="#L174">Server architecture</a></li>
+      <li><a href="#Remember">Remember current "page"</a></li>
+      <li><a href="#L212">Reading position in page</a></li>
+      <li><a href="#L223">Semantic reading position</a> 
+        <ul>
+          <li><a href="#L229">structured path</a></li>
+          <li><a href="#L251">element count</a></li>
+          <li><a href="#L283">element position</a></li>
+          <li><a href="#L291">headers index</a></li>
+        </ul>
+      </li>
+      <li><a href="#L304">One method to identify the visible elements</a></li>
+      <li><a href="#L358">second method to find out what is visible</a></li>
+      <li><a href="#L379">useful functions</a></li>
+      <li><a href="#L501">JavaScript Tutorial</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+</div>
+
+<h2 style="clear:none;" id="CA-Ideal procedure language">Implementation
+details</h2>
+
+<p></p>
+
+<div>
+<h4 id="Roaming" style="clear:none;"><a href="index.html#Roaming">Roaming - the
+server side</a></h4>
+
+<p>This part of the server services deals with storing the history of the
+documents, that is, the current reading position, and the history of where they
+were reading in previous sessions. </p>
+
+<p>It is expected to have high traffic of non-critical inserts (each user's
+scroll). </p>
+
+<p>The details of the data is stored in <a href="dataModel.html">the Data Model
+page</a>. </p>
+
+<h4>RESTful methods</h4>
+
+<p>The criteria for choosing which HTTP method is related to each CRUD
+operation is stated below. </p>
+
+<table class="wikitable">
+  <tbody>
+    <tr>
+      <th>Resource</th>
+      <th>GET</th>
+      <th>PUT</th>
+      <th>POST</th>
+      <th>DELETE</th>
+    </tr>
+    <tr>
+      <th>Collection URI, such as <code>http://example.com/<br>
+        resources/</code></th>
+      <td><b>List</b> the URIs and perhaps other details of the collection's
+        members.</td>
+      <td><b>Replace</b> the entire collection with another collection.</td>
+      <td><b>Create</b> a new entry in the collection. The new entry's URI is
+        assigned automatically and is usually returned by the operation.</td>
+      <td><b>Delete</b> the entire collection.</td>
+    </tr>
+    <tr>
+      <th>Element URI, such as <code>http://example.com/<br>
+        resources/item17</code></th>
+      <td><b>Retrieve</b> a representation of the addressed member of the
+        collection, expressed in an appropriate Internet media type.</td>
+      <td><b>Replace</b> the addressed member of the collection, or if it
+        doesn't exist, <b>create</b> it.</td>
+      <td>Not generally used. Treat the addressed member as a collection in its
+        own right and <b>create</b> a new entry in it.</td>
+      <td><b>Delete</b> the addressed member of the collection.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The PUT and DELETE methods are idempotent methods. The GET method is a safe
+method (or nullipotent), meaning that calling it produces no side-effects.</p>
+<ul>
+  <li>Create = PUT iff you are sending the full content of the specified
+    resource (URL).</li>
+  <li>Create = POST if you are sending a command to the server to create a
+    subordinate of the specified resource, using some server-side
+  algorithm.</li>
+  <li>Retrieve = GET.</li>
+  <li>Update = PUT iff you are updating the full content of the specified
+    resource.</li>
+  <li>Update = POST if you are requesting the server to update one or more
+    subordinates of the specified resource.</li>
+  <li>Delete = DELETE.</li>
+</ul>
+<ul>
+  <li>The client includes all aspect of the resource including the unique
+    identifier to uniquely identify the resource. Example: creating a new
+    employee.</li>
+  <li>The client provides all the information for a resource to be able to
+    modify that resource.This implies that the server side does not update any
+    aspect of the resource (such as an update date).</li>
+</ul>
+
+<p>In both cases, these operations can be performed multiple times with the
+same results. That is the resource will not be changed by requesting the
+operation more than once. Hence, a true idempotent operation.</p>
+
+<p><strong>Use the HTTP PUT method when:</strong></p>
+<ul>
+  <li>The client includes all aspect of the resource including the unique
+    identifier to uniquely identify the resource. Example: creating a new
+    employee.</li>
+  <li>The client provides all the information for a resource to be able to
+    modify that resource.This implies that the server side does not update any
+    aspect of the resource (such as an update date).</li>
+</ul>
+
+<p>In both cases, these operations can be performed multiple times with the
+same results. That is the resource will not be changed by requesting the
+operation more than once. Hence, a true idempotent operation.</p>
+
+<p><strong>Use the HTTP POST method when:</strong></p>
+<ul>
+  <li>The server will provide some information concerning the newly created
+    resource. For example, take a logging system. A new entry in the log will
+    most likely have a numbering scheme which is determined on the server side.
+    Upon creating a new log entry, the new sequence number will be determined
+    by the server and not by the client.</li>
+  <li>On a modification of a resource, the server will provide such information
+    as a resource state or an update date. Again in this case not all
+    information was provided by the client and the resource will be changing
+    from one modification request to the next. Hence a non idempotent
+  operation.</li>
+</ul>
+
+<h4>Use the HTTP POST method when:<a
+href="http://www.filecatalyst.com/rest-http-post-vs-http-put"></a></h4>
+<ul>
+  <li>The server will provide some information concerning the newly created
+    resource. For example, take a logging system. A new entry in the log will
+    most likely have a numbering scheme which is determined on the server side.
+    Upon creating a new log entry, the new sequence number will be determined
+    by the server and not by the client.</li>
+  <li>On a modification of a resource, the server will provide such information
+    as a resource state or an update date. Again in this case not all
+    information was provided by the client and the resource will be changing
+    from one modification request to the next. Hence a non idempotent
+  operation.</li>
+</ul>
+</div>
+
+<div>
+<h4 id="L9458"><a href="index.html#L9458">Tidy scroll</a></h4>
+
+<p>Capture the spacebar input and do a tidy scroll when it's pressed and
+released. The tidy scroll has the following characteristics: </p>
+<ol>
+  <li>A fast animation, so that the user can see what happened but doesn't have
+    to wait. Evaluate offering a configuration option for this lapse. </li>
+  <li>If the paragraph's height is not much (like, 10 or 12 lines) scroll to
+    the top of the next block element</li>
+</ol>
+</div>
+
+<div>
+<h4 id="L181">Reading position recording</h4>
+
+<p>This part contains the preliminary notes on how to implement the reading
+position recording and the interactions between the client and the server. </p>
+
+<h5 id="L193">Disconnected operation (see <a
+href="localStorage.html">localStorage notes</a>)</h5>
+
+<p>This introduces the idea of a disconnected operation capability, where the
+client stores the data locally, compiles it, and sends it to the server if it
+ever becomes available. This approach might allow the reader to have personal
+detailed information, and the server to have aggregate data, with less traffic.
+</p>
+
+<p>It will work when the reader does not allow the replicaqtion of his data to
+the server. </p>
+
+<p>In addition to remembering the reading position, the aggregation of this
+data makes the reading history of the document for the reader, and the
+aggregation of all the readers makes the document's reading history for the
+author. </p>
+
+<h5 id="Scroll">Scroll data</h5>
+
+<p>This is the data used for resuming reading and for reading time statistics.
+</p>
+
+<p>It's a chronological series of the scroll positions. </p>
+
+<p>Each time the user scrolls (after a litle while) the page stores a new
+reading position in localStorage. Also the position is recorded after one
+minute without scrolling, in what could be the end of the reading session, or a
+long pause. </p>
+
+<p>As a post-process, entries that point to the same element (have equal
+position) are cleaned leaving the first and the last one. </p>
+
+<p>The entries are indexed by their timestamp, converted to a string, using the
+<code><a
+href="http://msdn.microsoft.com/en-us/library/ie/cd9w2te4(v=vs.94).aspx">getTime()</a></code>
+method that returns the timestamp as a number of milliseconds since the epoch.
+</p>
+<pre>RT-2013-02-11T18:00:00.205Z: {"docPath":"0,0,1,1,1,0,0,3,9,1,16,1,7,2"}
+RT-2013-02-11T18:00:08.365Z: {"docPath":"0,0,1,1,1,0,0,3,9,1,16,1,7,3","p100":42}
+RT-2013-02-11T18:00:20.391Z: {"docPath":"0,0,1,2,1,0,0,2,1"}
+RT-2013-02-11T18:00:26.825Z: {"docPath":"0,0,1,2,1,0,0,4"}
+
+360674548856: {"docPath":"0,0,1,1,1,0,0,3,9,1","p100":37}
+RT-1360674675006: {"docPath":"0,0,1,1,1,0,0,3,6,6","p100":17}
+RT-1360674683092: {"docPath":"0,0,1,1,1,0,0,3,9,1","p100":17}
+RT-1360674688941: {"docPath":"0,0,1,1,1,0,0,3,9,1,6,1,1,1","p100":75}
+RT-1360674690533: {"docPath":"0,0,1,1,1,0,0,3,9,1,6,1,2,1"}
+RT-1360674693509: {"docPath":"0,0,1,1,1,0,0,3,9,1,6,1,2,4"}
+RT-1360674696485: {"docPath":"0,0,1,1,1,0,0,3,9,1,6,1,3,1","p100":21}
+RT-1360674699637: {"docPath":"0,0,1,1,1,0,0,3,9,1,7,1,2,1"}
+RT-1360674790333: {"docPath":"0,0,1,1,1,0,0,3,1,2","p100":47}
+RT-1360674792299: {"docPath":"0,0,1,1,1,0,0,3,3,2","p100":61}
+RT-1360674797756: {"docPath":"0,0,1,1,1,0,0,3,6,3"}
+RT-1360674799636: {"docPath":"0,0,1,1,1,0,0,3,6,6","p100":17}
+RT-1360674801419: {"docPath":"0,0,1,1,1,0,0,3,8,1","p100":79}
+RT-1360676022061: {"docPath":"0,0,1,1,1,0,0,3,8","p100":2}
+RT-1360676667522: {"docPath":"0,0,1,1,1,0,0,3,7,1","p100":70}
+beforeunload: 1360676670067</pre>
+
+<p>Another type of record is produced when the document loses focus, i.e., the
+reader goes to another window. This is done with <a
+href="http://stackoverflow.com/questions/3479734/javascript-jquery-test-if-window-has-focus">the
+<code>hasFocus()</code> method</a>. The user has to change the focus and not
+return for a while, like 1 or 2 minutes, to be considered lost in action. </p>
+
+<h5 id="L230">Compiling reading time statistics</h5>
+
+<p>The application builds a TOC and stores it in non-volatile memory -
+<code>localStorage</code> and the database. </p>
+
+<p>From the <a href="#Scroll">scroll data</a> it calculates the time spent
+reading each entry of the TOC. </p>
+
+<p>The information in the <code>docPath</code> property contains, in its first
+7 element, a reference to a TOC item. </p>
+
+<h5>Detecting when the reader abandons the document</h5>
+
+<p>When the reader leaves the page (closes it or navigates somewhere else) the
+reading session is supposed to have ended and the event is recorded. </p>
+<pre>$(window).unload( function () { alert("Bye now!"); } );</pre>
+
+<p></p>
+<pre>function closeIt() {
+  return "Any string value here forces a dialog box to \n" + 
+  "appear before closing the window.";
+}
+window.onbeforeunload = closeIt;</pre>
+
+<p>The event is triggered by any of the following actions: </p>
+<ul style="margin-left:2em;">
+  <li>Close the current window. </li>
+  <li>Navigate to another location by entering a new address or selecting a
+    Favorite. </li>
+  <li>Click an <a
+    href="http://msdn.microsoft.com/en-us/library/ms535173(v=vs.85).aspx"><strong>anchor</strong></a>
+    that refers to another document. </li>
+  <li>Invoke the <a
+    href="http://msdn.microsoft.com/en-us/library/ms535173(v=vs.85).aspx"><strong>anchor</strong></a>.<a
+    href="http://msdn.microsoft.com/en-us/library/ms536363(v=vs.85).aspx"><strong>click</strong></a>
+    method. </li>
+  <li>Invoke the <a
+    href="http://msdn.microsoft.com/en-us/library/ms535862(v=vs.85).aspx"><strong>document</strong></a>.<a
+    href="http://msdn.microsoft.com/en-us/library/ms536782(v=vs.85).aspx"><strong>write</strong></a>
+    method. </li>
+  <li>Invoke the <a
+    href="http://msdn.microsoft.com/en-us/library/ms535862(v=vs.85).aspx"><strong>document</strong></a>.<a
+    href="http://msdn.microsoft.com/en-us/library/ms536369(v=vs.85).aspx"><strong>close</strong></a>
+    method. </li>
+  <li>Invoke the <a
+    href="http://msdn.microsoft.com/en-us/library/ms535873(v=vs.85).aspx"><strong>window</strong></a>.<a
+    href="http://msdn.microsoft.com/en-us/library/ms536367(v=vs.85).aspx"><strong>close</strong></a>
+    method. </li>
+  <li>Invoke the <a
+    href="http://msdn.microsoft.com/en-us/library/ms535873(v=vs.85).aspx"><strong>window</strong></a>.<a
+    href="http://msdn.microsoft.com/en-us/library/ms536638(v=vs.85).aspx"><strong>navigate</strong></a>
+    or <a
+    href="http://msdn.microsoft.com/en-us/library/ms536641(v=vs.85).aspx"><strong>NavigateAndFind</strong></a>
+    method. </li>
+  <li>Invoke the <a
+    href="http://msdn.microsoft.com/en-us/library/ms535866(v=vs.85).aspx"><strong>location</strong></a>.<a
+    href="http://msdn.microsoft.com/en-us/library/ms536712(v=vs.85).aspx"><strong>replace</strong></a>
+    method. </li>
+  <li>Invoke the <a
+    href="http://msdn.microsoft.com/en-us/library/ms535866(v=vs.85).aspx"><strong>location</strong></a>.<a
+    href="http://msdn.microsoft.com/en-us/library/ms536691(v=vs.85).aspx"><strong>reload</strong></a>
+    method. </li>
+  <li>Specify a new value for the <a
+    href="http://msdn.microsoft.com/en-us/library/ms535866(v=vs.85).aspx"><strong>location</strong></a>.<a
+    href="http://msdn.microsoft.com/en-us/library/ms533867(v=vs.85).aspx"><strong>href</strong></a>
+    property. </li>
+  <li>Submit a <a
+    href="http://msdn.microsoft.com/en-us/library/ms535249(v=vs.85).aspx"><strong>form</strong></a>
+    to the address specified in the <a
+    href="http://msdn.microsoft.com/en-us/library/ms533063(v=vs.85).aspx"><strong>ACTION</strong></a>
+    attribute via the <a
+    href="http://msdn.microsoft.com/en-us/library/ms535840(v=vs.85).aspx"><strong>INPUT
+    type=submit</strong></a> control, or invoke the <strong>form</strong>.<a
+    href="http://msdn.microsoft.com/en-us/library/ms536771(v=vs.85).aspx"><strong>submit</strong></a>
+    method. </li>
+  <li>Invoke the <a
+    href="http://msdn.microsoft.com/en-us/library/ms535873(v=vs.85).aspx"><strong>window</strong></a>.<a
+    href="http://msdn.microsoft.com/en-us/library/ms536651(v=vs.85).aspx"><strong>open</strong></a>
+    method, providing the possible value <strong>_self</strong> for the window
+    name. </li>
+  <li>Invoke the <a
+    href="http://msdn.microsoft.com/en-us/library/ms535862(v=vs.85).aspx"><strong>document</strong></a>.<a
+    href="http://msdn.microsoft.com/en-us/library/ms536652(v=vs.85).aspx"><strong>open</strong></a>
+    method. </li>
+  <li>Click the Back, Forward, Refresh, or Home button. </li>
+</ul>
+
+<p>It is a list of the ways a user can terminate the viewing of a current page.
+All of these mean end of session, by triggering the
+<code>window.onbeforeunload</code> event. </p>
+
+<p></p>
+
+<h5>How to find the reader's IP address</h5>
+
+<p>There are several services that return the client's public IP: </p>
+<ul>
+  <li><a href="http://whatismyip.org/">http://whatismyip.org/</a> <span
+    style="text-decoration: line-through; color: Grey;">174.129.141.141</span></li>
+  <li>http://checkip.dyndns.org/ 190.31.91.126 !</li>
+  <li>wget http://ipecho.net/plain -O - -q ; echo 190.31.91.126 </li>
+  <li>http://ifconfig.me/ 190.31.91.126 </li>
+  <li>http://www.ip-details.com/ = </li>
+</ul>
+
+<p>Get own public IP in commandline:</p>
+<pre>wget -q -O - checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/&lt;.*$//'</pre>
+
+<p>The services can't be used in a high traffic scenario, but are useful to
+find out what do they do. </p>
+
+<h5 id="L971">Identity of the document</h5>
+
+<p>The document knows its id and bears it when it's sent to the client. It also
+contains the user id when the user is already identified, or a temporary
+<em>unidentified user</em> id if not. If the document came from another
+location, then the server (or the client?) would assign it an id associated to
+its URL. </p>
+
+<h5 id="L983">Identity of the reader</h5>
+
+<p>It might be useful to send also the client's IP number only once, when the
+session is started. Another way to recognize readers (a reader's computer,
+actually) is by inspecting the bytes 9~12 of the generated ids. </p>
+</div>
+
+<div>
+<h4 id="L174">Server architecture</h4>
+
+<p>There are options and tradeoffs: </p>
+<ol>
+  <li>Web server with ASP3 or PHP, easy and inexpensive to host, short in
+    features (like a REST framework)</li>
+  <li>Servlet container with Java, more expensive to host, but choke full of
+    features</li>
+  <li><a href="nodeServerSetup.html">node.js server</a>, cheap to host during
+    development, but too young a technology. 
+    <p>The construction of a development setup was successful, using portable
+    versions of all the software involved, and is documented as <a
+    href="nodeServerSetup.html">Windows node.js server setup</a>. </p>
+    <p>Next attempt was <code>restify</code> that offers REST mapping,
+    discarded because of its scarce documentation. </p>
+    <p>Using the <code>express</code> plugin seems to be the way. It implements
+    traditional web site serving functions, and has also some RESTful
+    capabilities. </p>
+    <p>Possibliy <a
+    href="https://github.com/visionmedia/express-resource#express-resource">express-resource</a>
+    can be used. </p>
+  </li>
+</ol>
+</div>
+
+<p></p>
+
+<div>
+<h4 id="Remember"><a href="rt.html">Remember current "page"</a></h4>
+
+<p>On scroll save the position (scrollTop) in a cookie. Wait for on second
+before saving it, to allow for any adjustement or the reader paging repeatedly.
+</p>
+
+<p>When the document displays, or when returning from another part of the
+document, scroll to the saved position. </p>
+
+<p>The scroll position depends on the width of the window, the font size, and
+other properties. A document reshown in a resized window might not scroll
+correctly. </p>
+
+<p>To get to the right place the bookmark must contain the section/subsection,
+the paragraph number within the section, and a position in the paragraph that
+will usually be its beginning. Maybe always returning to the top of the
+paragraph is OK when the documnent is reloaded, and getting to the exact
+position is desired upon returning from other place. </p>
+
+<p>Or, give each element an id and bookmark it. The id assignment algorithm has
+to handle cases like when a new paragraph or image is inserted, and also when a
+new section or chapter is inserted. It has to assign equal ids to the same
+paragraphs and images each new session despite of content changes, as much as
+possible (what for? content is supposed to be static). </p>
+
+<p>Initially use the scrollTop. </p>
+</div>
+
+<div>
+<h4 id="L212">Reading position in page</h4>
+
+<p>To get the user back to his reading position upon page redisplay the most
+accurate result can be attained by remembering the scroll position of the
+content using <code>RT.$content.scrollTop()</code>. </p>
+
+<p>This value is valid as long as the page width doesn't change. </p>
+
+<p>In case the width was changed (or the font) it is necessary to be aware of
+where was the user reading, which element was visible (paragraph, image, or
+whatever) when he closed the page. </p>
+</div>
+
+<div>
+<h4 id="L223">Semantic reading position</h4>
+
+<p>The document is structured, i.e., it has the form of a proper hierarchy of
+headers fleshed with content like text paragraphs, images, lists, tables,
+etc... </p>
+
+<p>The content is considered to be dangling from the previous header. </p>
+
+<h5 id="L229">structured path</h5>
+
+<p>If the headers are numbered in a sort of Dewey coding, each one will end up
+with an up to 6 parts unique number, the six parts are one for each HTML
+heading level H1 through H6. </p>
+
+<p>There is also a page number (where <em>page</em> means a <em>web page</em>,
+not a <em>book page</em>. A page is a file or a hidden DIV. The page number is
+the very first element of the numbers string. </p>
+
+<p>Thus, 2.1.3.4 would be the content under the 4th H3 heading within the 3rd
+H2 of the first H1 in the second page. </p>
+
+<p>The first part of a saved reading location is then its <em>structured
+path</em>. </p>
+
+<h5 id="L251">element count</h5>
+
+<p>The next part is the number of the topmost visible element within its
+structured path. The first element is number 1, and so on. The counted elements
+are the following tagnames: </p>
+<ul>
+  <li>DIV</li>
+  <li>P</li>
+  <li>OL</li>
+  <li>UL</li>
+  <li>IMG</li>
+  <li>TABLE</li>
+  <li>PRE</li>
+</ul>
+
+<p>Some of these element types still have internal numbering, like the LIs of
+the OL or UL lists, or the TRs of a TABLE. Specifically, a DIV can contain a
+variety of subordinate elements. </p>
+
+<p>There are elements that don't show, hidden elements. These elements are
+counted as part of the structure because they might become visible per user
+action, like the closed sections of an accordion. </p>
+
+<p>The floated elements are ignored, because they don't belong to the structure
+hierarchy. There are marginal cases, like a 100% wide DIV containing a single
+floated element, that take space, but are not accounted for at first. </p>
+
+<h5 id="L283">element position</h5>
+
+<p>The first visible element might be partially scrolled out. Or, it might be
+way bigger than the visible window (like for example a long table) in a way
+that it is valuable to record its position and to be able to replicate it. </p>
+
+<p>The case of the long table is solved by remembering the number of the
+topmost visible TR. The same happens with other elements with internal
+structure like the lists. </p>
+
+<p>In the case of the very long P or PRE, the topmost text has to be detected
+and its position recorded. </p>
+
+<h5 id="L291">headers index</h5>
+
+<p>Build a tree or list of the documnent headers, associated with their
+appropriate <code>docPath</code> (as a key). <code></code></p>
+
+<p>Use it to build the dynamic reading position breadcrumb, with clickable
+titles. </p>
+
+<p>Analyze it and allow the user to be told if there are structure glitches.
+</p>
+</div>
+
+<div>
+<h4 id="L304">One method to identify the visible elements</h4>
+
+<p>The visible elements are found by comparing their positions in the document,
+more specifically: within the content, against the current position of the
+visible window in the screen. </p>
+
+<p>The visible portion of the scrollable content is defined by its top and
+bottom positions, and its height is the height of the container:</p>
+
+<p><code>var visibleTop = RT.$content.scrollTop();<br>
+</code><code>var visibleBottom = visibleTop + RT.$container.height();</code></p>
+
+<p>This visible window is what scrolls down and moves as the user reading
+progresses. </p>
+
+<p>Each element has a position within the document and a height. If the current
+element is <code>$this</code> then its top position and its height are: </p>
+
+<p><code>var elementTop = $this.offset().top<br>
+var elementHeight = </code><code>$this.height()<br>
+var elementBottom = $this.offset().top + $this.height()</code></p>
+
+<p>The visibility of an element stems from the relationship of its position and
+height with the top and bottom of the visible window. There are four possible
+cases: </p>
+<ol>
+  <li>The element is totally outside the visible window: 
+    <pre>elementBottom &lt; visibleTop || elementTop &gt;  visibleBottom</pre>
+  </li>
+  <li>The top of the element is visible (and possibly the bottom too): 
+    <pre>elementTop &gt; visibleTop &amp;&amp; elementTop &lt; visibleBottom</pre>
+  </li>
+  <li>The bottom of the element is visible: 
+    <pre>elementBottom &gt; visibleTop &amp;&amp; elementBottom &lt; visibleBottom</pre>
+  </li>
+  <li>Part of the element is visible, but neither the top nor the bottom: 
+    <pre>elementTop &lt; visibleTop &amp;&amp; elementBottom &gt; visibleBottom</pre>
+  </li>
+</ol>
+
+<h4 id="L358">second method to find out what is visible</h4>
+
+<p>Using newer features like <code>elementFromPoint()</code> &amp;
+<code>getBoundingClientRect()</code>. </p>
+
+<p>The <code>elementFromPoint()</code> method is the ideal feature for this
+purpose. </p>
+
+<p>These are <var><a
+href="http://www.quirksmode.org/dom/w3c_cssom.html#documentview">DocumentView
+and ElementView methods</a></var>. </p>
+
+<h4 id="L379">useful functions</h4>
+<pre>/* 
+ This throws consistent results for an element's position:
+ q.getBoundingClientRect().top + $('#rtOuter').scrollTop()
+
+ A more complete expression is:
+ $('h2')[0].getBoundingClientRect().top 
+ + $('#rtOuter').scrollTop() 
+ - $('#rtBody')[0].getBoundingClientRect().top 
+ that returns exactly zero for the h2 at the top of the page. 
+ The last item corrects a difference of 17.91666603088379px that is the 
+ H2's top margin. The inspection says it has offsetTop: 18. Also its 
+ style has margin-top: 17.920000076293945px. The last item doesn't belong
+ here. 
+
+ As of Chrome, the stable positions are calculted thus: 
+$('[docpath="0,0,1,1,1,0,0,3,1,3"]')[0].getBoundingClientRect().top + $('#rtOuter').scrollTop()
+<strong>implemented:</strong>
+<strong>$('[docpath="0,0,1,1,1,0,0,3,1,3"]')[0].getBoundingClientRect().top + RT.$container.scrollTop()</strong>
+
+ */</pre>
+<dl>
+  <dt>elementFromPoint() <img alt="!" src="res/caramba_yellow.gif" width="7"
+  height="14"></dt>
+    <dd><pre>document.elementFromPoint(<em>xCoordinate</em>, <em>yCoordinate</em>)</pre>
+      <p>Returns a reference to the element located at the given coordinates.
+      The point is one close to the top left corner of the viewport plus any
+      margins and headers. If the specified point is outside the visible bounds
+      of the document or either coordinate is negative, the result is null. </p>
+    </dd>
+    <dd>If the element at the specified point belongs to another document (for
+      example, an iframe's subdocument), the element in the DOM of the document
+      the method is called on (in the iframe case, the iframe itself) is
+      returned. If the element at the given point is anonymous or XBL generated
+      content, such as a textbox's scroll bars, then the first non-anonymous
+      ancestor element (for example, the textbox) is returned. </dd>
+    <dd>If the specified point is outside the visible bounds of the document or
+      either coordinate is negative, the result is null.</dd>
+  <dt>getBoundingClientRect()</dt>
+    <dd><pre>x.getBoundingClientRect()</pre>
+      <p>Gets the element's encompassing rectangle. Returns an object that
+      contains the top, left, right, and bottom (all relative to the top left
+      of the viewport) of the combined rectangle of element x. </p>
+    </dd>
+    <dd>Also see <a
+      href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/rectdemo.htm">getBoundingClientRect</a>
+      . </dd>
+  <dt>scrollIntoView() <img alt="!" src="res/caramba_yellow.gif" width="7"
+  height="14"></dt>
+    <dd><pre>x.scrollIntoView()</pre>
+      <p>Makes an element scroll into view, to the top of the viewport. (Not
+      part of the specification) (<a
+      href="http://www.quirksmode.org/dom/tests/scrollintoview.html">test</a>)</p>
+    </dd>
+  <dt>offsetWidth and offsetHeight</dt>
+    <dd>The width and height of the entire element, including borders. </dd>
+  <dt>scrollLeft and scrollTop </dt>
+    <dd>The amount of pixels the element has scrolled. Read/write. In jQuery
+      scrollTop() is "Get the current vertical position of the scroll bar for
+      the first element in the set of matched elements" and scrollLeft() is
+      similar. </dd>
+  <dt>scrollWidth and scrollHeight </dt>
+    <dd>The width and height of the entire content field, including those parts
+      that are currently hidden. <br>
+      If there's no hidden content it should be equal to clientX/Y. </dd>
+  <dt>innerWidth and innerHeight </dt>
+    <dd><pre>window.innerWidth
+window.innerHeight</pre>
+      <p>The dimensions of the viewport (interior of the browser window). (<a
+      href="http://www.quirksmode.org/dom/tests/windowview.html#pageXOffset%20and%20pageYOffset">test
+      page</a>)</p>
+    </dd>
+  <dt>pageXOffset and pageYOffset </dt>
+    <dd><pre>window.pageXOffset
+window.pageYOffset</pre>
+      <p>The amount of pixels the entire page has been scrolled. (<a
+      href="http://www.quirksmode.org/dom/tests/windowview.html#pageXOffset%20and%20pageYOffset">test
+      page</a>). </p>
+    </dd>
+    <dd>This might allow rt to function without the extra container level. </dd>
+  <dt>availWidth and availHeight </dt>
+    <dd><pre>screen.availWidth
+screen.availHeight</pre>
+      <p>The monitor screen resolution less the taskbar and such. </p>
+    </dd>
+  <dt>width and height </dt>
+    <dd><pre>screen.width
+screen.height</pre>
+      <p>The width and height of the monitor screen. </p>
+    </dd>
+  <dt>clientLeft and clientTop</dt>
+    <dd>The position of the upper left corner of the content element relative
+      to the upper left corner of the entire element (including borders) (<a
+      href="http://www.quirksmode.org/dom/tests/elementdimensions.html">test</a>).
+    </dd>
+</dl>
+</div>
+
+<p></p>
+
+<div>
+<h4 id="L501">JavaScript <a
+href="http://javascript.info/tutorial/coordinates">Tutorial</a></h4>
+
+<p>Document coordinates are window coordinates plus scroll. </p>
+
+<p>Most of time, only document coordinates are used, because they remain same
+after scrolling. </p>
+
+<p>Element coordinates are the coordinates of the left-upper corner. There is
+unfortunately no single property which gives coordinates. But they can be
+calculated using offsetTop/offsetLeft and offsetParent. </p>
+
+<p>The right way: elem.getBoundingClientRect</p>
+
+<p>This method is described in W3C standard, and most modern browsers implement
+it (IE too). It returns a rectangle which encloses the element. The rectangle
+is given as an object with properties top, left, right, bottom. </p>
+<pre class="small80">&lt;input id="brTest" type="button" 
+value="Show button.getBoundingClientRect()" 
+onclick='showRect(this)'/&gt;
+ 
+&lt;script&gt;
+function showRect(elem) {
+  var r = elem.getBoundingClientRect()
+  alert("Top/Left: "+r.top+" / "+r.left)
+  alert("Right/Bottom: "+r.right+" / "+r.bottom)
+}
+&lt;/script&gt;</pre>
+
+<p>The coordinates are given relative to <code>window</code>, not
+<code>document</code>. To calculate coordinates relative to the document, we
+need to take page scroll into account. </p>
+
+<p>If an element is inline and contains long text, it requires multiple
+rectangles to show up. Every line is a rectangle. Such rectangles are called
+"anonymous boxes". This stuff is described in great <a
+href="http://www.w3.org/TR/CSS21/visuren.html#anonymous-block-level">details in
+CSS specification</a>. So, the element contents can be in single or multiple
+rectangles. It is possible to get all these rectangles by calling
+<code>elem.getClientRects()</code>. It works fine excepts for IE&lt;8. </p>
+
+<p>We don't call <code>getClientRects</code> directly. The method
+<code>elem.getBoundingClientRect()</code> returns a single minimal rectangle
+which encloses all boxes returned by <code>getClientRects()</code>.</p>
+
+<p>New version of coordinate calculator using
+<code>getBoundingClientRect</code>: </p>
+<pre class="small80">function getOffsetRect(elem) {
+    // (1)
+    var box = elem.getBoundingClientRect()
+     
+    var body = document.body
+    var docElem = document.documentElement
+     
+    // (2)
+    var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop
+    var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft
+     
+    // (3)
+    var clientTop = docElem.clientTop || body.clientTop || 0
+    var clientLeft = docElem.clientLeft || body.clientLeft || 0
+     
+    // (4)
+    var top  = box.top +  scrollTop - clientTop
+    var left = box.left + scrollLeft - clientLeft
+     
+    return { top: Math.round(top), left: Math.round(left) }
+}</pre>
+
+<p>Also check <a href="http://www.greywyvern.com/?post=331">Updated "find
+position" script</a>. It contains another script with extra considertions, like
+multiple levels of scrolling elements. </p>
+
+<h4>formatting dates</h4>
+
+<p>Javascript has no date formatting feature. This method implements it for all
+Date objects. </p>
+<pre class="small80">Date.prototype.format = function(format) //author: meizz
+{
+  var o = {
+    "M+" : this.getMonth()+1, //month
+    "d+" : this.getDate(),    //day
+    "h+" : this.getHours(),   //hour
+    "m+" : this.getMinutes(), //minute
+    "s+" : this.getSeconds(), //second
+    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    "S" : this.getMilliseconds() //millisecond
+  }
+
+  if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+    (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+  for(var k in o)if(new RegExp("("+ k +")").test(format))
+    format = format.replace(RegExp.$1,
+      RegExp.$1.length==1 ? o[k] :
+        ("00"+ o[k]).substr((""+ o[k]).length));
+  return format;
+}</pre>
+</div>
+
+<p>From: <a
+href="http://huahun.iteye.com/blog/197367">http://huahun.iteye.com/blog/197367</a>
+via <a
+href="http://stackoverflow.com/questions/1056728/formatting-a-date-in-javascript">SO:Formatting
+a date in JavaScript</a> </p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+</div>
+</body>
+</html>
