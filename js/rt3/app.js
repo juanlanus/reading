@@ -36,6 +36,7 @@ GLOBAL.db = null;
 
 /** Module dependencies  */
 var assert = require('assert');
+var Actions = require('../common/actions.js');
 var MongoClient = require( 'mongodb' ).MongoClient;
 var Server = require( 'mongodb' ).Server;
 var format = require( 'util' ).format;
