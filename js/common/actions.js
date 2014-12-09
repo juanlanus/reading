@@ -1,7 +1,7 @@
 // encoding of recorded user actions types
 Actions = function() {
 
-    this.actionIds = {
+    actionIds = {
       sessionStart: 0,
       smartScroll: 1,
       scroll: 2,

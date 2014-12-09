@@ -1,8 +1,8 @@
-"use strict";
 
 /* global jQuery, RT */
 
 describe("TOC - building", function() {
+"use strict";
 
   it("TOC should be defined", function() {
     expect(TOC).toBeDefined();
@@ -15,12 +15,32 @@ describe("TOC - building", function() {
   it("should have a currentLevel variable", function() {
     expect(TOC.currentLevel).toBeDefined();
   });
+});
 
 describe("Action codes", function() {
+"use strict";
 
-  it("Actions should be defined", function() {
+  it("should be defined", function() {
     expect(Actions).toBeDefined();
   });
+
+  var actions = new Actions();
+
+  it("should translate 'foo' into undefined", function() {
+    var failed = actions.getActionId("foo");
+    expect(typeof translated).toBe('undefined');
+  });
+
+  it("should correctly translate 'openTOC' into 7", function() {
+    var translated = actions.getActionId("openTOC");
+    expect(translated).toBe(7);
+  });
+
+  it("should translate 7 into 'openToc'", function() {
+    var translated = actions.getActionName(7);
+    expect(translated).toBe('openTOC');
+  });
+});
 
 
 
@@ -570,4 +590,4 @@ describe("Action codes", function() {
     });
   });
   */
-});
+
