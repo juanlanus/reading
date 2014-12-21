@@ -1,3 +1,11 @@
+/*
+ *  jQuery Reading Tools - v0.0.1
+ *  Reading tools: make reading on-screen something better.
+ *  http://jqueryboilerplate.com
+ *
+ *  Made by Juan Lanus
+ *  Under MIT License
+ */
 (function rtIIFE( $, window, document, undefined ) {
 
   // ********************************************************************************
@@ -44,15 +52,18 @@
   // ********************************************************************************
   // The actual plugin constructor
   function Plugin ( element, options ) {
+    // reference to the container (the pugin element) and its content
     this.element = element;
     this.$element = $( element );
     this.content = this.$element.children()[0];
     this.$content = $( this.content );
+    // merge options into defaults object
     this.settings = $.extend( {}, defaults, options );
     this._defaults = defaults;
     this._name = pluginName;
     // make the plugin data publicly accesible
     $.fn.rt.RT = this;
+    // initialize tue plugin
     this.init();
   }
 
@@ -62,8 +73,6 @@
 
     init: function () {
       var RT = $.fn.rt.RT;
-
-      RT.TOC = new TOC();
 
       RT.data = initData();
 

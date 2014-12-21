@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 
     // Lint definitions
     jshint: {
-      files: ["src/jquery.rt.js"],
+      files: ["src/jquery.rt.js", "src/toc.js", "../common/actions.js"],
       options: {
         jshintrc: ".jshintrc"
       }

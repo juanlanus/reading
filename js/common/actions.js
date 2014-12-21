@@ -1,7 +1,7 @@
 // encoding of recorded user actions types
-Actions = function() {
+var Actions = function() {
 
-    actionIds = {
+    var actionIds = {
       sessionStart: 0,
       smartScroll: 1,
       scroll: 2,
@@ -14,7 +14,7 @@ Actions = function() {
       sessionEnd: 25
     };
 
-    actionIdMap = null;
+    var actionIdMap = null;
       
     this.getActionId = function( actionName ) {
       return actionIds[actionName];
@@ -30,5 +30,5 @@ Actions = function() {
 
     };
 
-    return this;
+    return Actions;
 };
