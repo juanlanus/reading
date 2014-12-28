@@ -16,6 +16,10 @@ describe("TOC - building", function() {
     expect(TOC.currentLevel).toBeDefined();
   });
 
+  it("should have a config object with a debug property", function() {
+    expect(TOC.config.debug).toBeDefined();
+  });
+
 
   /*
   describe("configureSelectors()", function() {

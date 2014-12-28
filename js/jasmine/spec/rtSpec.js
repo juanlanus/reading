@@ -4,40 +4,77 @@
 describe("TOC - building", function() {
 "use strict";
 
-  it("TOC should be defined", function() {
+  it("The constructor should be defined", function() {
     expect(TOC).toBeDefined();
   });
 
-  it("should have a clearTOC function", function() {
-    expect(TOC.clearTOC).toBeDefined();
+  var RT = RT || {};
+  RT.TOC = new TOC({debug:true});
+
+  it("The instance RT.TOC should be defined", function() {
+    expect(RT.TOC).toBeDefined();
   });
 
-  it("should have a currentLevel variable", function() {
-    expect(TOC.currentLevel).toBeDefined();
+  it("should have a clearTOC function", function() {
+    expect(RT.TOC.clearTOC).toBeDefined();
   });
+
+  it("should have a config object with a debug property", function() {
+    expect(RT.TOC.config.debug).toBeDefined();
+  });
+
+  it("config.debug should be true", function() {
+    expect(RT.TOC.config.debug).toBe(true);
+  });
+
+  it("should build the right TOC tree", function() {
+    debugger;
+    var dom = document.createElement('div');
+    dom.innerHTML = 
+        '<body>' + 
+        '  <h1>top title</h1>' + 
+        '  <p>lorem ipsum</p>' + 
+        '    <h2>first subtitle</h2>' + 
+        '    <p>lorem ipsum</p>' + 
+        '    <h2>second subtitle</h2>' + 
+        '    <p>lorem ipsum</p>' + 
+        '</body>';
+    var newTOC = RT.TOC.buildTOC( dom );
+  });
+
+
+
+  // it("should have a currentLevel property", function() {
+  //   expect(RT.TOC.currentLevel).toBeDefined();
+  // });
 });
 
 describe("Action codes", function() {
 "use strict";
 
-  it("should be defined", function() {
+  it("the constructor should be defined", function() {
     expect(Actions).toBeDefined();
   });
 
-  var actions = new Actions();
+  var RT = RT || {};
+  RT.actions = new Actions();
+
+  it("the instance should be defined", function() {
+    expect(RT.actions).toBeDefined();
+  });
 
   it("should translate 'foo' into undefined", function() {
-    var failed = actions.getActionId("foo");
+    var failed = RT.actions.getActionId("foo");
     expect(typeof translated).toBe('undefined');
   });
 
   it("should correctly translate 'openTOC' into 7", function() {
-    var translated = actions.getActionId("openTOC");
+    var translated = RT.actions.getActionId("openTOC");
     expect(translated).toBe(7);
   });
 
   it("should translate 7 into 'openToc'", function() {
-    var translated = actions.getActionName(7);
+    var translated = RT.actions.getActionName(7);
     expect(translated).toBe('openTOC');
   });
 });

@@ -1,31 +1,26 @@
-var TOC = (function( options ) {
-  "use strict";
-
-  var t = {};
+var TOC = function( options ) {
+  'use strict';
 
   /* TOC data items *************************************************************/
 
-  t.config = {
+  this.config = {
     openIconFilePath: 'res/expand.png',
     closeIconFilePath: 'res/collapse.png',
     debug: false
   };
-  $.extend( t.config, options );
+  $.extend( this.config, options );
 
   // the TOC tree
-  t.toc = {};
-
-  // reference to the TOC in the DOM
-  t.tocHTML = null;
+  this.toc = {};
 
   // TOC node constructor
-  t.TocNode = function( level, header, parent ) {
+  this.TocNode = function( level, header, parent ) {
     this.level = level;     // header level 1...6
     this.header = header;   // reference to the DOM element
     this.parent = parent;   // reference to the containing header
     this.children = [];     // this node's descendants
-  }
-  t.TocNode.prototype.toString = function() {
+  };
+  this.TocNode.prototype.toString = function() {
     if( !! this.header ) {
       /* jshint undef:true, devel:true */
       console.log( this.level + ( new Array(2 * this.level).join(' ') )
@@ -36,21 +31,17 @@ var TOC = (function( options ) {
   };
 
 
-  var currentLevel = null;
-  var currentNode = null;
 
   /* TOC functions **************************************************************/
 
   // empty the TOC, reset current level
-  function clearTOC() {
+  this.clearTOC = function() {
     this.toc = {};
-    currentLevel = null;
-    currentNode = this.toc;
-  }
+  };
 
 
   // Recursively display the TOC in the console
-  t.logTOC = function() {
+  this.logTOC = function() {
     function logTOCNode( thisNode ) {
       console.log( thisNode.toString() );
       for(var i = 0; i < thisNode.children.length; i++) {
@@ -63,7 +54,7 @@ var TOC = (function( options ) {
 
 
   // Render the TOC as nested HTML unordered lists, returns HTML text block
-  t.render = function() {
+  this.render = function() {
     var
       tocHTML = '',
       lineHTML = '',
@@ -117,12 +108,12 @@ var TOC = (function( options ) {
 
 
   // appends the header h to the bottom of the TOC
-  var addTOCItem = function( h ) {
+  var addTOCItem = function( h, currentNode, currentLevel ) {
     var headerLevel = parseInt( h.tagName.substring(1, 2), 10);
-    var newNode = new TocNode( headerLevel, h );
+    var newNode = new TOC.TocNode( headerLevel, h, null );
     // go to the tree branch where this header belongs and add it
     if( currentLevel === null ) { // initial empty TOC
-      toc = newNode;
+      // var toc = newNode;
       currentLevel = headerLevel;
       console.log( 'created empty TOC');
     } else {
@@ -135,7 +126,7 @@ var TOC = (function( options ) {
           var fillerNode;
           while( headerLevel > currentLevel ) {
             // create a filler node without node ref for now
-            fillerNode =  new TocNode( currentLevel + 1, null, currentNode );
+            fillerNode =  new this.TocNode( currentLevel + 1, null, currentNode );
             currentNode.children.push( fillerNode );
             currentLevel++;
             currentNode = fillerNode;
@@ -145,7 +136,7 @@ var TOC = (function( options ) {
           // headerLevel < currentLevel: back up to the header's level
           // navigate the tree backwards and insert the new node
           while( currentLevel > headerLevel ) {
-            assert( currentNode.parent, 'ran out of higher levels navigating upwards'); 
+            // assert( currentNode.parent, 'ran out of higher levels navigating upwards');
             currentNode = currentNode.parent;
             currentLevel = currentNode.level;
           }
@@ -158,40 +149,38 @@ var TOC = (function( options ) {
 
 
   // builds a TOC for the DOM branch hanging from the argument
-  t.buildTOC = function( dom ) { 
-    $allHeaders = $( 'h1, h2, h3, h4, h5, h6', dom );
+  this.buildTOC = function( dom ) {
+    var $allHeaders = $( 'h1, h2, h3, h4, h5, h6', dom );
     var thisNode;
+    var currentNode = null;
+    var currentLevel = null;
     for( var iah = 0; iah < $allHeaders.length; iah++) {
       thisNode = $allHeaders[iah];
-      if( this.config.debug ) { console.log( 'buildTOC: ' + $(thisNode).text() ); }
-      addTOCItem( thisNode );
+      if( this.config.debug ) { console.log( 'buildTOC: ' + thisNode.tagName + $(thisNode).text() ); }
+      addTOCItem( thisNode, currentNode, currentLevel );
     }
-  }
+    return this.toc;
+  };
 
 
   // makes the group nodes collapsible by adding click handlers
-  t.makeCollapsible = function( tocRoot ) {
+  this.makeCollapsible = function( tocRoot ) {
     // the argument is a reference to the root of a rendered TOC in the page, a DOM node
 
     // the actual handler
     function expandCollapseTOC( event ) {
-      // check that the click happened on one of the open/close icons
-      // get a reference to the container div where the click happened
       var c = $( event.target.parentElement );
       if( c.hasClass('rtOpenCloseIcon') ) {
-        // get a ref to the associated UL to be mutated
         var theUL = c.parent().children('ul');
-        // the click happened in a [+] or [-] div
         if( c.hasClass('rtExpanded') ) {
-          // it's expanded: have to close (collapse)
           theUL.slideUp( 'fast' );
-          $( 'img', c ).attr( 'src', config.openIconFilePath );
+          $( 'img', c ).attr( 'src', this.config.openIconFilePath );
           c.removeClass('rtExpanded').addClass('rtCollapsed');
         } else {
           if( c.hasClass('rtCollapsed') ) {
-            // it's collapsed: have to open (expand)
             theUL.slideDown( 'fast' );
-            $('img', c).attr( 'src', config.closeIconFilePath );
+            /* jshint validthis: true */
+            $('img', c).attr( 'src', this.config.closeIconFilePath );
             c.removeClass('rtCollapsed');
             c.addClass('rtExpanded');
           } else {
@@ -222,30 +211,8 @@ var TOC = (function( options ) {
     $( 'li:has(ul)', tocRoot ).addClass( 'rtCollapsible' );
     $( '.rtCollapsible', tocRoot ).prepend( openCloseIcon );
     // store a reference to the TOC in the DOM
-    tocHTML = tocRoot;
-  }
+    // var tocHTML = tocRoot;
+  };
 
-
-  /* external module interface **************************************************/
-  /* /return {
-    config: config,
-    clearTOC: clearTOC,
-    buildTOC: buildTOC,
-    currentLevel: currentLevel,
-    currentNode: currentNode,
-    logTOC: logTOC,
-    render: render,
-    makeCollapsible: makeCollapsible,
-    openIconFilePath: config.openIconFilePath,
-    closeIconFilePath: config.closeIconFilePath,
-    tocHTML: tocHTML
-  }; */
-
-  return t;
-})(
-  // options:
-  {
-    debug: true
-  }
-);
-
+  return this;
+};

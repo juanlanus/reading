@@ -30,5 +30,5 @@ var Actions = function() {
 
     };
 
-    return Actions;
+    return this;
 };
