@@ -28,7 +28,6 @@ describe("TOC - building", function() {
   });
 
   it("should build the right TOC tree", function() {
-    debugger;
     var dom = document.createElement('div');
     dom.innerHTML = 
         '<body>' + 

@@ -108,12 +108,12 @@ var TOC = function( options ) {
 
 
   // appends the header h to the bottom of the TOC
-  var addTOCItem = function( h, currentNode, currentLevel ) {
+  var addTOCItem = function( TOC, toc, h, currentNode, currentLevel ) {
     var headerLevel = parseInt( h.tagName.substring(1, 2), 10);
     var newNode = new TOC.TocNode( headerLevel, h, null );
     // go to the tree branch where this header belongs and add it
     if( currentLevel === null ) { // initial empty TOC
-      // var toc = newNode;
+      toc = newNode;
       currentLevel = headerLevel;
       console.log( 'created empty TOC');
     } else {
@@ -150,6 +150,7 @@ var TOC = function( options ) {
 
   // builds a TOC for the DOM branch hanging from the argument
   this.buildTOC = function( dom ) {
+    var toc = {};
     var $allHeaders = $( 'h1, h2, h3, h4, h5, h6', dom );
     var thisNode;
     var currentNode = null;
@@ -157,9 +158,9 @@ var TOC = function( options ) {
     for( var iah = 0; iah < $allHeaders.length; iah++) {
       thisNode = $allHeaders[iah];
       if( this.config.debug ) { console.log( 'buildTOC: ' + thisNode.tagName + $(thisNode).text() ); }
-      addTOCItem( thisNode, currentNode, currentLevel );
+      addTOCItem( this, toc, thisNode, currentNode, currentLevel );
     }
-    return this.toc;
+    return toc;
   };
 
 
