@@ -15,30 +15,50 @@ describe("TOC - building", function() {
     expect(RT.TOC).toBeDefined();
   });
 
-  it("should have a clearTOC function", function() {
+  it("Should have a clearTOC function", function() {
     expect(RT.TOC.clearTOC).toBeDefined();
   });
 
-  it("should have a config object with a debug property", function() {
+  it("Should have a config object with a debug property", function() {
     expect(RT.TOC.config.debug).toBeDefined();
   });
 
-  it("config.debug should be true", function() {
+  it("Config.debug should be true", function() {
     expect(RT.TOC.config.debug).toBe(true);
   });
 
-  it("should build the right TOC tree", function() {
+  it('Should be able to create TOC nodes', function() {
+    var anH1 = document.createElement( 'h1' );
+    var newNode = new RT.TOC.TocNode( 1, anH1, null ); // level, header, parent
+    expect( newNode ).toBeDefined();
+  });
+
+  it('Should be able to toString() a TOC node', function() {
+    var anH1 = document.createElement( 'h1' );
+    console.log( anH1.nodeName );
+    var newNode = new RT.TOC.TocNode( 1, anH1, null ); // level, header, parent
+    console.log( newNode.toString() );
+    expect( newNode.toString().trim() ).toBe('1  undefined');
+  });
+
+  it("Should build the right TOC tree", function() {
     var dom = document.createElement('div');
-    dom.innerHTML = 
-        '<body>' + 
-        '  <h1>top title</h1>' + 
-        '  <p>lorem ipsum</p>' + 
-        '    <h2>first subtitle</h2>' + 
-        '    <p>lorem ipsum</p>' + 
-        '    <h2>second subtitle</h2>' + 
-        '    <p>lorem ipsum</p>' + 
+    dom.innerHTML =
+        '<body>' +
+        '  <h3 id="h3r">rogue h3</h3>' +
+        '  <h1 id="h1">top title</h1>' +
+        '  <p>lorem ipsum</p>' +
+        '    <h2 id="h2a">first subtitle</h2>' +
+        '    <p>lorem ipsum</p>' +
+        '      <h3 id="h3">a sub-subtitle</h3>' +
+        '      <p>lorem ipsum</p>' +
+        '    <h2 id="h2b">second subtitle</h2>' +
+        '    <p>lorem ipsum</p>' +
         '</body>';
     var newTOC = RT.TOC.buildTOC( dom );
+    console.log( RT.TOC.toc.toString() );
+    // http://stackoverflow.com/questions/15322793/is-there-a-jasmine-matcher-to-compare-objects-on-subsets-of-their-properties
+    // expect(result).toEqual(jasmine.objectContaining(example))
   });
 
 

@@ -21,13 +21,16 @@ var TOC = function( options ) {
     this.children = [];     // this node's descendants
   };
   this.TocNode.prototype.toString = function() {
-    if( !! this.header ) {
+    var thisTOCNode = arguments.length === 0 ? this : arguments[0];
+    var theString = '';
+    if( !! thisTOCNode.header ) {
       /* jshint undef:true, devel:true */
-      console.log( this.level + ( new Array(2 * this.level).join(' ') )
-      + this.header.textContent );
+       theString+= ( thisTOCNode.level + ' ' + ( new Array(2 * thisTOCNode.level).join(' ') ) + thisTOCNode.header.textContent );
     } else {
-      console.log( this.level + (new Array(2 * this.level).join(' ')) + ' - - no header' );
+       theString+= ( thisTOCNode.level + ' ' + ( new Array(2 * thisTOCNode.level).join(' ')) + ( thisTOCNode.level ? '-' : 'TOC root' ) );
     }
+    theString+= thisTOCNode.children.forEach( toString );
+    return theString;
   };
 
 
@@ -39,18 +42,6 @@ var TOC = function( options ) {
     this.toc = {};
   };
 
-
-  // Recursively display the TOC in the console
-  this.logTOC = function() {
-    function logTOCNode( thisNode ) {
-      console.log( thisNode.toString() );
-      for(var i = 0; i < thisNode.children.length; i++) {
-        logTOCNode( thisNode.children[i] );
-      }
-    }
-
-    logTOCNode( this.toc );
-  };
 
 
   // Render the TOC as nested HTML unordered lists, returns HTML text block
@@ -107,22 +98,25 @@ var TOC = function( options ) {
   };
 
 
-  // appends the header h to the bottom of the TOC
-  var addTOCItem = function( TOC, toc, h, currentNode, currentLevel ) {
-    var headerLevel = parseInt( h.tagName.substring(1, 2), 10);
-    var newNode = new TOC.TocNode( headerLevel, h, null );
-    // go to the tree branch where this header belongs and add it
-    if( currentLevel === null ) { // initial empty TOC
-      toc = newNode;
-      currentLevel = headerLevel;
-      console.log( 'created empty TOC');
-    } else {
+
+  // builds a TOC for the DOM branch hanging from the argument
+  this.buildTOC = function( dom ) {
+    var toc = new this.TocNode( 0, undefined, null );
+    var $allHeaders = $( 'h1, h2, h3, h4, h5, h6', dom );
+    var currentNode = toc;
+    var currentLevel = 0;
+    var thisHeader;
+
+    for( var iah = 0; iah < $allHeaders.length; iah++) {
+      thisHeader = $allHeaders[iah];
+      if( this.config.debug ) { console.log( 'buildTOC: ' + thisHeader.tagName + ' ' + $(thisHeader).text() ); }
+      var headerLevel = parseInt( thisHeader.tagName.substring(1, 2), 10);
+      var newNode = new this.TocNode( headerLevel, thisHeader, null );
       if( headerLevel === currentLevel ) {
         newNode.parent = currentNode.parent;
         currentNode.children.push( newNode );
       } else {
         if( headerLevel > currentLevel ) {
-          // subordinate level: create a new branch for this header
           var fillerNode;
           while( headerLevel > currentLevel ) {
             // create a filler node without node ref for now
@@ -131,12 +125,9 @@ var TOC = function( options ) {
             currentLevel++;
             currentNode = fillerNode;
           }
-          fillerNode.header = h;
+          fillerNode.header = thisHeader;
         } else {
-          // headerLevel < currentLevel: back up to the header's level
-          // navigate the tree backwards and insert the new node
           while( currentLevel > headerLevel ) {
-            // assert( currentNode.parent, 'ran out of higher levels navigating upwards');
             currentNode = currentNode.parent;
             currentLevel = currentNode.level;
           }
@@ -145,21 +136,7 @@ var TOC = function( options ) {
         }
       }
     }
-  };
-
-
-  // builds a TOC for the DOM branch hanging from the argument
-  this.buildTOC = function( dom ) {
-    var toc = {};
-    var $allHeaders = $( 'h1, h2, h3, h4, h5, h6', dom );
-    var thisNode;
-    var currentNode = null;
-    var currentLevel = null;
-    for( var iah = 0; iah < $allHeaders.length; iah++) {
-      thisNode = $allHeaders[iah];
-      if( this.config.debug ) { console.log( 'buildTOC: ' + thisNode.tagName + $(thisNode).text() ); }
-      addTOCItem( this, toc, thisNode, currentNode, currentLevel );
-    }
+    this.toc = toc;
     return toc;
   };
 
@@ -175,6 +152,7 @@ var TOC = function( options ) {
         var theUL = c.parent().children('ul');
         if( c.hasClass('rtExpanded') ) {
           theUL.slideUp( 'fast' );
+          /* jshint validthis: true */
           $( 'img', c ).attr( 'src', this.config.openIconFilePath );
           c.removeClass('rtExpanded').addClass('rtCollapsed');
         } else {
