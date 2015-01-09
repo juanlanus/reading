@@ -38,7 +38,7 @@ describe("TOC - building", function() {
     console.log( anH1.nodeName );
     var newNode = new RT.TOC.TocNode( 1, anH1, null ); // level, header, parent
     console.log( newNode.toString() );
-    expect( newNode.toString().trim() ).toBe('1  undefined');
+    expect( newNode.toString().trim() ).toBe('1');
   });
 
   it("Should build the right TOC tree", function() {

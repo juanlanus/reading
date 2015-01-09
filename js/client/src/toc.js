@@ -29,7 +29,9 @@ var TOC = function( options ) {
     } else {
        theString+= ( thisTOCNode.level + ' ' + ( new Array(2 * thisTOCNode.level).join(' ')) + ( thisTOCNode.level ? '-' : 'TOC root' ) );
     }
-    theString+= thisTOCNode.children.forEach( toString );
+    if( thisTOCNode.children.length ) {
+      theString+= thisTOCNode.children.forEach( this.toString );
+    }
     return theString;
   };
 
