@@ -250,18 +250,18 @@ virtual bookmarks are stored somewhere in the Internet. </p>
 
 <h4 id="smartScroll">Smart scroll</h4>
 
-<p>In a paper book there are no partially visible lines. Each page starts and
-ends with a fully visible text line. Additionally, some editing effort is made
-to avoid splitting paragraphs so that words or short lines are left dangling at
-the top or the bottom of a page. </p>
+<p>In a paper book there are no partially visible text lines. Each page starts
+with a fully visible line. Additionally, some editing effort is made to avoid
+splitting paragraphs so that words or short lines are left dangling at the top
+or the bottom of a page. </p>
 
 <p>The <em>smart scroll</em> feature provides scroll with the tidyness of a
 printed page, setting the start of a paragraph at the top of the viewport, or
-at least a full text line when a big paragraph doesn't fit. </p>
+at least a full text line when a lengthy paragraph doesn't fit in the page. </p>
 
 <p>This feature's most important benefit is that the scrolling is done by
 sliding the text upwards so the reader can keep an eye on it. The jumps of the
-regular scroll force the reader to chase a new reading position and to refocus
+legacy scroll force the reader to chase a new reading position and to refocus
 in a piece of text, contributing to eye strain. </p>
 
 <h4 id="roaming">Roaming</h4>
@@ -320,8 +320,8 @@ reading already done and still left, like a book's pages before and after the
 reader's place. </p>
 
 <p>An example diagram is shown. The numbers represent the percent already read
-and pending. The thin white bar between them is proportional to the currently
-displayed page. </p>
+and pending. The thin white bar between them is proportional to height of the
+currently displayed page. </p>
 
 <h4 id="timing">Timing</h4>
 
@@ -352,13 +352,13 @@ but only the copy, more semantically. </p>
 <p>Allows the author to provide an index, possibly with some tuning by the
 editor, to make the search more semantic than lexical. </p>
 
-<p>If the page is part of a set (a multi-page document, like a book broken in a
+<p>If the page is part of a set (a multi-page document, like a book split in a
 chapter per HTML page), the search can span all the pages comprising the set,
 and only those pages, instead of the standard choice "either this page or the
 whole web". </p>
 
 <p>If the reader has other documents in her shelf (read documents history) she
-can also search them. </p>
+can also search them together with the current one. </p>
 
 <h4 id="">The Shelf</h4>
 
@@ -391,7 +391,7 @@ the current document. </p>
 <h4 id="norepeat">No repeated pages</h4>
 
 <p>Links that open in new browser pages tend to open the same page again each
-time they are clicked. This system system will, instead, takes the reader to
+time they are clicked. This system system will, instead, take the reader to
 the previously opened single instance of the page. </p>
 
 <h4 id="figures">Figures and examples</h4>
@@ -408,7 +408,7 @@ figure or example and set it side by side with the associated text, making it
 possible to display noth at once in a wide screen. </p>
 
 <p>This is like tearing off a book or magazine page containing the figure to be
-able to see it while reading the explanation. </p>
+able to see it while reading the related text. </p>
 
 <h4 id="sidenotes">Handle sidenotes</h4>
 
@@ -624,10 +624,13 @@ persisted state (like the current reading place). </p>
 
 <p>The server has a cost that is paid either by the publisher (to get the
 readers statistics), or by the reader as a low cost optional subscription when
-client side part is a browser add-on. </p>
+the client side part is a browser add-on. </p>
 
 <p>The system also can be used by a reader without the server part, resigning
 the roaming state and persistence features. </p>
+
+<p>As the owners of this system, our economic goal is to make mokey by selling
+the server services to those who opt in. </p>
 
 <p></p>
 
