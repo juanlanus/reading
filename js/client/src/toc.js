@@ -198,7 +198,7 @@ var TOC = function( options ) {
     $( tocRoot ).on( 'click', expandCollapseTOC );
     // add the open/close controls to LIs having UL children
     var openCloseIcon = '<div class="rtOpenCloseIcon rtExpanded"><img src="'
-      + TOC.config.closeIconFilePath
+      + this.config.closeIconFilePath
       + '"/></div>';
     $( 'li:has(ul)', tocRoot ).addClass( 'rtCollapsible' );
     $( '.rtCollapsible', tocRoot ).prepend( openCloseIcon );

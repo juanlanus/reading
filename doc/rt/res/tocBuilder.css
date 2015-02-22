@@ -11,5 +11,5 @@ a.tocBackLink, a.tocBackLink:visited { display:block; float:right; font-size:12p
 .tocContainer div.tocLevel2 { padding-left:2em; font-size:90%; font-weight:bold; }
 .tocContainer div.tocLevel3 { padding-left:4em; font-size:80%; }
 .tocContainer div.tocLevel4 { padding-left:6em; font-size:70%; }
-.tocContainer div.tocLevel5 { padding-left:8em; font-size:65%; solid blue; }
+.tocContainer div.tocLevel5 { padding-left:8em; font-size:65%; }
 .tocContainer div.tocLevel6 { padding-left:10em; font-size:65%; }

@@ -10,3 +10,4 @@ Session.vim
 .netrwhist
 mongoLog.txt
 **/qqq*
+**/nohup.out

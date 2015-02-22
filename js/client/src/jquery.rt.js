@@ -997,15 +997,15 @@
 
     // build the TOC
     // TODO: the TOC object gets stored in the global context
-    this.TOC.clearTOC();
-    this.TOC.buildTOC( RT.$content.get()[0] );
+    RT.TOC.clearTOC();
+    RT.TOC.buildTOC( RT.$content.get()[0] );
     // DEBUG: 
-    if( RT.debug ) { this.TOC.logTOC(); }
+    if( RT.debug ) { RT.TOC.logTOC(); }
     // render the TOC in the TOC sliding panel
     // TODO: this .toc class name is not right
-    $('.toc').html( this.TOC.render() );
+    $('.toc').html( RT.TOC.render() );
     // accordionize the TOC tree
-    this.TOC.makeCollapsible( $( '.toc' )[0] );
+    RT.TOC.makeCollapsible( $( '.toc' )[0] );
   };
 
 
