@@ -25,18 +25,18 @@ var TOC = function( options ) {
     var theString = '';
     if( !! thisTOCNode.header ) {
       /* jshint undef:true, devel:true */
-       theString+= thisTOCNode.level + ' ' +
-       ( new Array(2 * thisTOCNode.level).join(' ') ) +
-       'header:';
-       if( thisTOCNode.header.textContent ) {
-         theString+= thisTOCNode.header.textContent
-       } else {
-         theString+= '(no text content)'
-       };
+      theString+= thisTOCNode.level + ' ' +
+      ( new Array(2 * thisTOCNode.level).join(' ') ) +
+      'header:';
+      if( thisTOCNode.header.textContent ) {
+        theString+= thisTOCNode.header.textContent;
+      } else {
+        theString+= '(no text content)';
+      }
     } else {
-       theString+= ( thisTOCNode.level + ' ' +
-       ( new Array(2 * thisTOCNode.level).join(' ')) +
-       ( thisTOCNode.level ? '-' : 'TOC root' ) );
+      theString+= ( thisTOCNode.level + ' ' +
+      ( new Array(2 * thisTOCNode.level).join(' ')) +
+      ( thisTOCNode.level ? '-' : 'TOC root' ) );
     }
     console.log( theString );
     if( thisTOCNode.children.length ) {
