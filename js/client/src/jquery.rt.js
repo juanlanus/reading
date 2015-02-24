@@ -820,7 +820,7 @@
 
       +'</div>\n'
 
-      +'<div id="TOCPanel" style="z-index:998;">\n'
+      +'<div id="TOCPanel" style="z-index:998; display:none;">\n'
       +  '<div id="TOCContainer"\n'
       +    '<div class="toc">TOC comes here</div>\n'
       +  '</div>\n'
@@ -958,7 +958,7 @@
           var w = theTOC.width();
           if( theTOC.css( 'display' ) === 'none' ) {
             // show the TOC
-            theTOC.show().animate( { left: - w + 1 }, 3); // a jQuery bug
+            theTOC.css( 'left', -w );
             theTOC.show().animate(
               { left: 0 },
               777
@@ -996,11 +996,10 @@
     );
 
     // build the TOC
-    // TODO: the TOC object gets stored in the global context
+    // TODO: this belongs to the TOC module, the TOC is already loaded
     RT.TOC.clearTOC();
     RT.TOC.buildTOC( RT.$content.get()[0] );
-    // DEBUG: 
-    if( RT.debug ) { RT.TOC.logTOC(); }
+    // if( RT.settings.debug ) { RT.TOC.logTOC(); }
     // render the TOC in the TOC sliding panel
     // TODO: this .toc class name is not right
     $('.toc').html( RT.TOC.render() );
