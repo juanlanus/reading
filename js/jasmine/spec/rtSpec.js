@@ -38,13 +38,12 @@ describe("TOC - building", function() {
     console.log( anH1.nodeName );
     var newNode = new RT.TOC.TocNode( 1, anH1, null ); // level, header, parent
     console.log( newNode.toString() );
-    expect( newNode.toString().trim() ).toBe('1');
+    expect( newNode.toString().trim() ).toBe('1  header:(no text content)');
   });
 
   it("Should build the right TOC tree", function() {
     var dom = document.createElement('div');
     dom.innerHTML =
-        '<body>' +
         '  <h3 id="h3r">rogue h3</h3>' +
         '  <h1 id="h1">top title</h1>' +
         '  <p>lorem ipsum</p>' +
@@ -53,8 +52,7 @@ describe("TOC - building", function() {
         '      <h3 id="h3">a sub-subtitle</h3>' +
         '      <p>lorem ipsum</p>' +
         '    <h2 id="h2b">second subtitle</h2>' +
-        '    <p>lorem ipsum</p>' +
-        '</body>';
+        '    <p>lorem ipsum</p>';
     var newTOC = RT.TOC.buildTOC( dom );
     console.log( RT.TOC.toc.toString() );
     // http://stackoverflow.com/questions/15322793/is-there-a-jasmine-matcher-to-compare-objects-on-subsets-of-their-properties

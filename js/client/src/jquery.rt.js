@@ -999,7 +999,9 @@
     // TODO: this belongs to the TOC module, the TOC is already loaded
     RT.TOC.clearTOC();
     RT.TOC.buildTOC( RT.$content.get()[0] );
-    // if( RT.settings.debug ) { RT.TOC.logTOC(); }
+    if( RT.settings.debug ) { 
+      console.log( RT.TOC.toString() );
+    }
     // render the TOC in the TOC sliding panel
     // TODO: this .toc class name is not right
     $('.toc').html( RT.TOC.render() );

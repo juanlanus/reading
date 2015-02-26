@@ -34,13 +34,16 @@ var TOC = function( options ) {
         theString+= '(no text content)';
       }
     } else {
-      theString+= ( thisTOCNode.level + ' ' +
-      ( new Array(2 * thisTOCNode.level).join(' ')) +
-      ( thisTOCNode.level ? '-' : 'TOC root' ) );
+      var level = thisTOCNode.level;
+      theString+= ( level + ' ' +
+      level === 0 ? '' : ( new Array(2 * level).join(' ')) +
+      ( level ? '-' : 'TOC root' ) );
     }
     console.log( theString );
     if( thisTOCNode.children.length ) {
-      theString+= thisTOCNode.children.forEach( this.toString );
+      theString+= thisTOCNode.children.forEach(
+        this.toString( this )
+      );
       console.log( theString );
     }
     return theString;
