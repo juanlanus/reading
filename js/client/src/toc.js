@@ -23,29 +23,35 @@ var TOC = function( options ) {
   this.TocNode.prototype.toString = function() {
     var thisTOCNode = arguments.length === 0 ? this : arguments[0];
     var theString = '';
-    if( !! thisTOCNode.header ) {
-      /* jshint undef:true, devel:true */
-      theString+= thisTOCNode.level + ' ' +
-      ( new Array(2 * thisTOCNode.level).join(' ') ) +
-      'header:';
-      if( thisTOCNode.header.textContent ) {
-        theString+= thisTOCNode.header.textContent;
+    var theNode = this;
+
+    var toStringANode = function( aNode ){
+      var level = aNode.level;
+      var nodeString = '';
+      if( aNode.header ) {
+        /* jshint undef:true, devel:true */
+        nodeString+= level + ' ' +
+        ( new Array(2 * level).join(' ') ) +
+        'header:';
+        if( aNode.header.textContent ) {
+          nodeString+= aNode.header.textContent;
+        } else {
+          nodeString+= '(no text content)';
+        }
       } else {
-        theString+= '(no text content)';
+        nodeString+= ( level + ' ' +
+        level === 0 ? '' : ( new Array(2 * level).join(' ')) +
+        ( level ? '-' : 'TOC root' ) );
       }
-    } else {
-      var level = thisTOCNode.level;
-      theString+= ( level + ' ' +
-      level === 0 ? '' : ( new Array(2 * level).join(' ')) +
-      ( level ? '-' : 'TOC root' ) );
-    }
-    console.log( theString );
-    if( thisTOCNode.children.length ) {
-      theString+= thisTOCNode.children.forEach(
-        this.toString( this )
-      );
-      console.log( theString );
-    }
+      theString += nodeString;
+      if( thisTOCNode.children.length ) {
+        theString+= thisTOCNode.children.forEach(
+          toStringANode( this )
+        );
+      }
+    };
+
+    toStringANode( theNode );
     return theString;
   };
 
