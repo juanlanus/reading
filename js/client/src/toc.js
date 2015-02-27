@@ -27,26 +27,23 @@ var TOC = function( options ) {
 
     var toStringANode = function( aNode ){
       var level = aNode.level;
+      var indent = ( level + ' ' + level === 0 ? '' : ( new Array(2 * level).join(' ')) + ( level ? '-' : 'TOC root' ) );
       var nodeString = '';
       if( aNode.header ) {
+        nodeString+= indent;
         /* jshint undef:true, devel:true */
-        nodeString+= level + ' ' +
-        ( new Array(2 * level).join(' ') ) +
-        'header:';
         if( aNode.header.textContent ) {
           nodeString+= aNode.header.textContent;
         } else {
           nodeString+= '(no text content)';
         }
-      } else {
-        nodeString+= ( level + ' ' +
-        level === 0 ? '' : ( new Array(2 * level).join(' ')) +
-        ( level ? '-' : 'TOC root' ) );
       }
       theString += nodeString;
       if( thisTOCNode.children.length ) {
         theString+= thisTOCNode.children.forEach(
-          toStringANode( this )
+          function( eachNode ) {
+            toStringANode( eachNode );
+          }
         );
       }
     };
