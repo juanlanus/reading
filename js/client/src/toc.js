@@ -23,14 +23,11 @@ var TOC = function( options ) {
   this.TocNode.prototype.toString = function() {
     var thisTOCNode = arguments.length === 0 ? this : arguments[0];
     var theString = '';
-    var theNode = this;
 
     var toStringANode = function( aNode ){
       var level = aNode.level;
-      var indent = ( level + ' ' + level === 0 ? '' : ( new Array(2 * level).join(' ')) + ( level ? '-' : 'TOC root' ) );
-      var nodeString = '';
+      var nodeString = level + ' ' + ( level === 0 ? ' - TOC root' : ( new Array(2 * level).join(' ')));
       if( aNode.header ) {
-        nodeString+= indent;
         /* jshint undef:true, devel:true */
         if( aNode.header.textContent ) {
           nodeString+= aNode.header.textContent;
@@ -38,18 +35,17 @@ var TOC = function( options ) {
           nodeString+= '(no text content)';
         }
       }
-      theString += nodeString;
-      if( thisTOCNode.children.length ) {
-        theString+= thisTOCNode.children.forEach(
-          function( eachNode ) {
-            toStringANode( eachNode );
-          }
-        );
+      theString += '\n' + nodeString;
+      var n = aNode.children.length;
+      if( n ) {
+        for( var i = 0; i < n; i++) {
+          toStringANode( aNode.children[i] );
+        }
       }
     };
 
-    toStringANode( theNode );
-    return theString;
+    toStringANode( this );
+    return theString.trim();
   };
 
 
@@ -128,7 +124,7 @@ var TOC = function( options ) {
 
     for( var iah = 0; iah < $allHeaders.length; iah++) {
       thisHeader = $allHeaders[iah];
-      if( this.config.debug ) { console.log( 'buildTOC: ' + thisHeader.tagName + ' ' + $(thisHeader).text() ); }
+      // if( this.config.debug ) { console.log( 'buildTOC: ' + thisHeader.tagName + ' ' + $(thisHeader).text() ); }
       var headerLevel = parseInt( thisHeader.tagName.substring(1, 2), 10);
       var newNode = new this.TocNode( headerLevel, thisHeader, null );
       if( headerLevel === currentLevel ) {

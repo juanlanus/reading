@@ -35,10 +35,8 @@ describe("TOC - building", function() {
 
   it('Should be able to toString() a TOC node', function() {
     var anH1 = document.createElement( 'h1' );
-    console.log( anH1.nodeName );
     var newNode = new RT.TOC.TocNode( 1, anH1, null ); // level, header, parent
-    console.log( newNode.toString() );
-    expect( newNode.toString().trim() ).toBe('1  header:(no text content)');
+    expect( newNode.toString().trim() ).toBe('1  (no text content)');
   });
 
   it("Should build the right TOC tree", function() {
