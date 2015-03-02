@@ -15,7 +15,7 @@
   #TOCPanel             { float:left; height:100%; background:rgb(240,240,240); 
                           display:none; position:fixed; top:0; left:0;
                           width:100%; height:100%; margin-left:0; }
-  .toc                  { padding-left:70px; height:100%; overflow-y:scroll; } /* for scroll */
+  .toc                  { padding-left:90px; height:100%; overflow-y:scroll; } /* for scroll */
 
   /* menu containing the usability test instructions */
   #menuContainer        { overflow-y:auto; font-family:Helvetica, Arial, sans-serif;}

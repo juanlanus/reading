@@ -52,7 +52,17 @@ describe("TOC - building", function() {
         '    <h2 id="h2b">second subtitle</h2>' +
         '    <p>lorem ipsum</p>';
     var newTOC = RT.TOC.buildTOC( dom );
-    console.log( RT.TOC.toc.toString() );
+    var toStringOutput =
+      '0  - TOC root' + '\n' +
+      '1  ' + '\n' +
+      '2    ' + '\n' +
+      '3      rogue h3' + '\n' +
+      '1  top title' + '\n' +
+      '2    first subtitle' + '\n' +
+      '3      a sub-subtitle' + '\n' +
+      '2    second subtitle';
+    var theTOC =  RT.TOC.toc.toString();
+    expect( theTOC).toBe(toStringOutput);
     // http://stackoverflow.com/questions/15322793/is-there-a-jasmine-matcher-to-compare-objects-on-subsets-of-their-properties
     // expect(result).toEqual(jasmine.objectContaining(example))
   });

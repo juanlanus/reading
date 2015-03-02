@@ -163,9 +163,9 @@
           $thisElement.attr( 'docPath', docPath.toString() );
           // DEBUG: log the docPaths in a PRE element $('#docPathLog')
           // TODO: some elements have a wrong docPath with an empty item, log them always
-          if ( RT.settings.debug || ( docPath && docPath.indexOf( ',,' ) !== -1 ) ) {
-            buildPathLog();
-          }
+          // if ( RT.settings.debug || ( docPath && docPath.indexOf( ',,' ) !== -1 ) ) {
+          //   buildPathLog();
+          // }
           // build the path for this element's children (pass a copy of current path)
           buildPath ( RT, $thisElement, docPath.slice(0), level + 1 );
 
@@ -1000,7 +1000,7 @@
     RT.TOC.clearTOC();
     RT.TOC.buildTOC( RT.$content.get()[0] );
     if( RT.settings.debug ) { 
-      console.log( RT.TOC.toString() );
+      console.log( RT.TOC.toc.toString() );
     }
     // render the TOC in the TOC sliding panel
     // TODO: this .toc class name is not right

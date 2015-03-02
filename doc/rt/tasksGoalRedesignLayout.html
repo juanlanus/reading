@@ -1,0 +1,197 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Language" content="en">
+  <title>rt:dev tasks &amp; bugs</title>
+  <link rel="stylesheet" href="res/rtDoc.css" type="text/css">
+  <script type="text/javascript" src="res/jquery-1.8.3.js">
+ </script>
+  <script type="text/javascript" src="res/tocBuilder.js">
+ </script>
+  <script type="text/javascript" src="res/rtdoc.js">
+ </script>
+  <link href="res/tocBuilder.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#tocContainer').tocBuilder({
+        type: 'headings',
+        backLinkText: 'TOC',
+        startLevel: 2,
+        endLevel: 6
+      });
+    });
+  </script>
+  <script type="text/javascript" src="res/rt.js">
+ </script>
+  <style>
+  .doneItem { color:rgb(128,128,128); } 
+  pre, code, tt { font-size:80%; } </style>
+</head>
+
+<body>
+
+<div class="imgR miniMenu">
+<ul style="list-style-type:none;">
+  <li><a href="index.html">index</a> </li>
+  <li><a href="tasks.html">tasks &amp; bugs</a></li>
+  <li><a href="comparison.html">comparison</a></li>
+  <li><a href="rtech.html">technical defs</a></li>
+  <li><a href="database.html">database</a></li>
+  <li><a href="notes.html">notes &amp; links</a></li>
+  <li><a href="aboutScrolling.html">about scrolling</a></li>
+  <li><a href="project.html">project</a></li>
+</ul>
+</div>
+
+<div id="rtHeader">
+
+<div class="fixedHeader">
+<h1 style="display:inline; ">rt: goal: refactor layout for less coupling and 1
+scroll bar</h1>
+</div>
+</div>
+
+<div class="imgL framed">
+
+<div id="tocContainer" class="toc tocContainer">
+<ul>
+  <li><a href="#tasks">tasks</a></li>
+</ul>
+</div>
+</div>
+
+<div id="rtBody">
+
+<div id="tocContainer" class="tocContainer" style="display:none;">
+
+<div class="toc">
+<ul>
+  <li><a href="">---</a></li>
+</ul>
+</div>
+</div>
+
+<h2>description</h2>
+
+<p>The current layout has issues, like it would be bettter to have less
+coupling among components, and it's a must not to display twu vertical scroll
+bars when the TOC is visible. </p>
+
+<p>Also, the CSS rules for the RT DIVs are intermingled with legacy
+documentation rules, and should be split in layout essential rules and
+aesthetic rules. </p>
+
+<p>The current layout hierarchy is: </p>
+<ul>
+  <li>div#textContainer
+    <ul>
+      <li>div#rtPanelLeft
+        <ul>
+          <li>#rtProgressDiagram
+            <ul>
+              <li>#rtProgressDiagram &gt; div.rtProgressDone</li>
+              <li>#rtProgressDiagram &gt; div.rtProgressCurrent</li>
+              <li>#rtProgressDiagram &gt; div.rtProgressRemaining</li>
+            </ul>
+          </li>
+          <li>#rtBurgerMenu</li>
+          <li>#rtTOCIcon</li>
+          <li>#rtHighlightIcon</li>
+          <li>#rtHelpIcon</li>
+          <li>#rtEndTest (button)</li>
+        </ul>
+      </li>
+      <li>div#TOCPanel
+        <ul>
+          <li>div#TOCContainer
+            <ul>
+              <li>#TOCContainer &gt; li.rt_toc_0.rtCollapsible (a maverick li
+                element) 
+                <ul>
+                  <li>#TOCContainer &gt; li &gt; div (the open/close icon)</li>
+                  <li>#TOCContainer &gt; li &gt; ul &gt; li &gt; a (main
+                  title)</li>
+                  <li>#TOCContainer &gt; li &gt; ul (subordinate TOC tree)
+                    <ul>
+                      <li>#TOCContainer &gt; li &gt; ul &gt; li &gt; ul &gt;
+                        li:nth-child(1) ... (10)
+                        <ul>
+                          <li>#TOCContainer &gt; li &gt; ul &gt; li &gt; ul
+                            &gt; li:nth-child(1 ... 10) &gt; a</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>div#menuPanel
+        <ul>
+          <li>div#menuContainer</li>
+        </ul>
+      </li>
+      <li>div#helpPanel
+        <ul>
+          <li>div#helpContainer</li>
+        </ul>
+      </li>
+      <li>div#textContent
+        <ul>
+          <li>(copy content)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 style="clear:both;" id="tasks">tasks <img alt="this one!"
+src="res/caramba_yellow.gif" width="7" height="14"> </h2>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p>?</p>
+</div>
+</body>
+</html>

@@ -21,14 +21,12 @@ var TOC = function( options ) {
     this.children = [];     // this node's descendants
   };
   this.TocNode.prototype.toString = function() {
-    var thisTOCNode = arguments.length === 0 ? this : arguments[0];
     var theString = '';
 
     var toStringANode = function( aNode ){
       var level = aNode.level;
-      var nodeString = level + ' ' + ( level === 0 ? ' - TOC root' : ( new Array(2 * level).join(' ')));
+      var nodeString = level + ' ' + ( level === 0 ? ' - TOC root' : ( new Array(2 * level).join(' ')) );
       if( aNode.header ) {
-        /* jshint undef:true, devel:true */
         if( aNode.header.textContent ) {
           nodeString+= aNode.header.textContent;
         } else {
@@ -37,10 +35,8 @@ var TOC = function( options ) {
       }
       theString += '\n' + nodeString;
       var n = aNode.children.length;
-      if( n ) {
-        for( var i = 0; i < n; i++) {
-          toStringANode( aNode.children[i] );
-        }
+      for( var i = 0; i < n; i++ ) {
+        toStringANode( aNode.children[i] );
       }
     };
 
