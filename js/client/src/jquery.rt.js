@@ -63,7 +63,7 @@
     init: function () {
       var RT = $.fn.rt.RT;
 
-      RT.TOC = new TOC();
+      // #TOC RT.TOC = new TOC();
 
       RT.data = initData();
 
@@ -789,13 +789,14 @@
 
 
   var buildControlPanel = function( RT ) {
-    // display the control panel
-    // TODO: use a template renderer like moustache?
+    // populate the control panel
     var cp =
-      '<div id="rtPanelLeft" class="rtPanelLeft" style="z-index:999;">\n'
       +  '<div id="rtProgressDiagram">\n'
-      +    '<img src="res/progressDiagram.png" title="progress diagram (non functional yet), shows the reading place\n'
-      +    ' and the number of pages alredy read and still pending">\n'
+      +  '  <div id="rtProgressTemplate" class="rtProgress">\n'
+      +  '      <div class="rtProgressDone" title="already read"> </div> \n'
+      +  '      <div class="rtProgressCurrent" title="current page"> </div> \n'
+      +  '      <div class="rtProgressRemaining" title="not yet read"> </div> \n'
+      +  '  </div>\n'
       +  '</div>\n'
 
       +  '<div id="rtBurgerMenu">\n'
@@ -817,9 +818,8 @@
       +  '<div id="rtEndTest">\n'
       +    '<button onclick="location.href=\'survey.html\'">End</button>\n'
       +  '</div>\n'
-
-      +'</div>\n'
-
+    ;  
+/*
       +'<div id="TOCPanel" style="z-index:998; display:none;">\n'
       +  '<div id="TOCContainer"\n'
       +    '<div class="toc">TOC comes here</div>\n'
@@ -837,7 +837,9 @@
       +    '<div class="help" class="help">instructions come here</div>\n'
       +  '</div>\n'
       +'</div>\n';
-    RT.$element.prepend( cp );
+*/
+    // RT.$element.prepend( cp );
+    $('#rtControlPanel').prepend( cp );
   };
 
 
@@ -913,6 +915,7 @@
   var setHighlighter = function( RT ) {
   // set the highlighter
   /* global rangy */
+  /*
     rangy.init();
     // JLHint complains: var cssClassApplierModule = rangy.modules.CssClassApplier;
     var highlight1Applier = rangy.createCssClassApplier('rtHigh1');
@@ -946,10 +949,12 @@
         return false;
       }
     );
+  */
   };
 
   
   var setTOC = function( RT ) {
+    /*
   // set the TOC toggler
     $('#rtTOCIcon').on( 'click', null, RT,
         function( event ) {
@@ -1007,6 +1012,7 @@
     $('.toc').html( RT.TOC.render() );
     // accordionize the TOC tree
     RT.TOC.makeCollapsible( $( '.toc' )[0] );
+  */
   };
 
 

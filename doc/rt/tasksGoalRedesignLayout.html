@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="Content-Language" content="en">
-  <title>rt:dev tasks &amp; bugs</title>
+  <title>rt: refactor layout</title>
   <link rel="stylesheet" href="res/rtDoc.css" type="text/css">
   <script type="text/javascript" src="res/jquery-1.8.3.js">
  </script>
@@ -84,11 +84,11 @@ aesthetic rules. </p>
 
 <p>The current layout hierarchy is: </p>
 <ul>
-  <li>div#textContainer
+  <li>div#textContainer 
     <ul>
-      <li>div#rtPanelLeft
+      <li>div#rtPanelLeft 
         <ul>
-          <li>#rtProgressDiagram
+          <li>#rtProgressDiagram 
             <ul>
               <li>#rtProgressDiagram &gt; div.rtProgressDone</li>
               <li>#rtProgressDiagram &gt; div.rtProgressCurrent</li>
@@ -102,9 +102,9 @@ aesthetic rules. </p>
           <li>#rtEndTest (button)</li>
         </ul>
       </li>
-      <li>div#TOCPanel
+      <li>div#TOCPanel 
         <ul>
-          <li>div#TOCContainer
+          <li>div#TOCContainer 
             <ul>
               <li>#TOCContainer &gt; li.rt_toc_0.rtCollapsible (a maverick li
                 element) 
@@ -112,10 +112,10 @@ aesthetic rules. </p>
                   <li>#TOCContainer &gt; li &gt; div (the open/close icon)</li>
                   <li>#TOCContainer &gt; li &gt; ul &gt; li &gt; a (main
                   title)</li>
-                  <li>#TOCContainer &gt; li &gt; ul (subordinate TOC tree)
+                  <li>#TOCContainer &gt; li &gt; ul (subordinate TOC tree) 
                     <ul>
                       <li>#TOCContainer &gt; li &gt; ul &gt; li &gt; ul &gt;
-                        li:nth-child(1) ... (10)
+                        li:nth-child(1) ... (10) 
                         <ul>
                           <li>#TOCContainer &gt; li &gt; ul &gt; li &gt; ul
                             &gt; li:nth-child(1 ... 10) &gt; a</li>
@@ -129,17 +129,17 @@ aesthetic rules. </p>
           </li>
         </ul>
       </li>
-      <li>div#menuPanel
+      <li>div#menuPanel 
         <ul>
           <li>div#menuContainer</li>
         </ul>
       </li>
-      <li>div#helpPanel
+      <li>div#helpPanel 
         <ul>
           <li>div#helpContainer</li>
         </ul>
       </li>
-      <li>div#textContent
+      <li>div#textContent 
         <ul>
           <li>(copy content)</li>
         </ul>
@@ -147,6 +147,46 @@ aesthetic rules. </p>
     </ul>
   </li>
 </ul>
+
+<p>The goal is: </p>
+<ul>
+  <li>div#rtContainer 
+    <ul>
+      <li>div#rtControlPanel</li>
+      <li>div#rtContent 
+        <ul>
+          <li>div#rtTOC</li>
+          <li>div#rtHelp</li>
+          <li>div#rtMenu</li>
+          <li>div#rtDocument</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>There is an outer container that holds only structural elements. It might
+span the whole viewport. It displays no scroll bars. </p>
+
+<p>The control panel #rtControlPanel is a separate entity that can be
+positioned to the left or the bottom, of the outer container. It has a fixed
+with when displayed vertical, fixed height when horizontal. To achieve the
+two-positions capability it might be needed to define both instances, and to
+have only one visible at any time. </p>
+
+<p>The content panel #rtTextContent shares the screen real estate with the
+control (spans all the space left), and contains the #rtDocument pane with the
+document text, and the other hidden panels that will overlay the document when
+activated. Each of the hidden panels can have its own internal structure
+without affecting the other elements. </p>
+
+<p>For the service panels to fully overlay the document panel, they should be
+positioned in absolute mode with respect to the outer container; the position
+coordinates would depend on the position of the control panel, and the size
+must be calculated. </p>
+
+<p>Do not use a template renderer: the added HTML it small and the renderers
+are too big in comparison. </p>
 
 <h2 style="clear:both;" id="tasks">tasks <img alt="this one!"
 src="res/caramba_yellow.gif" width="7" height="14"> </h2>
